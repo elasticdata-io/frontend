@@ -1,5 +1,6 @@
 <template>
 	<v-app id="inspire">
+		<app-header></app-header>
 		<v-content>
 			<v-container class="fill-height" fluid>
 				<v-row align="center" justify="center">
@@ -48,9 +49,13 @@
 </template>
 
 <script>
+import AppHeader from '../components/AppHeader';
 import { SET_SNACK_MESSAGE } from '../store/mutations';
 
 export default {
+	components: {
+		AppHeader,
+	},
 	data: () => ({
 		login: '',
 		password: '',
