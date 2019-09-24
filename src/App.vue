@@ -1,28 +1,20 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+	<div id="app">
+		<router-view></router-view>
+		<snackbar></snackbar>
+		<http-transport-layer></http-transport-layer>
+	</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import HttpTransportLayer from './components/HttpTransportLayer.vue';
+import Snackbar from './components/Snackbar';
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+	components: { HttpTransportLayer, Snackbar },
+};
 </script>
-
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+	font-family: Ubuntu, sans-serif;
 }
 </style>
