@@ -1,5 +1,5 @@
 <template>
-	<v-app id="inspire">
+	<v-app id="login">
 		<app-header></app-header>
 		<v-content>
 			<v-container class="fill-height" fluid>
@@ -37,7 +37,8 @@
 							<v-card-actions>
 								<div class="flex-grow-1"></div>
 								<v-btn
-									color="secondary"
+									color="action"
+									dark
 									@click="doLogin"
 									depressed
 									:disabled="loading"

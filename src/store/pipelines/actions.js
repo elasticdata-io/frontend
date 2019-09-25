@@ -1,0 +1,6 @@
+export const SUBSCRIBE_WS = 'SUBSCRIBE_WS';
+export const FETCH_PIPELINES = 'FETCH_PIPELINES';
+export const FETCH_DEPENDS = 'FETCH_DEPENDS';
+export const REMOVE = 'REMOVE';
+export const RUN_PIPELINE = 'RUN_PIPELINE';
+export const STOP_PIPELINE = 'STOP_PIPELINE';

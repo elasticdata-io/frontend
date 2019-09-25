@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Login from '../views/Login.vue';
+import Pipelines from '../views/Pipelines.vue';
 
 Vue.use(Router);
 
@@ -10,9 +11,15 @@ const router = new Router({
 			name: 'login',
 			path: '/login',
 			component: Login,
-			meta: {
-				breadcrumb: 'Login',
-			},
+		},
+		{
+			path: '/',
+			redirect: '/pipelines',
+		},
+		{
+			name: 'pipelines',
+			path: '/pipelines',
+			component: Pipelines,
 		},
 	],
 });

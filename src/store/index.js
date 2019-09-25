@@ -3,11 +3,15 @@ import Vuex from 'vuex';
 import { SET_SNACK_MESSAGE } from './mutations';
 import { IS_MOBILE_VIEW, IS_SM_ONLY, IS_XS_ONLY } from './getters';
 
+import pipelines from './pipelines/';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
 	plugins: [],
-	modules: {},
+	modules: {
+		pipelines,
+	},
 	state: {
 		snackMessage: '',
 	},

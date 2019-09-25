@@ -3,12 +3,12 @@ module.exports = {
 		host: 'localhost',
 		proxy: {
 			'/api/*': {
-				target: 'http://localhost:8085',
+				target: 'http://app.elasticdata.io',
 				changeOrigin: true,
 				autoRewrite: true,
 			},
 			'/ws/*': {
-				target: 'http://localhost:8085',
+				target: 'http://app.elasticdata.io',
 				changeOrigin: true,
 				autoRewrite: true,
 			},
