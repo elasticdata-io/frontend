@@ -5,6 +5,7 @@
 			<v-container class="fill-height" fluid>
 				<v-layout>
 					<v-flex>
+						<h1>Pipelines</h1>
 						<v-simple-table>
 							<template v-slot:default>
 								<thead>
@@ -19,7 +20,11 @@
 								</thead>
 								<tbody>
 									<tr v-for="pipeline in pipelines" :key="pipeline.id">
-										<td>{{ pipeline.status.title }}</td>
+										<td>
+											<pipeline-run-status-button
+												:pipeline="pipeline"
+											></pipeline-run-status-button>
+										</td>
 										<td>{{ pipeline.key }}</td>
 										<td>
 											<v-btn
@@ -102,6 +107,7 @@
 </template>
 <script>
 import AppHeader from '../components/AppHeader';
+import PipelineRunStatusButton from '../components/PipelineRunStatusButton';
 import { FETCH_PIPELINES, REMOVE } from '../store/pipelines/actions';
 import { PIPELINES } from '../store/pipelines/getters';
 import * as moment from 'moment';
@@ -110,6 +116,7 @@ import { mapGetters } from 'vuex';
 export default {
 	components: {
 		AppHeader,
+		PipelineRunStatusButton,
 	},
 	computed: {
 		...mapGetters('pipelines', {
