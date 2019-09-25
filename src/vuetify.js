@@ -8,9 +8,13 @@ Vue.use(Vuetify);
 
 export default new Vuetify({
 	theme: {
-		primary: '#004d9f',
-		secondary: colors.red.darken1,
-		accent: '#8caed4',
-		background: '#f5f5f5',
+		themes: {
+			light: {
+				primary: '#002884',
+				secondary: '#3f51b5',
+				accent: '#8c9eff',
+				error: '#b71c1c',
+			},
+		},
 	},
 });

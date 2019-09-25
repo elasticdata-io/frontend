@@ -6,8 +6,8 @@
 				<v-row align="center" justify="center">
 					<v-col cols="12" sm="8" md="4">
 						<v-card class="elevation-2">
-							<v-toolbar color="primary" dark flat>
-								<v-toolbar-title>Login</v-toolbar-title>
+							<v-toolbar flat>
+								<v-toolbar-title>Login form</v-toolbar-title>
 								<div class="flex-grow-1"></div>
 							</v-toolbar>
 							<v-card-text>
@@ -15,7 +15,6 @@
 									<v-text-field
 										label="Enter you login"
 										name="login"
-										prepend-icon="person"
 										type="text"
 										required
 										v-model="login"
@@ -27,7 +26,6 @@
 										id="password"
 										label="Enter you password"
 										name="password"
-										prepend-icon="lock"
 										type="password"
 										required
 										v-model="password"
@@ -38,7 +36,13 @@
 							</v-card-text>
 							<v-card-actions>
 								<div class="flex-grow-1"></div>
-								<v-btn @click="doLogin" :disabled="loading">login</v-btn>
+								<v-btn
+									color="secondary"
+									@click="doLogin"
+									depressed
+									:disabled="loading"
+									>login</v-btn
+								>
 							</v-card-actions>
 						</v-card>
 					</v-col>
