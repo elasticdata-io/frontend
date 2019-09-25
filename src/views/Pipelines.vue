@@ -30,9 +30,9 @@
 											<v-btn
 												text
 												small
-												color="secondary"
+												color="primary"
 												:to="'/tasks/' + pipeline.id"
-												>launches</v-btn
+												>35 launches</v-btn
 											>
 										</td>
 										<td>{{ fromNow(pipeline.lastCompletedOn) }}</td>
