@@ -35,6 +35,10 @@ const router = new Router({
 			name: 'payment',
 			path: '/payment',
 		},
+		{
+			name: 'account',
+			path: '/account',
+		},
 	],
 });
 

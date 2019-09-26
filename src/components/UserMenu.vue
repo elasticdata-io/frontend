@@ -37,6 +37,12 @@
 					<span class="pl-2">Допомога</span>
 				</v-list-item-title>
 			</v-list-item>
+			<v-list-item :to="{ name: 'account' }">
+				<v-list-item-title>
+					<v-icon>account_circle</v-icon>
+					<span class="pl-2">Аккаунт</span>
+				</v-list-item-title>
+			</v-list-item>
 		</v-list>
 	</v-navigation-drawer>
 </template>
