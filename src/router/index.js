@@ -26,6 +26,7 @@ const router = new Router({
 			name: 'pipeline.edit',
 			path: '/pipeline/edit/:id',
 			component: Pipeline,
+			props: true,
 		},
 		{
 			name: 'help',
