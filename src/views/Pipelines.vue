@@ -1,136 +1,148 @@
 <template>
-	<v-app id="pipelines">
-		<app-header></app-header>
-		<v-content>
-			<v-container class="fill-height" fluid>
-				<v-layout>
-					<v-flex>
-						<v-card>
-							<v-card-title>
-								<span>Pipelines</span>
-								<v-btn
-									color="accent"
-									small
-									depressed
-									style="margin-left: 20px;"
-									to="/pipeline/add"
-								>
-									<v-icon>add</v-icon>
-									add new pipeline
-								</v-btn>
-							</v-card-title>
-							<v-simple-table>
-								<template v-slot:default>
-									<thead>
-										<tr>
-											<th class="text-left">Run status</th>
-											<th class="text-left">Name</th>
-											<th class="text-left">launches</th>
-											<th class="text-left">Last completed</th>
-											<th class="text-left">Scrap data</th>
-											<th class="text-left">Actions</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr v-for="pipeline in pipelines" :key="pipeline.id">
-											<td>
-												<pipeline-run-status-button
-													:pipeline="pipeline"
-												></pipeline-run-status-button>
-											</td>
-											<td>{{ pipeline.key }}</td>
-											<td>
-												<v-btn
-													text
-													small
-													color="primary"
-													:to="'/tasks/' + pipeline.id"
-													>35 launches</v-btn
-												>
-											</td>
-											<td>{{ fromNow(pipeline.lastCompletedOn) }}</td>
-											<td>
-												<v-menu offset-y>
-													<template v-slot:activator="{ on }">
-														<v-btn color="primary" text small v-on="on">
-															download
-														</v-btn>
-													</template>
-													<v-list>
-														<v-list-item>
-															<a
-																:href="
-																	'/api/pipeline/data/' +
-																		pipeline.id
-																"
-																target="_blank"
+	<v-content>
+		<v-container class="fill-height" fluid>
+			<v-layout>
+				<v-flex>
+					<v-card>
+						<v-card-title>
+							<span>Павуки</span>
+							<v-btn
+								color="accent"
+								small
+								depressed
+								style="margin-left: 20px;"
+								to="/pipeline/add"
+							>
+								<v-icon>add</v-icon>
+								додати новий павук
+							</v-btn>
+						</v-card-title>
+						<v-simple-table>
+							<template v-slot:default>
+								<thead>
+									<tr>
+										<th class="text-left">Статус</th>
+										<th class="text-left">Назва</th>
+										<th class="text-left">Запуски</th>
+										<th class="text-left">Зібранні данні</th>
+										<th class="text-left">Дії</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="pipeline in pipelines" :key="pipeline.id">
+										<td>
+											<pipeline-run-status-button
+												:pipeline="pipeline"
+											></pipeline-run-status-button>
+										</td>
+										<td>
+											<router-link
+												:to="{
+													name: 'pipeline.edit',
+													params: { id: pipeline.id },
+												}"
+											>
+												{{ pipeline.key }}
+											</router-link>
+										</td>
+										<td>
+											<v-btn
+												text
+												small
+												color="primary"
+												:to="'/tasks/' + pipeline.id"
+												>35 запуск(ів)</v-btn
+											>
+										</td>
+										<td>
+											<v-menu offset-y>
+												<template v-slot:activator="{ on }">
+													<v-btn color="primary" text small v-on="on">
+														<v-icon>arrow_downward</v-icon>
+														{{ fromNow(pipeline.lastCompletedOn) }}
+													</v-btn>
+												</template>
+												<v-list>
+													<v-list-item>
+														<a
+															:href="
+																'/api/pipeline/data/' + pipeline.id
+															"
+															target="_blank"
+														>
+															json
+														</a>
+													</v-list-item>
+													<v-list-item>
+														<a
+															:href="
+																'/api/pipeline/data/csv/' +
+																	pipeline.id
+															"
+															target="_blank"
+														>
+															csv
+														</a>
+													</v-list-item>
+												</v-list>
+											</v-menu>
+										</td>
+										<td>
+											<v-menu offset-y>
+												<template v-slot:activator="{ on }">
+													<v-btn depressed text v-on="on">
+														<v-icon>more_vert</v-icon>
+													</v-btn>
+												</template>
+												<v-list>
+													<v-list-item @click="edit(pipeline.id)">
+														<v-list-item-title>
+															<v-icon style="padding-right: 5px;"
+																>create</v-icon
 															>
-																json
-															</a>
-														</v-list-item>
-														<v-list-item>
-															<a
-																:href="
-																	'/api/pipeline/data/csv/' +
-																		pipeline.id
-																"
-																target="_blank"
+															редагувати
+														</v-list-item-title>
+													</v-list-item>
+													<v-list-item @click="remove(pipeline.id)">
+														<v-list-item-title>
+															<v-icon style="padding-right: 5px;"
+																>delete_sweep</v-icon
 															>
-																csv
-															</a>
-														</v-list-item>
-													</v-list>
-												</v-menu>
-											</td>
-											<td>
-												<v-menu offset-y>
-													<template v-slot:activator="{ on }">
-														<v-btn depressed text v-on="on">
-															<v-icon>more_vert</v-icon>
-														</v-btn>
-													</template>
-													<v-list>
-														<v-list-item @click="edit(pipeline.id)">
-															<v-list-item-title>
-																<v-icon style="padding-right: 5px;"
-																	>create</v-icon
-																>
-																edit
-															</v-list-item-title>
-														</v-list-item>
-														<v-list-item @click="remove(pipeline.id)">
-															<v-list-item-title>
-																<v-icon style="padding-right: 5px;"
-																	>delete_sweep</v-icon
-																>
-																remove
-															</v-list-item-title>
-														</v-list-item>
-													</v-list>
-												</v-menu>
-											</td>
-										</tr>
-									</tbody>
-								</template>
-							</v-simple-table>
-						</v-card>
-					</v-flex>
-				</v-layout>
-			</v-container>
-		</v-content>
-	</v-app>
+															видалити
+														</v-list-item-title>
+													</v-list-item>
+													<v-list-item @click="clone(pipeline.id)">
+														<v-list-item-title>
+															<v-icon style="padding-right: 5px;"
+																>file_copy</v-icon
+															>
+															клонувати
+														</v-list-item-title>
+													</v-list-item>
+												</v-list>
+											</v-menu>
+										</td>
+									</tr>
+								</tbody>
+							</template>
+						</v-simple-table>
+					</v-card>
+				</v-flex>
+			</v-layout>
+		</v-container>
+	</v-content>
 </template>
 <script>
-import AppHeader from '../components/AppHeader';
 import PipelineRunStatusButton from '../components/PipelineRunStatusButton';
 import { FETCH_PIPELINES, REMOVE } from '../store/pipelines/actions';
 import { PIPELINES } from '../store/pipelines/getters';
 import * as moment from 'moment';
 import { mapGetters } from 'vuex';
 
+moment.locale('uk');
+
 export default {
 	components: {
-		AppHeader,
 		PipelineRunStatusButton,
 	},
 	computed: {

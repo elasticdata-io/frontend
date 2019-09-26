@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from '../views/Login.vue';
 import Pipelines from '../views/Pipelines.vue';
+import Pipeline from '../views/Pipeline.vue';
 
 Vue.use(Router);
 
@@ -20,6 +21,19 @@ const router = new Router({
 			name: 'pipelines',
 			path: '/pipelines',
 			component: Pipelines,
+		},
+		{
+			name: 'pipeline.edit',
+			path: '/pipeline/edit/:id',
+			component: Pipeline,
+		},
+		{
+			name: 'help',
+			path: '/help',
+		},
+		{
+			name: 'payment',
+			path: '/payment',
 		},
 	],
 });
