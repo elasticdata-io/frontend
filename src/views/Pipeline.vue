@@ -1,14 +1,14 @@
 <template>
 	<v-content>
 		<v-container>
-			<v-layout>
-				<v-flex sm6 md5>
+			<v-row>
+				<v-col md="4">
 					<v-card>
 						<v-card-title>{{ name }}</v-card-title>
 						<v-divider></v-divider>
 						<v-card-text>
 							<v-text-field
-								v-model="pipeline.name"
+								v-model="pipeline.key"
 								:counter="255"
 								label="Назва павука"
 								required
@@ -19,44 +19,36 @@
 								:counter="500"
 								label="Опис"
 							></v-textarea>
-							<v-layout>
-								<v-flex>
-									<v-switch
-										v-model="pipeline.isDebugMode"
-										:label="`Режим розробника`"
+							<v-checkbox v-model="pipeline.isDebugMode" label="Режим розробника">
+								<v-tooltip top slot="append">
+									<template v-slot:activator="{ on }">
+										<v-icon small v-on="on" color="grey lighten-1">help</v-icon>
+									</template>
+									<span
+										>Якщо увімкнено - будуть доступні логи після
+										завершення</span
 									>
-										<v-tooltip top slot="append">
-											<template v-slot:activator="{ on }">
-												<v-icon v-on="on" color="grey lighten-1"
-													>help</v-icon
-												>
-											</template>
-											<span
-												>Якщо увімкнено - будуть доступні логи після
-												завершення</span
-											>
-										</v-tooltip>
-									</v-switch>
-								</v-flex>
-								<v-flex>
-									<v-switch
-										v-model="pipeline.isTakeScreenshot"
-										:label="`Зберігати скріншоти`"
-									>
-										<v-tooltip top slot="append">
-											<template v-slot:activator="{ on }">
-												<v-icon v-on="on" color="grey lighten-1"
-													>help</v-icon
-												>
-											</template>
-											<span
-												>Якщо увімкнено - значно сповільнює роботу
-												павука</span
-											>
-										</v-tooltip>
-									</v-switch>
-								</v-flex>
-							</v-layout>
+								</v-tooltip>
+							</v-checkbox>
+							<v-checkbox
+								v-model="pipeline.isTakeScreenshot"
+								label="Зберігати скріншоти"
+							>
+								<v-tooltip top slot="append">
+									<template v-slot:activator="{ on }">
+										<v-icon small v-on="on" color="grey lighten-1">help</v-icon>
+									</template>
+									<span>Якщо увімкнено - значно сповільнює роботу павука</span>
+								</v-tooltip>
+							</v-checkbox>
+							<v-checkbox v-model="pipeline.needProxy" label="Приховувати ip адресу">
+								<v-tooltip top slot="append">
+									<template v-slot:activator="{ on }">
+										<v-icon small v-on="on" color="grey lighten-1">help</v-icon>
+									</template>
+									<span>Павук приховує свою ip адресу</span>
+								</v-tooltip>
+							</v-checkbox>
 						</v-card-text>
 						<v-card-actions>
 							<v-row class="pr-5" justify="end">
@@ -65,13 +57,26 @@
 							</v-row>
 						</v-card-actions>
 					</v-card>
-				</v-flex>
-				<v-flex>
-					<pre class="json" id="editor" style="height: calc(100vh - 100px);">
-                        <code>{{ pipeline.jsonCommands }}</code>
-                    </pre>
-				</v-flex>
-			</v-layout>
+				</v-col>
+				<v-col md="4">
+					<v-card>
+						<v-card-title>Інструкції павука</v-card-title>
+						<v-divider></v-divider>
+						<v-card-text>
+							telegram
+						</v-card-text>
+					</v-card>
+				</v-col>
+				<v-col md="4">
+					<v-card>
+						<v-card-title>Історія запусків</v-card-title>
+						<v-divider></v-divider>
+						<v-card-text>
+							list tasks
+						</v-card-text>
+					</v-card>
+				</v-col>
+			</v-row>
 		</v-container>
 	</v-content>
 </template>
@@ -79,26 +84,22 @@
 import * as ace from 'brace';
 import 'brace/mode/json';
 import 'brace/theme/monokai';
+import { FETCH_PIPELINE, CLEAR_PIPELINE } from '../store/pipeline/actions';
+import { mapGetters } from 'vuex';
+import { CURRENT_PIPELINE } from '../store/pipeline/getters';
 
 let editor;
 
 export default {
 	data() {
-		return {
-			pipeline: {
-				description: '',
-				name: '',
-				isDebugMode: false,
-				isTakeScreenshot: false,
-				jsonCommands: JSON.stringify(window.location)
-					.split(',')
-					.join(',\n'),
-			},
-		};
+		return {};
 	},
 	computed: {
+		...mapGetters('pipeline', {
+			pipeline: CURRENT_PIPELINE,
+		}),
 		name() {
-			return this.pipeline.name || 'Введіть назву';
+			return this.pipeline.key || 'Введіть назву';
 		},
 	},
 	methods: {
@@ -118,8 +119,9 @@ export default {
 			// });
 		},
 	},
-	mounted() {
-		this.initEditor(ace);
+	created() {
+		this.$store.dispatch(`pipeline/${CLEAR_PIPELINE}`);
+		this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.id });
 	},
 	props: {
 		id: {

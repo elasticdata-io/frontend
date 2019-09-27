@@ -162,8 +162,7 @@ export default {
 			if (!isDeleted) {
 				return;
 			}
-			const token = this.$localStorage.get('token');
-			this.$store.dispatch(`pipelines/${REMOVE}`, { token, id });
+			this.$store.dispatch(`pipelines/${REMOVE}`, { id });
 		},
 	},
 	created() {

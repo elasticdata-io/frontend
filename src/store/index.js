@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import { SET_SNACK_MESSAGE, TOGGLE_SHOW_VERTICAL_MENU, SET_SHOW_VERTICAL_MENU } from './mutations';
 import { IS_MOBILE_VIEW, IS_SM_ONLY, IS_XS_ONLY, SHOW_VERTICAL_MENU } from './getters';
 
+import pipeline from './pipeline/';
 import pipelines from './pipelines/';
 
 Vue.use(Vuex);
@@ -10,6 +11,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 	plugins: [],
 	modules: {
+		pipeline,
 		pipelines,
 	},
 	state: {
