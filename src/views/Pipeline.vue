@@ -96,6 +96,7 @@ import { FETCH_PIPELINE, CLEAR_PIPELINE, SAVE_PIPELINE } from '../store/pipeline
 import { mapGetters } from 'vuex';
 import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from '../store/pipeline/getters';
 import { SET_SNACK_MESSAGE } from '../store/mutations';
+import { SET_PIPELINE_ID } from '../store/pipeline/mutations';
 
 let editor;
 
@@ -132,22 +133,30 @@ export default {
 			// });
 		},
 		async savePipeline() {
-			try {
-				await this.$store.dispatch(`pipeline/${SAVE_PIPELINE}`);
-			} catch (e) {
-				return;
-			}
-			this.$store.commit(SET_SNACK_MESSAGE, 'Данні успішно збережено!');
+			this.$store
+				.dispatch(`pipeline/${SAVE_PIPELINE}`)
+				.then(success => {
+					this.$store.commit(SET_SNACK_MESSAGE, success);
+				})
+				.catch(error => this.$store.commit(SET_SNACK_MESSAGE, error));
 		},
 	},
-	created() {
+	async created() {
 		this.$store.dispatch(`pipeline/${CLEAR_PIPELINE}`);
-		this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.id });
+		if (this.state === 'edit') {
+			await this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.id });
+		}
+		this.$store.commit(`pipeline/${SET_PIPELINE_ID}`, this.id);
 	},
 	props: {
 		id: {
 			required: false,
 			type: String,
+		},
+		state: {
+			required: false,
+			type: String,
+			default: 'edit',
 		},
 	},
 };

@@ -39,7 +39,7 @@
 											<router-link
 												:to="{
 													name: 'pipeline.edit',
-													params: { id: pipeline.id },
+													params: { id: pipeline.id, state: 'edit' },
 												}"
 											>
 												{{ pipeline.key }}
@@ -134,7 +134,7 @@
 </template>
 <script>
 import PipelineRunStatusButton from '../components/PipelineRunStatusButton';
-import { FETCH_PIPELINES, REMOVE } from '../store/pipelines/actions';
+import { FETCH_PIPELINES, REMOVE_PIPELINE } from '../store/pipelines/actions';
 import { PIPELINES } from '../store/pipelines/getters';
 import * as moment from 'moment';
 import { mapGetters } from 'vuex';
@@ -162,7 +162,7 @@ export default {
 			if (!isDeleted) {
 				return;
 			}
-			this.$store.dispatch(`pipelines/${REMOVE}`, { id });
+			this.$store.dispatch(`pipelines/${REMOVE_PIPELINE}`, { id });
 		},
 	},
 	created() {

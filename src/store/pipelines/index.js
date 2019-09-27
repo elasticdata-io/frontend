@@ -90,9 +90,9 @@ const actions = {
 		});
 	},
 
-	[action.REMOVE]({ commit }, { id }) {
+	[action.REMOVE_PIPELINE]({ commit }, { id }) {
 		commit(mutation.SET_LOADING, true);
-		Vue.http.get(`/api/pipeline/delete/${id}`).then(() => {
+		Vue.http.delete(`/api/pipeline/delete/${id}`).then(() => {
 			commit('REMOVE', id);
 			commit(mutation.SET_LOADING, false);
 		});

@@ -13,6 +13,10 @@ const mutations = {
 		Vue.set(state, 'pipeline', pipeline);
 	},
 
+	[mutation.SET_PIPELINE_ID](state, pipelineId) {
+		Vue.set(state.pipeline, 'id', pipelineId);
+	},
+
 	[mutation.SET_PIPELINE_LOADING](state, loading) {
 		Vue.set(state, 'loading', loading);
 	},
@@ -48,19 +52,24 @@ const actions = {
 	},
 
 	async [action.SAVE_PIPELINE]({ commit, state }) {
-		commit(mutation.SET_PIPELINE_LOADING, true);
-		const res = await Vue.http.post(`/api/pipeline/save`, state.pipeline);
-		return new Promise(resolve => {
-			setTimeout(() => {
-				commit(mutation.SET_PIPELINE, res.body);
-				commit(mutation.SET_PIPELINE_LOADING, false);
-				resolve();
-			}, 500);
+		return new Promise((resolve, reject) => {
+			commit(mutation.SET_PIPELINE_LOADING, true);
+			Vue.http
+				.post(`/api/pipeline/save`, state.pipeline)
+				.then(res => {
+					setTimeout(() => {
+						commit(mutation.SET_PIPELINE, res.body);
+						commit(mutation.SET_PIPELINE_LOADING, false);
+						resolve('Данні успішно збережено!');
+					}, 500);
+				})
+				.catch(e => reject(e.bodyText || e.statusText));
 		});
 	},
 
 	[action.CLEAR_PIPELINE]({ commit }) {
 		commit(mutation.SET_PIPELINE, {});
+		commit(mutation.SET_PIPELINE_LOADING, false);
 	},
 };
 

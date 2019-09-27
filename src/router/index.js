@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Login from '../views/Login.vue';
 import Pipelines from '../views/Pipelines.vue';
 import Pipeline from '../views/Pipeline.vue';
+import PipelineAddRedirect from '../views/PipelineAddRedirect.vue';
 
 Vue.use(Router);
 
@@ -23,10 +24,21 @@ const router = new Router({
 			component: Pipelines,
 		},
 		{
+			name: 'pipeline.add',
+			path: '/pipeline/add',
+			component: PipelineAddRedirect,
+		},
+		{
 			name: 'pipeline.edit',
-			path: '/pipeline/edit/:id',
+			path: '/pipeline/:state/:id',
 			component: Pipeline,
-			props: true,
+			props: route => {
+				const state = route.params.state || 'edit';
+				return {
+					state: state,
+					id: route.params.id,
+				};
+			},
 		},
 		{
 			name: 'help',
