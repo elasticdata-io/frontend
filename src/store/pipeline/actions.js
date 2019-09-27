@@ -1,4 +1,5 @@
 export const CLEAR_PIPELINE = 'CLEAR_PIPELINE';
 export const FETCH_PIPELINE = 'FETCH_PIPELINE';
+export const SAVE_PIPELINE = 'SAVE_PIPELINE';
 export const RUN_PIPELINE = 'RUN_PIPELINE';
 export const STOP_PIPELINE = 'STOP_PIPELINE';

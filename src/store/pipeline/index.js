@@ -47,6 +47,13 @@ const actions = {
 		});
 	},
 
+	async [action.SAVE_PIPELINE]({ commit, state }) {
+		commit(mutation.SET_PIPELINE_LOADING, true);
+		const res = await Vue.http.post(`/api/pipeline/save`, state.pipeline);
+		commit(mutation.SET_PIPELINE, res.body);
+		commit(mutation.SET_PIPELINE_LOADING, false);
+	},
+
 	[action.CLEAR_PIPELINE]({ commit }) {
 		commit(mutation.SET_PIPELINE, {});
 	},

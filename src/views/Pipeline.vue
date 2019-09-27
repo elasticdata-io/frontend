@@ -52,7 +52,14 @@
 						</v-card-text>
 						<v-card-actions>
 							<v-row class="pr-5" justify="end">
-								<v-btn color="accent" depressed :disabled="true">Зберегти</v-btn>
+								<v-btn
+									color="accent"
+									depressed
+									:disabled="saveBtnDisabled"
+									@click="savePipeline"
+								>
+									Зберегти
+								</v-btn>
 								<v-btn depressed :to="{ name: 'pipelines' }">Скасувати</v-btn>
 							</v-row>
 						</v-card-actions>
@@ -84,9 +91,10 @@
 import * as ace from 'brace';
 import 'brace/mode/json';
 import 'brace/theme/monokai';
-import { FETCH_PIPELINE, CLEAR_PIPELINE } from '../store/pipeline/actions';
+import { FETCH_PIPELINE, CLEAR_PIPELINE, SAVE_PIPELINE } from '../store/pipeline/actions';
 import { mapGetters } from 'vuex';
-import { CURRENT_PIPELINE } from '../store/pipeline/getters';
+import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from '../store/pipeline/getters';
+import { SET_SNACK_MESSAGE } from '../store/mutations';
 
 let editor;
 
@@ -97,9 +105,13 @@ export default {
 	computed: {
 		...mapGetters('pipeline', {
 			pipeline: CURRENT_PIPELINE,
+			pipelineLoading: CURRENT_PIPELINE_LOADING,
 		}),
 		name() {
-			return this.pipeline.key || 'Введіть назву';
+			return `Параметри` || this.pipeline.key || 'Введіть назву';
+		},
+		saveBtnDisabled() {
+			return this.pipelineLoading;
 		},
 	},
 	methods: {
@@ -117,6 +129,14 @@ export default {
 			//     property: 'jsonCommands',
 			//     value: json
 			// });
+		},
+		async savePipeline() {
+			try {
+				await this.$store.dispatch(`pipeline/${SAVE_PIPELINE}`);
+			} catch (e) {
+				return;
+			}
+			this.$store.commit(SET_SNACK_MESSAGE, 'Данні успішно збережено!');
 		},
 	},
 	created() {
