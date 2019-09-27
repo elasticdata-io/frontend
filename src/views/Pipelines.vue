@@ -51,11 +51,11 @@
 												small
 												color="primary"
 												:to="'/tasks/' + pipeline.id"
-												>35 запуск(ів)</v-btn
-											>
+												>35 запуск(ів)
+											</v-btn>
 										</td>
 										<td>
-											<v-menu offset-y>
+											<v-menu offset-y v-if="pipeline.lastCompletedOn">
 												<template v-slot:activator="{ on }">
 													<v-btn color="primary" text small v-on="on">
 														<v-icon>arrow_downward</v-icon>
@@ -98,24 +98,24 @@
 													<v-list-item @click="edit(pipeline.id)">
 														<v-list-item-title>
 															<v-icon style="padding-right: 5px;"
-																>create</v-icon
-															>
+																>create
+															</v-icon>
 															редагувати
 														</v-list-item-title>
 													</v-list-item>
 													<v-list-item @click="remove(pipeline.id)">
 														<v-list-item-title>
 															<v-icon style="padding-right: 5px;"
-																>delete_sweep</v-icon
-															>
+																>delete_sweep
+															</v-icon>
 															видалити
 														</v-list-item-title>
 													</v-list-item>
 													<v-list-item @click="clone(pipeline.id)">
 														<v-list-item-title>
 															<v-icon style="padding-right: 5px;"
-																>file_copy</v-icon
-															>
+																>file_copy
+															</v-icon>
 															клонувати
 														</v-list-item-title>
 													</v-list-item>
@@ -152,6 +152,9 @@ export default {
 	},
 	methods: {
 		fromNow(date) {
+			if (!date) {
+				return 'ще не збирались';
+			}
 			return moment(date).fromNow();
 		},
 		edit(id) {

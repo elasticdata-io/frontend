@@ -137,8 +137,15 @@ export default {
 				.dispatch(`pipeline/${SAVE_PIPELINE}`)
 				.then(success => {
 					this.$store.commit(SET_SNACK_MESSAGE, success);
+					this.checkRedirectAfterCreated();
 				})
 				.catch(error => this.$store.commit(SET_SNACK_MESSAGE, error));
+		},
+		checkRedirectAfterCreated() {
+			if (this.state === 'edit') {
+				return;
+			}
+			this.$router.replace({ name: 'pipeline.edit', params: { state: 'edit', id: this.id } });
 		},
 	},
 	async created() {
