@@ -1,8 +1,8 @@
 <template>
 	<v-content>
 		<v-container class="fill-height" fluid>
-			<v-layout>
-				<v-flex>
+			<v-row>
+				<v-col>
 					<v-card>
 						<v-card-title>
 							<span>Павуки</span>
@@ -14,7 +14,7 @@
 								to="/pipeline/add"
 							>
 								<v-icon>add</v-icon>
-								додати новий павук
+								додати нового павука
 							</v-btn>
 						</v-card-title>
 						<v-simple-table>
@@ -127,8 +127,8 @@
 							</template>
 						</v-simple-table>
 					</v-card>
-				</v-flex>
-			</v-layout>
+				</v-col>
+			</v-row>
 		</v-container>
 	</v-content>
 </template>
