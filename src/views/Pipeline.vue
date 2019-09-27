@@ -58,9 +58,10 @@
 									:disabled="saveBtnDisabled"
 									@click="savePipeline"
 								>
-									Зберегти
+									<span v-if="!saveBtnDisabled">Зберегти</span>
+									<span v-if="saveBtnDisabled">Збереження...</span>
 								</v-btn>
-								<v-btn depressed :to="{ name: 'pipelines' }">Скасувати</v-btn>
+								<v-btn depressed :to="{ name: 'pipelines' }">назад</v-btn>
 							</v-row>
 						</v-card-actions>
 					</v-card>

@@ -14,7 +14,7 @@ const mutations = {
 	},
 
 	[mutation.SET_PIPELINE_LOADING](state, loading) {
-		this.loading = loading;
+		Vue.set(state, 'loading', loading);
 	},
 
 	[mutation.PIPELINE_CHANGE_ATTRIBUTE](state, { attr, value }) {
@@ -50,8 +50,13 @@ const actions = {
 	async [action.SAVE_PIPELINE]({ commit, state }) {
 		commit(mutation.SET_PIPELINE_LOADING, true);
 		const res = await Vue.http.post(`/api/pipeline/save`, state.pipeline);
-		commit(mutation.SET_PIPELINE, res.body);
-		commit(mutation.SET_PIPELINE_LOADING, false);
+		return new Promise(resolve => {
+			setTimeout(() => {
+				commit(mutation.SET_PIPELINE, res.body);
+				commit(mutation.SET_PIPELINE_LOADING, false);
+				resolve();
+			}, 500);
+		});
 	},
 
 	[action.CLEAR_PIPELINE]({ commit }) {
