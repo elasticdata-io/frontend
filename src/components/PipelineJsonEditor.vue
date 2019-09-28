@@ -8,10 +8,10 @@
 			transition="dialog-bottom-transition"
 		>
 			<template v-slot:activator="{ on }">
-				<v-btn color="accent" dark v-on="on">json</v-btn>
+				<v-btn block depressed elevation="1" v-on="on">json</v-btn>
 			</template>
 			<v-card v-if="dialog">
-				<v-toolbar class="toolbar" dark color="action">
+				<v-toolbar class="toolbar" dark color="grey darken-3">
 					<v-btn icon dark @click="dialog = false">
 						<v-icon>close</v-icon>
 					</v-btn>

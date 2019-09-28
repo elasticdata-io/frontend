@@ -79,6 +79,8 @@
 										@save="saveJsonCommands"
 									></pipeline-json-editor>
 								</v-col>
+							</v-row>
+							<v-row>
 								<v-col>
 									<pipeline-yaml-editor
 										:json="pipeline.jsonCommands"
