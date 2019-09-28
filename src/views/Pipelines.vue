@@ -97,15 +97,13 @@
 												<v-list>
 													<v-list-item @click="edit(pipeline.id)">
 														<v-list-item-title>
-															<v-icon style="padding-right: 5px;"
-																>create
-															</v-icon>
+															<v-icon class="pr-2">create </v-icon>
 															редагувати
 														</v-list-item-title>
 													</v-list-item>
 													<v-list-item @click="remove(pipeline.id)">
 														<v-list-item-title>
-															<v-icon style="padding-right: 5px;"
+															<v-icon class="pr-2"
 																>delete_sweep
 															</v-icon>
 															видалити
@@ -113,9 +111,7 @@
 													</v-list-item>
 													<v-list-item @click="clone(pipeline.id)">
 														<v-list-item-title>
-															<v-icon style="padding-right: 5px;"
-																>file_copy
-															</v-icon>
+															<v-icon class="pr-2">file_copy </v-icon>
 															клонувати
 														</v-list-item-title>
 													</v-list-item>

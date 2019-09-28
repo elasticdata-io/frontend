@@ -8,14 +8,17 @@
 			transition="dialog-bottom-transition"
 		>
 			<template v-slot:activator="{ on }">
-				<v-btn block depressed elevation="1" v-on="on">json</v-btn>
+				<v-btn block depressed elevation="1" v-on="on">
+					<v-icon class="pr-2">create </v-icon>
+					json
+				</v-btn>
 			</template>
 			<v-card v-if="dialog">
 				<v-toolbar class="toolbar" dark color="grey darken-3">
 					<v-btn icon dark @click="dialog = false">
 						<v-icon>close</v-icon>
 					</v-btn>
-					<v-toolbar-title>{{ title }}</v-toolbar-title>
+					<v-toolbar-title>json: {{ title }}</v-toolbar-title>
 					<div class="flex-grow-1"></div>
 					<v-toolbar-items>
 						<v-btn dark text @click="save">
