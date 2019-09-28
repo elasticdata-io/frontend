@@ -2,24 +2,41 @@
 	<v-layout>
 		<v-flex class="text-justify">
 			<span v-if="loading">
-				<v-btn>
+				<v-btn :disabled="disabled">
 					<pulse-loader size="2px" color="#002884" />
 				</v-btn>
 			</span>
 			<span v-if="!loading">
 				<span v-if="isRunnablePipeline(status)">
-					<v-btn x-small depressed fab @click="runPipeline(pipelineId)">
+					<v-btn
+						:disabled="disabled"
+						x-small
+						depressed
+						fab
+						@click="runPipeline(pipelineId)"
+					>
 						<v-icon>play_arrow</v-icon>
 					</v-btn>
 				</span>
 				<span v-if="!isRunnablePipeline(status)">
-					<v-btn v-if="status.title === pipelineIsPending" x-small text>
+					<v-btn
+						:disabled="disabled"
+						v-if="status.title === pipelineIsPending"
+						x-small
+						text
+					>
 						<pulse-loader size="2px" color="#002884" />
 					</v-btn>
-					<v-btn v-if="status.title === pipelineIsStopping" x-small text>
+					<v-btn
+						:disabled="disabled"
+						v-if="status.title === pipelineIsStopping"
+						x-small
+						text
+					>
 						<pulse-loader size="2px" color="#eb3875" />
 					</v-btn>
 					<v-btn
+						:disabled="disabled"
 						v-if="status.title === pipelineIsRunning"
 						x-small
 						text
@@ -28,6 +45,7 @@
 						<clip-loader size="16px" color="#797979" />
 					</v-btn>
 					<v-btn
+						:disabled="disabled"
 						v-if="status.title === pipelineStatusIsMissing"
 						x-small
 						depressed
@@ -81,7 +99,9 @@ export default {
 		status: {
 			type: Object,
 			required: false,
-			default: () => {},
+			default: () => ({
+				title: PipelineStatuses.NOT_RUNNING.title,
+			}),
 		},
 		pipelineId: {
 			type: String,
@@ -89,6 +109,11 @@ export default {
 			default: '',
 		},
 		loading: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
+		disabled: {
 			type: Boolean,
 			required: false,
 			default: false,

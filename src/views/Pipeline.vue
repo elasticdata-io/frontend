@@ -71,7 +71,7 @@
 						<v-card-title>Інструкції павука</v-card-title>
 						<v-divider></v-divider>
 						<v-card-text>
-							<v-row>
+							<v-row v-if="pipeline.modifiedOn">
 								<v-col>
 									В останнє зміни збережено:
 									<strong>{{ fromNow(pipeline.modifiedOn) }}</strong>
@@ -83,6 +83,7 @@
 										:json="pipeline.jsonCommands"
 										:title="pipeline.key"
 										@save="saveJsonCommands"
+										:disabled="!hasName"
 									></pipeline-json-editor>
 								</v-col>
 							</v-row>
@@ -92,6 +93,7 @@
 										:json="pipeline.jsonCommands"
 										:title="pipeline.key"
 										@save="saveJsonCommands"
+										:disabled="!hasName"
 									></pipeline-yaml-editor>
 								</v-col>
 							</v-row>
@@ -109,6 +111,7 @@
 										:status="pipeline.status"
 										:pipeline-id="pipeline.id"
 										:loading="pipeline.loading"
+										:disabled="!isCreated"
 									></pipeline-run-status-button>
 								</v-col>
 							</v-row>
@@ -146,6 +149,12 @@ export default {
 		},
 		saveBtnDisabled() {
 			return this.pipelineLoading;
+		},
+		isCreated() {
+			return Boolean(this.pipeline.modifiedOn);
+		},
+		hasName() {
+			return Boolean(this.pipeline.key);
 		},
 	},
 	methods: {

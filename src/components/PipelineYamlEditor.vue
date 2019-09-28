@@ -8,7 +8,7 @@
 			transition="dialog-bottom-transition"
 		>
 			<template v-slot:activator="{ on }">
-				<v-btn block depressed elevation="1" v-on="on">
+				<v-btn :disabled="disabled" block depressed elevation="1" v-on="on">
 					<v-icon class="pr-2">create </v-icon>
 					yaml
 				</v-btn>
