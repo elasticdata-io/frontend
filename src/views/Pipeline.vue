@@ -38,15 +38,20 @@
 									<template v-slot:activator="{ on }">
 										<v-icon small v-on="on" color="grey lighten-1">help</v-icon>
 									</template>
-									<span>Якщо увімкнено - значно сповільнює роботу павука</span>
+									<span
+										>Якщо увімкнено - для кожної команди зберігаєтся скріншот,
+										значно сповільнює роботу павука</span
+									>
 								</v-tooltip>
 							</v-checkbox>
-							<v-checkbox v-model="pipeline.needProxy" label="Приховувати ip адресу">
+							<v-checkbox v-model="pipeline.needProxy" label="Змінювати ip адресу">
 								<v-tooltip top slot="append">
 									<template v-slot:activator="{ on }">
 										<v-icon small v-on="on" color="grey lighten-1">help</v-icon>
 									</template>
-									<span>Павук приховує свою ip адресу</span>
+									<span
+										>Якщо увімкнено - павук постійно змінює свою ip адресу</span
+									>
 								</v-tooltip>
 							</v-checkbox>
 						</v-card-text>
