@@ -1,26 +1,33 @@
 <template>
-	<v-snackbar v-if="snackMessage" v-model="snackMessage" :timeout="10000">
+	<v-snackbar v-model="snackbar" :timeout="10000">
 		<span style="max-width: 500px;word-wrap: break-word">
 			{{ snackMessage }}
 		</span>
 		<v-btn small style="color: #333333" @click="close">
-			close
+			закрити
 		</v-btn>
 	</v-snackbar>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import { SET_SNACK_MESSAGE } from '../store/mutations';
+import { SNACK_MESSAGE } from '../store/getters';
 
 export default {
 	computed: {
-		...mapState({
-			snackMessage: 'snackMessage',
+		...mapGetters({
+			snackMessage: SNACK_MESSAGE,
 		}),
+		snackbar: {
+			get() {
+				return Boolean(this.snackMessage);
+			},
+			set() {},
+		},
 	},
 	methods: {
 		close() {
-			this.$store.commit(SET_SNACK_MESSAGE, null);
+			this.$store.commit(SET_SNACK_MESSAGE, '');
 		},
 	},
 };

@@ -71,7 +71,11 @@
 						<v-card-title>Інструкції павука</v-card-title>
 						<v-divider></v-divider>
 						<v-card-text>
-							telegram
+							<pipeline-json-editor
+								:json="pipeline.jsonCommands"
+								:title="pipeline.key"
+								@save="saveJsonCommands"
+							></pipeline-json-editor>
 						</v-card-text>
 					</v-card>
 				</v-col>
@@ -89,18 +93,15 @@
 	</v-content>
 </template>
 <script>
-import * as ace from 'brace';
-import 'brace/mode/json';
-import 'brace/theme/monokai';
 import { FETCH_PIPELINE, CLEAR_PIPELINE, SAVE_PIPELINE } from '../store/pipeline/actions';
 import { mapGetters } from 'vuex';
 import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from '../store/pipeline/getters';
 import { SET_SNACK_MESSAGE } from '../store/mutations';
 import { SET_PIPELINE_ID } from '../store/pipeline/mutations';
-
-let editor;
+import PipelineJsonEditor from '../components/PipelineJsonEditor';
 
 export default {
+	components: { PipelineJsonEditor },
 	data() {
 		return {};
 	},
@@ -117,20 +118,9 @@ export default {
 		},
 	},
 	methods: {
-		initEditor: function(ace) {
-			setTimeout(() => {
-				editor = ace.edit('editor');
-				editor.setTheme('ace/theme/monokai');
-				editor.getSession().setMode('ace/mode/json');
-				editor.getSession().on('change', () => this.onChangeJsonCommands());
-			});
-		},
-		onChangeJsonCommands: function() {
-			let json = editor.getValue();
-			// this.$store.commit(`pipeline/${pipelineMutation.CHANGE_PROPS}`, {
-			//     property: 'jsonCommands',
-			//     value: json
-			// });
+		saveJsonCommands(json) {
+			this.pipeline.jsonCommands = json;
+			this.savePipeline();
 		},
 		async savePipeline() {
 			this.$store
@@ -168,12 +158,3 @@ export default {
 	},
 };
 </script>
-<style lang="less">
-#editor .ace_content * {
-	font-family: Monaco, 'Ubuntu Mono', monospace;
-	font-weight: 400;
-	font-size: 12px;
-	line-height: 1.35;
-	letter-spacing: 0.32px;
-}
-</style>

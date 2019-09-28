@@ -1,7 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { SET_SNACK_MESSAGE, TOGGLE_SHOW_VERTICAL_MENU, SET_SHOW_VERTICAL_MENU } from './mutations';
-import { IS_MOBILE_VIEW, IS_SM_ONLY, IS_XS_ONLY, SHOW_VERTICAL_MENU } from './getters';
+import {
+	IS_MOBILE_VIEW,
+	IS_SM_ONLY,
+	IS_XS_ONLY,
+	SHOW_VERTICAL_MENU,
+	SNACK_MESSAGE,
+} from './getters';
 
 import pipeline from './pipeline/';
 import pipelines from './pipelines/';
@@ -45,5 +51,6 @@ export default new Vuex.Store({
 			);
 		},
 		[SHOW_VERTICAL_MENU]: state => state.showVerticalMenu,
+		[SNACK_MESSAGE]: state => state.snackMessage,
 	},
 });
