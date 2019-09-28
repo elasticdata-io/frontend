@@ -47,7 +47,7 @@ export default {
 	}),
 	methods: {
 		initData() {
-			this.editData = YAML.stringify(JSON.parse(this.json));
+			this.editData = YAML.stringify(JSON.parse(this.json || '{"commands": []}'));
 		},
 		save() {
 			this.dialog = false;

@@ -137,8 +137,6 @@ import { PIPELINES } from '../store/pipelines/getters';
 import * as moment from 'moment';
 import { mapGetters } from 'vuex';
 
-moment.locale('uk');
-
 export default {
 	components: {
 		PipelineRunStatusButton,
@@ -153,7 +151,7 @@ export default {
 			if (!date) {
 				return 'ще не збирались';
 			}
-			return moment(date).fromNow();
+			return moment.utc(date).fromNow();
 		},
 		edit(id) {
 			this.$router.push({ name: 'pipeline.edit', params: { id } });

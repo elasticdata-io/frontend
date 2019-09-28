@@ -73,6 +73,12 @@
 						<v-card-text>
 							<v-row>
 								<v-col>
+									В останнє зміни збережено:
+									<strong>{{ fromNow(pipeline.modifiedOn) }}</strong>
+								</v-col>
+							</v-row>
+							<v-row>
+								<v-col>
 									<pipeline-json-editor
 										:json="pipeline.jsonCommands"
 										:title="pipeline.key"
@@ -97,7 +103,16 @@
 						<v-card-title>Історія запусків</v-card-title>
 						<v-divider></v-divider>
 						<v-card-text>
-							list tasks
+							<v-row>
+								<v-col>
+									<pipeline-run-status-button
+										:status="pipeline.status"
+										:pipeline-id="pipeline.id"
+										:loading="pipeline.loading"
+									></pipeline-run-status-button>
+								</v-col>
+							</v-row>
+							<v-divider></v-divider>
 						</v-card-text>
 					</v-card>
 				</v-col>
@@ -106,6 +121,7 @@
 	</v-content>
 </template>
 <script>
+import * as moment from 'moment';
 import { FETCH_PIPELINE, CLEAR_PIPELINE, SAVE_PIPELINE } from '../store/pipeline/actions';
 import { mapGetters } from 'vuex';
 import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from '../store/pipeline/getters';
@@ -113,9 +129,10 @@ import { SET_SNACK_MESSAGE } from '../store/mutations';
 import { SET_PIPELINE_ID } from '../store/pipeline/mutations';
 import PipelineJsonEditor from '../components/PipelineJsonEditor';
 import PipelineYamlEditor from '../components/PipelineYamlEditor';
+import PipelineRunStatusButton from '../components/PipelineRunStatusButton';
 
 export default {
-	components: { PipelineJsonEditor, PipelineYamlEditor },
+	components: { PipelineJsonEditor, PipelineYamlEditor, PipelineRunStatusButton },
 	data() {
 		return {};
 	},
@@ -150,6 +167,12 @@ export default {
 				return;
 			}
 			this.$router.replace({ name: 'pipeline.edit', params: { state: 'edit', id: this.id } });
+		},
+		fromNow(date) {
+			if (!date) {
+				return 'ще не зберігалося';
+			}
+			return moment.utc(date).fromNow();
 		},
 	},
 	async created() {
