@@ -1,45 +1,45 @@
 <template>
 	<v-layout>
 		<v-flex class="text-justify">
-			<span v-if="pipeline.loading">
+			<span v-if="loading">
 				<v-btn>
 					<pulse-loader size="2px" color="#002884" />
 				</v-btn>
 			</span>
-			<span v-if="!pipeline.loading">
-				<span v-if="isRunnablePipeline(pipeline)">
-					<v-btn x-small depressed fab @click="runPipeline(pipeline)">
+			<span v-if="!loading">
+				<span v-if="isRunnablePipeline(status)">
+					<v-btn x-small depressed fab @click="runPipeline(pipelineId)">
 						<v-icon>play_arrow</v-icon>
 					</v-btn>
 				</span>
-				<span v-if="!isRunnablePipeline(pipeline)">
-					<v-btn v-if="pipeline.status.title === pipelineIsPending" x-small text>
+				<span v-if="!isRunnablePipeline(status)">
+					<v-btn v-if="status.title === pipelineIsPending" x-small text>
 						<pulse-loader size="2px" color="#002884" />
 					</v-btn>
-					<v-btn v-if="pipeline.status.title === pipelineIsStopping" x-small text>
+					<v-btn v-if="status.title === pipelineIsStopping" x-small text>
 						<pulse-loader size="2px" color="#eb3875" />
 					</v-btn>
 					<v-btn
-						v-if="pipeline.status.title === pipelineIsRunning"
+						v-if="status.title === pipelineIsRunning"
 						x-small
 						text
-						@click="stopPipeline(pipeline)"
+						@click="stopPipeline(pipelineId)"
 					>
 						<clip-loader size="16px" color="#797979" />
 					</v-btn>
 					<v-btn
-						v-if="pipeline.status.title === pipelineStatusIsMissing"
+						v-if="status.title === pipelineStatusIsMissing"
 						x-small
 						depressed
 						fab
-						@click="runPipeline(pipeline)"
+						@click="runPipeline(pipelineId)"
 					>
 						<v-icon>play_arrow</v-icon>
 					</v-btn>
 				</span>
 			</span>
 			<small>
-				{{ pipeline.status.title }}
+				{{ status.title }}
 			</small>
 		</v-flex>
 	</v-layout>
@@ -61,26 +61,37 @@ export default {
 		pipelineStatusIsMissing: null,
 	}),
 	methods: {
-		isRunnablePipeline(pipeline) {
-			const status = pipeline.status.title || '';
+		isRunnablePipeline(status) {
+			const pipelineStatus = status.title || '';
 			const statuses = Object.values(PipelineStatuses);
-			return statuses.filter(s => s.runnable && s.title === status).length > 0;
+			return statuses.filter(s => s.runnable && s.title === pipelineStatus).length > 0;
 		},
 
-		runPipeline: function(pipeline) {
+		runPipeline: function(pipelineId) {
 			const token = this.$localStorage.get('token');
 			//this.$store.dispatch(`pipelines/${RUN_PIPELINE}`, {token, pipeline});
 		},
 
-		stopPipeline: function(pipeline) {
+		stopPipeline: function(pipelineId) {
 			const token = this.$localStorage.get('token');
 			//this.$store.dispatch(`pipelines/${STOP_PIPELINE}`, {token, pipeline});
 		},
 	},
 	props: {
-		pipeline: {
+		status: {
 			type: Object,
-			required: true,
+			required: false,
+			default: () => {},
+		},
+		pipelineId: {
+			type: String,
+			required: false,
+			default: '',
+		},
+		loading: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 	},
 };

@@ -32,7 +32,9 @@
 									<tr v-for="pipeline in pipelines" :key="pipeline.id">
 										<td>
 											<pipeline-run-status-button
-												:pipeline="pipeline"
+												:pipeline-id="pipeline.id"
+												:status="pipeline.status"
+												:loading="pipeline.loading"
 											></pipeline-run-status-button>
 										</td>
 										<td>
