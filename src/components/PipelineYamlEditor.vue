@@ -8,7 +8,7 @@
 			transition="dialog-bottom-transition"
 		>
 			<template v-slot:activator="{ on }">
-				<v-btn color="accent" dark v-on="on">json</v-btn>
+				<v-btn color="accent" dark v-on="on">yaml</v-btn>
 			</template>
 			<v-card v-if="dialog">
 				<v-toolbar class="toolbar" dark color="action">
@@ -25,71 +25,32 @@
 					</v-toolbar-items>
 				</v-toolbar>
 				<v-card-text class="pl-0 pr-0 pt-0 pb-0">
-					<pre class="json" id="editor"><code>{{ editData }}</code></pre>
+					<pre id="editor"><code>{{ editData }}</code></pre>
 				</v-card-text>
 			</v-card>
 		</v-dialog>
 	</div>
 </template>
 <script>
-import * as ace from 'brace';
-import 'brace/mode/json';
-import 'brace/theme/monokai';
-
-let editor;
+import * as YAML_JS from 'yamljs';
+import * as YAML from 'json-to-pretty-yaml';
+import 'brace/mode/yaml';
+import PipelineJsonEditor from './PipelineJsonEditor';
 
 export default {
+	mixins: [PipelineJsonEditor],
 	data: () => ({
-		dialog: false,
-		editData: '',
-		textType: 'json',
+		textType: 'yaml',
 	}),
-	watch: {
-		dialog: function(value) {
-			if (value) {
-				this.onOpenDialog();
-			} else {
-				this.onCloseDialog();
-			}
-		},
-	},
 	methods: {
 		initData() {
-			this.editData = this.json;
-		},
-		onOpenDialog() {
-			this.initData();
-			setTimeout(() => {
-				editor = ace.edit('editor');
-				editor.setTheme('ace/theme/monokai');
-				editor.getSession().setMode(`ace/mode/${this.textType}`);
-			});
-		},
-		onCloseDialog() {
-			if (editor) {
-				setTimeout(() => {
-					editor.destroy();
-				});
-			}
+			this.editData = YAML.stringify(JSON.parse(this.json));
 		},
 		save() {
 			this.dialog = false;
-			let json = this.getEditData();
+			let yaml = this.getEditData();
+			const json = JSON.stringify(YAML_JS.parse(yaml));
 			this.$emit('save', json);
-		},
-		getEditData() {
-			return editor.getValue();
-		},
-	},
-	props: {
-		title: {
-			type: String,
-			default: '',
-		},
-		json: {
-			type: String,
-			required: false,
-			default: '',
 		},
 	},
 };
@@ -110,10 +71,6 @@ export default {
 
 	.ace_content * {
 		font-family: Monaco, 'Ubuntu Mono', monospace;
-		/*font-weight: 400;*/
-		/*font-size: 13px;*/
-		/*line-height: 1.35;*/
-		/*letter-spacing: 0.32px;*/
 	}
 }
 </style>

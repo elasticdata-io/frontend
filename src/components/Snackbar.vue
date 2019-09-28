@@ -22,7 +22,9 @@ export default {
 			get() {
 				return Boolean(this.snackMessage);
 			},
-			set() {},
+			set() {
+				this.$store.commit(SET_SNACK_MESSAGE, '');
+			},
 		},
 	},
 	methods: {

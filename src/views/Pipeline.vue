@@ -2,7 +2,7 @@
 	<v-content>
 		<v-container>
 			<v-row>
-				<v-col md="4">
+				<v-col>
 					<v-card>
 						<v-card-title>{{ name }}</v-card-title>
 						<v-divider></v-divider>
@@ -66,20 +66,31 @@
 						</v-card-actions>
 					</v-card>
 				</v-col>
-				<v-col md="4">
+				<v-col>
 					<v-card>
 						<v-card-title>Інструкції павука</v-card-title>
 						<v-divider></v-divider>
 						<v-card-text>
-							<pipeline-json-editor
-								:json="pipeline.jsonCommands"
-								:title="pipeline.key"
-								@save="saveJsonCommands"
-							></pipeline-json-editor>
+							<v-row>
+								<v-col>
+									<pipeline-json-editor
+										:json="pipeline.jsonCommands"
+										:title="pipeline.key"
+										@save="saveJsonCommands"
+									></pipeline-json-editor>
+								</v-col>
+								<v-col>
+									<pipeline-yaml-editor
+										:json="pipeline.jsonCommands"
+										:title="pipeline.key"
+										@save="saveJsonCommands"
+									></pipeline-yaml-editor>
+								</v-col>
+							</v-row>
 						</v-card-text>
 					</v-card>
 				</v-col>
-				<v-col md="4">
+				<v-col>
 					<v-card>
 						<v-card-title>Історія запусків</v-card-title>
 						<v-divider></v-divider>
@@ -99,9 +110,10 @@ import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from '../store/pipeline/ge
 import { SET_SNACK_MESSAGE } from '../store/mutations';
 import { SET_PIPELINE_ID } from '../store/pipeline/mutations';
 import PipelineJsonEditor from '../components/PipelineJsonEditor';
+import PipelineYamlEditor from '../components/PipelineYamlEditor';
 
 export default {
-	components: { PipelineJsonEditor },
+	components: { PipelineJsonEditor, PipelineYamlEditor },
 	data() {
 		return {};
 	},
@@ -119,7 +131,7 @@ export default {
 	},
 	methods: {
 		saveJsonCommands(json) {
-			this.pipeline.jsonCommands = json;
+			this.pipeline.jsonCommands = JSON.stringify(JSON.parse(json), null, 4);
 			this.savePipeline();
 		},
 		async savePipeline() {
