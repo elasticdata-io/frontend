@@ -2,6 +2,7 @@ import Vue from 'vue';
 import * as action from './actions';
 import * as mutation from './mutations';
 import { PIPELINES } from './getters';
+import { PIPELINE_CHANGED } from './actions';
 
 const state = {
 	pipelines: [],
@@ -96,6 +97,15 @@ const actions = {
 			commit('REMOVE', id);
 			commit(mutation.SET_LOADING, false);
 		});
+	},
+
+	[action.PIPELINE_CHANGED]({ commit, state }, { pipeline }) {
+		const id = pipeline.id;
+		const findPipeline = state.pipelines.find(p => p.id === id);
+		if (!findPipeline) {
+			return;
+		}
+		commit(mutation.PIPELINE_CHANGE, pipeline);
 	},
 };
 

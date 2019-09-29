@@ -17,12 +17,12 @@ const mutations = {
 		Vue.set(state.pipeline, 'id', pipelineId);
 	},
 
-	[mutation.SET_PIPELINE_LOADING](state, loading) {
-		Vue.set(state, 'loading', loading);
+	[mutation.SET_PIPELINE_STATUS](state, status) {
+		Vue.set(state.pipeline, 'status', status);
 	},
 
-	[mutation.PIPELINE_CHANGE_ATTRIBUTE](state, { attr, value }) {
-		Vue.set(state.pipeline, attr, value);
+	[mutation.SET_PIPELINE_LOADING](state, loading) {
+		Vue.set(state, 'loading', loading);
 	},
 };
 
@@ -70,6 +70,13 @@ const actions = {
 	[action.CLEAR_PIPELINE]({ commit }) {
 		commit(mutation.SET_PIPELINE, {});
 		commit(mutation.SET_PIPELINE_LOADING, false);
+	},
+
+	[action.CURRENT_PIPELINE_CHANGED]({ commit, state }, { pipeline }) {
+		if (state.pipeline.id === pipeline.id) {
+			// change only status
+			commit(mutation.SET_PIPELINE_STATUS, pipeline.status);
+		}
 	},
 };
 
