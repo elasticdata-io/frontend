@@ -126,7 +126,21 @@
 							<v-divider></v-divider>
 							<v-row>
 								<v-col>
-									<span>10 останніх запусків павука</span>
+									<span class="pr-3">10 останніх запусків павука</span>
+									<v-tooltip top>
+										<template v-slot:activator="{ on }">
+											<v-btn
+												small
+												icon
+												depressed
+												@click="loadTasks"
+												v-on="on"
+											>
+												<v-icon>refresh</v-icon>
+											</v-btn>
+										</template>
+										<span>Оновити список</span>
+									</v-tooltip>
 									<tasks-mini :tasks="tasks"></tasks-mini>
 								</v-col>
 							</v-row>
@@ -208,12 +222,15 @@ export default {
 			}
 			return moment.utc(date).fromNow();
 		},
+		loadTasks() {
+			this.$store.dispatch(`tasks/${FETCH_TASKS}`, { pipelineId: this.id });
+		},
 	},
 	async created() {
 		this.$store.dispatch(`pipeline/${CLEAR_PIPELINE}`);
 		this.$store.commit(`tasks/${CLEAR_TASKS}`);
 		if (this.state === 'edit') {
-			this.$store.dispatch(`tasks/${FETCH_TASKS}`, { pipelineId: this.id });
+			this.loadTasks();
 			await this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.id });
 		}
 		this.$store.commit(`pipeline/${SET_PIPELINE_ID}`, this.id);
