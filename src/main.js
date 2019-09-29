@@ -10,6 +10,7 @@ import { messages } from './i18n';
 import 'vuetify/dist/vuetify.min.css';
 import vuetify from './vuetify';
 import VueI18n from 'vue-i18n';
+import { SET_SNACK_MESSAGE } from './store/mutations';
 
 Vue.use(VueI18n);
 Vue.use(VueResource);
@@ -23,6 +24,11 @@ Vue.http.interceptors.push(function(request, next) {
 	next(function(response) {
 		if (response.status === 401) {
 			location.href = '/#/login';
+		}
+		if (response.status === 500) {
+			const message =
+				typeof response.body === 'string' ? response.body : response.body.message;
+			store.commit(SET_SNACK_MESSAGE, `Упс... Виникла помилка на сервері: ${message}`);
 		}
 	});
 });
