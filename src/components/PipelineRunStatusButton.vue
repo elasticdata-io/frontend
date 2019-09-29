@@ -8,30 +8,46 @@
 			</span>
 			<span v-if="!loading">
 				<span v-if="isRunnablePipeline(status)">
-					<v-btn :disabled="disabled" x-small depressed fab @click="runPipeline()">
+					<v-btn
+						v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
+						:disabled="disabled"
+						depressed
+						fab
+						@click="runPipeline()"
+					>
 						<v-icon>play_arrow</v-icon>
 					</v-btn>
 				</span>
 				<span v-if="!isRunnablePipeline(status)">
-					<v-btn :disabled="disabled" v-if="status === pipelineIsPending" x-small text>
+					<v-btn
+						v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
+						:disabled="disabled"
+						v-if="status === pipelineIsPending"
+						text
+					>
 						<pulse-loader size="2px" color="#002884" />
 					</v-btn>
-					<v-btn :disabled="disabled" v-if="status === pipelineIsStopping" x-small text>
+					<v-btn
+						v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
+						:disabled="disabled"
+						v-if="status === pipelineIsStopping"
+						text
+					>
 						<pulse-loader size="2px" color="#eb3875" />
 					</v-btn>
 					<v-btn
+						v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
 						:disabled="disabled"
 						v-if="status === pipelineIsRunning"
-						x-small
 						text
 						@click="stopPipeline()"
 					>
 						<clip-loader size="16px" color="#797979" />
 					</v-btn>
 					<v-btn
+						v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
 						:disabled="disabled"
 						v-if="status === pipelineStatusIsMissing"
-						x-small
 						depressed
 						fab
 						@click="runPipeline()"
@@ -98,6 +114,11 @@ export default {
 			type: Boolean,
 			required: false,
 			default: false,
+		},
+		miniIcon: {
+			type: Boolean,
+			required: false,
+			default: true,
 		},
 	},
 };

@@ -113,7 +113,9 @@
 						<v-card-text>
 							<v-row>
 								<v-col>
+									<span>Поточний статус</span>
 									<pipeline-run-status-button
+										:miniIcon="false"
 										:status="statusTitle"
 										:pipeline-id="pipeline.id"
 										:loading="pipeline.loading"
@@ -124,6 +126,7 @@
 							<v-divider></v-divider>
 							<v-row>
 								<v-col>
+									<span>10 останніх запусків павука</span>
 									<tasks-mini :tasks="tasks"></tasks-mini>
 								</v-col>
 							</v-row>
