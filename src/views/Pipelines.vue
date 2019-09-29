@@ -33,7 +33,7 @@
 										<td>
 											<pipeline-run-status-button
 												:pipeline-id="pipeline.id"
-												:status="pipeline.status"
+												:status="pipeline.status.title"
 												:loading="pipeline.loading"
 											></pipeline-run-status-button>
 										</td>

@@ -114,7 +114,7 @@
 							<v-row>
 								<v-col>
 									<pipeline-run-status-button
-										:status="pipeline.status"
+										:status="statusTitle"
 										:pipeline-id="pipeline.id"
 										:loading="pipeline.loading"
 										:disabled="!isCreated"
@@ -147,6 +147,7 @@ import PipelineRunStatusButton from '../components/PipelineRunStatusButton';
 import TasksMini from '../components/TasksMini';
 import { FETCH_TASKS } from '../store/tasks/actions';
 import { TASKS } from '../store/tasks/getters';
+import { SUBSCRIBE_PIPELINE } from '../store/actions';
 
 export default {
 	components: { PipelineJsonEditor, PipelineYamlEditor, PipelineRunStatusButton, TasksMini },
@@ -172,6 +173,10 @@ export default {
 		},
 		hasName() {
 			return Boolean(this.pipeline.key);
+		},
+		statusTitle() {
+			const status = (this.pipeline && this.pipeline.status) || {};
+			return status.title;
 		},
 	},
 	methods: {
@@ -208,6 +213,7 @@ export default {
 			await this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.id });
 		}
 		this.$store.commit(`pipeline/${SET_PIPELINE_ID}`, this.id);
+		this.$store.dispatch(SUBSCRIBE_PIPELINE);
 	},
 	props: {
 		id: {

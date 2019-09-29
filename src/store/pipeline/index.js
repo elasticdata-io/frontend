@@ -27,17 +27,17 @@ const mutations = {
 };
 
 const actions = {
-	[action.RUN_PIPELINE]({ commit }, { pipeline }) {
+	[action.RUN_PIPELINE]({ commit }, { pipelineId }) {
 		commit(mutation.SET_PIPELINE_LOADING, true);
-		Vue.http.get(`/api/pipeline/run/${pipeline.id}`).then(res => {
+		Vue.http.get(`/api/pipeline/run/${pipelineId}`).then(res => {
 			commit(mutation.SET_PIPELINE, res.body);
 			commit(mutation.SET_PIPELINE_LOADING, false);
 		});
 	},
 
-	[action.STOP_PIPELINE]({ commit }, { pipeline }) {
+	[action.STOP_PIPELINE]({ commit }, { pipelineId }) {
 		commit(mutation.SET_PIPELINE_LOADING, true);
-		Vue.http.get(`/api/pipeline/stop/${pipeline.id}`).then(res => {
+		Vue.http.get(`/api/pipeline/stop/${pipelineId}`).then(res => {
 			commit(mutation.SET_PIPELINE, res.body);
 			commit(mutation.SET_PIPELINE_LOADING, false);
 		});

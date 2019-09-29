@@ -20,7 +20,7 @@
 					<td>
 						<v-tooltip left>
 							<template v-slot:activator="{ on }">
-								<v-icon v-if="task.error" color="pink" v-on="on">
+								<v-icon small v-if="task.error" color="pink" v-on="on">
 									error
 								</v-icon>
 							</template>
@@ -29,7 +29,7 @@
 
 						<v-tooltip left>
 							<template v-slot:activator="{ on }">
-								<v-icon v-if="!task.error" v-on="on">check</v-icon>
+								<v-icon small v-if="!task.error" v-on="on">check</v-icon>
 							</template>
 							<span>Завершено без помилок</span>
 						</v-tooltip>
@@ -84,6 +84,9 @@ export default {
 			return moment.utc(date).fromNow();
 		},
 		duration: task => {
+			if (!task.startOn || !task.endOn) {
+				return 'невідомо';
+			}
 			const startOn = moment.utc(task.startOn);
 			const endOn = moment.utc(task.endOn);
 			const diff = endOn.diff(startOn);

@@ -86,6 +86,7 @@ export default {
 					if (body.success) {
 						this.$localStorage.set('login', this.login);
 						this.$localStorage.set('token', body.token);
+						this.$localStorage.set('userId', body.userId);
 						this.successRedirect();
 					}
 				})
