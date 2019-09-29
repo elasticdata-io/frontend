@@ -57,16 +57,17 @@
 						</v-card-text>
 						<v-card-actions>
 							<v-row class="pr-5" justify="end">
+								<v-btn depressed :to="{ name: 'pipelines' }">назад</v-btn>
 								<v-btn
 									color="accent"
 									depressed
 									:disabled="saveBtnDisabled"
 									@click="savePipeline"
+									class="ml-6"
 								>
 									<span v-if="!saveBtnDisabled">Зберегти</span>
 									<span v-if="saveBtnDisabled">Збереження...</span>
 								</v-btn>
-								<v-btn depressed :to="{ name: 'pipelines' }">назад</v-btn>
 							</v-row>
 						</v-card-actions>
 					</v-card>
@@ -121,6 +122,11 @@
 								</v-col>
 							</v-row>
 							<v-divider></v-divider>
+							<v-row>
+								<v-col>
+									<tasks :tasks="tasks"></tasks>
+								</v-col>
+							</v-row>
 						</v-card-text>
 					</v-card>
 				</v-col>
@@ -138,9 +144,12 @@ import { SET_PIPELINE_ID } from '../store/pipeline/mutations';
 import PipelineJsonEditor from '../components/PipelineJsonEditor';
 import PipelineYamlEditor from '../components/PipelineYamlEditor';
 import PipelineRunStatusButton from '../components/PipelineRunStatusButton';
+import Tasks from '../components/Tasks';
+import { FETCH_TASKS } from '../store/tasks/actions';
+import { TASKS } from '../store/tasks/getters';
 
 export default {
-	components: { PipelineJsonEditor, PipelineYamlEditor, PipelineRunStatusButton },
+	components: { PipelineJsonEditor, PipelineYamlEditor, PipelineRunStatusButton, Tasks },
 	data() {
 		return {};
 	},
@@ -148,6 +157,9 @@ export default {
 		...mapGetters('pipeline', {
 			pipeline: CURRENT_PIPELINE,
 			pipelineLoading: CURRENT_PIPELINE_LOADING,
+		}),
+		...mapGetters('tasks', {
+			tasks: TASKS,
 		}),
 		name() {
 			return `Параметри` || this.pipeline.key || 'Введіть назву';
@@ -192,6 +204,7 @@ export default {
 	async created() {
 		this.$store.dispatch(`pipeline/${CLEAR_PIPELINE}`);
 		if (this.state === 'edit') {
+			this.$store.dispatch(`tasks/${FETCH_TASKS}`, { pipelineId: this.id });
 			await this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.id });
 		}
 		this.$store.commit(`pipeline/${SET_PIPELINE_ID}`, this.id);

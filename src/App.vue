@@ -23,5 +23,6 @@ export default {
 <style>
 * {
 	font-family: Ubuntu, sans-serif;
+	/*font-family: 'PT Sans', Ubuntu, sans-serif;*/
 }
 </style>

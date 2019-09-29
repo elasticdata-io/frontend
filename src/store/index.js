@@ -11,6 +11,7 @@ import {
 
 import pipeline from './pipeline/';
 import pipelines from './pipelines/';
+import tasks from './tasks/';
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
 	modules: {
 		pipeline,
 		pipelines,
+		tasks,
 	},
 	state: {
 		snackMessage: '',
