@@ -16,11 +16,13 @@ import Snackbar from './components/Snackbar';
 import AppHeader from './components/AppHeader';
 import UserMenu from './components/UserMenu';
 import { stompConnect } from './store/websocket';
+import { SUBSCRIBE_PIPELINE } from './store/actions';
 
 export default {
 	components: { HttpTransportLayer, Snackbar, AppHeader, UserMenu },
 	created() {
 		stompConnect();
+		this.$store.dispatch(SUBSCRIBE_PIPELINE);
 	},
 };
 </script>

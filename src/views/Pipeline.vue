@@ -150,7 +150,6 @@ import PipelineRunStatusButton from '../components/PipelineRunStatusButton';
 import TasksMini from '../components/TasksMini';
 import { FETCH_TASKS } from '../store/tasks/actions';
 import { TASKS } from '../store/tasks/getters';
-import { SUBSCRIBE_PIPELINE } from '../store/actions';
 import { CLEAR_TASKS } from '../store/tasks/mutations';
 
 export default {
@@ -218,7 +217,6 @@ export default {
 			await this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.id });
 		}
 		this.$store.commit(`pipeline/${SET_PIPELINE_ID}`, this.id);
-		this.$store.dispatch(SUBSCRIBE_PIPELINE);
 	},
 	props: {
 		id: {

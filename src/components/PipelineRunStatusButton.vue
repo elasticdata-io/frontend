@@ -58,7 +58,7 @@
 				</span>
 			</span>
 			<small v-if="!loading">
-				{{ status }}
+				{{ $t(`pipeline.status.${status}`) }}
 			</small>
 		</v-col>
 	</v-row>
