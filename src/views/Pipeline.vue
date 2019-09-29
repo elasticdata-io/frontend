@@ -124,7 +124,7 @@
 							<v-divider></v-divider>
 							<v-row>
 								<v-col>
-									<tasks :tasks="tasks"></tasks>
+									<tasks-mini :tasks="tasks"></tasks-mini>
 								</v-col>
 							</v-row>
 						</v-card-text>
@@ -144,12 +144,12 @@ import { SET_PIPELINE_ID } from '../store/pipeline/mutations';
 import PipelineJsonEditor from '../components/PipelineJsonEditor';
 import PipelineYamlEditor from '../components/PipelineYamlEditor';
 import PipelineRunStatusButton from '../components/PipelineRunStatusButton';
-import Tasks from '../components/Tasks';
+import TasksMini from '../components/TasksMini';
 import { FETCH_TASKS } from '../store/tasks/actions';
 import { TASKS } from '../store/tasks/getters';
 
 export default {
-	components: { PipelineJsonEditor, PipelineYamlEditor, PipelineRunStatusButton, Tasks },
+	components: { PipelineJsonEditor, PipelineYamlEditor, PipelineRunStatusButton, TasksMini },
 	data() {
 		return {};
 	},
