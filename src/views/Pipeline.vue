@@ -151,6 +151,7 @@ import TasksMini from '../components/TasksMini';
 import { FETCH_TASKS } from '../store/tasks/actions';
 import { TASKS } from '../store/tasks/getters';
 import { SUBSCRIBE_PIPELINE } from '../store/actions';
+import { CLEAR_TASKS } from '../store/tasks/mutations';
 
 export default {
 	components: { PipelineJsonEditor, PipelineYamlEditor, PipelineRunStatusButton, TasksMini },
@@ -211,6 +212,7 @@ export default {
 	},
 	async created() {
 		this.$store.dispatch(`pipeline/${CLEAR_PIPELINE}`);
+		this.$store.commit(`tasks/${CLEAR_TASKS}`);
 		if (this.state === 'edit') {
 			this.$store.dispatch(`tasks/${FETCH_TASKS}`, { pipelineId: this.id });
 			await this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.id });

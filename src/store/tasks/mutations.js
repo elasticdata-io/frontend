@@ -1,3 +1,3 @@
 export const SET_TASKS = 'SET_TASKS';
-export const RESTORE_TASKS = 'RESTORE_TASKS';
+export const CLEAR_TASKS = 'CLEAR_TASKS';
 export const SET_TASKS_LOADING = 'SET_TASKS_LOADING';

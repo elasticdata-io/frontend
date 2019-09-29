@@ -17,14 +17,13 @@ const mutations = {
 		Vue.set(state, 'tasks', tasks);
 	},
 
-	[mutation.RESTORE_TASKS](state) {
+	[mutation.CLEAR_TASKS](state) {
 		Vue.set(state, 'tasks', []);
 	},
 };
 
 const actions = {
 	[action.FETCH_TASKS]({ commit }, { pipelineId }) {
-		commit(mutation.RESTORE_TASKS);
 		commit(mutation.SET_TASKS_LOADING, true);
 		return Vue.http.get(`/api/pipeline-task/list/${pipelineId}`).then(res => {
 			commit(mutation.SET_TASKS, res.body);
