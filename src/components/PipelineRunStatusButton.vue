@@ -1,11 +1,12 @@
 <template>
 	<v-row>
 		<v-col class="text-justify">
-			<span v-if="loading">
-				<v-btn :disabled="disabled">
-					<pulse-loader size="2px" color="#002884" />
-				</v-btn>
-			</span>
+			<v-progress-linear
+				v-if="loading"
+				color="red lighten-2"
+				buffer-value="0"
+				stream
+			></v-progress-linear>
 			<span v-if="!loading">
 				<span v-if="isRunnablePipeline(status)">
 					<v-btn
@@ -56,7 +57,7 @@
 					</v-btn>
 				</span>
 			</span>
-			<small>
+			<small v-if="!loading">
 				{{ status }}
 			</small>
 		</v-col>

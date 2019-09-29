@@ -118,7 +118,7 @@
 										:miniIcon="false"
 										:status="statusTitle"
 										:pipeline-id="pipeline.id"
-										:loading="pipeline.loading"
+										:loading="pipelineLoading"
 										:disabled="!isCreated"
 									></pipeline-run-status-button>
 								</v-col>
