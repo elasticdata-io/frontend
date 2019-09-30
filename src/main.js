@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import App from './App.vue';
 import VueResource from 'vue-resource';
 import VueLocalStorage from 'vue-localstorage';
+import Vuelidate from 'vuelidate';
 import router from './router';
 import store from './store';
 import { messages } from './i18n';
@@ -15,6 +16,7 @@ import { SET_SNACK_MESSAGE } from './store/mutations';
 Vue.use(VueI18n);
 Vue.use(VueResource);
 Vue.use(VueLocalStorage);
+Vue.use(Vuelidate);
 
 Vue.config.productionTip = false;
 
