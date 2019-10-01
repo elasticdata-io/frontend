@@ -2,14 +2,31 @@
 	<v-content>
 		<v-container class="fill-height" fluid>
 			<v-row align="center" justify="center">
-				<v-col cols="12" sm="8" md="4">
+				<v-col sm="8" md="5">
 					<v-card class="elevation-2" ref="form">
-						<v-toolbar flat>
-							<v-toolbar-title>Авторизація</v-toolbar-title>
-							<div class="flex-grow-1"></div>
-						</v-toolbar>
 						<v-card-text>
-							<v-form>
+							<v-row justify="center">
+								<v-col class="text-center" md="10">
+									<v-toolbar flat>
+										<v-toolbar-title>Вхід/Реєстрація</v-toolbar-title>
+									</v-toolbar>
+									<v-btn
+										block
+										class="mt-2"
+										color="secondary"
+										:href="'/api/oauth2/authorization/google'"
+										>google</v-btn
+									>
+									<v-btn
+										block
+										class="mt-3"
+										color="primary"
+										:href="'/api/oauth2/authorization/facebook'"
+										>facebook</v-btn
+									>
+								</v-col>
+							</v-row>
+							<v-form v-if="showSimpleLogin" class="pt-6">
 								<v-text-field
 									ref="login"
 									:rules="[rules.required]"
@@ -33,7 +50,7 @@
 								></v-text-field>
 							</v-form>
 						</v-card-text>
-						<v-card-actions>
+						<v-card-actions v-if="showSimpleLogin">
 							<div class="flex-grow-1"></div>
 							<v-btn
 								color="action"
@@ -44,6 +61,22 @@
 								>Вхід
 							</v-btn>
 						</v-card-actions>
+						<div class="links">
+							<ul>
+								<li>
+									<a href="">Технічна підтримка</a>
+								</li>
+								<li>
+									<a href="">Умови надання послуг</a>
+								</li>
+								<li>
+									<a href="">Політика конфіденційності</a>
+								</li>
+							</ul>
+							<div class="license">
+								2019 elasticdata.io Всі права зареєстровано
+							</div>
+						</div>
 					</v-card>
 				</v-col>
 			</v-row>
@@ -69,6 +102,7 @@ export default {
 		rules: {
 			required: value => !!value || "Обов'язкове поле",
 		},
+		showSimpleLogin: false,
 	}),
 	validations: {
 		login: {
@@ -146,3 +180,24 @@ export default {
 	},
 };
 </script>
+<style scoped lang="less">
+.links {
+	font-size: 0.8em;
+	text-align: center;
+	padding-bottom: 20px;
+
+	li {
+		display: inline-block;
+		padding-right: 20px;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	.license {
+		padding-top: 7px;
+		color: #666;
+	}
+}
+</style>
