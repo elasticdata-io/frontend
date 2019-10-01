@@ -9,7 +9,7 @@
 			</a>
 		</v-toolbar-title>
 		<div class="flex-grow-1"></div>
-		<v-btn small text to="/logout" color="white">
+		<v-btn small text :to="{ name: 'logout' }" color="white">
 			<v-icon>exit_to_app</v-icon>
 			<span style="padding-left: 5px;">Exit</span>
 		</v-btn>

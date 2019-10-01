@@ -4,6 +4,7 @@ import Login from '../views/Login.vue';
 import Pipelines from '../views/Pipelines.vue';
 import Pipeline from '../views/Pipeline.vue';
 import PipelineAddRedirect from '../views/PipelineAddRedirect.vue';
+import Exit from '../views/Exit';
 
 Vue.use(Router);
 
@@ -13,6 +14,11 @@ const router = new Router({
 			name: 'login',
 			path: '/login',
 			component: Login,
+		},
+		{
+			name: 'logout',
+			path: '/logout',
+			component: Exit,
 		},
 		{
 			path: '/',

@@ -12,7 +12,7 @@ import {
 import pipeline from './pipeline/';
 import pipelines from './pipelines/';
 import tasks from './tasks/';
-import Push from 'push.js';
+import user from './user/';
 import { subscribe } from './websocket';
 import { SUBSCRIBE_PIPELINE } from './actions';
 import { PIPELINE_CHANGED } from './pipelines/actions';
@@ -26,6 +26,7 @@ export default new Vuex.Store({
 		pipeline,
 		pipelines,
 		tasks,
+		user,
 	},
 	state: {
 		snackMessage: '',

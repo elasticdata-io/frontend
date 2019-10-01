@@ -55,6 +55,7 @@
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
 import { SET_SNACK_MESSAGE } from '../store/mutations';
+import { LOGIN } from '../store/user/actions';
 
 export default {
 	components: {},
@@ -121,9 +122,11 @@ export default {
 					this.error = body.error;
 					this.success = body.message;
 					if (body.success && body.token && body.userId) {
-						this.$localStorage.set('login', this.login);
-						this.$localStorage.set('token', body.token);
-						this.$localStorage.set('userId', body.userId);
+						this.$store.dispatch(`user/${LOGIN}`, {
+							login: this.login,
+							token: body.token,
+							userId: body.userId,
+						});
 						this.successRedirect();
 					} else {
 						this.handleServerError(body);
