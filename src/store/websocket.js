@@ -6,7 +6,7 @@ let stompClient = null;
 const protocol = window.location.protocol;
 const hostname = window.location.hostname;
 const apiPort = hostname.includes('localhost') ? 8080 : window.location.port;
-const wsUrl = `${protocol}//${hostname}:${apiPort}/ws`;
+const wsUrl = `${protocol}//${hostname}:${apiPort}/api/ws`;
 
 const reconnectTimeout = 1 * 1000; // in ms
 

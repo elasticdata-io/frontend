@@ -25,7 +25,7 @@ Vue.http.interceptors.push(function(request, next) {
 	request.headers.set('token', Vue.localStorage.get('token'));
 	next(function(response) {
 		if (response.status === 401) {
-			location.href = '/#/login';
+			router.push({ name: 'auth.exit' });
 		}
 		if (response.status === 500) {
 			const message =
