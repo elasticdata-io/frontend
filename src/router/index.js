@@ -5,6 +5,7 @@ import Pipelines from '../views/Pipelines.vue';
 import Pipeline from '../views/Pipeline.vue';
 import PipelineAddRedirect from '../views/PipelineAddRedirect.vue';
 import Exit from '../views/Exit';
+import Enter from '../views/Enter';
 
 Vue.use(Router);
 
@@ -19,6 +20,12 @@ const router = new Router({
 			name: 'logout',
 			path: '/logout',
 			component: Exit,
+		},
+		{
+			name: 'enter',
+			path: '/enter/:userId',
+			props: true,
+			component: Enter,
 		},
 		{
 			path: '/',
@@ -62,13 +69,8 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-	let token = Vue.localStorage.get('token');
-	if (to.name === 'login' || to.name === 'exit') {
+	if (to.name === 'login' || to.name === 'logout') {
 		next();
-	}
-	if (!token) {
-		router.replace('/login');
-		return;
 	}
 	next();
 });
