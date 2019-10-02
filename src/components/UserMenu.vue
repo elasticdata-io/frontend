@@ -9,7 +9,7 @@
 		:clipped="true"
 		:touchless="true"
 	>
-		<v-list v-if="loggedIn">
+		<v-list>
 			<v-list-item>
 				<v-list-item-content>
 					<v-list-item-title>
@@ -67,7 +67,7 @@ export default {
 			user: USER,
 		}),
 		visible: function() {
-			return true;
+			return this.loggedIn;
 		},
 	},
 	data: () => {
