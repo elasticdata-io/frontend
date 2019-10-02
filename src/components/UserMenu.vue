@@ -50,8 +50,7 @@
 import { mapGetters } from 'vuex';
 import AvatarIcon from './AvatarIcon';
 import { SHOW_VERTICAL_MENU } from '../store/getters';
-import { USER } from '../store/user/getters';
-import { FETCH_CURRENT_USER } from '../store/user/actions';
+import { LOGGED_IN, USER } from '../store/user/getters';
 
 export default {
 	components: {
@@ -62,10 +61,13 @@ export default {
 			SHOW_VERTICAL_MENU: SHOW_VERTICAL_MENU,
 		}),
 		...mapGetters('user', {
+			loggedIn: LOGGED_IN,
+		}),
+		...mapGetters('user', {
 			user: USER,
 		}),
 		visible: function() {
-			return true;
+			return this.loggedIn;
 		},
 	},
 	data: () => {
@@ -82,9 +84,6 @@ export default {
 				active: this.$route.fullPath.startsWith(path),
 			};
 		},
-	},
-	created() {
-		//this.$store.dispatch(`user/${FETCH_CURRENT_USER}`);
 	},
 };
 </script>
