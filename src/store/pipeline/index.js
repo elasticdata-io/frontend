@@ -78,6 +78,32 @@ const actions = {
 			commit(mutation.SET_PIPELINE_STATUS, pipeline.status);
 		}
 	},
+
+	[action.INIT_DEFAULT_PIPELINE_COMMANDS]({ commit, state }) {
+		const currentPipeline = state.pipeline;
+		currentPipeline.jsonCommands = JSON.stringify(
+			{
+				commands: [
+					{
+						cmd: 'url',
+						params: {
+							urls: ['http://google.com.ua'],
+						},
+					},
+					{
+						cmd: 'getText',
+						params: {
+							key: 'header',
+							selector: 'h1',
+						},
+					},
+				],
+			},
+			null,
+			4
+		);
+		commit(mutation.SET_PIPELINE, currentPipeline);
+	},
 };
 
 const getters = {
