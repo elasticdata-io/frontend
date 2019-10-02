@@ -183,7 +183,7 @@ export default {
 			return `Параметри` || this.pipeline.key || 'Введіть назву';
 		},
 		saveBtnDisabled() {
-			return this.pipelineLoading;
+			return this.pipelineLoading || !this.pipeline.key;
 		},
 		isCreated() {
 			return Boolean(this.pipeline.modifiedOn);
