@@ -70,7 +70,7 @@ const actions = {
 
 const getters = {
 	[USER]: state => state.user,
-	[LOGGED_IN]: state => state.user,
+	[LOGGED_IN]: state => state.loggedIn,
 	[LOGIN]: state => state.login,
 };
 
