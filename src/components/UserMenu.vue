@@ -13,8 +13,8 @@
 			<v-list-item>
 				<v-list-item-content>
 					<v-list-item-title>
-						<avatar-icon></avatar-icon>
-						<span class="pl-2">Сергій Ткаченко</span>
+						<avatar-icon :picture="user.picture"></avatar-icon>
+						<span class="pl-2">{{ user.firstName }} {{ user.lastName }}</span>
 					</v-list-item-title>
 				</v-list-item-content>
 			</v-list-item>
@@ -50,6 +50,8 @@
 import { mapGetters } from 'vuex';
 import AvatarIcon from './AvatarIcon';
 import { SHOW_VERTICAL_MENU } from '../store/getters';
+import { USER } from '../store/user/getters';
+import { FETCH_CURRENT_USER } from '../store/user/actions';
 
 export default {
 	components: {
@@ -58,6 +60,9 @@ export default {
 	computed: {
 		...mapGetters({
 			SHOW_VERTICAL_MENU: SHOW_VERTICAL_MENU,
+		}),
+		...mapGetters('user', {
+			user: USER,
 		}),
 		visible: function() {
 			return true;
@@ -77,6 +82,9 @@ export default {
 				active: this.$route.fullPath.startsWith(path),
 			};
 		},
+	},
+	created() {
+		//this.$store.dispatch(`user/${FETCH_CURRENT_USER}`);
 	},
 };
 </script>

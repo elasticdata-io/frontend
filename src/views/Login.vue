@@ -2,25 +2,25 @@
 	<v-content>
 		<v-container class="fill-height" fluid>
 			<v-row align="center" justify="center">
-				<v-col sm="8" md="5">
+				<v-col sm="6" md="5">
 					<v-card class="elevation-2" ref="form">
 						<v-card-text>
 							<v-row justify="center">
-								<v-col class="text-center" md="10">
+								<v-col class="text-center" sm="10" md="10" lg="8" xl="8">
 									<v-toolbar flat>
 										<v-toolbar-title>Вхід/Реєстрація</v-toolbar-title>
 									</v-toolbar>
 									<v-btn
 										block
 										class="mt-2"
-										color="secondary"
+										color="secondary lighten-2"
 										:href="'/api/oauth2/authorization/google'"
 										>google</v-btn
 									>
 									<v-btn
 										block
 										class="mt-3"
-										color="primary"
+										color="primary lighten-2"
 										:href="'/api/oauth2/authorization/facebook'"
 										>facebook</v-btn
 									>

@@ -1,11 +1,12 @@
 import Vue from 'vue';
 import * as action from './actions';
 import * as mutation from './mutations';
-import { LOGGED_IN, TASKS, USER } from './getters';
+import { LOGGED_IN, LOGIN, USER } from './getters';
 
 const state = {
 	user: {},
 	loading: false,
+	login: null,
 	loggedIn: false,
 	token: null,
 };
@@ -56,12 +57,21 @@ const actions = {
 		commit(mutation.CLEAR_TOKEN);
 		commit(mutation.CLEAR_USER);
 		commit(mutation.SET_LOGGED_IN, false);
+		commit(mutation.SET_LOGIN, null);
+	},
+
+	async [action.FETCH_CURRENT_USER]({ commit }) {
+		const response = await Vue.http.get(`/api/user/current`);
+		const body = response.body;
+		commit(mutation.SET_LOGIN, body.login);
+		commit(mutation.SET_USER, body);
 	},
 };
 
 const getters = {
 	[USER]: state => state.user,
 	[LOGGED_IN]: state => state.user,
+	[LOGIN]: state => state.login,
 };
 
 export default {

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 import { SET_SNACK_MESSAGE, TOGGLE_SHOW_VERTICAL_MENU, SET_SHOW_VERTICAL_MENU } from './mutations';
 import {
 	IS_MOBILE_VIEW,
@@ -21,7 +22,11 @@ import { CURRENT_PIPELINE_CHANGED } from './pipeline/actions';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-	plugins: [],
+	plugins: [
+		createPersistedState({
+			paths: ['user', 'showVerticalMenu'],
+		}),
+	],
 	modules: {
 		pipeline,
 		pipelines,
