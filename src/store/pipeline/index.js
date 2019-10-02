@@ -2,6 +2,7 @@ import Vue from 'vue';
 import * as action from './actions';
 import * as mutation from './mutations';
 import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from './getters';
+import defaultPipelineCommands from '../defaultPipelineCommands';
 
 const state = {
 	pipeline: {},
@@ -81,27 +82,7 @@ const actions = {
 
 	[action.INIT_DEFAULT_PIPELINE_COMMANDS]({ commit, state }) {
 		const currentPipeline = state.pipeline;
-		currentPipeline.jsonCommands = JSON.stringify(
-			{
-				commands: [
-					{
-						cmd: 'url',
-						params: {
-							urls: ['http://google.com.ua'],
-						},
-					},
-					{
-						cmd: 'getText',
-						params: {
-							key: 'header',
-							selector: 'h1',
-						},
-					},
-				],
-			},
-			null,
-			4
-		);
+		currentPipeline.jsonCommands = JSON.stringify(defaultPipelineCommands, null, 4);
 		commit(mutation.SET_PIPELINE, currentPipeline);
 	},
 };
