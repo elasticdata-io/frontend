@@ -14,8 +14,8 @@ import pipeline from './pipeline/';
 import pipelines from './pipelines/';
 import tasks from './tasks/';
 import user from './user/';
-import { subscribe } from './websocket';
-import { SUBSCRIBE_PIPELINE } from './actions';
+import { subscribe, stompConnect } from './websocket';
+import { SUBSCRIBE_PIPELINE, WEBSOCKET_CONNECT } from './actions';
 import { PIPELINE_CHANGED } from './pipelines/actions';
 import { CURRENT_PIPELINE_CHANGED } from './pipeline/actions';
 
@@ -51,8 +51,10 @@ export default new Vuex.Store({
 		},
 	},
 	actions: {
-		[SUBSCRIBE_PIPELINE]({ commit, dispatch }) {
-			const userId = Vue.localStorage.get('userId');
+		[WEBSOCKET_CONNECT]() {
+			stompConnect();
+		},
+		[SUBSCRIBE_PIPELINE]({ commit, dispatch }, { userId }) {
 			subscribe(`/pipeline/change/${userId}`, function(res) {
 				const pipeline = JSON.parse(res.body);
 				dispatch(`pipelines/${PIPELINE_CHANGED}`, { pipeline });

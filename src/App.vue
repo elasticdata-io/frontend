@@ -15,14 +15,23 @@ import HttpTransportLayer from './components/HttpTransportLayer.vue';
 import Snackbar from './components/Snackbar';
 import AppHeader from './components/AppHeader';
 import UserMenu from './components/UserMenu';
-import { stompConnect } from './store/websocket';
-import { SUBSCRIBE_PIPELINE } from './store/actions';
+import { SUBSCRIBE_PIPELINE, WEBSOCKET_CONNECT } from './store/actions';
+import { USER } from './store/user/getters';
+import { mapGetters } from 'vuex';
 
 export default {
 	components: { HttpTransportLayer, Snackbar, AppHeader, UserMenu },
+	computed: {
+		...mapGetters('user', {
+			user: USER,
+		}),
+	},
 	created() {
-		stompConnect();
-		this.$store.dispatch(SUBSCRIBE_PIPELINE);
+		const userId = this.user && this.user.id;
+		if (userId) {
+			this.$store.dispatch(WEBSOCKET_CONNECT, { userId });
+			this.$store.dispatch(SUBSCRIBE_PIPELINE, { userId });
+		}
 	},
 };
 </script>
