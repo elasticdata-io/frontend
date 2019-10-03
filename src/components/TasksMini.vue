@@ -3,7 +3,23 @@
 		<template v-slot:default>
 			<thead>
 				<tr>
-					<th class="text-left"></th>
+					<th class="text-left pl-1">
+						<v-tooltip top>
+							<template v-slot:activator="{ on }">
+								<v-btn
+									small
+									icon
+									depressed
+									@click="reload"
+									v-on="on"
+									color="accent"
+								>
+									<v-icon>refresh</v-icon>
+								</v-btn>
+							</template>
+							<span>Оновити список</span>
+						</v-tooltip>
+					</th>
 					<th class="text-left"></th>
 					<th class="text-left">Тривалість</th>
 					<th class="text-left">Завершено</th>
@@ -91,6 +107,9 @@ export default {
 			const endOn = moment.utc(task.endOn);
 			const diff = endOn.diff(startOn);
 			return moment.utc(diff).format('HH:mm:ss');
+		},
+		reload() {
+			this.$emit('reload');
 		},
 	},
 	props: {

@@ -48,20 +48,39 @@
 											</router-link>
 										</td>
 										<td>
+											<v-btn v-if="!pipeline.tasksTotal" text disabled small>
+												не було
+											</v-btn>
 											<v-btn
+												v-if="pipeline.tasksTotal"
 												text
 												small
 												color="primary"
+												disabled
 												:to="'/tasks/' + pipeline.id"
-												>35 запуск(ів)
+												>{{ pipeline.tasksTotal }} запуск(ів)
 											</v-btn>
 										</td>
 										<td>
-											<v-menu offset-y v-if="pipeline.lastCompletedOn">
+											<v-menu offset-y>
 												<template v-slot:activator="{ on }">
-													<v-btn color="primary" text small v-on="on">
+													<v-btn
+														v-if="pipeline.lastCompletedOn"
+														color="primary"
+														text
+														small
+														v-on="on"
+													>
 														<v-icon>arrow_downward</v-icon>
 														{{ fromNow(pipeline.lastCompletedOn) }}
+													</v-btn>
+													<v-btn
+														v-if="!pipeline.lastCompletedOn"
+														text
+														disabled
+														small
+													>
+														немає
 													</v-btn>
 												</template>
 												<v-list>

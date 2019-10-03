@@ -8,7 +8,7 @@ export const messages = {
 		pipeline: {
 			status: {
 				error: 'завершено з помилкою',
-				'not running': 'не працює',
+				'not running': 'не запускався',
 				pending: 'в очікуванні',
 				running: 'в процесі',
 				completed: 'завершено',

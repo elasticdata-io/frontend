@@ -127,21 +127,7 @@
 							<v-row>
 								<v-col>
 									<span class="pr-3">10 останніх запусків павука</span>
-									<v-tooltip top>
-										<template v-slot:activator="{ on }">
-											<v-btn
-												small
-												icon
-												depressed
-												@click="loadTasks"
-												v-on="on"
-											>
-												<v-icon>refresh</v-icon>
-											</v-btn>
-										</template>
-										<span>Оновити список</span>
-									</v-tooltip>
-									<tasks-mini :tasks="tasks"></tasks-mini>
+									<tasks-mini :tasks="tasks" @reload="loadTasks"></tasks-mini>
 								</v-col>
 							</v-row>
 						</v-card-text>
