@@ -8,13 +8,13 @@ export const messages = {
 		pipeline: {
 			status: {
 				error: 'завершено з помилкою',
-				'not running': 'не запускався',
-				pending: 'в очікуванні',
+				'not running': 'не працює',
+				pending: 'в черзі',
 				running: 'в процесі',
 				completed: 'завершено',
-				stopped: 'зупинився',
+				stopped: 'зупинено',
 				stopping: 'зупиняєтся',
-				null: 'не визначено',
+				null: '',
 			},
 		},
 	},

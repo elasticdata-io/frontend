@@ -139,7 +139,12 @@
 </template>
 <script>
 import * as moment from 'moment';
-import { FETCH_PIPELINE, CLEAR_PIPELINE, SAVE_PIPELINE } from '../store/pipeline/actions';
+import {
+	FETCH_PIPELINE,
+	CLEAR_PIPELINE,
+	SAVE_PIPELINE,
+	INIT_DEFAULT_PIPELINE_COMMANDS,
+} from '../store/pipeline/actions';
 import { mapGetters } from 'vuex';
 import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from '../store/pipeline/getters';
 import { SET_SNACK_MESSAGE } from '../store/mutations';
@@ -169,7 +174,7 @@ export default {
 			return `Параметри` || this.pipeline.key || 'Введіть назву';
 		},
 		saveBtnDisabled() {
-			return this.pipelineLoading;
+			return this.pipelineLoading || !this.pipeline.key;
 		},
 		isCreated() {
 			return Boolean(this.pipeline.modifiedOn);
@@ -215,6 +220,9 @@ export default {
 	async created() {
 		this.$store.dispatch(`pipeline/${CLEAR_PIPELINE}`);
 		this.$store.commit(`tasks/${CLEAR_TASKS}`);
+		if (this.state === 'add') {
+			this.$store.dispatch(`pipeline/${INIT_DEFAULT_PIPELINE_COMMANDS}`);
+		}
 		if (this.state === 'edit') {
 			this.loadTasks();
 			await this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.id });

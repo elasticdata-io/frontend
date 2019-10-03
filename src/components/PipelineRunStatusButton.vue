@@ -99,7 +99,7 @@ export default {
 		status: {
 			type: String,
 			required: false,
-			default: PipelineStatuses.NOT_RUNNING.title,
+			default: null,
 		},
 		pipelineId: {
 			type: String,
