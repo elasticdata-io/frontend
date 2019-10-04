@@ -8,7 +8,7 @@ const hostname = window.location.hostname;
 const apiPort = hostname.includes('localhost') ? 8080 : window.location.port;
 const wsUrl = `${protocol}//${hostname}:${apiPort}/api/ws`;
 
-const reconnectTimeout = 1 * 1000; // in ms
+const reconnectTimeout = 2 * 1000; // in ms
 
 let subscribes = [];
 

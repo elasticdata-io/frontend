@@ -18,6 +18,7 @@
 						:loading="pendingToServer"
 						fab
 						@click="runPipeline()"
+						:color="pipelineIsError === status ? 'red lighten-5' : ''"
 					>
 						<v-icon>play_arrow</v-icon>
 					</v-btn>
@@ -29,6 +30,7 @@
 						:disabled="disabled"
 						fab
 						depressed
+						class="pa-1"
 					>
 						<v-progress-linear color="teal" buffer-value="0" stream></v-progress-linear>
 					</v-btn>
@@ -38,6 +40,7 @@
 						v-if="status === pipelineIsStopping"
 						fab
 						depressed
+						class="pa-1"
 					>
 						<v-progress-linear
 							color="red lighten-2"
@@ -74,7 +77,10 @@
 					</v-btn>
 				</span>
 			</span>
-			<small v-if="!loading && !currentExecuteCommand">
+			<small
+				v-if="!loading && !currentExecuteCommand"
+				:class="{ 'red--text': pipelineIsError === status }"
+			>
 				{{ $t(`pipeline.status.${status}`) }}
 			</small>
 			<small v-if="isRunning && currentExecuteCommand" class="current-execute-command">
@@ -96,8 +102,10 @@ export default {
 	},
 	data: () => ({
 		pipelineIsRunning: PipelineStatuses.RUNNING.title,
+		pipelineIsError: PipelineStatuses.ERROR.title,
 		pipelineIsStopping: PipelineStatuses.STOPPING.title,
 		pipelineIsPending: PipelineStatuses.PENDING.title,
+		pipelineIsCompleted: PipelineStatuses.COMPLETED.title,
 		pipelineStatusIsMissing: null,
 		pendingToServer: false,
 	}),
