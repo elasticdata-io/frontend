@@ -34,6 +34,9 @@
 											<pipeline-run-status-button
 												:pipeline-id="pipeline.id"
 												:status="pipeline.status.title"
+												:current-execute-command="
+													pipeline.currentExecuteCommand
+												"
 												:loading="pipeline.loading"
 											></pipeline-run-status-button>
 										</td>

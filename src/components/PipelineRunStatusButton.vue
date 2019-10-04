@@ -57,8 +57,11 @@
 					</v-btn>
 				</span>
 			</span>
-			<small v-if="!loading">
+			<small v-if="!loading && !currentExecuteCommand">
 				{{ $t(`pipeline.status.${status}`) }}
+			</small>
+			<small v-if="isRunning && currentExecuteCommand" class="current-execute-command">
+				{{ currentExecuteCommand }}
 			</small>
 		</v-col>
 	</v-row>
@@ -81,6 +84,9 @@ export default {
 		pipelineStatusIsMissing: null,
 	}),
 	methods: {
+		isRunning() {
+			return this.status === PipelineStatuses.RUNNING;
+		},
 		isRunnablePipeline(status) {
 			const pipelineStatus = status || '';
 			const statuses = Object.values(PipelineStatuses);
@@ -96,6 +102,11 @@ export default {
 		},
 	},
 	props: {
+		currentExecuteCommand: {
+			type: String,
+			required: false,
+			default: null,
+		},
 		status: {
 			type: String,
 			required: false,
@@ -124,3 +135,9 @@ export default {
 	},
 };
 </script>
+<style lang="less">
+.current-execute-command {
+	font-weight: bold;
+	letter-spacing: 0.08em;
+}
+</style>

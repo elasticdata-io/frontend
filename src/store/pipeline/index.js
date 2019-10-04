@@ -3,6 +3,7 @@ import * as action from './actions';
 import * as mutation from './mutations';
 import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from './getters';
 import defaultPipelineCommands from '../defaultPipelineCommands';
+import { PIPELINE_CHANGED } from '../pipelines/actions';
 
 const state = {
 	pipeline: {},
@@ -28,20 +29,20 @@ const mutations = {
 };
 
 const actions = {
-	[action.RUN_PIPELINE]({ commit }, { pipelineId }) {
+	async [action.RUN_PIPELINE]({ commit, dispatch }, { pipelineId }) {
 		commit(mutation.SET_PIPELINE_LOADING, true);
-		Vue.http.get(`/api/pipeline/run/${pipelineId}`).then(res => {
-			commit(mutation.SET_PIPELINE, res.body);
-			commit(mutation.SET_PIPELINE_LOADING, false);
-		});
+		const res = await Vue.http.get(`/api/pipeline/run/${pipelineId}`);
+		commit(mutation.SET_PIPELINE, res.body);
+		commit(mutation.SET_PIPELINE_LOADING, false);
+		dispatch(`pipelines/${PIPELINE_CHANGED}`, { pipeline: res.body }, { root: true });
 	},
 
-	[action.STOP_PIPELINE]({ commit }, { pipelineId }) {
+	async [action.STOP_PIPELINE]({ commit, dispatch }, { pipelineId }) {
 		commit(mutation.SET_PIPELINE_LOADING, true);
-		Vue.http.get(`/api/pipeline/stop/${pipelineId}`).then(res => {
-			commit(mutation.SET_PIPELINE, res.body);
-			commit(mutation.SET_PIPELINE_LOADING, false);
-		});
+		const res = await Vue.http.get(`/api/pipeline/stop/${pipelineId}`);
+		commit(mutation.SET_PIPELINE, res.body);
+		commit(mutation.SET_PIPELINE_LOADING, false);
+		dispatch(`pipelines/${PIPELINE_CHANGED}`, { pipeline: res.body }, { root: true });
 	},
 
 	[action.FETCH_PIPELINE]({ commit }, { id }) {
@@ -84,6 +85,20 @@ const actions = {
 		const currentPipeline = state.pipeline;
 		currentPipeline.jsonCommands = JSON.stringify(defaultPipelineCommands, null, 4);
 		commit(mutation.SET_PIPELINE, currentPipeline);
+	},
+
+	[action.UPDATE_NEW_PARSED_ROWS_COUNT]({ commit, state }, { newParseRowsCount }) {
+		commit(mutation.SET_PIPELINE, {
+			...state.pipeline,
+			newParseRowsCount: newParseRowsCount,
+		});
+	},
+
+	[action.UPDATE_CURRENT_EXECUTE_COMMAND]({ commit, state }, { commandName }) {
+		commit(mutation.SET_PIPELINE, {
+			...state.pipeline,
+			currentExecuteCommand: commandName,
+		});
 	},
 };
 

@@ -118,6 +118,7 @@
 										:miniIcon="false"
 										:status="statusTitle"
 										:pipeline-id="pipeline.id"
+										:current-execute-command="pipeline.currentExecuteCommand"
 										:loading="pipelineLoading"
 										:disabled="!isCreated"
 									></pipeline-run-status-button>

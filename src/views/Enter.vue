@@ -6,7 +6,7 @@ import { SET_LOGGED_IN, SET_TOKEN, SET_USER } from '../store/user/mutations';
 import { FETCH_CURRENT_USER } from '../store/user/actions';
 import { mapGetters } from 'vuex';
 import { USER } from '../store/user/getters';
-import { SUBSCRIBE_PIPELINE, WEBSOCKET_CONNECT } from '../store/actions';
+import { SUBSCRIBE_PIPELINE_ALL, WEBSOCKET_CONNECT } from '../store/actions';
 
 export default {
 	computed: {
@@ -33,7 +33,7 @@ export default {
 		const userId = this.user && this.user.id;
 		if (userId) {
 			this.$store.dispatch(WEBSOCKET_CONNECT, { userId });
-			this.$store.dispatch(SUBSCRIBE_PIPELINE, { userId });
+			this.$store.dispatch(SUBSCRIBE_PIPELINE_ALL, { userId });
 		}
 		this.redirectToMain();
 	},

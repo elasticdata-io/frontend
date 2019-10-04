@@ -3,6 +3,7 @@ import * as action from './actions';
 import * as mutation from './mutations';
 import { PIPELINES } from './getters';
 import { PIPELINE_CHANGED } from './actions';
+import { UPDATE_CURRENT_EXECUTE_COMMAND as PIPELINES_UPDATE_CURRENT_EXECUTE_COMMAND } from './actions';
 
 const state = {
 	pipelines: [],
@@ -106,6 +107,28 @@ const actions = {
 			return;
 		}
 		commit(mutation.PIPELINE_CHANGE, pipeline);
+	},
+
+	[action.UPDATE_NEW_PARSED_ROWS_COUNT]({ commit, state }, { pipelineId, newParseRowsCount }) {
+		const findPipeline = state.pipelines.find(p => p.id === pipelineId);
+		if (!findPipeline) {
+			return;
+		}
+		commit(mutation.PIPELINE_CHANGE, {
+			...findPipeline,
+			newParseRowsCount: newParseRowsCount,
+		});
+	},
+
+	[action.UPDATE_CURRENT_EXECUTE_COMMAND]({ commit, state }, { pipelineId, commandName }) {
+		const findPipeline = state.pipelines.find(p => p.id === pipelineId);
+		if (!findPipeline) {
+			return;
+		}
+		commit(mutation.PIPELINE_CHANGE, {
+			...findPipeline,
+			currentExecuteCommand: commandName,
+		});
 	},
 };
 

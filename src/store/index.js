@@ -15,9 +15,23 @@ import pipelines from './pipelines/';
 import tasks from './tasks/';
 import user from './user/';
 import { subscribe, stompConnect } from './websocket';
-import { SUBSCRIBE_PIPELINE, WEBSOCKET_CONNECT } from './actions';
-import { PIPELINE_CHANGED } from './pipelines/actions';
-import { CURRENT_PIPELINE_CHANGED } from './pipeline/actions';
+import {
+	SUBSCRIBE_PIPELINE_ALL,
+	SUBSCRIBE_PIPELINE_CHANGED,
+	SUBSCRIBE_PIPELINE_EXECUTE_COMMAND,
+	SUBSCRIBE_PIPELINE_PARSED_LINES,
+	WEBSOCKET_CONNECT,
+} from './actions';
+import {
+	PIPELINE_CHANGED,
+	UPDATE_NEW_PARSED_ROWS_COUNT as PIPELINES_UPDATE_NEW_PARSED_ROWS_COUNT,
+	UPDATE_CURRENT_EXECUTE_COMMAND as PIPELINES_UPDATE_CURRENT_EXECUTE_COMMAND,
+} from './pipelines/actions';
+import {
+	CURRENT_PIPELINE_CHANGED,
+	UPDATE_NEW_PARSED_ROWS_COUNT as PIPELINE_UPDATE_NEW_PARSED_ROWS_COUNT,
+	UPDATE_CURRENT_EXECUTE_COMMAND as PIPELINE_UPDATE_CURRENT_EXECUTE_COMMAND,
+} from './pipeline/actions';
 
 Vue.use(Vuex);
 
@@ -54,31 +68,42 @@ export default new Vuex.Store({
 		[WEBSOCKET_CONNECT]() {
 			stompConnect();
 		},
-		[SUBSCRIBE_PIPELINE]({ commit, dispatch }, { userId }) {
-			subscribe(`/pipeline/change/${userId}`, function(res) {
+		[SUBSCRIBE_PIPELINE_ALL]({ dispatch }, { userId }) {
+			dispatch(SUBSCRIBE_PIPELINE_CHANGED, { userId });
+			dispatch(SUBSCRIBE_PIPELINE_PARSED_LINES, { userId });
+			dispatch(SUBSCRIBE_PIPELINE_EXECUTE_COMMAND, { userId });
+		},
+		[SUBSCRIBE_PIPELINE_CHANGED]({ dispatch }, { userId }) {
+			subscribe(`/pipeline/change/${userId}`, res => {
 				const pipeline = JSON.parse(res.body);
 				dispatch(`pipelines/${PIPELINE_CHANGED}`, { pipeline });
 				dispatch(`pipeline/${CURRENT_PIPELINE_CHANGED}`, { pipeline });
 			});
-			subscribe(`/pipeline/parsed-lines/${userId}`, function(res) {
-				// const data = JSON.parse(res.body);
-				// let pipelineId = data.pipelineId;
-				// let newParseRowsCount = data.newParseRowsCount;
-				// commit('PIPELINE_CHANGE_ATTRIBUTE', {
-				// 	pipelineId,
-				// 	attr: 'newParseRowsCount',
-				// 	value: newParseRowsCount,
-				// });
+		},
+		[SUBSCRIBE_PIPELINE_PARSED_LINES]({ dispatch }, { userId }) {
+			subscribe(`/pipeline/parsed-lines/${userId}`, res => {
+				const data = JSON.parse(res.body);
+				let pipelineId = data.pipelineId;
+				let newParseRowsCount = data.newParseRowsCount;
+				dispatch(`pipelines/${PIPELINES_UPDATE_NEW_PARSED_ROWS_COUNT}`, {
+					pipelineId,
+					newParseRowsCount,
+				});
+				dispatch(`pipeline/${PIPELINE_UPDATE_NEW_PARSED_ROWS_COUNT}`, {
+					newParseRowsCount,
+				});
 			});
-			subscribe(`/pipeline/command/execute/${userId}`, function(res) {
-				// const data = JSON.parse(res.body);
-				// let pipelineId = data.pipelineId;
-				// let commandExecutingName = data.commandExecutingName;
-				// commit('PIPELINE_CHANGE_ATTRIBUTE', {
-				// 	pipelineId,
-				// 	attr: 'commandExecutingName',
-				// 	value: commandExecutingName,
-				// });
+		},
+		[SUBSCRIBE_PIPELINE_EXECUTE_COMMAND]({ dispatch }, { userId }) {
+			subscribe(`/pipeline/command/execute/${userId}`, res => {
+				const data = JSON.parse(res.body);
+				let pipelineId = data.pipelineId;
+				let commandName = data.commandExecutingName;
+				dispatch(`pipelines/${PIPELINES_UPDATE_CURRENT_EXECUTE_COMMAND}`, {
+					pipelineId,
+					commandName,
+				});
+				dispatch(`pipeline/${PIPELINE_UPDATE_CURRENT_EXECUTE_COMMAND}`, { commandName });
 			});
 		},
 	},
