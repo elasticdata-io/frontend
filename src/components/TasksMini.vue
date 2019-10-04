@@ -64,8 +64,7 @@
 							</template>
 							<v-list>
 								<v-list-item
-									:href="'http://applogs.elasticdata.io/' + task.id"
-									target="_blank"
+									:to="{ name: 'task.logs', params: { taskId: task.id } }"
 								>
 									<v-list-item-title>
 										<v-icon class="pr-2">folder_open</v-icon>

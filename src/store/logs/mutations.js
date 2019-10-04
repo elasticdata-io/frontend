@@ -1,0 +1,3 @@
+export const SET_TASK_LOGS = 'SET_TASK_LOGS';
+export const CLEAR_TASK_LOGS = 'CLEAR_TASK_LOGS';
+export const SET_TASK_LOGS_LOADING = 'SET_TASK_LOGS_LOADING';

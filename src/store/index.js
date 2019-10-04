@@ -14,6 +14,7 @@ import pipeline from './pipeline/';
 import pipelines from './pipelines/';
 import tasks from './tasks/';
 import user from './user/';
+import logs from './logs/';
 import { subscribe, stompConnect } from './websocket';
 import {
 	SUBSCRIBE_PIPELINE_ALL,
@@ -46,6 +47,7 @@ export default new Vuex.Store({
 		pipelines,
 		tasks,
 		user,
+		logs,
 	},
 	state: {
 		snackMessage: '',
