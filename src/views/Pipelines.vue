@@ -139,6 +139,11 @@
 								</tbody>
 							</template>
 						</v-simple-table>
+						<v-progress-linear
+							v-if="pipelinesLoading"
+							indeterminate
+							color="cyan"
+						></v-progress-linear>
 					</v-card>
 				</v-col>
 			</v-row>
@@ -148,7 +153,7 @@
 <script>
 import PipelineRunStatusButton from '../components/PipelineRunStatusButton';
 import { FETCH_PIPELINES, REMOVE_PIPELINE } from '../store/pipelines/actions';
-import { PIPELINES } from '../store/pipelines/getters';
+import { PIPELINES, PIPELINES_LOADING } from '../store/pipelines/getters';
 import * as moment from 'moment';
 import { mapGetters } from 'vuex';
 
@@ -159,6 +164,7 @@ export default {
 	computed: {
 		...mapGetters('pipelines', {
 			pipelines: PIPELINES,
+			pipelinesLoading: PIPELINES_LOADING,
 		}),
 	},
 	methods: {

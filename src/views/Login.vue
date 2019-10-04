@@ -2,7 +2,7 @@
 	<v-content>
 		<v-container class="fill-height" fluid>
 			<v-row align="center" justify="center">
-				<v-col sm="6" md="5">
+				<v-col sm="7" md="6" lg="5">
 					<v-card class="elevation-2" ref="form">
 						<v-card-text>
 							<v-row justify="center">

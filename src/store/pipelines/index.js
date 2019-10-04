@@ -1,9 +1,7 @@
 import Vue from 'vue';
 import * as action from './actions';
 import * as mutation from './mutations';
-import { PIPELINES } from './getters';
-import { PIPELINE_CHANGED } from './actions';
-import { UPDATE_CURRENT_EXECUTE_COMMAND as PIPELINES_UPDATE_CURRENT_EXECUTE_COMMAND } from './actions';
+import { PIPELINES, PIPELINES_LOADING } from './getters';
 
 const state = {
 	pipelines: [],
@@ -134,6 +132,7 @@ const actions = {
 
 const getters = {
 	[PIPELINES]: state => state.pipelines,
+	[PIPELINES_LOADING]: state => state.loading,
 };
 
 export default {
