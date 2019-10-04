@@ -1,12 +1,14 @@
 <template>
 	<v-row>
 		<v-col class="text-justify">
-			<v-progress-linear
+			<v-btn
 				v-if="loading"
-				color="red lighten-2"
-				buffer-value="0"
-				stream
-			></v-progress-linear>
+				v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
+				:disabled="true"
+				depressed
+				:loading="true"
+				fab
+			></v-btn>
 			<span v-if="!loading">
 				<span v-if="isRunnablePipeline(status)">
 					<v-btn
