@@ -12,6 +12,11 @@ Vue.use(Router);
 const router = new Router({
 	routes: [
 		{
+			name: 'default',
+			path: '*',
+			redirect: '/',
+		},
+		{
 			name: 'login',
 			path: '/login',
 			component: Login,
