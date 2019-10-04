@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import * as moment from 'moment';
 import * as action from './actions';
 import * as mutation from './mutations';
 import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from './getters';
@@ -76,10 +77,12 @@ const actions = {
 		}
 	},
 
-	[action.INIT_DEFAULT_PIPELINE_COMMANDS]({ commit, state }) {
+	[action.INIT_DEFAULT_PIPELINE_PROPERTIES]({ commit, state }) {
 		const currentPipeline = state.pipeline;
-		currentPipeline.jsonCommands = JSON.stringify(defaultPipelineCommands, null, 4);
-		commit(mutation.SET_PIPELINE, currentPipeline);
+		commit(mutation.SET_PIPELINE, {
+			...currentPipeline,
+			jsonCommands: JSON.stringify(defaultPipelineCommands, null, 4),
+		});
 	},
 
 	[action.UPDATE_NEW_PARSED_ROWS_COUNT]({ commit, state }, { newParseRowsCount }) {

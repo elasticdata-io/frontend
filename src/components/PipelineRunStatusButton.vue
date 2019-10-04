@@ -24,30 +24,42 @@
 				</span>
 				<span v-if="!isRunnablePipeline(status)">
 					<v-btn
+						v-if="status === pipelineIsPending"
 						v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
 						:disabled="disabled"
-						v-if="status === pipelineIsPending"
-						text
+						fab
+						depressed
 					>
-						<pulse-loader size="2px" color="#002884" />
+						<v-progress-linear color="teal" buffer-value="0" stream></v-progress-linear>
 					</v-btn>
 					<v-btn
 						v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
 						:disabled="disabled"
 						v-if="status === pipelineIsStopping"
-						text
+						fab
+						depressed
 					>
-						<pulse-loader size="2px" color="#eb3875" />
+						<v-progress-linear
+							color="red lighten-2"
+							buffer-value="0"
+							stream
+						></v-progress-linear>
 					</v-btn>
 					<v-btn
 						v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
 						:disabled="disabled"
 						v-if="status === pipelineIsRunning"
-						text
+						fab
+						depressed
 						@click="stopPipeline()"
 						:loading="pendingToServer"
 					>
-						<clip-loader size="16px" color="#797979" />
+						<v-progress-circular
+							:size="16"
+							:width="2"
+							indeterminate
+							color="teal"
+						></v-progress-circular>
 					</v-btn>
 					<v-btn
 						v-bind="{ 'x-small': miniIcon, small: !miniIcon }"

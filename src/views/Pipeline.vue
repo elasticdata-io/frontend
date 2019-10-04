@@ -144,7 +144,7 @@ import {
 	FETCH_PIPELINE,
 	CLEAR_PIPELINE,
 	SAVE_PIPELINE,
-	INIT_DEFAULT_PIPELINE_COMMANDS,
+	INIT_DEFAULT_PIPELINE_PROPERTIES,
 } from '../store/pipeline/actions';
 import { mapGetters } from 'vuex';
 import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from '../store/pipeline/getters';
@@ -222,7 +222,7 @@ export default {
 		this.$store.dispatch(`pipeline/${CLEAR_PIPELINE}`);
 		this.$store.commit(`tasks/${CLEAR_TASKS}`);
 		if (this.state === 'add') {
-			this.$store.dispatch(`pipeline/${INIT_DEFAULT_PIPELINE_COMMANDS}`);
+			this.$store.dispatch(`pipeline/${INIT_DEFAULT_PIPELINE_PROPERTIES}`);
 		}
 		if (this.state === 'edit') {
 			this.loadTasks();
