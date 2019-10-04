@@ -87,26 +87,19 @@
 													</v-btn>
 												</template>
 												<v-list>
-													<v-list-item>
-														<a
-															:href="
-																'/api/pipeline/data/' + pipeline.id
-															"
-															target="_blank"
-														>
-															json
-														</a>
+													<v-list-item
+														:href="'/api/pipeline/data/' + pipeline.id"
+														target="_blank"
+													>
+														<v-list-item-title>json</v-list-item-title>
 													</v-list-item>
-													<v-list-item>
-														<a
-															:href="
-																'/api/pipeline/data/csv/' +
-																	pipeline.id
-															"
-															target="_blank"
-														>
-															csv
-														</a>
+													<v-list-item
+														:href="
+															'/api/pipeline/data/csv/' + pipeline.id
+														"
+														target="_blank"
+													>
+														<v-list-item-title>csv</v-list-item-title>
 													</v-list-item>
 												</v-list>
 											</v-menu>
