@@ -13,6 +13,7 @@
 						v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
 						:disabled="disabled"
 						depressed
+						:loading="pendingToServer"
 						fab
 						@click="runPipeline()"
 					>
@@ -42,6 +43,7 @@
 						v-if="status === pipelineIsRunning"
 						text
 						@click="stopPipeline()"
+						:loading="pendingToServer"
 					>
 						<clip-loader size="16px" color="#797979" />
 					</v-btn>
@@ -52,6 +54,7 @@
 						depressed
 						fab
 						@click="runPipeline()"
+						:loading="pendingToServer"
 					>
 						<v-icon>play_arrow</v-icon>
 					</v-btn>
@@ -82,6 +85,7 @@ export default {
 		pipelineIsStopping: PipelineStatuses.STOPPING.title,
 		pipelineIsPending: PipelineStatuses.PENDING.title,
 		pipelineStatusIsMissing: null,
+		pendingToServer: false,
 	}),
 	methods: {
 		isRunning() {
@@ -93,12 +97,18 @@ export default {
 			return statuses.filter(s => s.runnable && s.title === pipelineStatus).length > 0;
 		},
 
-		runPipeline: function() {
-			this.$store.dispatch(`pipeline/${RUN_PIPELINE}`, { pipelineId: this.pipelineId });
+		async runPipeline() {
+			this.pendingToServer = true;
+			await this.$store.dispatch(`pipeline/${RUN_PIPELINE}`, { pipelineId: this.pipelineId });
+			this.pendingToServer = false;
 		},
 
-		stopPipeline: function() {
-			this.$store.dispatch(`pipeline/${STOP_PIPELINE}`, { pipelineId: this.pipelineId });
+		async stopPipeline() {
+			this.pendingToServer = true;
+			await this.$store.dispatch(`pipeline/${STOP_PIPELINE}`, {
+				pipelineId: this.pipelineId,
+			});
+			this.pendingToServer = false;
 		},
 	},
 	props: {
