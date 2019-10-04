@@ -89,7 +89,7 @@ export default {
 	}),
 	methods: {
 		isRunning() {
-			return this.status === PipelineStatuses.RUNNING;
+			return this.status === PipelineStatuses.RUNNING.title;
 		},
 		isRunnablePipeline(status) {
 			const pipelineStatus = status || '';

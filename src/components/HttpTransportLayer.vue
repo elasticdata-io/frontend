@@ -36,7 +36,7 @@ export default {
 					return;
 				}
 				this.loading = true;
-			}, 200);
+			}, 700);
 		},
 	},
 	created: function() {
