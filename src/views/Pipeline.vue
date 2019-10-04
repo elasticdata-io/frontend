@@ -128,7 +128,12 @@
 							<v-row>
 								<v-col>
 									<span class="pr-3">10 останніх запусків павука</span>
-									<tasks-mini :tasks="tasks" @reload="loadTasks"></tasks-mini>
+									<tasks-mini
+										v-if="tasks"
+										:tasks="tasks"
+										:disabled="!id"
+										@reload="loadTasks"
+									></tasks-mini>
 								</v-col>
 							</v-row>
 						</v-card-text>
@@ -215,6 +220,9 @@ export default {
 			return moment.utc(date).fromNow();
 		},
 		loadTasks() {
+			if (!this.id) {
+				return;
+			}
 			this.$store.dispatch(`tasks/${FETCH_TASKS}`, { pipelineId: this.id });
 		},
 	},

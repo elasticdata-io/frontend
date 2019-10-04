@@ -10,12 +10,9 @@ import Enter from '../views/Enter';
 Vue.use(Router);
 
 const router = new Router({
+	//mode: 'history',
+	//base: process.env.BASE_URL,
 	routes: [
-		{
-			name: 'default',
-			path: '*',
-			redirect: '/',
-		},
 		{
 			name: 'login',
 			path: '/login',
@@ -69,6 +66,11 @@ const router = new Router({
 		{
 			name: 'account',
 			path: '/account',
+		},
+		{
+			name: 'default',
+			path: '*',
+			redirect: '/',
 		},
 	],
 });

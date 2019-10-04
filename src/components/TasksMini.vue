@@ -10,6 +10,7 @@
 									small
 									icon
 									depressed
+									:disabled="disabled"
 									@click="reload"
 									v-on="on"
 									color="accent"
@@ -116,6 +117,11 @@ export default {
 		tasks: {
 			type: Array,
 			default: () => [],
+			required: false,
+		},
+		disabled: {
+			type: Boolean,
+			default: false,
 			required: false,
 		},
 	},
