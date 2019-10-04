@@ -15,7 +15,8 @@ let subscribes = [];
 let reconnectId;
 
 function stompFailureCallback(error) {
-	console.warn('ws is disconnected: ', error);
+	console.warn('%c ws is disconnected', 'color: red');
+	console.warn(error);
 	if (!reconnectId) {
 		reconnectId = setInterval(stompConnect, reconnectTimeout);
 	}
@@ -37,10 +38,11 @@ function stompConnect() {
 		},
 		stompFailureCallback
 	);
+	stompClient.debug = null;
 }
 
 function init() {
-	console.info('ws is connected', reconnectId);
+	console.log('%c ws is connected', 'color: green');
 	if (reconnectId) {
 		clearInterval(reconnectId);
 	}
