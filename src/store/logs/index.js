@@ -27,7 +27,7 @@ const actions = {
 		commit(mutation.CLEAR_TASK_LOGS);
 		commit(mutation.SET_TASK_LOGS_LOADING, true);
 		return Vue.http.get(`/api/pipeline/log/${taskId}`).then(res => {
-			const logs = res.bodyText || '';
+			const logs = res.bodyText || 'немає логів';
 			let logsFormatted = logs.replace(/([^\n]+)\n/g, '<span>$1</span>');
 			logsFormatted = logsFormatted.replace(
 				/#screenshot-([^#]+)#/g,
