@@ -31,7 +31,7 @@ const actions = {
 			let logsFormatted = logs.replace(/([^\n]+)\n/g, '<span>$1</span>');
 			logsFormatted = logsFormatted.replace(
 				/#screenshot-([^#]+)#/g,
-				`<a target="_blank" href="http://applogs.elasticdata.io/${taskId}/screenshots/$1" class="screenshot">img</a>`
+				`<a target="_blank" href="http://applogs.elasticdata.io/${taskId}/screenshots/$1" class="img-screenshot">picture</a>`
 			);
 			commit(mutation.SET_TASK_LOGS, logsFormatted);
 			commit(mutation.SET_TASK_LOGS_LOADING, false);

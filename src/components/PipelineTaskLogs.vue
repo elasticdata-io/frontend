@@ -111,6 +111,18 @@ export default {
 			left: 0;
 			transform: translateY(-50%);
 		}
+
+		.img-screenshot {
+			text-decoration: none;
+			position: relative;
+			display: inline-block;
+			padding-right: 20px;
+			color: #fff;
+
+			background-image: url('../assets/icons8-jpg.svg');
+			background-position: right center;
+			background-repeat: no-repeat;
+		}
 	}
 }
 </style>
