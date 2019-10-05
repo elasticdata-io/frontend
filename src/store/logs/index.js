@@ -28,7 +28,7 @@ const actions = {
 		commit(mutation.SET_TASK_LOGS_LOADING, true);
 		return Vue.http.get(`/api/pipeline/log/${taskId}`).then(res => {
 			const logs = res.bodyText || '';
-			commit(mutation.SET_TASK_LOGS, logs.replace(/\n/g, '<br>'));
+			commit(mutation.SET_TASK_LOGS, logs.replace(/([^\n]+)\n/g, '<span>$1</span>'));
 			commit(mutation.SET_TASK_LOGS_LOADING, false);
 		});
 	},

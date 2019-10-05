@@ -65,14 +65,32 @@ export default {
 	},
 };
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .toolbar {
 	max-height: 64px;
 }
 .logs {
-	font-family: Monaco, 'Ubuntu Mono', monospace;
-	font-size: 11px;
-	line-height: 18px;
-	color: #444;
+	letter-spacing: -0.04em;
+	padding: 19px 19px 19px 27px;
+	background: #000;
+	color: #ccc;
+
+	span {
+		display: block;
+		width: 100%;
+		padding-top: 0.5em;
+		padding-left: 15px;
+		position: relative;
+		font: 12px/16px Menlo, Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+			Bitstream Vera Sans Mono, Courier New, monospace, serif;
+
+		&:before {
+			content: '.';
+			position: absolute;
+			top: 50%;
+			left: 0;
+			transform: translateY(-50%);
+		}
+	}
 }
 </style>
