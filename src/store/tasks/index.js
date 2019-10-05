@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import * as action from './actions';
 import * as mutation from './mutations';
-import { TASKS } from './getters';
+import { TASK_BY_ID, TASKS } from './getters';
 
 const state = {
 	tasks: [],
@@ -33,6 +33,7 @@ const actions = {
 };
 
 const getters = {
+	[TASK_BY_ID]: state => taskId => state.tasks.find(t => t.id === taskId),
 	[TASKS]: state => state.tasks,
 };
 

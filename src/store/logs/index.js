@@ -28,7 +28,12 @@ const actions = {
 		commit(mutation.SET_TASK_LOGS_LOADING, true);
 		return Vue.http.get(`/api/pipeline/log/${taskId}`).then(res => {
 			const logs = res.bodyText || '';
-			commit(mutation.SET_TASK_LOGS, logs.replace(/([^\n]+)\n/g, '<span>$1</span>'));
+			let logsFormatted = logs.replace(/([^\n]+)\n/g, '<span>$1</span>');
+			logsFormatted = logsFormatted.replace(
+				/#screenshot-([^#]+)#/g,
+				`<a target="_blank" href="http://applogs.elasticdata.io/${taskId}/screenshots/$1" class="screenshot">img</a>`
+			);
+			commit(mutation.SET_TASK_LOGS, logsFormatted);
 			commit(mutation.SET_TASK_LOGS_LOADING, false);
 		});
 	},
