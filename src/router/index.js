@@ -6,7 +6,7 @@ import Pipeline from '../views/Pipeline.vue';
 import PipelineAddRedirect from '../views/PipelineAddRedirect.vue';
 import Exit from '../views/Exit';
 import Enter from '../views/Enter';
-import PipelineTaskLogs from '../views/PipelineTaskLogs';
+import PipelineTaskLogs from '../components/PipelineTaskLogs';
 
 Vue.use(Router);
 
@@ -55,12 +55,6 @@ const router = new Router({
 					id: route.params.id,
 				};
 			},
-		},
-		{
-			name: 'task.logs',
-			path: '/task/logs/:taskId',
-			component: PipelineTaskLogs,
-			props: true,
 		},
 		{
 			name: 'help',

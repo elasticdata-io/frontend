@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import * as action from './actions';
 import * as mutation from './mutations';
-import { TASK_LOGS } from './getters';
+import { TASK_LOGS, TASK_LOGS_LOADING } from './getters';
 
 const state = {
 	logs: '',
@@ -36,6 +36,7 @@ const actions = {
 
 const getters = {
 	[TASK_LOGS]: state => state.logs,
+	[TASK_LOGS_LOADING]: state => state.loading,
 };
 
 export default {
