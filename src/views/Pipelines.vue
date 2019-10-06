@@ -37,6 +37,7 @@
 												:current-execute-command="
 													pipeline.currentExecuteCommand
 												"
+												:new-parse-rows-count="pipeline.newParseRowsCount"
 												:loading="pipeline.loading"
 											></pipeline-run-status-button>
 										</td>

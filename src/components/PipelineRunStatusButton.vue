@@ -84,7 +84,7 @@
 				{{ $t(`pipeline.status.${status}`) }}
 			</small>
 			<small v-if="isRunning && currentExecuteCommand" class="current-execute-command">
-				{{ currentExecuteCommand }}
+				{{ currentExecuteCommand }} {{ newParseRowsCount }}
 			</small>
 		</v-col>
 	</v-row>
@@ -136,6 +136,11 @@ export default {
 	props: {
 		currentExecuteCommand: {
 			type: String,
+			required: false,
+			default: null,
+		},
+		newParseRowsCount: {
+			type: Number,
 			required: false,
 			default: null,
 		},
