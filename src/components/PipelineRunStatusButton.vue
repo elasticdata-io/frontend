@@ -84,22 +84,20 @@
 				{{ $t(`pipeline.status.${status}`) }}
 			</small>
 			<small v-if="isRunning && currentExecuteCommand" class="current-execute-command">
-				{{ currentExecuteCommand }} {{ newParseRowsCount }}
+				{{ currentExecuteCommand }}
+			</small>
+			<small v-if="isRunning && newParseRowsCount" class="current-parsed-rows-count">
+				{{ newParseRowsCount }}
 			</small>
 		</v-col>
 	</v-row>
 </template>
 <script>
-import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
-import ClipLoader from 'vue-spinner/src/ClipLoader.vue';
 import PipelineStatuses from '../constants/pipeline-statuses';
 import { RUN_PIPELINE, STOP_PIPELINE } from '../store/pipeline/actions';
 
 export default {
-	components: {
-		PulseLoader,
-		ClipLoader,
-	},
+	components: {},
 	data: () => ({
 		pipelineIsRunning: PipelineStatuses.RUNNING.title,
 		pipelineIsError: PipelineStatuses.ERROR.title,
