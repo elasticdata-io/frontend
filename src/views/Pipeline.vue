@@ -169,6 +169,11 @@ export default {
 	data() {
 		return {};
 	},
+	watch: {
+		$route: {
+			handler: function(to, from) {},
+		},
+	},
 	computed: {
 		...mapGetters('pipeline', {
 			pipeline: CURRENT_PIPELINE,
@@ -227,24 +232,14 @@ export default {
 			this.$store.dispatch(`tasks/${FETCH_TASKS}`, { pipelineId: this.id });
 		},
 	},
-	async created() {
+	created() {
 		this.$store.dispatch(`pipeline/${CLEAR_PIPELINE}`);
 		this.$store.commit(`tasks/${CLEAR_TASKS}`);
-		if (this.state === 'add') {
-			this.$store.dispatch(`pipeline/${INIT_DEFAULT_PIPELINE_PROPERTIES}`);
-		}
-		if (this.state === 'edit') {
-			this.loadTasks();
-			await this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.id });
-			const pipeline = this.pipeline || {};
-			if (pipeline.id !== this.id) {
-				this.$router.replace({
-					name: 'pipeline.edit',
-					params: { state: 'edit', id: pipeline.id },
-				});
-			}
-		}
-		this.$store.commit(`pipeline/${SET_PIPELINE_ID}`, this.id);
+		this.$store.dispatch(`pipeline/${INIT_DEFAULT_PIPELINE_PROPERTIES}`, {
+			pipelineId: this.id,
+		});
+		this.loadTasks();
+		this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.id });
 	},
 	props: {
 		id: {

@@ -12,7 +12,6 @@ export default {
 	async created() {
 		const id = await this.getId();
 		if (!id) {
-			console.error(`id: ${id}`);
 			return;
 		}
 		this.$router.replace({ name: 'pipeline.edit', params: { state: 'add', id: id } });
