@@ -236,6 +236,13 @@ export default {
 		if (this.state === 'edit') {
 			this.loadTasks();
 			await this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.id });
+			const pipeline = this.pipeline || {};
+			if (pipeline.id !== this.id) {
+				this.$router.replace({
+					name: 'pipeline.edit',
+					params: { state: 'edit', id: pipeline.id },
+				});
+			}
 		}
 		this.$store.commit(`pipeline/${SET_PIPELINE_ID}`, this.id);
 	},
