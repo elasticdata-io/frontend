@@ -31,7 +31,7 @@
 					<span class="pl-2">Оплата</span>
 				</v-list-item-title>
 			</v-list-item>
-			<v-list-item :to="{ name: 'help' }">
+			<v-list-item href="//docs.elasticdata.io" target="_blank">
 				<v-list-item-title>
 					<v-icon>help</v-icon>
 					<span class="pl-2">Допомога</span>
