@@ -19,8 +19,8 @@ service:
 ingress:
   enabled: true
   host: app.elasticdata.io
-  tls: false
-  secretName: wildcard-tls-secret
+  tls: true
+  secretName: frontend-tls-secret
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
