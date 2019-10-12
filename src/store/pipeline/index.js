@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import * as moment from 'moment';
 import * as action from './actions';
 import * as mutation from './mutations';
 import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from './getters';
@@ -77,15 +76,12 @@ const actions = {
 		}
 	},
 
-	[action.INIT_DEFAULT_PIPELINE_PROPERTIES]({ commit, state }, { pipelineId }) {
+	[action.INIT_DEFAULT_PIPELINE_PROPERTIES]({ commit, state }, { id }) {
 		const currentPipeline = state.pipeline;
-		if (currentPipeline.pipelineId) {
-			return;
-		}
 		commit(mutation.SET_PIPELINE, {
-			...currentPipeline,
-			pipelineId,
+			id,
 			jsonCommands: JSON.stringify(defaultPipelineCommands, null, 4),
+			...currentPipeline,
 		});
 	},
 

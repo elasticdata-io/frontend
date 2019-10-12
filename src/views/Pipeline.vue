@@ -236,8 +236,11 @@ export default {
 		this.$store.dispatch(`pipeline/${CLEAR_PIPELINE}`);
 		this.$store.commit(`tasks/${CLEAR_TASKS}`);
 		this.$store.dispatch(`pipeline/${INIT_DEFAULT_PIPELINE_PROPERTIES}`, {
-			pipelineId: this.id,
+			id: this.id,
 		});
+		if (this.state === 'add') {
+			return;
+		}
 		this.loadTasks();
 		this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.id });
 	},
