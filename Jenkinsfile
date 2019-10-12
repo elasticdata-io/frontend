@@ -78,7 +78,6 @@ spec:
 						sh 'helm init --wait --client-only'
 					}
 					stage('helm upgrade') {
-						sh 'helm delete --purge frontend'
 						sh "helm upgrade \
                             -f install/helm/frontend/values.yaml \
                             -f install/helm/frontend/${VALUES_FILE} \
