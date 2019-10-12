@@ -119,18 +119,18 @@
 															редагувати
 														</v-list-item-title>
 													</v-list-item>
+													<v-list-item @click="clone(pipeline.id)">
+														<v-list-item-title>
+															<v-icon class="pr-2">file_copy </v-icon>
+															клонувати
+														</v-list-item-title>
+													</v-list-item>
 													<v-list-item @click="remove(pipeline.id)">
 														<v-list-item-title>
 															<v-icon class="pr-2"
 																>delete_sweep
 															</v-icon>
 															видалити
-														</v-list-item-title>
-													</v-list-item>
-													<v-list-item @click="clone(pipeline.id)">
-														<v-list-item-title>
-															<v-icon class="pr-2">file_copy </v-icon>
-															клонувати
 														</v-list-item-title>
 													</v-list-item>
 												</v-list>
