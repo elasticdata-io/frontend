@@ -84,7 +84,9 @@ export default new Vuex.Store({
 				dispatch(`pipelines/${PIPELINE_CHANGED}`, { pipeline });
 				dispatch(`pipeline/${CURRENT_PIPELINE_CHANGED}`, { pipeline });
 				const status = pipeline.status || {};
-				if (status.title === PipelineStatuses.COMPLETED.title) {
+				const isCompleted = status.title === PipelineStatuses.COMPLETED.title;
+				const isError = status.title === PipelineStatuses.ERROR.title;
+				if (isCompleted || isError) {
 					dispatch(`tasks/${FETCH_TASKS}`, { pipelineId: pipeline.id });
 				}
 			});
