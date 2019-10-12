@@ -66,7 +66,7 @@
 									class="ml-6"
 								>
 									<span v-if="!saveBtnDisabled">Зберегти</span>
-									<span v-if="saveBtnDisabled">Збереження...</span>
+									<span v-if="pipelineLoading">Збереження...</span>
 								</v-btn>
 							</v-row>
 						</v-card-actions>
