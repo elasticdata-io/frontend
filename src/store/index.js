@@ -34,6 +34,9 @@ import {
 	UPDATE_CURRENT_EXECUTE_COMMAND as PIPELINE_UPDATE_CURRENT_EXECUTE_COMMAND,
 } from './pipeline/actions';
 
+import PipelineStatuses from '../constants/pipeline-statuses';
+import { FETCH_TASKS } from './tasks/actions';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -80,6 +83,10 @@ export default new Vuex.Store({
 				const pipeline = JSON.parse(res.body);
 				dispatch(`pipelines/${PIPELINE_CHANGED}`, { pipeline });
 				dispatch(`pipeline/${CURRENT_PIPELINE_CHANGED}`, { pipeline });
+				const status = pipeline.status || {};
+				if (status.title === PipelineStatuses.COMPLETED.title) {
+					dispatch(`tasks/${FETCH_TASKS}`, { pipelineId: pipeline.id });
+				}
 			});
 		},
 		[SUBSCRIBE_PIPELINE_PARSED_LINES]({ dispatch }, { userId }) {

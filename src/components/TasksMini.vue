@@ -28,9 +28,8 @@
 								<span>Оновити список</span>
 							</v-tooltip>
 						</th>
-						<th class="text-left"></th>
+						<th class="text-left">Завершено <v-icon>sort</v-icon></th>
 						<th class="text-left">Тривалість</th>
-						<th class="text-left">Завершено</th>
 						<th class="text-left">Дії</th>
 					</tr>
 				</thead>
@@ -40,7 +39,6 @@
 						:key="task.id"
 						:class="{ 'pink--text': task.error }"
 					>
-						<td>{{ index + 1 }}</td>
 						<td>
 							<v-tooltip left>
 								<template v-slot:activator="{ on }">
@@ -58,10 +56,10 @@
 								<span>Завершено без помилок</span>
 							</v-tooltip>
 						</td>
+						<td>{{ fromNow(task.startOn) }}</td>
 						<td>
 							{{ duration(task) }}
 						</td>
-						<td>{{ fromNow(task.startOn) }}</td>
 						<td>
 							<v-menu offset-y>
 								<template v-slot:activator="{ on }">
