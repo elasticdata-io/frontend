@@ -153,7 +153,7 @@
 </template>
 <script>
 import PipelineRunStatusButton from '../components/PipelineRunStatusButton';
-import { FETCH_PIPELINES, REMOVE_PIPELINE } from '../store/pipelines/actions';
+import { CLONE_PIPELINE, FETCH_PIPELINES, REMOVE_PIPELINE } from '../store/pipelines/actions';
 import { PIPELINES, PIPELINES_LOADING } from '../store/pipelines/getters';
 import * as moment from 'moment';
 import { mapGetters } from 'vuex';
@@ -178,8 +178,15 @@ export default {
 		edit(id) {
 			this.$router.push({ name: 'pipeline.edit', params: { id } });
 		},
+		clone(id) {
+			let is = window.confirm('Продовжити клонування павука?');
+			if (!is) {
+				return;
+			}
+			this.$store.dispatch(`pipelines/${CLONE_PIPELINE}`, { id });
+		},
 		remove(id) {
-			let isDeleted = window.confirm('Do I continue deleting?');
+			let isDeleted = window.confirm('Продовжити видалення павука?');
 			if (!isDeleted) {
 				return;
 			}

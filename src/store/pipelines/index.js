@@ -128,6 +128,14 @@ const actions = {
 			currentExecuteCommand: commandName,
 		});
 	},
+
+	[action.CLONE_PIPELINE]({ dispatch }, { id }) {
+		Vue.http.post(`/api/pipeline/clone/${id}`).then(res => {
+			if (res.status) {
+				dispatch(action.FETCH_PIPELINES);
+			}
+		});
+	},
 };
 
 const getters = {
