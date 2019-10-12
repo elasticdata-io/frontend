@@ -48,7 +48,7 @@
 										error
 									</v-icon>
 								</template>
-								<span>Завершено з помилкою</span>
+								<span>{{ task.error }}</span>
 							</v-tooltip>
 
 							<v-tooltip left>
