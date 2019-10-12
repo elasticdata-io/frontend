@@ -1,6 +1,6 @@
 {{- if .Values.ingress.enabled -}}
   {{- $fullName := include "frontend.fullname" . -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ template "frontend.fullname" . }}-master
@@ -20,10 +20,10 @@ ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   rules:
     - host: {{ .Values.ingress.host }}
-  {{- if .Values.ingress.tls }}
-tls:
-  - hosts:
-      - {{ .Values.ingress.host }}
-    secretName: {{ .Values.ingress.secretName }}
-  {{- end }}
-  {{- end }}
+{{- if .Values.ingress.tls }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.host }}
+      secretName: {{ .Values.ingress.secretName }}
+{{- end }}
+{{- end }}
