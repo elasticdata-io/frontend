@@ -14,7 +14,10 @@
 				<v-list-item-content>
 					<v-list-item-title>
 						<avatar-icon :picture="user.picture"></avatar-icon>
-						<span class="pl-2">{{ user.firstName }} {{ user.lastName }}</span>
+						<span class="pl-2" v-if="!missingName"
+							>{{ user.firstName }} {{ user.lastName }}</span
+						>
+						<span class="pl-2" v-if="missingName">{{ user.login }}</span>
 					</v-list-item-title>
 				</v-list-item-content>
 			</v-list-item>
@@ -68,6 +71,9 @@ export default {
 		}),
 		visible: function() {
 			return this.loggedIn;
+		},
+		missingName: function() {
+			return !this.firstName && !this.lastName;
 		},
 	},
 	data: () => {
