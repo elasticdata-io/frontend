@@ -14,9 +14,9 @@ metadata:
     nginx.org/mergeable-ingress-type: master
     ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/issuer: letsencrypt-prod
-  {{- if (and (not (empty .Values.ingress.host)) (not (empty .Values.ingress.secretName))) }}
-ingress.kubernetes.io/ssl-redirect: "true"
-  {{- end }}
+{{- if (and (not (empty .Values.ingress.host)) (not (empty .Values.ingress.secretName))) }}
+    ingress.kubernetes.io/ssl-redirect: "true"
+{{- end }}
 spec:
   rules:
     - host: {{ .Values.ingress.host }}
