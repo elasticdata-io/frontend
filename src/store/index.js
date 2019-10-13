@@ -117,6 +117,7 @@ export default new Vuex.Store({
 					commandProperties,
 				});
 				dispatch(`pipeline/${PIPELINE_UPDATE_CURRENT_EXECUTE_COMMAND}`, {
+					pipelineId,
 					commandName,
 					commandProperties,
 				});
