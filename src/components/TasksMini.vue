@@ -68,12 +68,6 @@
 									</v-btn>
 								</template>
 								<v-list>
-									<v-list-item @click="viewLogs(task)">
-										<v-list-item-title>
-											<v-icon class="pr-2">folder_open</v-icon>
-											переглянути логи
-										</v-list-item-title>
-									</v-list-item>
 									<v-list-item
 										:href="'/api/pipeline-task/data/' + task.id"
 										target="_blank"
@@ -81,6 +75,12 @@
 										<v-list-item-title>
 											<v-icon class="pr-2">cloud_download</v-icon>
 											скачати json
+										</v-list-item-title>
+									</v-list-item>
+									<v-list-item @click="viewLogs(task)">
+										<v-list-item-title>
+											<v-icon class="pr-2">folder_open</v-icon>
+											переглянути логи
 										</v-list-item-title>
 									</v-list-item>
 								</v-list>
