@@ -110,11 +110,16 @@ export default new Vuex.Store({
 				const data = JSON.parse(res.body);
 				let pipelineId = data.pipelineId;
 				let commandName = data.commandExecutingName;
+				let commandProperties = data.commandExecutingProperties;
 				dispatch(`pipelines/${PIPELINES_UPDATE_CURRENT_EXECUTE_COMMAND}`, {
 					pipelineId,
 					commandName,
+					commandProperties,
 				});
-				dispatch(`pipeline/${PIPELINE_UPDATE_CURRENT_EXECUTE_COMMAND}`, { commandName });
+				dispatch(`pipeline/${PIPELINE_UPDATE_CURRENT_EXECUTE_COMMAND}`, {
+					commandName,
+					commandProperties,
+				});
 			});
 		},
 	},

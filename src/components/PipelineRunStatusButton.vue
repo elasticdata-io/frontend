@@ -89,6 +89,9 @@
 			<small v-if="isRunning && newParseRowsCount" class="current-parsed-rows-count">
 				{{ newParseRowsCount }}
 			</small>
+			<div>
+				<small>{{ currentExecuteCommandProperties }}</small>
+			</div>
 		</v-col>
 	</v-row>
 </template>
@@ -133,6 +136,11 @@ export default {
 	},
 	props: {
 		currentExecuteCommand: {
+			type: String,
+			required: false,
+			default: null,
+		},
+		currentExecuteCommandProperties: {
 			type: String,
 			required: false,
 			default: null,

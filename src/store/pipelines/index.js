@@ -118,7 +118,10 @@ const actions = {
 		});
 	},
 
-	[action.UPDATE_CURRENT_EXECUTE_COMMAND]({ commit, state }, { pipelineId, commandName }) {
+	[action.UPDATE_CURRENT_EXECUTE_COMMAND](
+		{ commit, state },
+		{ pipelineId, commandName, commandProperties }
+	) {
 		const findPipeline = state.pipelines.find(p => p.id === pipelineId);
 		if (!findPipeline) {
 			return;
@@ -126,6 +129,7 @@ const actions = {
 		commit(mutation.PIPELINE_CHANGE, {
 			...findPipeline,
 			currentExecuteCommand: commandName,
+			currentExecuteCommandProperties: commandProperties,
 		});
 	},
 

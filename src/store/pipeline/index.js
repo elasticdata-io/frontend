@@ -92,10 +92,11 @@ const actions = {
 		});
 	},
 
-	[action.UPDATE_CURRENT_EXECUTE_COMMAND]({ commit, state }, { commandName }) {
+	[action.UPDATE_CURRENT_EXECUTE_COMMAND]({ commit, state }, { commandName, commandProperties }) {
 		commit(mutation.SET_PIPELINE, {
 			...state.pipeline,
 			currentExecuteCommand: commandName,
+			currentExecuteCommandProperties: commandProperties,
 		});
 	},
 };

@@ -119,6 +119,9 @@
 										:status="statusTitle"
 										:pipeline-id="pipeline.id"
 										:current-execute-command="pipeline.currentExecuteCommand"
+										:current-execute-command-properties="
+											pipeline.currentExecuteCommandProperties
+										"
 										:new-parse-rows-count="pipeline.newParseRowsCount"
 										:loading="pipelineLoading"
 										:disabled="!isCreated"
