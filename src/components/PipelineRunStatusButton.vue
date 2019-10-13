@@ -87,9 +87,9 @@
 				{{ currentExecuteCommand }}
 			</small>
 			<small v-if="isRunning && newParseRowsCount" class="current-parsed-rows-count">
-				{{ newParseRowsCount }}
+				{{ newParseRowsCount }} rows
 			</small>
-			<div>
+			<div class="current-execute-command-properties">
 				<small>{{ currentExecuteCommandProperties }}</small>
 			</div>
 		</v-col>
@@ -182,5 +182,9 @@ export default {
 .current-execute-command {
 	font-weight: bold;
 	letter-spacing: 0.08em;
+}
+.current-execute-command-properties {
+	text-align: left;
+	line-height: 1em;
 }
 </style>
