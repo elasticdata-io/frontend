@@ -4,7 +4,7 @@
 			<v-col>
 				<span class="headline">Всього документів: {{ lastParseRowsCount }}</span>
 				<v-row>
-					<v-col class="pb-1">
+					<v-col class="pb-1 pt-10">
 						<v-btn block small>
 							переглянути
 							<v-icon class="ml-2">view_list</v-icon>
