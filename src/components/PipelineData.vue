@@ -3,9 +3,6 @@
 		<v-row>
 			<v-col>
 				<span class="headline">Всього документів: {{ lastParseRowsCount }}</span>
-				<p>
-					<!--                                                <pipeline-data></pipeline-data>-->
-				</p>
 				<v-row>
 					<v-col class="pb-1">
 						<v-btn block small>
@@ -20,25 +17,25 @@
 							<template v-slot:activator="{ on }">
 								<v-btn block small v-on="on">
 									завантажити
-									<v-icon class="ml-2">more_vert </v-icon>
+									<v-icon class="ml-2">more_vert</v-icon>
 								</v-btn>
 							</template>
 							<v-list>
 								<v-list-item :href="jsonLink" target="_blank">
 									<v-list-item-title>
-										<v-icon class="ml-2">get_app </v-icon>
+										<v-icon class="ml-2">get_app</v-icon>
 										json
 									</v-list-item-title>
 								</v-list-item>
 								<v-list-item :href="csvLink" target="_blank">
 									<v-list-item-title>
-										<v-icon class="ml-2">get_app </v-icon>
+										<v-icon class="ml-2">get_app</v-icon>
 										csv
 									</v-list-item-title>
 								</v-list-item>
 								<v-list-item disabled>
 									<v-list-item-title>
-										<v-icon disabled class="ml-2">get_app </v-icon>
+										<v-icon disabled class="ml-2">get_app</v-icon>
 										xls
 									</v-list-item-title>
 								</v-list-item>
@@ -52,25 +49,25 @@
 							<template v-slot:activator="{ on }">
 								<v-btn block small v-on="on">
 									Копіювати посилання
-									<v-icon class="ml-2">more_vert </v-icon>
+									<v-icon class="ml-2">more_vert</v-icon>
 								</v-btn>
 							</template>
 							<v-list>
-								<v-list-item>
+								<v-list-item @click="copyJsonLink">
 									<v-list-item-title>
-										<v-icon class="ml-2">link </v-icon>
+										<v-icon class="ml-2">link</v-icon>
 										json
 									</v-list-item-title>
 								</v-list-item>
-								<v-list-item>
+								<v-list-item @click="copyCsvLink">
 									<v-list-item-title>
-										<v-icon class="ml-2">link </v-icon>
+										<v-icon class="ml-2">link</v-icon>
 										csv
 									</v-list-item-title>
 								</v-list-item>
 								<v-list-item disabled>
 									<v-list-item-title>
-										<v-icon disabled class="ml-2">link </v-icon>
+										<v-icon disabled class="ml-2">link</v-icon>
 										xls
 									</v-list-item-title>
 								</v-list-item>
@@ -103,13 +100,30 @@
 	</v-card-text>
 </template>
 <script>
+import copy from 'copy-to-clipboard';
+import { SET_SNACK_MESSAGE } from '../store/mutations';
+
 export default {
 	computed: {
 		jsonLink: function() {
-			return `/api/pipeline/data/${this.pipelineId}`;
+			return `${location.protocol}//${location.hostname}:${location.port}/api/pipeline/data/${
+				this.pipelineId
+			}`;
 		},
 		csvLink: function() {
-			return `/api/pipeline/data/csv/${this.pipelineId}`;
+			return `${location.protocol}//${location.hostname}:${
+				location.port
+			}/api/pipeline/data/csv/${this.pipelineId}`;
+		},
+	},
+	methods: {
+		copyJsonLink() {
+			copy(this.jsonLink);
+			this.$store.commit(SET_SNACK_MESSAGE, `Посилання скопійовано в буфер обміну`);
+		},
+		copyCsvLink() {
+			copy(this.csvLink);
+			this.$store.commit(SET_SNACK_MESSAGE, `Посилання скопійовано в буфер обміну`);
 		},
 	},
 	props: {
