@@ -79,7 +79,7 @@
 									</v-list-item>
 									<v-list-item @click="viewLogs(task)">
 										<v-list-item-title>
-											<v-icon class="pr-2">folder_open</v-icon>
+											<v-icon class="pr-2">bug_report</v-icon>
 											переглянути логи
 										</v-list-item-title>
 									</v-list-item>
