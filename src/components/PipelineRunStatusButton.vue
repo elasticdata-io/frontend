@@ -87,7 +87,7 @@
 				{{ currentExecuteCommand }}
 			</small>
 			<small v-if="isRunning && newParseRowsCount" class="current-parsed-rows-count">
-				{{ newParseRowsCount }} rows
+				{{ newParseRowsCount }} docs
 			</small>
 			<div class="current-execute-command-properties">
 				<small>{{ currentExecuteCommandProperties }}</small>
