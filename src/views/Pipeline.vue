@@ -144,7 +144,13 @@
 															</v-btn>
 														</template>
 														<v-list>
-															<v-list-item>
+															<v-list-item
+																:href="
+																	'/api/pipeline/data/' +
+																		pipeline.id
+																"
+																target="_blank"
+															>
 																<v-list-item-title>
 																	<v-icon class="ml-2"
 																		>get_app</v-icon
@@ -152,7 +158,13 @@
 																	json
 																</v-list-item-title>
 															</v-list-item>
-															<v-list-item>
+															<v-list-item
+																:href="
+																	'/api/pipeline/data/csv/' +
+																		pipeline.id
+																"
+																target="_blank"
+															>
 																<v-list-item-title>
 																	<v-icon class="ml-2"
 																		>get_app</v-icon
