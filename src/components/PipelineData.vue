@@ -5,23 +5,13 @@
 				<span class="headline">Всього документів: {{ lastParseRowsCount }}</span>
 				<v-row>
 					<v-col class="pb-1 pt-10">
-						<v-btn
-							block
-							small
-							:to="{ name: 'pipeline.data-view', params: $route.params }"
-						>
-							переглянути
-							<v-icon class="ml-2">view_list</v-icon>
+						<v-btn icon :to="{ name: 'pipeline.data-view', params: $route.params }">
+							<v-icon>view_list</v-icon>
 						</v-btn>
-					</v-col>
-				</v-row>
-				<v-row>
-					<v-col class="pb-1">
-						<v-menu offset-y>
+						<v-menu offset-y class="ml-4">
 							<template v-slot:activator="{ on }">
-								<v-btn block small v-on="on">
-									завантажити
-									<v-icon class="ml-2">more_vert</v-icon>
+								<v-btn v-on="on" icon>
+									<v-icon>get_app</v-icon>
 								</v-btn>
 							</template>
 							<v-list>
@@ -45,15 +35,10 @@
 								</v-list-item>
 							</v-list>
 						</v-menu>
-					</v-col>
-				</v-row>
-				<v-row>
-					<v-col>
-						<v-menu offset-y>
+						<v-menu offset-y class="ml-4">
 							<template v-slot:activator="{ on }">
-								<v-btn block small v-on="on">
-									Копіювати посилання
-									<v-icon class="ml-2">more_vert</v-icon>
+								<v-btn icon v-on="on">
+									<v-icon>link</v-icon>
 								</v-btn>
 							</template>
 							<v-list>
