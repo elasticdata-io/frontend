@@ -25,6 +25,7 @@
 						</v-card-title>
 						<v-card-text>
 							<v-data-table
+								height="60vh"
 								:headers="headers"
 								:items="items"
 								:items-per-page="10"
