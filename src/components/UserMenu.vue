@@ -28,6 +28,12 @@
 					<span class="pl-2">Павуки</span>
 				</v-list-item-title>
 			</v-list-item>
+			<v-list-item :to="{ name: 'analytics' }">
+				<v-list-item-title>
+					<v-icon>equalizer</v-icon>
+					<span class="pl-2">Аналітика</span>
+				</v-list-item-title>
+			</v-list-item>
 			<v-list-item :to="{ name: 'payment' }">
 				<v-list-item-title>
 					<v-icon>payment</v-icon>

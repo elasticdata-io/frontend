@@ -72,39 +72,113 @@
 						</v-card-actions>
 					</v-card>
 				</v-col>
-				<v-col>
-					<v-card>
-						<v-card-title>Інструкції павука</v-card-title>
-						<v-divider></v-divider>
-						<v-card-text>
-							<v-row v-if="pipeline.modifiedOn">
-								<v-col>
-									В останнє зміни збережено:
-									<strong>{{ fromNow(pipeline.modifiedOn) }}</strong>
-								</v-col>
-							</v-row>
-							<v-row>
-								<v-col>
-									<pipeline-json-editor
-										:json="pipeline.jsonCommands"
-										:title="pipeline.key"
-										@save="saveJsonCommands"
-										:disabled="!hasName"
-									></pipeline-json-editor>
-								</v-col>
-							</v-row>
-							<v-row>
-								<v-col>
-									<pipeline-yaml-editor
-										:json="pipeline.jsonCommands"
-										:title="pipeline.key"
-										@save="saveJsonCommands"
-										:disabled="!hasName"
-									></pipeline-yaml-editor>
-								</v-col>
-							</v-row>
-						</v-card-text>
-					</v-card>
+				<v-col class="pt-0">
+					<v-row>
+						<v-col>
+							<v-card>
+								<v-card-title>Інструкції павука</v-card-title>
+								<v-divider></v-divider>
+								<v-card-text>
+									<v-row v-if="pipeline.modifiedOn">
+										<v-col>
+											В останнє зміни збережено:
+											<strong>{{ fromNow(pipeline.modifiedOn) }}</strong>
+										</v-col>
+									</v-row>
+									<v-row>
+										<v-col>
+											<pipeline-json-editor
+												:json="pipeline.jsonCommands"
+												:title="pipeline.key"
+												@save="saveJsonCommands"
+												:disabled="!hasName"
+											></pipeline-json-editor>
+										</v-col>
+									</v-row>
+									<v-row>
+										<v-col>
+											<pipeline-yaml-editor
+												:json="pipeline.jsonCommands"
+												:title="pipeline.key"
+												@save="saveJsonCommands"
+												:disabled="!hasName"
+											></pipeline-yaml-editor>
+										</v-col>
+									</v-row>
+								</v-card-text>
+							</v-card>
+						</v-col>
+					</v-row>
+					<v-row>
+						<v-col>
+							<v-card>
+								<v-card-title>Дані</v-card-title>
+								<v-divider></v-divider>
+								<v-card-text>
+									<v-row>
+										<v-col>
+											<span class="headline">Всього документів: 123K</span>
+											<p>
+												<!--                                                <pipeline-data></pipeline-data>-->
+											</p>
+											<v-row>
+												<v-col>
+													<v-btn block small>
+														переглянути
+														<v-icon class="ml-2">view_list</v-icon>
+													</v-btn>
+												</v-col>
+											</v-row>
+											<v-row>
+												<v-col>
+													<v-btn block small>
+														завантажити
+														<v-icon class="ml-2">get_app</v-icon>
+													</v-btn>
+												</v-col>
+											</v-row>
+											<v-row>
+												<v-col>
+													<v-btn block small>
+														Копіювати посилання
+														<v-icon class="ml-2">link</v-icon>
+													</v-btn>
+												</v-col>
+											</v-row>
+											<v-row>
+												<v-col>
+													<v-badge
+														style="width: 100%"
+														color="purple"
+														right
+														overlap
+													>
+														<template v-slot:badge>
+															<v-tooltip bottom>
+																<template v-slot:activator="{ on }">
+																	<v-icon dark v-on="on">
+																		attach_money
+																	</v-icon>
+																</template>
+																<span
+																	>Доступно в платній
+																	підписці</span
+																>
+															</v-tooltip>
+														</template>
+														<v-btn block small disabled>
+															Аналітика даних
+															<v-icon class="ml-2">equalizer</v-icon>
+														</v-btn>
+													</v-badge>
+												</v-col>
+											</v-row>
+										</v-col>
+									</v-row>
+								</v-card-text>
+							</v-card>
+						</v-col>
+					</v-row>
 				</v-col>
 				<v-col>
 					<v-card>
@@ -158,7 +232,6 @@ import {
 import { mapGetters } from 'vuex';
 import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from '../store/pipeline/getters';
 import { SET_SNACK_MESSAGE } from '../store/mutations';
-import { SET_PIPELINE_ID } from '../store/pipeline/mutations';
 import PipelineJsonEditor from '../components/PipelineJsonEditor';
 import PipelineYamlEditor from '../components/PipelineYamlEditor';
 import PipelineRunStatusButton from '../components/PipelineRunStatusButton';
@@ -166,9 +239,16 @@ import TasksMini from '../components/TasksMini';
 import { FETCH_TASKS } from '../store/tasks/actions';
 import { TASKS } from '../store/tasks/getters';
 import { CLEAR_TASKS } from '../store/tasks/mutations';
+import PipelineData from '../components/PipelineData';
 
 export default {
-	components: { PipelineJsonEditor, PipelineYamlEditor, PipelineRunStatusButton, TasksMini },
+	components: {
+		PipelineJsonEditor,
+		PipelineYamlEditor,
+		PipelineRunStatusButton,
+		TasksMini,
+		PipelineData,
+	},
 	data() {
 		return {};
 	},
