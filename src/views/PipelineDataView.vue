@@ -4,7 +4,7 @@
 			<v-row>
 				<v-col>
 					<v-btn :to="{ name: 'pipeline.edit', params: { id: id, state: 'edit' } }">
-						<v-icon>keyboard_backspace</v-icon>
+						<v-icon class="mr-2">keyboard_backspace</v-icon>
 						назад до павука
 					</v-btn>
 				</v-col>
