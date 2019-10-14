@@ -73,7 +73,7 @@ export default {
 			columns = [...new Set(columns)].map(x => {
 				return {
 					value: x,
-					text: x,
+					text: x.toUpperCase(),
 					sortable: true,
 				};
 			});
