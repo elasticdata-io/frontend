@@ -69,6 +69,10 @@ const router = new Router({
 			path: '/account',
 		},
 		{
+			name: 'analytics',
+			path: '/analytics',
+		},
+		{
 			name: 'default',
 			path: '*',
 			redirect: '/',
