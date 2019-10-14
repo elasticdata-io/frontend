@@ -1,9 +1,8 @@
 <template>
-	<v-card-text>
+	<v-card-text class="pt-1">
 		<v-row>
-			<v-col>
-				<span class="headline">Всього документів: {{ lastParseRowsCount }}</span>
-				<v-row class="pb-1 pt-10">
+			<v-col class="pt-0">
+				<v-row>
 					<v-col xl="6" lg="6" md="12" sm="12" xs="12">
 						<v-btn
 							class="mr-4"
@@ -14,7 +13,7 @@
 								<template v-slot:activator="{ on }">
 									<v-icon v-on="on">view_list</v-icon>
 								</template>
-								<span>Переглянути</span>
+								<span>Переглянути документи</span>
 							</v-tooltip>
 						</v-btn>
 						<v-menu offset-y>
@@ -24,7 +23,7 @@
 										<template v-slot:activator="{ on }">
 											<v-icon v-on="on">get_app</v-icon>
 										</template>
-										<span>Завантажити</span>
+										<span>Завантажити документи</span>
 									</v-tooltip>
 								</v-btn>
 							</template>
@@ -56,7 +55,7 @@
 										<template v-slot:activator="{ on }">
 											<v-icon v-on="on">link</v-icon>
 										</template>
-										<span>Копіювати посилання</span>
+										<span>Копіювати посилання на документи</span>
 									</v-tooltip>
 								</v-btn>
 							</template>
@@ -101,8 +100,11 @@
 						</v-badge>
 					</v-col>
 				</v-row>
+				<v-divider></v-divider>
 				<v-row>
-					<v-col> </v-col>
+					<v-col>
+						<span class="headline">Всього документів: {{ lastParseRowsCount }}</span>
+					</v-col>
 				</v-row>
 			</v-col>
 		</v-row>

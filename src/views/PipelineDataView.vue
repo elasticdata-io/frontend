@@ -3,7 +3,10 @@
 		<v-container>
 			<v-row>
 				<v-col>
-					<v-btn :to="{ name: 'pipeline.edit', params: { id: id, state: 'edit' } }">
+					<v-btn
+						elevation="1"
+						:to="{ name: 'pipeline.edit', params: { id: id, state: 'edit' } }"
+					>
 						<v-icon class="mr-2">keyboard_backspace</v-icon>
 						назад до {{ pipeline.key }}
 					</v-btn>
