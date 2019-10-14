@@ -117,7 +117,10 @@
 								<v-card-text>
 									<v-row>
 										<v-col>
-											<span class="headline">Всього документів: 123K</span>
+											<span class="headline"
+												>Всього документів:
+												{{ pipeline.lastParseRowsCount }}</span
+											>
 											<p>
 												<!--                                                <pipeline-data></pipeline-data>-->
 											</p>
@@ -167,7 +170,7 @@
 															</v-tooltip>
 														</template>
 														<v-btn block small disabled>
-															Аналітика даних
+															Аналітика
 															<v-icon class="ml-2">equalizer</v-icon>
 														</v-btn>
 													</v-badge>
