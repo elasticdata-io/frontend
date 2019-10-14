@@ -134,18 +134,82 @@
 											</v-row>
 											<v-row>
 												<v-col>
-													<v-btn block small>
-														завантажити
-														<v-icon class="ml-2">get_app</v-icon>
-													</v-btn>
+													<v-menu offset-y>
+														<template v-slot:activator="{ on }">
+															<v-btn block small v-on="on">
+																завантажити
+																<v-icon class="ml-2"
+																	>more_vert</v-icon
+																>
+															</v-btn>
+														</template>
+														<v-list>
+															<v-list-item>
+																<v-list-item-title>
+																	<v-icon class="ml-2"
+																		>get_app</v-icon
+																	>
+																	json
+																</v-list-item-title>
+															</v-list-item>
+															<v-list-item>
+																<v-list-item-title>
+																	<v-icon class="ml-2"
+																		>get_app</v-icon
+																	>
+																	csv
+																</v-list-item-title>
+															</v-list-item>
+															<v-list-item>
+																<v-list-item-title>
+																	<v-icon class="ml-2"
+																		>get_app</v-icon
+																	>
+																	xls
+																</v-list-item-title>
+															</v-list-item>
+														</v-list>
+													</v-menu>
 												</v-col>
 											</v-row>
 											<v-row>
 												<v-col>
-													<v-btn block small>
-														Копіювати посилання
-														<v-icon class="ml-2">link</v-icon>
-													</v-btn>
+													<v-menu offset-y>
+														<template v-slot:activator="{ on }">
+															<v-btn block small v-on="on">
+																Копіювати посилання
+																<v-icon class="ml-2"
+																	>more_vert</v-icon
+																>
+															</v-btn>
+														</template>
+														<v-list>
+															<v-list-item>
+																<v-list-item-title>
+																	<v-icon class="ml-2"
+																		>link</v-icon
+																	>
+																	json
+																</v-list-item-title>
+															</v-list-item>
+															<v-list-item>
+																<v-list-item-title>
+																	<v-icon class="ml-2"
+																		>link</v-icon
+																	>
+																	csv
+																</v-list-item-title>
+															</v-list-item>
+															<v-list-item>
+																<v-list-item-title>
+																	<v-icon class="ml-2"
+																		>link</v-icon
+																	>
+																	xls
+																</v-list-item-title>
+															</v-list-item>
+														</v-list>
+													</v-menu>
 												</v-col>
 											</v-row>
 											<v-row>
