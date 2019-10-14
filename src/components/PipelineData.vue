@@ -6,12 +6,22 @@
 				<v-row>
 					<v-col class="pb-1 pt-10">
 						<v-btn icon :to="{ name: 'pipeline.data-view', params: $route.params }">
-							<v-icon>view_list</v-icon>
+							<v-tooltip bottom>
+								<template v-slot:activator="{ on }">
+									<v-icon v-on="on">view_list</v-icon>
+								</template>
+								<span>Переглянути</span>
+							</v-tooltip>
 						</v-btn>
 						<v-menu offset-y class="ml-4">
 							<template v-slot:activator="{ on }">
 								<v-btn v-on="on" icon>
-									<v-icon>get_app</v-icon>
+									<v-tooltip bottom>
+										<template v-slot:activator="{ on }">
+											<v-icon v-on="on">get_app</v-icon>
+										</template>
+										<span>Завантажити</span>
+									</v-tooltip>
 								</v-btn>
 							</template>
 							<v-list>
@@ -38,7 +48,12 @@
 						<v-menu offset-y class="ml-4">
 							<template v-slot:activator="{ on }">
 								<v-btn icon v-on="on">
-									<v-icon>link</v-icon>
+									<v-tooltip bottom>
+										<template v-slot:activator="{ on }">
+											<v-icon v-on="on">link</v-icon>
+										</template>
+										<span>Копіювати посилання</span>
+									</v-tooltip>
 								</v-btn>
 							</template>
 							<v-list>
