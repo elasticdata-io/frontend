@@ -1,12 +1,13 @@
 import Vue from 'vue';
 import * as action from './actions';
 import * as mutation from './mutations';
-import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from './getters';
+import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING, CURRENT_PIPELINE_LAST_DATA } from './getters';
 import defaultPipelineCommands from '../defaultPipelineCommands';
 import { PIPELINE_CHANGED } from '../pipelines/actions';
 
 const state = {
 	pipeline: {},
+	lastData: [],
 	loading: false,
 };
 
@@ -21,6 +22,10 @@ const mutations = {
 
 	[mutation.SET_PIPELINE_LOADING](state, loading) {
 		Vue.set(state, 'loading', loading);
+	},
+
+	[mutation.SET_PIPELINE_LAST_DATA](state, lastData) {
+		Vue.set(state, 'lastData', lastData);
 	},
 };
 
@@ -46,6 +51,12 @@ const actions = {
 		Vue.http.get(`/api/pipeline/${id}`).then(res => {
 			commit(mutation.SET_PIPELINE, res.body);
 			commit(mutation.SET_PIPELINE_LOADING, false);
+		});
+	},
+
+	[action.FETCH_PIPELINE_LAST_DATA]({ commit }, { id }) {
+		Vue.http.get(`/api/pipeline/data/${id}`).then(res => {
+			commit(mutation.SET_PIPELINE_LAST_DATA, res.body);
 		});
 	},
 
@@ -110,6 +121,7 @@ const actions = {
 const getters = {
 	[CURRENT_PIPELINE_LOADING]: state => state.loading,
 	[CURRENT_PIPELINE]: state => state.pipeline,
+	[CURRENT_PIPELINE_LAST_DATA]: state => state.lastData,
 };
 
 export default {

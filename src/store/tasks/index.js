@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import * as action from './actions';
 import * as mutation from './mutations';
-import { TASK_BY_ID, TASKS } from './getters';
+import { TASK_BY_ID, TASKS, LAST_TASK } from './getters';
 
 const state = {
 	tasks: [],
@@ -35,6 +35,10 @@ const actions = {
 const getters = {
 	[TASK_BY_ID]: state => taskId => state.tasks.find(t => t.id === taskId),
 	[TASKS]: state => state.tasks,
+	[LAST_TASK]: state => {
+		const tasks = state.tasks;
+		return tasks.sort((a, b) => a.endOn > b.endOn).find(a => a);
+	},
 };
 
 export default {

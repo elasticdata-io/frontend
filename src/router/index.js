@@ -6,7 +6,7 @@ import Pipeline from '../views/Pipeline.vue';
 import PipelineAddRedirect from '../views/PipelineAddRedirect.vue';
 import Exit from '../views/Exit';
 import Enter from '../views/Enter';
-import PipelineTaskLogs from '../components/PipelineTaskLogs';
+import PipelineDataView from '../views/PipelineDataView';
 
 Vue.use(Router);
 
@@ -52,6 +52,16 @@ const router = new Router({
 				const state = route.params.state || 'edit';
 				return {
 					state: state,
+					id: route.params.id,
+				};
+			},
+		},
+		{
+			name: 'pipeline.data-view',
+			path: '/data/view/:id',
+			component: PipelineDataView,
+			props: route => {
+				return {
 					id: route.params.id,
 				};
 			},

@@ -5,7 +5,11 @@
 				<span class="headline">Всього документів: {{ lastParseRowsCount }}</span>
 				<v-row>
 					<v-col class="pb-1 pt-10">
-						<v-btn block small>
+						<v-btn
+							block
+							small
+							:to="{ name: 'pipeline.data-view', params: $route.params }"
+						>
 							переглянути
 							<v-icon class="ml-2">view_list</v-icon>
 						</v-btn>
