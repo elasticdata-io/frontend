@@ -112,7 +112,7 @@
 					<v-row>
 						<v-col>
 							<v-card>
-								<v-card-title>Дані</v-card-title>
+								<v-card-title>Поточні дані</v-card-title>
 								<v-divider></v-divider>
 								<pipeline-data
 									:pipeline-id="pipeline.id"
