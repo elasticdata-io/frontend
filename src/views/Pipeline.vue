@@ -125,7 +125,7 @@
 												<!--                                                <pipeline-data></pipeline-data>-->
 											</p>
 											<v-row>
-												<v-col>
+												<v-col class="pb-1">
 													<v-btn block small>
 														переглянути
 														<v-icon class="ml-2">view_list</v-icon>
@@ -133,7 +133,7 @@
 												</v-col>
 											</v-row>
 											<v-row>
-												<v-col>
+												<v-col class="pb-1">
 													<v-menu offset-y>
 														<template v-slot:activator="{ on }">
 															<v-btn block small v-on="on">
