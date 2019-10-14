@@ -73,7 +73,7 @@
 										target="_blank"
 									>
 										<v-list-item-title>
-											<v-icon class="pr-2">cloud_download</v-icon>
+											<v-icon class="pr-2">get_app</v-icon>
 											скачати json
 										</v-list-item-title>
 									</v-list-item>

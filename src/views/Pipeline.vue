@@ -160,9 +160,9 @@
 																	csv
 																</v-list-item-title>
 															</v-list-item>
-															<v-list-item>
+															<v-list-item disabled>
 																<v-list-item-title>
-																	<v-icon class="ml-2"
+																	<v-icon disabled class="ml-2"
 																		>get_app</v-icon
 																	>
 																	xls
@@ -200,9 +200,9 @@
 																	csv
 																</v-list-item-title>
 															</v-list-item>
-															<v-list-item>
+															<v-list-item disabled>
 																<v-list-item-title>
-																	<v-icon class="ml-2"
+																	<v-icon disabled class="ml-2"
 																		>link</v-icon
 																	>
 																	xls
