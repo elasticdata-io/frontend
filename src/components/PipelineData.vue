@@ -3,9 +3,13 @@
 		<v-row>
 			<v-col>
 				<span class="headline">Всього документів: {{ lastParseRowsCount }}</span>
-				<v-row>
-					<v-col class="pb-1 pt-10">
-						<v-btn icon :to="{ name: 'pipeline.data-view', params: $route.params }">
+				<v-row class="pb-1 pt-10">
+					<v-col xl="6" lg="6" md="12" sm="12" xs="12">
+						<v-btn
+							class="mr-4"
+							icon
+							:to="{ name: 'pipeline.data-view', params: $route.params }"
+						>
 							<v-tooltip bottom>
 								<template v-slot:activator="{ on }">
 									<v-icon v-on="on">view_list</v-icon>
@@ -13,9 +17,9 @@
 								<span>Переглянути</span>
 							</v-tooltip>
 						</v-btn>
-						<v-menu offset-y class="ml-4">
+						<v-menu offset-y>
 							<template v-slot:activator="{ on }">
-								<v-btn v-on="on" icon>
+								<v-btn class="mr-4" v-on="on" icon>
 									<v-tooltip bottom>
 										<template v-slot:activator="{ on }">
 											<v-icon v-on="on">get_app</v-icon>
@@ -45,7 +49,7 @@
 								</v-list-item>
 							</v-list>
 						</v-menu>
-						<v-menu offset-y class="ml-4">
+						<v-menu offset-y>
 							<template v-slot:activator="{ on }">
 								<v-btn icon v-on="on">
 									<v-tooltip bottom>
@@ -78,10 +82,8 @@
 							</v-list>
 						</v-menu>
 					</v-col>
-				</v-row>
-				<v-row>
-					<v-col>
-						<v-badge style="width: 100%" color="purple" right overlap>
+					<v-col xl="6" lg="6" md="12" sm="12" xs="12">
+						<v-badge color="purple" right overlap style="width: 100%;">
 							<template v-slot:badge>
 								<v-tooltip bottom>
 									<template v-slot:activator="{ on }">
@@ -98,6 +100,9 @@
 							</v-btn>
 						</v-badge>
 					</v-col>
+				</v-row>
+				<v-row>
+					<v-col> </v-col>
 				</v-row>
 			</v-col>
 		</v-row>
