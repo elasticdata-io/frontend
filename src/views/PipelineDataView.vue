@@ -34,7 +34,7 @@
 								:items="items"
 								:items-per-page="10"
 								:search="search"
-								class="elevation-1"
+								class="elevation-1 data-view"
 							></v-data-table>
 						</v-card-text>
 						<v-card-actions>
@@ -105,3 +105,10 @@ export default {
 	},
 };
 </script>
+<style lang="less">
+.data-view {
+	&.v-data-table td {
+		font-size: 10px;
+	}
+}
+</style>
