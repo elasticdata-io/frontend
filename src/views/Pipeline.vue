@@ -78,14 +78,18 @@
 										>
 									</v-tooltip>
 								</v-checkbox>
-								<v-btn depressed small color="grey darken-1" dark>
-									<v-icon class="pr-2">low_priority</v-icon>
-									налаштувати залежності
-								</v-btn>
-								<v-btn depressed small color="grey darken-1" dark class="mt-4">
-									<v-icon class="pr-2">timer</v-icon>
-									розклад запуску
-								</v-btn>
+								<div>
+									<v-btn depressed small color="grey darken-1" dark>
+										<v-icon class="pr-2">low_priority</v-icon>
+										налаштувати залежності
+									</v-btn>
+								</div>
+								<div>
+									<v-btn depressed small color="grey darken-1" dark class="mt-4">
+										<v-icon class="pr-2">timer</v-icon>
+										розклад запуску
+									</v-btn>
+								</div>
 							</div>
 							<div v-if="viewAdditional">
 								<v-btn
