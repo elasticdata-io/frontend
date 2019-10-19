@@ -45,6 +45,7 @@
 							</v-btn>
 							<div v-if="viewAdditional">
 								<v-checkbox
+									v-if="false"
 									class="hide-v-messages"
 									v-model="pipeline.isDebugMode"
 									label="Режим розробника"
@@ -79,11 +80,11 @@
 								</v-checkbox>
 								<v-btn depressed small color="grey darken-1" dark>
 									<v-icon class="pr-2">low_priority</v-icon>
-									вказати залежності
+									налаштувати залежності
 								</v-btn>
 								<v-btn depressed small color="grey darken-1" dark class="mt-4">
 									<v-icon class="pr-2">timer</v-icon>
-									періодичніть запуску
+									розклад запуску
 								</v-btn>
 							</div>
 							<div v-if="viewAdditional">
@@ -310,6 +311,7 @@ export default {
 		this.$store.commit(`tasks/${CLEAR_TASKS}`);
 		this.$store.dispatch(`pipeline/${INIT_DEFAULT_PIPELINE_PROPERTIES}`, {
 			id: this.id,
+			isDebugMode: true,
 		});
 		if (this.state === 'add') {
 			return;

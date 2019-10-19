@@ -87,10 +87,10 @@ const actions = {
 		}
 	},
 
-	[action.INIT_DEFAULT_PIPELINE_PROPERTIES]({ commit, state }, { id }) {
+	[action.INIT_DEFAULT_PIPELINE_PROPERTIES]({ commit, state }, props) {
 		const currentPipeline = state.pipeline;
 		commit(mutation.SET_PIPELINE, {
-			id,
+			...props,
 			jsonCommands: JSON.stringify(defaultPipelineCommands, null, 4),
 			...currentPipeline,
 		});
