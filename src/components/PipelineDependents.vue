@@ -139,27 +139,19 @@ export default {
 		timeMeasurement: [
 			{
 				title: 'секунда',
-				id: 'sec',
+				id: 's',
 			},
 			{
 				title: 'хвилина',
-				id: 'min',
+				id: 'm',
 			},
 			{
 				title: 'година',
-				id: 'hour',
+				id: 'h',
 			},
 			{
 				title: 'день',
-				id: 'day',
-			},
-			{
-				title: 'неділя',
-				id: 'week',
-			},
-			{
-				title: 'місяць',
-				id: 'month',
+				id: 'd',
 			},
 		],
 	}),
