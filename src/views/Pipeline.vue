@@ -80,11 +80,13 @@
 								</v-checkbox>
 								<div>
 									<pipeline-dependents
+										:disabled="!pipeline.key"
 										:id="pipeline.id"
 										:title="pipeline.key"
 										:dependencies="dependencies"
 										@add="onAddDependency"
 										@remove="onRemoveDependency"
+										@save="onSaveDependency"
 									></pipeline-dependents>
 								</div>
 								<div>
@@ -296,7 +298,7 @@ export default {
 			this.savePipeline();
 		},
 		async savePipeline() {
-			this.$store
+			return this.$store
 				.dispatch(`pipeline/${SAVE_PIPELINE}`)
 				.then(success => {
 					this.$store.commit(SET_SNACK_MESSAGE, success);
@@ -333,6 +335,9 @@ export default {
 		},
 		onRemoveDependency(pipelineId) {
 			this.dependencies = this.dependencies.filter(x => x.pipelineId !== pipelineId);
+		},
+		async onSaveDependency() {
+			return this.savePipeline();
 		},
 	},
 	created() {

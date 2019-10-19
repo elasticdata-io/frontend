@@ -2,7 +2,14 @@
 	<div>
 		<v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
 			<template v-slot:activator="{ on }">
-				<v-btn v-on="on" depressed small color="grey darken-1" dark>
+				<v-btn
+					v-on="on"
+					depressed
+					small
+					color="grey darken-1"
+					:dark="!disabled"
+					:disabled="disabled"
+				>
 					<v-icon class="pr-2">low_priority</v-icon>
 					налаштувати залежності (<span>{{ dependencies.length }}</span
 					>)
@@ -14,9 +21,9 @@
 					<v-toolbar-title>{{ title }}: налаштування залежностей</v-toolbar-title>
 					<v-spacer></v-spacer>
 					<v-toolbar-items>
-						<v-btn dark text @click="dialog = false">
-							<v-icon class="pr-2">close</v-icon>
-							закрити
+						<v-btn dark text @click="saveAndClose">
+							<v-icon class="pr-2">save</v-icon>
+							зберети і закрити
 						</v-btn>
 					</v-toolbar-items>
 				</v-toolbar>
@@ -31,8 +38,8 @@
 					</v-row>
 					<v-list color="grey lighten-3">
 						<v-subheader v-if="dependencies.length"
-							>Залежить від наступних павуків:</v-subheader
-						>
+							>Залежить від наступних павуків:
+						</v-subheader>
 						<v-list-item
 							v-for="dependency in dependencies"
 							:key="dependency.pipelineId"
@@ -192,6 +199,10 @@ export default {
 			const pipeline = this.pipelines.find(p => p.id === pipelineId) || {};
 			return pipeline.key;
 		},
+		async saveAndClose() {
+			await this.$emit('save');
+			this.dialog = false;
+		},
 	},
 	created() {
 		this.$store.dispatch(`pipelines/${FETCH_PIPELINES}`);
@@ -208,6 +219,10 @@ export default {
 		dependencies: {
 			type: Array,
 			default: () => [],
+		},
+		disabled: {
+			type: Boolean,
+			default: false,
 		},
 	},
 };
