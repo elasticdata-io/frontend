@@ -177,7 +177,7 @@ export default {
 				pipelineId: this.pipelineId,
 				dataFreshnessInterval:
 					this.enableDataFreshControl && this.dataFresh > 0
-						? `${this.dataFresh} ${this.selectedTimeMeasurement}`
+						? `${this.dataFresh}${this.selectedTimeMeasurement}`
 						: null,
 			});
 			this.resetAddControls();
