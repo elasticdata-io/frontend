@@ -73,34 +73,36 @@
 								item-value="id"
 								label="Додати залежність від павука"
 							></v-select>
-							<v-sheet color="grey lighten-3" width="100%">
-								<v-switch
-									v-model="enableDataFreshControl"
-									flat
-									label="Запускати тільки якщо данні в середині павука, старші за:"
-								></v-switch>
-							</v-sheet>
-							<v-row>
-								<v-col class="pt-0">
-									<v-text-field
-										v-model="dataFresh"
-										type="number"
-										:disabled="!enableDataFreshControl"
-										:label="selectedTimeMeasurement || `Введіть значення`"
-										prepend-icon="access_time"
-									></v-text-field>
-								</v-col>
-								<v-col class="pt-0">
-									<v-select
-										:disabled="!enableDataFreshControl"
-										v-model="selectedTimeMeasurement"
-										:items="timeMeasurement"
-										item-text="title"
-										item-value="id"
-										label="Вимір часу"
-									></v-select>
-								</v-col>
-							</v-row>
+							<div v-if="pipelineId">
+								<v-sheet color="grey lighten-3" width="100%">
+									<v-switch
+										v-model="enableDataFreshControl"
+										flat
+										label="Запускати тільки якщо данні в середині павука, старші за:"
+									></v-switch>
+								</v-sheet>
+								<v-row>
+									<v-col class="pt-0">
+										<v-text-field
+											v-model="dataFresh"
+											type="number"
+											:disabled="!enableDataFreshControl"
+											:label="selectedTimeMeasurement || `Введіть значення`"
+											prepend-icon="access_time"
+										></v-text-field>
+									</v-col>
+									<v-col class="pt-0">
+										<v-select
+											:disabled="!enableDataFreshControl"
+											v-model="selectedTimeMeasurement"
+											:items="timeMeasurement"
+											item-text="title"
+											item-value="id"
+											label="Вимір часу"
+										></v-select>
+									</v-col>
+								</v-row>
+							</div>
 							<v-row>
 								<v-col class="text-right">
 									<v-btn
