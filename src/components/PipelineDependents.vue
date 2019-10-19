@@ -4,7 +4,8 @@
 			<template v-slot:activator="{ on }">
 				<v-btn v-on="on" depressed small color="grey darken-1" dark>
 					<v-icon class="pr-2">low_priority</v-icon>
-					налаштувати залежності
+					налаштувати залежності (<span>{{ dependencies.length }}</span
+					>)
 				</v-btn>
 			</template>
 
