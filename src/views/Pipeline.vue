@@ -19,32 +19,11 @@
 								:counter="500"
 								label="Опис"
 							></v-textarea>
-							<v-checkbox v-model="pipeline.isDebugMode" label="Режим розробника">
-								<v-tooltip top slot="append">
-									<template v-slot:activator="{ on }">
-										<v-icon small v-on="on" color="grey lighten-1">help</v-icon>
-									</template>
-									<span
-										>Якщо увімкнено - будуть доступні логи після
-										завершення</span
-									>
-								</v-tooltip>
-							</v-checkbox>
 							<v-checkbox
-								v-model="pipeline.isTakeScreenshot"
-								label="Зберігати скріншоти"
+								class="hide-v-messages"
+								v-model="pipeline.needProxy"
+								label="Змінювати ip адресу"
 							>
-								<v-tooltip top slot="append">
-									<template v-slot:activator="{ on }">
-										<v-icon small v-on="on" color="grey lighten-1">help</v-icon>
-									</template>
-									<span
-										>Якщо увімкнено - для кожної команди зберігаєтся скріншот,
-										значно сповільнює роботу павука</span
-									>
-								</v-tooltip>
-							</v-checkbox>
-							<v-checkbox v-model="pipeline.needProxy" label="Змінювати ip адресу">
 								<v-tooltip top slot="append">
 									<template v-slot:activator="{ on }">
 										<v-icon small v-on="on" color="grey lighten-1">help</v-icon>
@@ -54,6 +33,71 @@
 									>
 								</v-tooltip>
 							</v-checkbox>
+							<v-btn
+								small
+								class="expand-more"
+								depressed
+								v-if="!viewAdditional"
+								@click="viewAdditional = true"
+							>
+								<v-icon class="pr-2">expand_more</v-icon>
+								ще
+							</v-btn>
+							<div v-if="viewAdditional">
+								<v-checkbox
+									class="hide-v-messages"
+									v-model="pipeline.isDebugMode"
+									label="Режим розробника"
+								>
+									<v-tooltip top slot="append">
+										<template v-slot:activator="{ on }">
+											<v-icon small v-on="on" color="grey lighten-1"
+												>help</v-icon
+											>
+										</template>
+										<span
+											>Якщо увімкнено - будуть доступні логи після
+											завершення</span
+										>
+									</v-tooltip>
+								</v-checkbox>
+								<v-checkbox
+									v-model="pipeline.isTakeScreenshot"
+									label="Зберігати скріншоти"
+								>
+									<v-tooltip top slot="append">
+										<template v-slot:activator="{ on }">
+											<v-icon small v-on="on" color="grey lighten-1"
+												>help</v-icon
+											>
+										</template>
+										<span
+											>Якщо увімкнено - для кожної команди зберігаєтся
+											скріншот, значно сповільнює роботу павука</span
+										>
+									</v-tooltip>
+								</v-checkbox>
+								<v-btn depressed small color="black" dark>
+									<v-icon class="pr-2">low_priority</v-icon>
+									вказати залежності
+								</v-btn>
+								<v-btn depressed small color="black" dark class="mt-4">
+									<v-icon class="pr-2">timer</v-icon>
+									періодичніть запуску
+								</v-btn>
+							</div>
+							<div v-if="viewAdditional">
+								<v-btn
+									depressed
+									small
+									class="expand-less"
+									v-if="viewAdditional"
+									@click="viewAdditional = false"
+								>
+									<v-icon class="pr-2">expand_less</v-icon>
+									згорнути
+								</v-btn>
+							</div>
 						</v-card-text>
 						<v-card-actions>
 							<v-row class="pr-5" justify="end">
@@ -194,7 +238,9 @@ export default {
 		PipelineData,
 	},
 	data() {
-		return {};
+		return {
+			viewAdditional: false,
+		};
 	},
 	watch: {
 		$route: {
@@ -284,3 +330,18 @@ export default {
 	},
 };
 </script>
+<style lang="less">
+.expand-more {
+	margin-top: 16px;
+}
+
+.expand-less {
+	margin-top: 32px;
+}
+
+.hide-v-messages {
+	.v-messages {
+		display: none;
+	}
+}
+</style>
