@@ -10,7 +10,7 @@
 			</template>
 
 			<v-card color="grey lighten-3">
-				<v-toolbar dark color="primary">
+				<v-toolbar dark color="gray">
 					<v-toolbar-title>{{ title }}: налаштування залежностей</v-toolbar-title>
 					<v-spacer></v-spacer>
 					<v-toolbar-items>

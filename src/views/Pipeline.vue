@@ -339,6 +339,7 @@ export default {
 		this.$store.dispatch(`pipeline/${INIT_DEFAULT_PIPELINE_PROPERTIES}`, {
 			id: this.id,
 			isDebugMode: true,
+			dependencies: [],
 		});
 		if (this.state === 'add') {
 			return;

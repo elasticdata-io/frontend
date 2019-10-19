@@ -64,7 +64,7 @@ const actions = {
 		return new Promise((resolve, reject) => {
 			commit(mutation.SET_PIPELINE_LOADING, true);
 			Vue.http
-				.post(`/api/pipeline/save`, state.pipeline)
+				.post(`/api/pipeline/save`, JSON.stringify(state.pipeline))
 				.then(res => {
 					setTimeout(() => {
 						commit(mutation.SET_PIPELINE, res.body);
