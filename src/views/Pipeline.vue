@@ -77,11 +77,11 @@
 										>
 									</v-tooltip>
 								</v-checkbox>
-								<v-btn depressed small color="black" dark>
+								<v-btn depressed small color="grey darken-1" dark>
 									<v-icon class="pr-2">low_priority</v-icon>
 									вказати залежності
 								</v-btn>
-								<v-btn depressed small color="black" dark class="mt-4">
+								<v-btn depressed small color="grey darken-1" dark class="mt-4">
 									<v-icon class="pr-2">timer</v-icon>
 									періодичніть запуску
 								</v-btn>
