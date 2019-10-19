@@ -14,6 +14,7 @@ export const messages = {
 				completed: 'завершено',
 				stopped: 'зупинено',
 				stopping: 'зупиняєтся',
+				wait_other_pipeline: 'в очікуванні залежностей',
 				null: '',
 			},
 		},

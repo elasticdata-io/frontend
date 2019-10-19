@@ -31,4 +31,8 @@ export default {
 		id: '',
 		title: 'stopping',
 	},
+	WAIT_OTHER_PIPELINE: {
+		id: '',
+		title: 'wait_other_pipeline',
+	},
 };
