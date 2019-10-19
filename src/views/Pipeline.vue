@@ -53,8 +53,8 @@
 									<v-tooltip top slot="append">
 										<template v-slot:activator="{ on }">
 											<v-icon small v-on="on" color="grey lighten-1"
-												>help</v-icon
-											>
+												>help
+											</v-icon>
 										</template>
 										<span
 											>Якщо увімкнено - будуть доступні логи після
@@ -69,8 +69,8 @@
 									<v-tooltip top slot="append">
 										<template v-slot:activator="{ on }">
 											<v-icon small v-on="on" color="grey lighten-1"
-												>help</v-icon
-											>
+												>help
+											</v-icon>
 										</template>
 										<span
 											>Якщо увімкнено - для кожної команди зберігаєтся
@@ -79,10 +79,12 @@
 									</v-tooltip>
 								</v-checkbox>
 								<div>
-									<v-btn depressed small color="grey darken-1" dark>
-										<v-icon class="pr-2">low_priority</v-icon>
-										налаштувати залежності
-									</v-btn>
+									<pipeline-dependents
+										:title="pipeline.key"
+										:dependencies="dependencies"
+										@add="onAddDependency"
+										@remove="onRemoveDependency"
+									></pipeline-dependents>
 								</div>
 								<div>
 									<v-btn depressed small color="grey darken-1" dark class="mt-4">
@@ -232,6 +234,7 @@ import { TASKS } from '../store/tasks/getters';
 import { CLEAR_TASKS } from '../store/tasks/mutations';
 import PipelineData from '../components/PipelineData';
 import ChartC3 from '../components/ChartC3';
+import PipelineDependents from '../components/PipelineDependents';
 
 export default {
 	components: {
@@ -241,6 +244,7 @@ export default {
 		TasksMini,
 		ChartC3,
 		PipelineData,
+		PipelineDependents,
 	},
 	data() {
 		return {
@@ -276,6 +280,14 @@ export default {
 			const status = (this.pipeline && this.pipeline.status) || {};
 			return status.title;
 		},
+		dependencies: {
+			get() {
+				return this.pipeline.dependencies;
+			},
+			set(dependencies) {
+				this.pipeline.dependencies = dependencies;
+			},
+		},
 	},
 	methods: {
 		saveJsonCommands(json) {
@@ -308,6 +320,17 @@ export default {
 				return;
 			}
 			this.$store.dispatch(`tasks/${FETCH_TASKS}`, { pipelineId: this.id });
+		},
+		onAddDependency({ pipelineId, dataFreshnessInterval }) {
+			this.dependencies = [
+				{
+					pipelineId,
+					dataFreshnessInterval,
+				},
+			].concat(this.dependencies);
+		},
+		onRemoveDependency(pipelineId) {
+			this.dependencies = this.dependencies.filter(x => x.pipelineId !== pipelineId);
 		},
 	},
 	created() {
