@@ -323,12 +323,13 @@ export default {
 			this.$store.dispatch(`tasks/${FETCH_TASKS}`, { pipelineId: this.id });
 		},
 		onAddDependency({ pipelineId, dataFreshnessInterval }) {
-			this.dependencies = [
+			const dependencies = this.dependencies || [];
+			this.dependencies = dependencies.concat([
 				{
 					pipelineId,
 					dataFreshnessInterval,
 				},
-			].concat(this.dependencies);
+			]);
 		},
 		onRemoveDependency(pipelineId) {
 			this.dependencies = this.dependencies.filter(x => x.pipelineId !== pipelineId);
