@@ -80,6 +80,7 @@
 								</v-checkbox>
 								<div>
 									<pipeline-dependents
+										:id="pipeline.id"
 										:title="pipeline.key"
 										:dependencies="dependencies"
 										@add="onAddDependency"

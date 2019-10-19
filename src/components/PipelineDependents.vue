@@ -166,10 +166,12 @@ export default {
 			pipelines: PIPELINES,
 		}),
 		items: function() {
-			return this.pipelines.filter(x => {
-				const find = this.dependencies.find(d => d.pipelineId === x.id);
-				return find === undefined;
-			});
+			return this.pipelines
+				.filter(x => {
+					const find = this.dependencies.find(d => d.pipelineId === x.id);
+					return find === undefined;
+				})
+				.filter(x => x.id !== this.id);
 		},
 	},
 	methods: {
@@ -200,6 +202,10 @@ export default {
 		this.$store.dispatch(`pipelines/${FETCH_PIPELINES}`);
 	},
 	props: {
+		id: {
+			type: String,
+			default: '',
+		},
 		title: {
 			type: String,
 			default: '',
