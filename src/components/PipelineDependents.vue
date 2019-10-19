@@ -134,7 +134,7 @@ export default {
 		pipelineId: null,
 		dialog: false,
 		enableDataFreshControl: false,
-		selectedTimeMeasurement: 'min',
+		selectedTimeMeasurement: 'm',
 		dataFresh: 30,
 		timeMeasurement: [
 			{
