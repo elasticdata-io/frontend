@@ -75,6 +75,20 @@
 					>
 						<v-icon>play_arrow</v-icon>
 					</v-btn>
+					<v-btn
+						v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
+						:disabled="true"
+						v-if="status === pipelineIsWaiting"
+						depressed
+						fab
+						:loading="pendingToServer"
+					>
+						<v-progress-linear
+							color="primary"
+							buffer-value="0"
+							stream
+						></v-progress-linear>
+					</v-btn>
 				</span>
 			</span>
 			<small
@@ -107,6 +121,7 @@ export default {
 		pipelineIsStopping: PipelineStatuses.STOPPING.title,
 		pipelineIsPending: PipelineStatuses.PENDING.title,
 		pipelineIsCompleted: PipelineStatuses.COMPLETED.title,
+		pipelineIsWaiting: PipelineStatuses.WAIT_OTHER_PIPELINE.title,
 		pipelineStatusIsMissing: null,
 		pendingToServer: false,
 	}),
