@@ -82,7 +82,7 @@
 									></v-switch>
 								</v-sheet>
 								<v-row>
-									<v-col class="pt-0">
+									<v-col class="pt-0" md="3">
 										<v-text-field
 											v-model="dataFresh"
 											type="number"
@@ -183,9 +183,10 @@ export default {
 		add() {
 			this.$emit('add', {
 				pipelineId: this.pipelineId,
-				dataFreshnessInterval: this.enableDataFreshControl
-					? `${this.dataFresh} ${this.selectedTimeMeasurement}`
-					: null,
+				dataFreshnessInterval:
+					this.enableDataFreshControl && this.dataFresh > 0
+						? `${this.dataFresh} ${this.selectedTimeMeasurement}`
+						: null,
 			});
 			this.resetAddControls();
 		},
