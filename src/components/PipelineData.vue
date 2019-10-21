@@ -117,7 +117,8 @@ import { SET_SNACK_MESSAGE } from '../store/mutations';
 export default {
 	computed: {
 		jsonLink: function() {
-			return `${location.protocol}//${location.hostname}:${location.port}/api/pipeline/data/${
+			const port = location.port ? `:${location.port}` : '';
+			return `${location.protocol}//${location.hostname}${port}/api/pipeline/data/${
 				this.pipelineId
 			}`;
 		},
