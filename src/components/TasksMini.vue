@@ -10,82 +10,102 @@
 			В роботі 0/4 воркерів
 			<v-btn small depressed disabled>Збільшити кількість воркерів</v-btn>
 		</div>
-		<v-simple-table class="tasks-mini mt-5">
-			<template v-slot:default>
-				<thead>
-					<tr>
-						<th class="text-left pl-1">
-							Статус
-						</th>
-						<th class="text-left">Тривалість</th>
-						<th class="text-left">Завершено</th>
-						<th class="text-left">Дії</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr
-						v-for="task in tasks"
-						:key="task.id"
-						:class="{ 'pink--text': task.failureReason }"
-					>
-						<td>
-							<task-run-status-button
-								:task-id="task.id"
-								:status="task.status"
-								:failureReason="task.failureReason"
-								:new-parse-rows-count="task.newParseRowsCount"
-								:current-execute-command="task.currentExecuteCommand"
-								:current-execute-command-properties="
-									task.currentExecuteCommandProperties
-								"
-								:miniIcon="true"
-							></task-run-status-button>
-						</td>
-						<td>
-							{{ duration(task) }}
-						</td>
-						<td>{{ fromNow(task.endOnUtc) }}</td>
-						<td>
-							<v-menu offset-y>
-								<template v-slot:activator="{ on }">
-									<v-btn depressed text v-on="on">
-										<v-icon>more_vert</v-icon>
-									</v-btn>
-								</template>
-								<v-list>
-									<v-list-item
-										:href="'/api/pipeline-task/data/' + task.id"
-										target="_blank"
-									>
-										<v-list-item-title>
-											<v-icon class="pr-2">get_app</v-icon>
-											скачати json
-										</v-list-item-title>
-									</v-list-item>
-									<v-list-item @click="viewLogs(task)">
-										<v-list-item-title>
-											<v-icon class="pr-2">bug_report</v-icon>
-											переглянути логи
-										</v-list-item-title>
-									</v-list-item>
-								</v-list>
-							</v-menu>
-						</td>
-					</tr>
-				</tbody>
-			</template>
-		</v-simple-table>
+		<v-row>
+			<v-col>Статус</v-col>
+			<v-col>Тривалість</v-col>
+			<v-col>Завершено</v-col>
+			<v-col>Дії</v-col>
+		</v-row>
+		<v-divider></v-divider>
+		<div :class="{ 'pink--text': task.failureReason }" v-for="task in tasks" :key="task.id">
+			<v-row align="center">
+				<v-col class="text-justify">
+					<task-run-status-button
+						:task-id="task.id"
+						:status="task.status"
+						:failureReason="task.failureReason"
+						:new-parse-rows-count="task.newParseRowsCount"
+						:current-execute-command="task.currentExecuteCommand"
+						:current-execute-command-properties="task.currentExecuteCommandProperties"
+						:miniIcon="true"
+					></task-run-status-button>
+				</v-col>
+				<v-col class="text-justify">{{ duration(task) }}</v-col>
+				<v-col class="text-justify">{{ fromNow(task.endOnUtc) }}</v-col>
+				<v-col class="text-justify">
+					<v-menu offset-y>
+						<template v-slot:activator="{ on }">
+							<v-btn depressed text v-on="on">
+								<v-icon>more_vert</v-icon>
+							</v-btn>
+						</template>
+						<v-list>
+							<v-list-item
+								:href="'/api/pipeline-task/data/' + task.id"
+								target="_blank"
+							>
+								<v-list-item-title>
+									<v-icon class="pr-2">get_app</v-icon>
+									скачати json
+								</v-list-item-title>
+							</v-list-item>
+							<v-list-item @click="viewLogs(task)">
+								<v-list-item-title>
+									<v-icon class="pr-2">bug_report</v-icon>
+									переглянути логи
+								</v-list-item-title>
+							</v-list-item>
+							<v-list-item v-if="isRunning(task.status)" @click="stopPipeline(task)">
+								<v-list-item-title>
+									<v-icon class="pr-2" color="secondary">stop</v-icon>
+									зупинити
+								</v-list-item-title>
+							</v-list-item>
+						</v-list>
+					</v-menu>
+				</v-col>
+			</v-row>
+			<v-progress-linear
+				v-if="isWaiting(task.status)"
+				height="1"
+				color="red lighten-2"
+				buffer-value="0"
+				stream
+			></v-progress-linear>
+			<v-progress-linear
+				v-if="isRunning(task.status)"
+				height="1"
+				indeterminate
+				color="green"
+			></v-progress-linear>
+			<v-progress-linear
+				v-if="isStopping(task.status)"
+				height="1"
+				indeterminate
+				color="red"
+			></v-progress-linear>
+			<v-divider></v-divider>
+		</div>
 	</div>
 </template>
 <script>
 import * as moment from 'moment';
 import PipelineTaskLogs from './PipelineTaskLogs';
 import TaskRunStatusButton from './TaskRunStatusButton';
+import PipelineStatuses from '../constants/pipeline-statuses';
+import { STOP_PIPELINE_TASK } from '../store/tasks/actions';
 
 export default {
 	components: { PipelineTaskLogs, TaskRunStatusButton },
 	data() {
 		return {
+			taskIsRunning: PipelineStatuses.RUNNING.title,
+			taskIsError: PipelineStatuses.ERROR.title,
+			taskIsStopping: PipelineStatuses.STOPPING.title,
+			taskIsStopped: PipelineStatuses.STOPPED.title,
+			taskIsPending: PipelineStatuses.PENDING.title,
+			taskIsCompleted: PipelineStatuses.COMPLETED.title,
+			taskIsWaiting: PipelineStatuses.WAIT_OTHER_PIPELINE.title,
 			selectedPipelineTitle: null,
 			selectedTaskId: null,
 			now: new Date(),
@@ -122,6 +142,20 @@ export default {
 		},
 		reload() {
 			this.$emit('reload');
+		},
+		isWaiting(status) {
+			return status === this.taskIsPending || status === this.taskIsWaiting;
+		},
+		isRunning(status) {
+			return status === this.taskIsRunning;
+		},
+		isStopping(status) {
+			return status === this.taskIsStopping;
+		},
+		stopPipeline(task) {
+			this.$store.dispatch(`tasks/${STOP_PIPELINE_TASK}`, {
+				taskId: task.id,
+			});
 		},
 	},
 	props: {
