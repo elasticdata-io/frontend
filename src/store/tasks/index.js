@@ -13,6 +13,13 @@ const mutations = {
 		Vue.set(state, 'loading', loading);
 	},
 
+	[mutation.REPLACE_TASK](state, task) {
+		const index = state.tasks.findIndex(x => x.id === task.id);
+		if (index < 0) {
+			return;
+		}
+		Vue.set(state.tasks, index, task);
+	},
 	[mutation.SET_TASKS](state, tasks) {
 		Vue.set(state, 'tasks', tasks);
 	},
@@ -31,10 +38,42 @@ const actions = {
 		});
 	},
 
-	async [action.STOP_PIPELINE_TASK]({ commit }, { taskId }) {
+	async [action.STOP_PIPELINE_TASK]({ dispatch }, { taskId }) {
 		const res = await Vue.http.post(`/api/pipeline/stop/${taskId}`);
 		const task = res.body;
-		commit(action.FETCH_TASKS, { pipelineId: task.pipelineId });
+		dispatch(action.FETCH_TASKS, { pipelineId: task.pipelineId });
+	},
+
+	async [action.TASK_CHANGED]({ commit }, { task }) {
+		commit(mutation.REPLACE_TASK, task);
+	},
+
+	[action.UPDATE_NEW_PARSED_ROWS_COUNT]({ commit, state }, { taskId, newParseRowsCount }) {
+		const taskIndex = state.tasks.findIndex(x => x.id === taskId);
+		if (taskIndex < 0) {
+			return;
+		}
+		const task = state.tasks[taskIndex];
+		commit(mutation.REPLACE_TASK, {
+			...task,
+			newParseRowsCount: newParseRowsCount,
+		});
+	},
+
+	[action.UPDATE_CURRENT_EXECUTE_COMMAND](
+		{ commit, state },
+		{ commandName, commandProperties, taskId }
+	) {
+		const taskIndex = state.tasks.findIndex(x => x.id === taskId);
+		if (taskIndex < 0) {
+			return;
+		}
+		const task = state.tasks[taskIndex];
+		commit(mutation.REPLACE_TASK, {
+			...task,
+			currentExecuteCommand: commandName,
+			currentExecuteCommandProperties: commandProperties,
+		});
 	},
 };
 

@@ -89,27 +89,6 @@ const actions = {
 			...currentPipeline,
 		});
 	},
-
-	[action.UPDATE_NEW_PARSED_ROWS_COUNT]({ commit, state }, { newParseRowsCount }) {
-		commit(mutation.SET_PIPELINE, {
-			...state.pipeline,
-			newParseRowsCount: newParseRowsCount,
-		});
-	},
-
-	[action.UPDATE_CURRENT_EXECUTE_COMMAND](
-		{ commit, state },
-		{ commandName, commandProperties, pipelineId }
-	) {
-		if (pipelineId !== state.pipeline.id) {
-			return;
-		}
-		commit(mutation.SET_PIPELINE, {
-			...state.pipeline,
-			currentExecuteCommand: commandName,
-			currentExecuteCommandProperties: commandProperties,
-		});
-	},
 };
 
 const getters = {

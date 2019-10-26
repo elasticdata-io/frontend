@@ -8,30 +8,13 @@
 		></pipeline-task-logs>
 		<div class="subtitle-2">
 			В роботі 0/4 воркерів
-			<v-btn small depressed>Збільшити кількість воркерів</v-btn>
+			<v-btn small depressed disabled>Збільшити кількість воркерів</v-btn>
 		</div>
-
 		<v-simple-table class="tasks-mini mt-5">
 			<template v-slot:default>
 				<thead>
 					<tr>
 						<th class="text-left pl-1">
-							<!--<v-tooltip top>
-								<template v-slot:activator="{ on }">
-									<v-btn
-										small
-										icon
-										depressed
-										:disabled="disabled"
-										@click="reload"
-										v-on="on"
-										color="accent"
-									>
-										<v-icon>refresh</v-icon>
-									</v-btn>
-								</template>
-								<span>Оновити список</span>
-							</v-tooltip>-->
 							Статус
 						</th>
 						<th class="text-left">Тривалість</th>
@@ -50,6 +33,11 @@
 								:task-id="task.id"
 								:status="task.status"
 								:failureReason="task.failureReason"
+								:new-parse-rows-count="task.newParseRowsCount"
+								:current-execute-command="task.currentExecuteCommand"
+								:current-execute-command-properties="
+									task.currentExecuteCommandProperties
+								"
 								:miniIcon="true"
 							></task-run-status-button>
 						</td>

@@ -24,18 +24,11 @@ import {
 	WEBSOCKET_CONNECT,
 } from './actions';
 import {
-	PIPELINE_CHANGED,
 	UPDATE_NEW_PARSED_ROWS_COUNT as PIPELINES_UPDATE_NEW_PARSED_ROWS_COUNT,
 	UPDATE_CURRENT_EXECUTE_COMMAND as PIPELINES_UPDATE_CURRENT_EXECUTE_COMMAND,
-} from './pipelines/actions';
-import {
-	CURRENT_PIPELINE_CHANGED,
-	UPDATE_NEW_PARSED_ROWS_COUNT as PIPELINE_UPDATE_NEW_PARSED_ROWS_COUNT,
-	UPDATE_CURRENT_EXECUTE_COMMAND as PIPELINE_UPDATE_CURRENT_EXECUTE_COMMAND,
-} from './pipeline/actions';
+} from './tasks/actions';
 
-import PipelineStatuses from '../constants/pipeline-statuses';
-import { FETCH_TASKS } from './tasks/actions';
+import { TASK_CHANGED } from './tasks/actions';
 
 Vue.use(Vuex);
 
@@ -79,45 +72,30 @@ export default new Vuex.Store({
 			dispatch(SUBSCRIBE_PIPELINE_EXECUTE_COMMAND, { userId });
 		},
 		[SUBSCRIBE_PIPELINE_CHANGED]({ dispatch }, { userId }) {
-			subscribe(`/pipeline/change/${userId}`, res => {
-				const pipeline = JSON.parse(res.body);
-				dispatch(`pipelines/${PIPELINE_CHANGED}`, { pipeline });
-				dispatch(`pipeline/${CURRENT_PIPELINE_CHANGED}`, { pipeline });
-				const status = pipeline.status || {};
-				const isCompleted = status.title === PipelineStatuses.COMPLETED.title;
-				const isError = status.title === PipelineStatuses.ERROR.title;
-				if (isCompleted || isError) {
-					dispatch(`tasks/${FETCH_TASKS}`, { pipelineId: pipeline.id });
-				}
+			subscribe(`/task/change/${userId}`, res => {
+				const task = JSON.parse(res.body);
+				dispatch(`tasks/${TASK_CHANGED}`, { task });
 			});
 		},
 		[SUBSCRIBE_PIPELINE_PARSED_LINES]({ dispatch }, { userId }) {
-			subscribe(`/pipeline/parsed-lines/${userId}`, res => {
+			subscribe(`/task/parsed-lines/${userId}`, res => {
 				const data = JSON.parse(res.body);
-				let pipelineId = data.pipelineId;
+				let taskId = data.pipelineTaskId;
 				let newParseRowsCount = data.newParseRowsCount;
-				dispatch(`pipelines/${PIPELINES_UPDATE_NEW_PARSED_ROWS_COUNT}`, {
-					pipelineId,
-					newParseRowsCount,
-				});
-				dispatch(`pipeline/${PIPELINE_UPDATE_NEW_PARSED_ROWS_COUNT}`, {
+				dispatch(`tasks/${PIPELINES_UPDATE_NEW_PARSED_ROWS_COUNT}`, {
+					taskId,
 					newParseRowsCount,
 				});
 			});
 		},
 		[SUBSCRIBE_PIPELINE_EXECUTE_COMMAND]({ dispatch }, { userId }) {
-			subscribe(`/pipeline/command/execute/${userId}`, res => {
+			subscribe(`/task/command/execute/${userId}`, res => {
 				const data = JSON.parse(res.body);
-				let pipelineId = data.pipelineId;
+				let taskId = data.pipelineTaskId;
 				let commandName = data.commandExecutingName;
 				let commandProperties = data.commandExecutingProperties;
-				dispatch(`pipelines/${PIPELINES_UPDATE_CURRENT_EXECUTE_COMMAND}`, {
-					pipelineId,
-					commandName,
-					commandProperties,
-				});
-				dispatch(`pipeline/${PIPELINE_UPDATE_CURRENT_EXECUTE_COMMAND}`, {
-					pipelineId,
+				dispatch(`tasks/${PIPELINES_UPDATE_CURRENT_EXECUTE_COMMAND}`, {
+					taskId,
 					commandName,
 					commandProperties,
 				});
