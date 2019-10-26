@@ -1,10 +1,13 @@
 <template>
-	<div>
+	<div class="task-run-status">
 		<v-row>
 			<v-col class="text-center pb-0" xs="12" sm="12" md="12" lg="12" xl="12">
+				<div v-if="docsCount" class="text-center">
+					<span class="docs-count">{{ docsCount }}</span>
+				</div>
 				<div
 					class="text-center"
-					v-if="!loading && !currentExecuteCommand"
+					v-if="!currentExecuteCommand"
 					:class="{
 						'red--text': pipelineIsError === status,
 						'pink--text': pipelineIsStopped === status,
@@ -12,19 +15,15 @@
 				>
 					{{ $t(`pipeline.status.${status}`) }}
 				</div>
-				<div class="text-left pl-3">
-					<span v-if="newParseRowsCount" class="current-parsed-rows-count">
-						<v-icon size="14">get_app</v-icon> <strong>{{ newParseRowsCount }}</strong>
+				<div class="text-center">
+					<div v-if="currentExecuteCommand">
 						<small
 							v-if="isRunning && currentExecuteCommand"
 							class="current-execute-command"
 						>
 							{{ currentExecuteCommand }}
 						</small>
-					</span>
-				</div>
-				<div class="current-execute-command-properties">
-					<!--				<small>{{ currentExecuteCommandProperties }}</small>-->
+					</div>
 				</div>
 			</v-col>
 			<v-col class="text-center pt-0" xs="12" sm="12" md="12" lg="12" xl="12">
@@ -37,104 +36,11 @@
 					<span>{{ failureReason }}</span>
 				</v-tooltip>
 			</v-col>
-			<v-col class="text-justify" v-if="false">
-				<v-btn
-					v-if="loading"
-					v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
-					:disabled="true"
-					depressed
-					:loading="true"
-					fab
-				></v-btn>
-				<div v-if="!loading" class="text-center">
-					<div v-if="isRunnablePipeline(status)">
-						<v-tooltip left v-if="status === pipelineIsError">
-							<template v-slot:activator="{ on }">
-								<v-icon small color="pink" v-on="on">
-									error
-								</v-icon>
-							</template>
-							<span>{{ failureReason }}</span>
-						</v-tooltip>
-					</div>
-					<div v-if="!isRunnablePipeline(status)">
-						<v-btn
-							v-if="status === pipelineIsPending"
-							v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
-							:disabled="disabled"
-							fab
-							depressed
-							class="pa-1"
-						>
-							<v-progress-linear
-								color="teal"
-								buffer-value="0"
-								stream
-							></v-progress-linear>
-						</v-btn>
-						<v-btn
-							v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
-							:disabled="disabled"
-							v-if="status === pipelineIsStopping"
-							fab
-							depressed
-							class="pa-1"
-						>
-							<v-progress-linear
-								color="red lighten-2"
-								buffer-value="0"
-								stream
-							></v-progress-linear>
-						</v-btn>
-						<v-btn
-							v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
-							:disabled="disabled"
-							v-if="status === pipelineIsRunning"
-							fab
-							depressed
-							@click="stopPipeline()"
-							:loading="pendingToServer"
-						>
-							<v-progress-circular
-								:size="18"
-								:width="2"
-								indeterminate
-								color="teal"
-							></v-progress-circular>
-						</v-btn>
-						<v-btn
-							v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
-							:disabled="true"
-							v-if="status === pipelineStatusIsMissing"
-							depressed
-							fab
-							:loading="pendingToServer"
-						>
-							<v-icon>not_interested</v-icon>
-						</v-btn>
-						<v-btn
-							v-bind="{ 'x-small': miniIcon, small: !miniIcon }"
-							:disabled="true"
-							v-if="status === pipelineIsWaiting"
-							depressed
-							fab
-							:loading="pendingToServer"
-						>
-							<v-progress-linear
-								color="primary"
-								buffer-value="0"
-								stream
-							></v-progress-linear>
-						</v-btn>
-					</div>
-				</div>
-			</v-col>
 		</v-row>
 	</div>
 </template>
 <script>
 import PipelineStatuses from '../constants/pipeline-statuses';
-import { STOP_PIPELINE_TASK } from '../store/tasks/actions';
 
 export default {
 	components: {},
@@ -170,7 +76,7 @@ export default {
 			required: false,
 			default: null,
 		},
-		newParseRowsCount: {
+		docsCount: {
 			type: Number,
 			required: false,
 			default: null,
@@ -209,12 +115,19 @@ export default {
 };
 </script>
 <style lang="less">
-.current-execute-command {
-	font-weight: bold;
-	letter-spacing: 0.08em;
-}
-.current-execute-command-properties {
-	text-align: left;
-	line-height: 1em;
+.task-run-status {
+	.docs-count {
+		display: inline-block;
+		background-color: #f5f5f5;
+		color: rgba(0, 0, 0, 0.87);
+		width: 25px;
+		height: 25px;
+		-webkit-border-radius: 15px;
+		-moz-border-radius: 15px;
+		border-radius: 15px;
+		padding-top: 2px;
+		font-size: 11px;
+		font-weight: bold;
+	}
 }
 </style>

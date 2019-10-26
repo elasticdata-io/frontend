@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="tasks-mini">
 		<pipeline-task-logs
 			v-if="selectedTaskId"
 			@closed="selectedTaskId = null"
@@ -17,14 +17,19 @@
 			<v-col>Дії</v-col>
 		</v-row>
 		<v-divider></v-divider>
-		<div :class="{ 'pink--text': task.failureReason }" v-for="task in tasks" :key="task.id">
+		<div
+			class="task-row"
+			:class="{ 'pink--text': task.failureReason }"
+			v-for="task in tasks"
+			:key="task.id"
+		>
 			<v-row align="center">
 				<v-col class="text-justify">
 					<task-run-status-button
 						:task-id="task.id"
 						:status="task.status"
 						:failureReason="task.failureReason"
-						:new-parse-rows-count="task.newParseRowsCount"
+						:docs-count="task.newParseRowsCount"
 						:current-execute-command="task.currentExecuteCommand"
 						:current-execute-command-properties="task.currentExecuteCommandProperties"
 						:miniIcon="true"
@@ -67,20 +72,20 @@
 			</v-row>
 			<v-progress-linear
 				v-if="isWaiting(task.status)"
-				height="1"
+				height="2"
 				color="red lighten-2"
 				buffer-value="0"
 				stream
 			></v-progress-linear>
 			<v-progress-linear
 				v-if="isRunning(task.status)"
-				height="1"
+				height="2"
 				indeterminate
 				color="green"
 			></v-progress-linear>
 			<v-progress-linear
 				v-if="isStopping(task.status)"
-				height="1"
+				height="2"
 				indeterminate
 				color="red"
 			></v-progress-linear>
@@ -182,6 +187,10 @@ export default {
 .tasks-mini {
 	&.v-data-table td {
 		font-size: 0.8em;
+	}
+
+	.task-row {
+		font-size: 12px;
 	}
 }
 </style>
