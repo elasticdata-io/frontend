@@ -120,13 +120,13 @@ export default {
 		display: inline-block;
 		background-color: #f5f5f5;
 		color: rgba(0, 0, 0, 0.87);
-		width: 25px;
-		height: 25px;
-		-webkit-border-radius: 15px;
-		-moz-border-radius: 15px;
-		border-radius: 15px;
-		padding-top: 2px;
-		font-size: 11px;
+		width: 22px;
+		height: 22px;
+		-webkit-border-radius: 11px;
+		-moz-border-radius: 11px;
+		border-radius: 11px;
+		padding-top: 1px;
+		font-size: 9px;
 		font-weight: bold;
 	}
 }

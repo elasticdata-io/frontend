@@ -79,9 +79,9 @@
 			></v-progress-linear>
 			<v-progress-linear
 				v-if="isRunning(task.status)"
-				height="2"
+				height="1"
 				indeterminate
-				color="green"
+				color="light-blue"
 			></v-progress-linear>
 			<v-progress-linear
 				v-if="isStopping(task.status)"
