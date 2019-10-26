@@ -79,7 +79,8 @@ const actions = {
 	async [action.STOP_PIPELINE_TASK]({ dispatch }, { taskId }) {
 		const res = await Vue.http.post(`/api/pipeline/stop/${taskId}`);
 		const task = res.body;
-		dispatch(action.FETCH_TASKS, { pipelineId: task.pipelineId });
+		const count = state.count;
+		dispatch(action.FETCH_TASKS, { pipelineId: task.pipelineId, count });
 	},
 
 	async [action.TASK_CHANGED]({ commit }, { task }) {
@@ -123,7 +124,7 @@ const getters = {
 		state.tasks.filter(x => x.pipelineId === pipelineId),
 	[LAST_TASK]: state => {
 		const tasks = state.tasks;
-		return tasks.sort((a, b) => a.endOn > b.endOn).find(a => a);
+		return tasks.sort((a, b) => a.endOnUtc > b.endOnUtc).find(a => a);
 	},
 	[TASKS_AT_WORK]: state => {
 		const atWorker = status => {
