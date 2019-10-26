@@ -6,8 +6,11 @@
 			:title="selectedPipelineTitle"
 			:task-id="selectedTaskId"
 		></pipeline-task-logs>
-		<div class="subtitle-2">
-			В роботі {{ tasksAtWork && tasksAtWork.length }}/4 воркерів
+		<div v-if="false" class="subtitle-2">
+			Запущено {{ tasksAtWork && tasksAtWork.length }}/{{
+				tasksPending.length + tasksAtWork.length
+			}}
+			задач
 			<v-btn small depressed disabled>Збільшити кількість воркерів</v-btn>
 		</div>
 		<v-row>
@@ -24,7 +27,7 @@
 			:key="task.id"
 		>
 			<v-row align="center">
-				<v-col class="text-justify">
+				<v-col class="text-left">
 					<task-run-status-button
 						:task-id="task.id"
 						:status="task.status"
@@ -35,9 +38,9 @@
 						:miniIcon="true"
 					></task-run-status-button>
 				</v-col>
-				<v-col class="text-justify">{{ duration(task) }}</v-col>
-				<v-col class="text-justify">{{ fromNow(task.endOnUtc) }}</v-col>
-				<v-col class="text-justify">
+				<v-col class="text-left">{{ duration(task) }}</v-col>
+				<v-col class="text-left">{{ fromNow(task.endOnUtc) }}</v-col>
+				<v-col class="text-left">
 					<v-menu offset-y>
 						<template v-slot:activator="{ on }">
 							<v-btn depressed text v-on="on">
@@ -91,6 +94,8 @@
 			></v-progress-linear>
 			<v-divider></v-divider>
 		</div>
+		<v-divider></v-divider>
+		<v-btn v-if="hasNextPage" block depressed @click="loadMore">Показати ще</v-btn>
 	</div>
 </template>
 <script>
@@ -98,9 +103,14 @@ import * as moment from 'moment';
 import PipelineTaskLogs from './PipelineTaskLogs';
 import TaskRunStatusButton from './TaskRunStatusButton';
 import PipelineStatuses from '../constants/pipeline-statuses';
-import { STOP_PIPELINE_TASK } from '../store/tasks/actions';
+import { FETCH_TASKS, LOAD_MORE_TASKS, STOP_PIPELINE_TASK } from '../store/tasks/actions';
 import { mapGetters } from 'vuex';
-import { TASKS_AT_WORK } from '../store/tasks/getters';
+import {
+	TASKS_AT_WORK,
+	TASKS_BY_PIPELINE,
+	TASKS_HAS_NEXT_PAGE,
+	TASKS_PENDING,
+} from '../store/tasks/getters';
 
 export default {
 	components: { PipelineTaskLogs, TaskRunStatusButton },
@@ -122,12 +132,18 @@ export default {
 	computed: {
 		...mapGetters('tasks', {
 			tasksAtWork: TASKS_AT_WORK,
+			tasksPending: TASKS_PENDING,
+			tasksByPipeline: TASKS_BY_PIPELINE,
+			hasNextPage: TASKS_HAS_NEXT_PAGE,
 		}),
+		tasks: function() {
+			return this.tasksByPipeline(this.pipelineId);
+		},
 	},
 	methods: {
 		viewLogs(task) {
 			this.selectedTaskId = task.id;
-			this.selectedPipelineTitle = task.pipeline.key;
+			this.selectedPipelineTitle = task.pipeline && task.pipeline.key;
 		},
 		fromNow(date) {
 			if (!date) {
@@ -169,21 +185,28 @@ export default {
 				taskId: task.id,
 			});
 		},
+		loadTasks() {
+			this.$store.dispatch(`tasks/${FETCH_TASKS}`, { pipelineId: this.pipelineId });
+		},
+		loadMore() {
+			this.$store.dispatch(`tasks/${LOAD_MORE_TASKS}`, { pipelineId: this.pipelineId });
+		},
 	},
 	props: {
-		tasks: {
-			type: Array,
-			default: () => [],
-			required: false,
-		},
 		disabled: {
 			type: Boolean,
 			default: false,
 			required: false,
 		},
+		pipelineId: {
+			type: String,
+			default: '',
+			required: false,
+		},
 	},
 	created() {
 		this.interval = setInterval(() => (this.now = new Date()), 1000);
+		this.loadTasks();
 	},
 	destroyed() {
 		clearInterval(this.interval);

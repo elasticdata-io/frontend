@@ -183,7 +183,12 @@
 						<v-card-text>
 							<v-row>
 								<v-col>
-									<v-btn block color="primary" @click="runPipeline">
+									<v-btn
+										:disabled="state === 'add'"
+										block
+										color="primary"
+										@click="runPipeline"
+									>
 										<v-icon class="mr-1">play_arrow</v-icon>
 										Запустити задачу
 									</v-btn>
@@ -193,10 +198,8 @@
 							<v-row>
 								<v-col>
 									<tasks-mini
-										v-if="tasks"
-										:tasks="tasks"
-										:disabled="!id"
-										@reload="loadTasks"
+										v-if="state === 'edit'"
+										:pipeline-id="id"
 									></tasks-mini>
 								</v-col>
 							</v-row>
@@ -222,8 +225,6 @@ import { SET_SNACK_MESSAGE } from '../store/mutations';
 import PipelineJsonEditor from '../components/PipelineJsonEditor';
 import PipelineYamlEditor from '../components/PipelineYamlEditor';
 import TasksMini from '../components/TasksMini';
-import { FETCH_TASKS } from '../store/tasks/actions';
-import { TASKS } from '../store/tasks/getters';
 import { CLEAR_TASKS } from '../store/tasks/mutations';
 import PipelineData from '../components/PipelineData';
 import PipelineDependents from '../components/PipelineDependents';
@@ -245,9 +246,6 @@ export default {
 		...mapGetters('pipeline', {
 			pipeline: CURRENT_PIPELINE,
 			pipelineLoading: CURRENT_PIPELINE_LOADING,
-		}),
-		...mapGetters('tasks', {
-			tasks: TASKS,
 		}),
 		name() {
 			return `Параметри` || this.pipeline.key || 'Введіть назву';
@@ -296,12 +294,6 @@ export default {
 			}
 			return moment.utc(date).fromNow();
 		},
-		loadTasks() {
-			if (!this.id) {
-				return;
-			}
-			this.$store.dispatch(`tasks/${FETCH_TASKS}`, { pipelineId: this.id });
-		},
 		onAddDependency({ pipelineId, dataFreshnessInterval }) {
 			const dependencies = this.dependencies || [];
 			this.dependencies = dependencies.concat([
@@ -329,7 +321,6 @@ export default {
 		if (this.state === 'add') {
 			return;
 		}
-		this.loadTasks();
 		this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.id });
 	},
 	props: {
