@@ -200,6 +200,7 @@
 									<tasks-mini
 										v-if="state === 'edit'"
 										:pipeline-id="id"
+										:pipeline-key="pipeline.key"
 									></tasks-mini>
 								</v-col>
 							</v-row>

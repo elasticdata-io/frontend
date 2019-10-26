@@ -143,7 +143,7 @@ export default {
 	methods: {
 		viewLogs(task) {
 			this.selectedTaskId = task.id;
-			this.selectedPipelineTitle = task.pipeline && task.pipeline.key;
+			this.selectedPipelineTitle = this.pipelineKey;
 		},
 		fromNow(date) {
 			if (!date) {
@@ -199,6 +199,11 @@ export default {
 			required: false,
 		},
 		pipelineId: {
+			type: String,
+			default: '',
+			required: false,
+		},
+		pipelineKey: {
 			type: String,
 			default: '',
 			required: false,
