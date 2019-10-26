@@ -1,1 +1,2 @@
 export const FETCH_TASKS = 'FETCH_TASKS';
+export const STOP_PIPELINE_TASK = 'STOP_PIPELINE_TASK';

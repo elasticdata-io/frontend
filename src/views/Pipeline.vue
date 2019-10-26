@@ -178,30 +178,20 @@
 				</v-col>
 				<v-col>
 					<v-card>
-						<v-card-title>Історія запусків</v-card-title>
+						<v-card-title>Задачі</v-card-title>
 						<v-divider></v-divider>
 						<v-card-text>
 							<v-row>
 								<v-col>
-									<span>Поточний статус</span>
-									<pipeline-run-status-button
-										:miniIcon="false"
-										:status="statusTitle"
-										:pipeline-id="pipeline.id"
-										:current-execute-command="pipeline.currentExecuteCommand"
-										:current-execute-command-properties="
-											pipeline.currentExecuteCommandProperties
-										"
-										:new-parse-rows-count="pipeline.newParseRowsCount"
-										:loading="pipelineLoading"
-										:disabled="!isCreated"
-									></pipeline-run-status-button>
+									<v-btn block color="primary" @click="runPipeline">
+										<v-icon class="mr-1">play_arrow</v-icon>
+										Запустити задачу
+									</v-btn>
 								</v-col>
 							</v-row>
 							<v-divider></v-divider>
 							<v-row>
 								<v-col>
-									<span class="pr-3">10 останніх запусків павука</span>
 									<tasks-mini
 										v-if="tasks"
 										:tasks="tasks"
@@ -224,28 +214,25 @@ import {
 	CLEAR_PIPELINE,
 	SAVE_PIPELINE,
 	INIT_DEFAULT_PIPELINE_PROPERTIES,
+	RUN_PIPELINE,
 } from '../store/pipeline/actions';
 import { mapGetters } from 'vuex';
 import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from '../store/pipeline/getters';
 import { SET_SNACK_MESSAGE } from '../store/mutations';
 import PipelineJsonEditor from '../components/PipelineJsonEditor';
 import PipelineYamlEditor from '../components/PipelineYamlEditor';
-import PipelineRunStatusButton from '../components/PipelineRunStatusButton';
 import TasksMini from '../components/TasksMini';
 import { FETCH_TASKS } from '../store/tasks/actions';
 import { TASKS } from '../store/tasks/getters';
 import { CLEAR_TASKS } from '../store/tasks/mutations';
 import PipelineData from '../components/PipelineData';
-import ChartC3 from '../components/ChartC3';
 import PipelineDependents from '../components/PipelineDependents';
 
 export default {
 	components: {
 		PipelineJsonEditor,
 		PipelineYamlEditor,
-		PipelineRunStatusButton,
 		TasksMini,
-		ChartC3,
 		PipelineData,
 		PipelineDependents,
 	},
@@ -253,11 +240,6 @@ export default {
 		return {
 			viewAdditional: false,
 		};
-	},
-	watch: {
-		$route: {
-			handler: function(to, from) {},
-		},
 	},
 	computed: {
 		...mapGetters('pipeline', {
@@ -273,15 +255,8 @@ export default {
 		saveBtnDisabled() {
 			return this.pipelineLoading || !this.pipeline.key;
 		},
-		isCreated() {
-			return Boolean(this.pipeline.modifiedOn);
-		},
 		hasName() {
 			return Boolean(this.pipeline.key);
-		},
-		statusTitle() {
-			const status = (this.pipeline && this.pipeline.status) || {};
-			return status.title;
 		},
 		dependencies: {
 			get() {
@@ -293,6 +268,9 @@ export default {
 		},
 	},
 	methods: {
+		runPipeline() {
+			this.$store.dispatch(`pipeline/${RUN_PIPELINE}`, { pipelineId: this.id });
+		},
 		saveJsonCommands(json) {
 			this.pipeline.jsonCommands = JSON.stringify(JSON.parse(json), null, 4);
 			this.savePipeline();

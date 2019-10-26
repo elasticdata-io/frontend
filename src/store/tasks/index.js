@@ -30,6 +30,12 @@ const actions = {
 			commit(mutation.SET_TASKS_LOADING, false);
 		});
 	},
+
+	async [action.STOP_PIPELINE_TASK]({ commit }, { taskId }) {
+		const res = await Vue.http.post(`/api/pipeline/stop/${taskId}`);
+		const task = res.body;
+		commit(action.FETCH_TASKS, { pipelineId: task.pipelineId });
+	},
 };
 
 const getters = {

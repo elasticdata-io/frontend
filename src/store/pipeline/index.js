@@ -4,6 +4,7 @@ import * as mutation from './mutations';
 import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING, CURRENT_PIPELINE_LAST_DATA } from './getters';
 import defaultPipelineCommands from '../defaultPipelineCommands';
 import { PIPELINE_CHANGED } from '../pipelines/actions';
+import { FETCH_TASKS } from '../tasks/actions';
 
 const state = {
 	pipeline: {},
@@ -32,18 +33,11 @@ const mutations = {
 const actions = {
 	async [action.RUN_PIPELINE]({ commit, dispatch }, { pipelineId }) {
 		commit(mutation.SET_PIPELINE_LOADING, true);
-		const res = await Vue.http.get(`/api/pipeline/run/${pipelineId}`);
-		commit(mutation.SET_PIPELINE, res.body);
+		const res = await Vue.http.post(`/api/pipeline/run/${pipelineId}`);
+		//commit(mutation.SET_PIPELINE, res.body);
 		commit(mutation.SET_PIPELINE_LOADING, false);
-		dispatch(`pipelines/${PIPELINE_CHANGED}`, { pipeline: res.body }, { root: true });
-	},
-
-	async [action.STOP_PIPELINE]({ commit, dispatch }, { pipelineId }) {
-		commit(mutation.SET_PIPELINE_LOADING, true);
-		const res = await Vue.http.get(`/api/pipeline/stop/${pipelineId}`);
-		commit(mutation.SET_PIPELINE, res.body);
-		commit(mutation.SET_PIPELINE_LOADING, false);
-		dispatch(`pipelines/${PIPELINE_CHANGED}`, { pipeline: res.body }, { root: true });
+		// dispatch(`pipelines/${PIPELINE_CHANGED}`, { pipeline: res.body }, { root: true });
+		dispatch(`tasks/${FETCH_TASKS}`, { pipelineId: pipelineId }, { root: true });
 	},
 
 	[action.FETCH_PIPELINE]({ commit }, { id }) {

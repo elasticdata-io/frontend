@@ -6,12 +6,17 @@
 			:title="selectedPipelineTitle"
 			:task-id="selectedTaskId"
 		></pipeline-task-logs>
-		<v-simple-table class="tasks-mini">
+		<div class="subtitle-2">
+			В роботі 0/4 воркерів
+			<v-btn small depressed>Збільшити кількість воркерів</v-btn>
+		</div>
+
+		<v-simple-table class="tasks-mini mt-5">
 			<template v-slot:default>
 				<thead>
 					<tr>
 						<th class="text-left pl-1">
-							<v-tooltip top>
+							<!--<v-tooltip top>
 								<template v-slot:activator="{ on }">
 									<v-btn
 										small
@@ -26,40 +31,32 @@
 									</v-btn>
 								</template>
 								<span>Оновити список</span>
-							</v-tooltip>
+							</v-tooltip>-->
+							Статус
 						</th>
-						<th class="text-left">Завершено <v-icon>sort</v-icon></th>
 						<th class="text-left">Тривалість</th>
+						<th class="text-left">Завершено</th>
 						<th class="text-left">Дії</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr
-						v-for="(task, index) in tasks"
+						v-for="task in tasks"
 						:key="task.id"
-						:class="{ 'pink--text': task.error }"
+						:class="{ 'pink--text': task.failureReason }"
 					>
 						<td>
-							<v-tooltip left>
-								<template v-slot:activator="{ on }">
-									<v-icon small v-if="task.error" color="pink" v-on="on">
-										error
-									</v-icon>
-								</template>
-								<span>{{ task.error }}</span>
-							</v-tooltip>
-
-							<v-tooltip left>
-								<template v-slot:activator="{ on }">
-									<v-icon small v-if="!task.error" v-on="on">check</v-icon>
-								</template>
-								<span>Завершено без помилок</span>
-							</v-tooltip>
+							<task-run-status-button
+								:task-id="task.id"
+								:status="task.status"
+								:failureReason="task.failureReason"
+								:miniIcon="true"
+							></task-run-status-button>
 						</td>
-						<td>{{ fromNow(task.startOn) }}</td>
 						<td>
 							{{ duration(task) }}
 						</td>
+						<td>{{ fromNow(task.endOnUtc) }}</td>
 						<td>
 							<v-menu offset-y>
 								<template v-slot:activator="{ on }">
@@ -95,13 +92,16 @@
 <script>
 import * as moment from 'moment';
 import PipelineTaskLogs from './PipelineTaskLogs';
+import TaskRunStatusButton from './TaskRunStatusButton';
 
 export default {
-	components: { PipelineTaskLogs },
+	components: { PipelineTaskLogs, TaskRunStatusButton },
 	data() {
 		return {
 			selectedPipelineTitle: null,
 			selectedTaskId: null,
+			now: new Date(),
+			interval: null,
 		};
 	},
 	methods: {
@@ -111,18 +111,26 @@ export default {
 		},
 		fromNow(date) {
 			if (!date) {
-				return 'ще не зберігалося';
+				return '-';
 			}
 			return moment.utc(date).fromNow();
 		},
-		duration: task => {
-			if (!task.startOn || !task.endOn) {
+		duration: function(task) {
+			if (!task.startOnUtc) {
 				return 'невідомо';
 			}
-			const startOn = moment.utc(task.startOn);
-			const endOn = moment.utc(task.endOn);
+			const startOn = moment.utc(task.startOnUtc);
+			const endOn = moment.utc(task.endOnUtc || this.now);
 			const diff = endOn.diff(startOn);
-			return moment.utc(diff).format('HH:mm:ss');
+			if (diff < 0) {
+				return '';
+			}
+			let format = 'mm:ss';
+			const diffHour = diff / 1000 / 60 / 60;
+			if (diffHour >= 1) {
+				format = 'HH:mm:ss';
+			}
+			return moment.utc(diff).format(format);
 		},
 		reload() {
 			this.$emit('reload');
@@ -139,6 +147,12 @@ export default {
 			default: false,
 			required: false,
 		},
+	},
+	created() {
+		this.interval = setInterval(() => (this.now = new Date()), 1000);
+	},
+	destroyed() {
+		clearInterval(this.interval);
 	},
 };
 </script>
