@@ -7,7 +7,7 @@
 			:task-id="selectedTaskId"
 		></pipeline-task-logs>
 		<div class="subtitle-2">
-			В роботі 0/4 воркерів
+			В роботі {{ tasksAtWork && tasksAtWork.length }}/4 воркерів
 			<v-btn small depressed disabled>Збільшити кількість воркерів</v-btn>
 		</div>
 		<v-row>
@@ -99,6 +99,8 @@ import PipelineTaskLogs from './PipelineTaskLogs';
 import TaskRunStatusButton from './TaskRunStatusButton';
 import PipelineStatuses from '../constants/pipeline-statuses';
 import { STOP_PIPELINE_TASK } from '../store/tasks/actions';
+import { mapGetters } from 'vuex';
+import { TASKS_AT_WORK } from '../store/tasks/getters';
 
 export default {
 	components: { PipelineTaskLogs, TaskRunStatusButton },
@@ -116,6 +118,11 @@ export default {
 			now: new Date(),
 			interval: null,
 		};
+	},
+	computed: {
+		...mapGetters('tasks', {
+			tasksAtWork: TASKS_AT_WORK,
+		}),
 	},
 	methods: {
 		viewLogs(task) {

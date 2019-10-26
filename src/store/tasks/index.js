@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import * as action from './actions';
 import * as mutation from './mutations';
-import { TASK_BY_ID, TASKS, LAST_TASK } from './getters';
+import { TASK_BY_ID, TASKS, LAST_TASK, TASKS_AT_WORK } from './getters';
+import PipelineStatuses from '../../constants/pipeline-statuses';
 
 const state = {
 	tasks: [],
@@ -83,6 +84,15 @@ const getters = {
 	[LAST_TASK]: state => {
 		const tasks = state.tasks;
 		return tasks.sort((a, b) => a.endOn > b.endOn).find(a => a);
+	},
+	[TASKS_AT_WORK]: state => {
+		const atWorker = status => {
+			const pipelineStatus = status || '';
+			const statuses = Object.values(PipelineStatuses);
+			return statuses.filter(s => s.worker && s.title === pipelineStatus).length > 0;
+		};
+		const tasks = state.tasks;
+		return tasks.filter(x => atWorker(x.status));
 	},
 };
 

@@ -134,7 +134,6 @@ export default {
 			const statuses = Object.values(PipelineStatuses);
 			return statuses.filter(s => s.runnable && s.title === pipelineStatus).length > 0;
 		},
-
 		async runPipeline() {
 			this.pendingToServer = true;
 			await this.$store.dispatch(`pipeline/${RUN_PIPELINE}`, { pipelineId: this.pipelineId });

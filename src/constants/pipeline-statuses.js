@@ -11,6 +11,7 @@ export default {
 	RUNNING: {
 		id: '',
 		title: 'running',
+		worker: true,
 	},
 	COMPLETED: {
 		id: '',
@@ -30,9 +31,11 @@ export default {
 	STOPPING: {
 		id: '',
 		title: 'stopping',
+		worker: true,
 	},
 	WAIT_OTHER_PIPELINE: {
 		id: '',
 		title: 'wait_other_pipeline',
+		worker: true,
 	},
 };
