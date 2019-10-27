@@ -33,7 +33,7 @@
 										<td>
 											<pipeline-run-status-button
 												:pipeline-id="pipeline.id"
-												:status="pipeline.status.title"
+												:status="pipeline.status"
 												:current-execute-command="
 													pipeline.currentExecuteCommand
 												"
