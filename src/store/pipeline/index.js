@@ -33,7 +33,7 @@ const mutations = {
 const actions = {
 	async [action.RUN_PIPELINE]({ commit, dispatch }, { pipelineId }) {
 		commit(mutation.SET_PIPELINE_LOADING, true);
-		const res = await Vue.http.post(`/api/pipeline/run/${pipelineId}`);
+		const res = await Vue.http.post(`/api/pipeline/run-from-client/${pipelineId}`);
 		//commit(mutation.SET_PIPELINE, res.body);
 		commit(mutation.SET_PIPELINE_LOADING, false);
 		// dispatch(`pipelines/${PIPELINE_CHANGED}`, { pipeline: res.body }, { root: true });

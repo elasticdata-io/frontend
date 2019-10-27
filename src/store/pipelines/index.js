@@ -62,7 +62,7 @@ const actions = {
 	// todo : change pipeline to pipelineId
 	[action.RUN_PIPELINE]({ commit }, { pipeline }) {
 		commit(mutation.SET_PIPELINE_LOADING, { loading: true, pipeline });
-		Vue.http.get(`/api/pipeline/run/${pipeline.id}`).then(res => {
+		Vue.http.post(`/api/pipeline/run-from-client/${pipeline.id}`).then(res => {
 			commit(mutation.PIPELINE_CHANGE, res.body);
 		});
 	},
