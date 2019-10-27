@@ -7,7 +7,7 @@
 				</div>
 				<div
 					class="text-center"
-					v-if="!currentExecuteCommand"
+					v-if="!showCommandName"
 					:class="{
 						'red--text': pipelineIsError === status,
 						'pink--text': pipelineIsStopped === status,
@@ -16,7 +16,7 @@
 					{{ $t(`pipeline.status.${status}`) }}
 				</div>
 				<div class="text-center">
-					<div v-if="currentExecuteCommand">
+					<div v-if="showCommandName">
 						<small
 							v-if="isRunning && currentExecuteCommand"
 							class="current-execute-command"
@@ -55,10 +55,15 @@ export default {
 		pipelineStatusIsMissing: null,
 		pendingToServer: false,
 	}),
-	methods: {
+	computed: {
 		isRunning() {
 			return this.status === PipelineStatuses.RUNNING.title;
 		},
+		showCommandName: function() {
+			return this.isRunning && this.currentExecuteCommand;
+		},
+	},
+	methods: {
 		isRunnablePipeline(status) {
 			const pipelineStatus = status || '';
 			const statuses = Object.values(PipelineStatuses);
