@@ -2,9 +2,6 @@
 	<div class="task-run-status">
 		<v-row>
 			<v-col class="text-center pb-0" xs="12" sm="12" md="12" lg="12" xl="12">
-				<div v-if="docsCount" class="text-center">
-					<span class="docs-count">{{ docsCount }}</span>
-				</div>
 				<div
 					class="text-center"
 					v-if="!showCommandName"
@@ -15,17 +12,17 @@
 				>
 					{{ $t(`pipeline.status.${status}`) }}
 				</div>
-				<div class="text-center">
-					<div v-if="showCommandName">
-						<small
-							v-if="isRunning && currentExecuteCommand"
-							class="current-execute-command"
-						>
+				<div class="text-center" v-if="showCommandName">
+					<div v-if="docsCount" class="text-center docs-count-wrap">
+						<span class="docs-count">{{ docsCount }}</span>
+					</div>
+					<div class="current-execute-command">
+						<small v-if="isRunning && currentExecuteCommand">
 							{{ currentExecuteCommand }}
 						</small>
 					</div>
-					<div v-if="commandProps" class="text-center">
-						<small class="current-execute-command-props">{{ commandProps }}</small>
+					<div v-if="commandProps" class="current-execute-command-props text-center">
+						<small class="">{{ commandProps }}</small>
 					</div>
 				</div>
 			</v-col>
@@ -69,7 +66,11 @@ export default {
 			if (!this.isRunning || !this.currentExecuteCommand) {
 				return '';
 			}
-			return this.currentExecuteCommandProperties || '';
+			const string = this.currentExecuteCommandProperties || '';
+			if (string.length > 20) {
+				return `${string.slice(0, 20)}...`;
+			}
+			return string;
 		},
 	},
 	methods: {
@@ -130,28 +131,37 @@ export default {
 </script>
 <style lang="less">
 .task-run-status {
-	.docs-count {
-		display: inline-block;
-		background-color: #f5f5f5;
-		color: rgba(0, 0, 0, 0.87);
-		width: 22px;
-		height: 22px;
-		-webkit-border-radius: 11px;
-		-moz-border-radius: 11px;
-		border-radius: 11px;
-		padding-top: 1px;
-		font-size: 9px;
-		font-weight: bold;
+	.docs-count-wrap {
+		padding-bottom: 3px;
+
+		.docs-count {
+			display: inline-block;
+			background-color: #f5f5f5;
+			color: rgba(0, 0, 0, 0.87);
+			width: 22px;
+			height: 22px;
+			-webkit-border-radius: 11px;
+			-moz-border-radius: 11px;
+			border-radius: 11px;
+			padding-top: 1px;
+			font-size: 9px;
+			font-weight: bold;
+		}
+	}
+
+	.current-execute-command {
+		line-height: 12px;
 	}
 
 	.current-execute-command-props {
-		font-size: 8px;
-		line-height: 8px;
-		width: 50px;
+		font-size: 10px;
+		line-height: 10px;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display: inline-block;
+		position: relative;
+		top: -2px;
 	}
 }
 </style>
