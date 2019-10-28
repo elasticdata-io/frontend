@@ -24,6 +24,9 @@
 							{{ currentExecuteCommand }}
 						</small>
 					</div>
+					<div v-if="commandProps" class="text-center">
+						<small class="current-execute-command-props">{{ commandProps }}</small>
+					</div>
 				</div>
 			</v-col>
 			<v-col class="text-center pt-0" xs="12" sm="12" md="12" lg="12" xl="12">
@@ -61,6 +64,12 @@ export default {
 		},
 		showCommandName: function() {
 			return this.isRunning && this.currentExecuteCommand;
+		},
+		commandProps: function() {
+			if (!this.isRunning || !this.currentExecuteCommand) {
+				return '';
+			}
+			return this.currentExecuteCommandProperties || '';
 		},
 	},
 	methods: {
@@ -133,6 +142,16 @@ export default {
 		padding-top: 1px;
 		font-size: 9px;
 		font-weight: bold;
+	}
+
+	.current-execute-command-props {
+		font-size: 8px;
+		line-height: 8px;
+		width: 50px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: inline-block;
 	}
 }
 </style>
