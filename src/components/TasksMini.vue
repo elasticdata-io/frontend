@@ -48,10 +48,7 @@
 							</v-btn>
 						</template>
 						<v-list>
-							<v-list-item
-								:href="'/api/pipeline-task/data/' + task.id"
-								target="_blank"
-							>
+							<v-list-item :href="task.docsUrl" target="_blank">
 								<v-list-item-title>
 									<v-icon class="pr-2">get_app</v-icon>
 									скачати json
