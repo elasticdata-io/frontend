@@ -7,7 +7,7 @@ export const messages = {
 	uk: {
 		pipeline: {
 			status: {
-				error: 'завершено з помилкою',
+				error: 'виникла помилка',
 				'not running': 'не працює',
 				pending: 'в черзі',
 				running: 'в процесі',
