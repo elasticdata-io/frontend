@@ -80,7 +80,6 @@
 								</v-checkbox>
 								<div>
 									<pipeline-dependents
-										v-if="false"
 										:disabled="!pipeline.key"
 										:id="pipeline.id"
 										:title="pipeline.key"

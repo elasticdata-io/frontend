@@ -7,6 +7,7 @@ import PipelineAddRedirect from '../views/PipelineAddRedirect.vue';
 import Exit from '../views/Exit';
 import Enter from '../views/Enter';
 import PipelineDataView from '../views/PipelineDataView';
+import Task from '../views/Task';
 
 Vue.use(Router);
 
@@ -65,6 +66,11 @@ const router = new Router({
 					id: route.params.id,
 				};
 			},
+		},
+		{
+			name: 'task',
+			path: '/task',
+			component: Task,
 		},
 		{
 			name: 'help',
