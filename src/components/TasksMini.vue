@@ -78,7 +78,7 @@
 				stream
 			></v-progress-linear>
 			<v-progress-linear
-				v-if="isRunning(task.status)"
+				v-if="isRunningOrQueue(task.status)"
 				height="1"
 				indeterminate
 				color="light-blue"
@@ -114,6 +114,7 @@ export default {
 	data() {
 		return {
 			taskIsRunning: PipelineStatuses.RUNNING.title,
+			taskIsQueue: PipelineStatuses.QUEUE.title,
 			taskIsError: PipelineStatuses.ERROR.title,
 			taskIsStopping: PipelineStatuses.STOPPING.title,
 			taskIsStopped: PipelineStatuses.STOPPED.title,
@@ -173,6 +174,9 @@ export default {
 		},
 		isRunning(status) {
 			return status === this.taskIsRunning;
+		},
+		isRunningOrQueue(status) {
+			return status === this.taskIsRunning || status === this.taskIsQueue;
 		},
 		isStopping(status) {
 			return status === this.taskIsStopping;

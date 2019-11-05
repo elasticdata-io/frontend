@@ -13,6 +13,11 @@ export default {
 		title: 'running',
 		worker: true,
 	},
+	QUEUE: {
+		id: '',
+		title: 'queue',
+		worker: true,
+	},
 	COMPLETED: {
 		id: '',
 		title: 'completed',

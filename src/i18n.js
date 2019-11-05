@@ -11,6 +11,7 @@ export const messages = {
 				'not running': 'не працює',
 				pending: 'в черзі',
 				running: 'в процесі',
+				queue: 'підготовка',
 				completed: 'завершено',
 				stopped: 'зупинено',
 				stopping: 'зупиняєтся',
