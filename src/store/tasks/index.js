@@ -61,8 +61,12 @@ const actions = {
 		commit(mutation.SET_TASKS_LOADING, true);
 		const offset = state.offset;
 		const countRequest = state.count;
+		if (this.fetch) {
+			this.fetch.abort();
+		}
+		const before = request => (this.fetch = request);
 		return Vue.http
-			.get(`/api/pipeline-task/list/${pipelineId}/${offset}/${countRequest}`)
+			.get(`/api/pipeline-task/list/${pipelineId}/${offset}/${countRequest}`, { before })
 			.then(res => {
 				const tasks = res.body || [];
 				commit(mutation.SET_TASKS, tasks);
