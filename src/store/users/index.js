@@ -33,7 +33,7 @@ const actions = {
 			return;
 		}
 		commit(`user/${SET_TOKEN}`, token, { root: true });
-		commit(`user/${SET_USER}`, { id: this.userId }, { root: true });
+		commit(`user/${SET_USER}`, { id: userId }, { root: true });
 		commit(`user/${SET_LOGGED_IN}`, true, { root: true });
 		await dispatch(`user/${FETCH_CURRENT_USER}`, null, { root: true });
 		await dispatch(WEBSOCKET_CONNECT, { userId }, { root: true });
