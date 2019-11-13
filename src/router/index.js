@@ -6,6 +6,7 @@ import Pipeline from '../views/Pipeline.vue';
 import PipelineAddRedirect from '../views/PipelineAddRedirect.vue';
 import Exit from '../views/Exit';
 import Enter from '../views/Enter';
+import Admin from '../views/Admin';
 import PipelineDataView from '../views/PipelineDataView';
 import Task from '../views/Task';
 
@@ -87,6 +88,11 @@ const router = new Router({
 		{
 			name: 'analytics',
 			path: '/analytics',
+		},
+		{
+			name: 'admin',
+			path: '/admin',
+			component: Admin,
 		},
 		{
 			name: 'default',

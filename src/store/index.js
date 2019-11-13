@@ -14,6 +14,7 @@ import pipeline from './pipeline/';
 import pipelines from './pipelines/';
 import tasks from './tasks/';
 import user from './user/';
+import users from './users/';
 import logs from './logs/';
 import { subscribe, stompConnect } from './websocket';
 import {
@@ -43,6 +44,7 @@ export default new Vuex.Store({
 		pipelines,
 		tasks,
 		user,
+		users,
 		logs,
 	},
 	state: {

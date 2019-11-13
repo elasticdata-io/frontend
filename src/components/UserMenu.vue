@@ -52,6 +52,12 @@
 					<span class="pl-2">Аккаунт</span>
 				</v-list-item-title>
 			</v-list-item>
+			<v-list-item v-if="user.isAdmin" :to="{ name: 'admin' }">
+				<v-list-item-title>
+					<v-icon>security</v-icon>
+					<span class="pl-2">Admin</span>
+				</v-list-item-title>
+			</v-list-item>
 		</v-list>
 	</v-navigation-drawer>
 </template>
