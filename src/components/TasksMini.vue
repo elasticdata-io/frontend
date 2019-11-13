@@ -38,7 +38,11 @@
 						:miniIcon="true"
 					></task-run-status-button>
 				</v-col>
-				<v-col class="text-left">{{ duration(task) }}</v-col>
+				<v-col class="text-center">
+					<small>{{ startedOn(task.startOnUtc) }}</small>
+					<v-divider></v-divider>
+					{{ duration(task) }}
+				</v-col>
 				<v-col class="text-left">{{ fromNow(task.endOnUtc) }}</v-col>
 				<v-col class="text-left">
 					<v-menu offset-y>
@@ -142,6 +146,11 @@ export default {
 		viewLogs(task) {
 			this.selectedTaskId = task.id;
 			this.selectedPipelineTitle = this.pipelineKey;
+		},
+		startedOn(time) {
+			const startOn = moment.utc(time);
+			const format = 'HH:mm:ss';
+			return startOn.format(format);
 		},
 		fromNow(date) {
 			if (!date) {
