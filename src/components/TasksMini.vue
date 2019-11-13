@@ -149,7 +149,7 @@ export default {
 		},
 		startedOn(time) {
 			const startOn = moment.utc(time);
-			const format = 'HH:mm:ss';
+			const format = 'HH:mm:ss..ms';
 			return startOn.format(format);
 		},
 		fromNow(date) {
