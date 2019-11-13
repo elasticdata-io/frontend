@@ -13,9 +13,8 @@
 										<v-list-item :key="user.login">
 											<template v-slot:default="{ active, toggle }">
 												<v-list-item-content>
-													<v-list-item-title
-														v-text="user.login"
-													></v-list-item-title>
+													<v-list-item-title></v-list-item-title>
+													{{ user.email || user.login }}
 													<v-list-item-subtitle
 														>{{ user.firstName }}
 														{{ user.lastName }}</v-list-item-subtitle
