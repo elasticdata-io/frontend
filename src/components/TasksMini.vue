@@ -52,7 +52,11 @@
 							</v-btn>
 						</template>
 						<v-list>
-							<v-list-item :href="task.docsUrl" target="_blank">
+							<v-list-item
+								:href="task.docsUrl"
+								:disabled="!task.docsUrl"
+								target="_blank"
+							>
 								<v-list-item-title>
 									<v-icon class="pr-2">get_app</v-icon>
 									скачати json
@@ -64,7 +68,10 @@
 									переглянути логи
 								</v-list-item-title>
 							</v-list-item>
-							<v-list-item v-if="isRunning(task.status)" @click="stopPipeline(task)">
+							<v-list-item
+								v-if="isNotFinished(task.status)"
+								@click="stopPipeline(task)"
+							>
 								<v-list-item-title>
 									<v-icon class="pr-2" color="secondary">stop</v-icon>
 									зупинити
@@ -180,6 +187,13 @@ export default {
 		},
 		isWaiting(status) {
 			return status === this.taskIsPending || status === this.taskIsWaiting;
+		},
+		isNotFinished(status) {
+			return (
+				status !== this.taskIsError &&
+				status !== this.taskIsCompleted &&
+				status !== this.taskIsStopped
+			);
 		},
 		isRunning(status) {
 			return status === this.taskIsRunning;
