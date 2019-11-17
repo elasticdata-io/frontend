@@ -21,8 +21,9 @@
 							<template v-slot:default>
 								<thead>
 									<tr>
-										<th class="text-left">Статус</th>
+										<th class="text-left" v-if="false">Статус</th>
 										<th class="text-left">Назва</th>
+										<th class="text-left">Опис</th>
 										<th class="text-left">Запуски</th>
 										<th class="text-left">Зібранні данні</th>
 										<th class="text-left">Дії</th>
@@ -30,7 +31,7 @@
 								</thead>
 								<tbody>
 									<tr v-for="pipeline in pipelines" :key="pipeline.id">
-										<td>
+										<td v-if="false">
 											<pipeline-run-status-button
 												:pipeline-id="pipeline.id"
 												:status="pipeline.status"
@@ -50,6 +51,9 @@
 											>
 												{{ pipeline.key }}
 											</router-link>
+										</td>
+										<td>
+											<small>{{ pipeline.description }}</small>
 										</td>
 										<td>
 											<v-btn v-if="!pipeline.tasksTotal" text disabled small>
