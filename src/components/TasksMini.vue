@@ -58,7 +58,7 @@
 								target="_blank"
 							>
 								<v-list-item-title>
-									<v-icon class="pr-2">get_app</v-icon>
+									<v-icon :disabled="!task.docsUrl" class="pr-2">get_app</v-icon>
 									скачати json
 								</v-list-item-title>
 							</v-list-item>
