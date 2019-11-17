@@ -22,6 +22,7 @@
 								<thead>
 									<tr>
 										<th class="text-left" v-if="false">Статус</th>
+										<th class="text-left">Зміненно</th>
 										<th class="text-left">Назва</th>
 										<th class="text-left">Опис</th>
 										<th class="text-left">Запуски</th>
@@ -41,6 +42,9 @@
 												:new-parse-rows-count="pipeline.newParseRowsCount"
 												:loading="pipeline.loading"
 											></pipeline-run-status-button>
+										</td>
+										<td>
+											<small>{{ fromNow(pipeline.modifiedOn) }}</small>
 										</td>
 										<td>
 											<router-link
