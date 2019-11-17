@@ -80,7 +80,7 @@
 								item-value="id"
 								label="Додати залежність від павука"
 							></v-select>
-							<div v-if="pipelineId">
+							<div v-if="false && pipelineId">
 								<v-sheet color="grey lighten-3" width="100%">
 									<v-switch
 										v-model="enableDataFreshControl"
