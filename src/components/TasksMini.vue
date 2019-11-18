@@ -13,11 +13,19 @@
 			задач
 			<v-btn small depressed disabled>Збільшити кількість воркерів</v-btn>
 		</div>
-		<v-row>
-			<v-col>Статус</v-col>
-			<v-col>Тривалість</v-col>
-			<v-col>Завершено</v-col>
-			<v-col>Дії</v-col>
+		<v-row align="center">
+			<v-col xs="3" sm="3" md="3" lg="3" xl="3">
+				<small>Статус</small>
+			</v-col>
+			<v-col>
+				<small>Тривалість</small>
+			</v-col>
+			<v-col>
+				<small>Завершено</small>
+			</v-col>
+			<v-col xs="2" sm="2" md="2" lg="2" xl="2">
+				<small>Дії</small>
+			</v-col>
 		</v-row>
 		<v-divider></v-divider>
 		<div
@@ -43,7 +51,7 @@
 					<v-divider></v-divider>
 					{{ duration(task) }}
 				</v-col>
-				<v-col class="text-left" xs="3" sm="3" md="3" lg="3" xl="3">{{
+				<v-col class="text-right" xs="3" sm="3" md="3" lg="3" xl="3">{{
 					fromNow(task.endOnUtc)
 				}}</v-col>
 				<v-col class="text-left" xs="2" sm="2" md="2" lg="2" xl="2">
