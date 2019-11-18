@@ -48,7 +48,7 @@
 								</v-list-item>
 							</v-list>
 						</v-menu>
-						<v-menu offset-y>
+						<v-menu v-if="!$vuetify.breakpoint.lgOnly" offset-y>
 							<template v-slot:activator="{ on }">
 								<v-btn icon v-on="on">
 									<v-tooltip bottom>
