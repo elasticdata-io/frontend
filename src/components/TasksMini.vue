@@ -27,7 +27,7 @@
 			:key="task.id"
 		>
 			<v-row align="center">
-				<v-col class="text-left">
+				<v-col class="text-left" xs="3" sm="3" md="3" lg="3" xl="3">
 					<task-run-status-button
 						:task-id="task.id"
 						:status="task.status"
@@ -38,13 +38,15 @@
 						:miniIcon="true"
 					></task-run-status-button>
 				</v-col>
-				<v-col class="text-center">
+				<v-col class="text-center" xs="3" sm="3" md="3" lg="3" xl="3">
 					<small>{{ startedOn(task.startOnUtc) }}</small>
 					<v-divider></v-divider>
 					{{ duration(task) }}
 				</v-col>
-				<v-col class="text-left">{{ fromNow(task.endOnUtc) }}</v-col>
-				<v-col class="text-left">
+				<v-col class="text-left" xs="3" sm="3" md="3" lg="3" xl="3">{{
+					fromNow(task.endOnUtc)
+				}}</v-col>
+				<v-col class="text-left" xs="2" sm="2" md="2" lg="2" xl="2">
 					<v-menu offset-y>
 						<template v-slot:activator="{ on }">
 							<v-btn depressed text v-on="on">
