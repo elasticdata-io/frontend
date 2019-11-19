@@ -18,6 +18,11 @@ export default {
 		title: 'queue',
 		worker: true,
 	},
+	NEED_RUN: {
+		id: '',
+		title: 'need_run',
+		worker: true,
+	},
 	COMPLETED: {
 		id: '',
 		title: 'completed',
@@ -41,6 +46,11 @@ export default {
 	WAIT_OTHER_PIPELINE: {
 		id: '',
 		title: 'wait_other_pipeline',
+		worker: true,
+	},
+	NEED_OTHER_PIPELINE: {
+		id: '',
+		title: 'need_other_pipeline',
 		worker: true,
 	},
 };

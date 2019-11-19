@@ -135,6 +135,7 @@ export default {
 	data() {
 		return {
 			taskIsRunning: PipelineStatuses.RUNNING.title,
+			taskIsNeedRun: PipelineStatuses.NEED_RUN.title,
 			taskIsQueue: PipelineStatuses.QUEUE.title,
 			taskIsError: PipelineStatuses.ERROR.title,
 			taskIsStopping: PipelineStatuses.STOPPING.title,
@@ -142,6 +143,7 @@ export default {
 			taskIsPending: PipelineStatuses.PENDING.title,
 			taskIsCompleted: PipelineStatuses.COMPLETED.title,
 			taskIsWaiting: PipelineStatuses.WAIT_OTHER_PIPELINE.title,
+			taskIsNeedOther: PipelineStatuses.NEED_OTHER_PIPELINE.title,
 			selectedPipelineTitle: null,
 			selectedTaskId: null,
 			now: new Date(),
@@ -196,7 +198,12 @@ export default {
 			this.$emit('reload');
 		},
 		isWaiting(status) {
-			return status === this.taskIsPending || status === this.taskIsWaiting;
+			return (
+				status === this.taskIsPending ||
+				status === this.taskIsWaiting ||
+				status === this.taskIsNeedRun ||
+				status === this.taskIsNeedOther
+			);
 		},
 		isNotFinished(status) {
 			return (
