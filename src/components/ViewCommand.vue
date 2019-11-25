@@ -1,5 +1,5 @@
 <template>
-	<div class="view-command" :class="selected ? 'selected' : ''" @click="toggleSelected">
+	<div class="view-command" :class="cls" @click="toggleSelected">
 		<span class="number-icon">
 			<v-icon size="38" v-if="!selected">arrow_right</v-icon>
 			<v-icon size="38" v-if="selected" color="purple darken-3">arrow_right</v-icon>
@@ -12,6 +12,12 @@
 			<span class="prop">{{ prop }}</span>
 			<div class="value">{{ value }}</div>
 		</div>
+		<v-progress-linear
+			v-if="running"
+			height="2"
+			indeterminate
+			color="green"
+		></v-progress-linear>
 	</div>
 </template>
 <script>
@@ -19,6 +25,14 @@ export default {
 	data: () => ({
 		selected: false,
 	}),
+	computed: {
+		cls: function() {
+			return {
+				selected: this.selected,
+				running: this.running,
+			};
+		},
+	},
 	methods: {
 		toggleSelected() {
 			this.selected = !this.selected;
@@ -37,6 +51,10 @@ export default {
 			type: Object,
 			default: () => {},
 		},
+		running: {
+			type: Boolean,
+			default: false,
+		},
 	},
 };
 </script>
@@ -48,8 +66,22 @@ export default {
 	padding: 2px 17px 5px 42px;
 	background-color: #edf0f5;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-	font-family: 'Ubuntu Mono', 'Ubuntu', monospace;
+	/*font-family: 'Ubuntu Mono', 'Ubuntu', monospace;*/
 	font-size: 0.9em;
+
+	font-family: 'Karla', sans-serif;
+	font-weight: normal;
+
+	.v-progress-linear {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+
+	&.running {
+		background-color: #cbe8cb;
+	}
 
 	&:hover,
 	&.selected {
@@ -79,7 +111,7 @@ export default {
 	}
 
 	.name {
-		font-weight: bold;
+		font-weight: 500;
 		text-transform: uppercase;
 	}
 
@@ -91,16 +123,18 @@ export default {
 		.value {
 			padding-top: 0;
 			padding-bottom: 0;
+			color: #555;
 		}
 
 		.prop {
 			position: absolute;
 			left: 0;
 			text-transform: uppercase;
-			font-weight: bold;
+			font-weight: normal;
+			font-size: 1em;
 
 			&:before {
-				content: '- ';
+				content: ':';
 			}
 		}
 

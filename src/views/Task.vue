@@ -1,5 +1,6 @@
 <template>
 	<v-content>
+		<link href="https://fonts.googleapis.com/css?family=Karla&display=swap" rel="stylesheet" />
 		<v-container>
 			<v-system-bar color="white" lights-out height="40">
 				<v-btn depressed small>
@@ -51,6 +52,7 @@
 					></view-command>
 					<view-command
 						:number="2"
+						:running="true"
 						name="waitAjax"
 						:params="{ commands: [] }"
 					></view-command>
