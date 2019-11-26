@@ -87,6 +87,12 @@
 									зупинити
 								</v-list-item-title>
 							</v-list-item>
+							<v-list-item v-if="isFinished(task.status)" :to="{ name: 'task' }">
+								<v-list-item-title>
+									<v-icon class="pr-2">assignment</v-icon>
+									детально
+								</v-list-item-title>
+							</v-list-item>
 						</v-list>
 					</v-menu>
 				</v-col>
@@ -211,6 +217,9 @@ export default {
 				status !== this.taskIsCompleted &&
 				status !== this.taskIsStopped
 			);
+		},
+		isFinished(status) {
+			return !this.isNotFinished(status);
 		},
 		isRunning(status) {
 			return status === this.taskIsRunning;
