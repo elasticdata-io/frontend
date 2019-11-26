@@ -7,7 +7,9 @@
 				<div class="prop-value" v-for="(value, prop) in params" :key="prop + value">
 					<span class="prop">{{ prop }}</span>
 					<div v-if="!isObjectOrArray(value)" class="value">{{ value }}</div>
-					<div v-if="isObjectOrArray(value)" class="value">JSON</div>
+					<div v-if="isObjectOrArray(value)" class="value">
+						<v-btn x-small depressed>JSON</v-btn>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -72,6 +74,7 @@ export default {
 </script>
 <style lang="less">
 .default-command-wrap {
+	@fontFamily: 'Ubuntu Mono', 'Ubuntu', monospace;
 	background-color: #edf0f5;
 	position: relative;
 
@@ -90,10 +93,8 @@ export default {
 		min-height: 30px;
 		padding: 2px 17px 5px 42px;
 		/*border-bottom: 1px solid rgba(0, 0, 0, 0.12);*/
-		/*font-family: 'Ubuntu Mono', 'Ubuntu', monospace;*/
-		font-size: 0.9em;
 
-		font-family: 'Karla', sans-serif;
+		font-size: 0.8em;
 		font-weight: normal;
 
 		.v-progress-linear {
@@ -106,24 +107,30 @@ export default {
 		.number {
 			position: absolute;
 			left: 17px;
-			color: #aaa;
-			font-weight: bold;
+			color: #666;
+			font-family: @fontFamily;
 		}
 
 		.name {
-			font-weight: 500;
+			font-size: 1.05em;
 			text-transform: uppercase;
+			font-family: @fontFamily;
 		}
 
 		.prop-value {
 			position: relative;
-			padding-left: 130px;
+			padding-left: 110px;
+
+			&:hover {
+				background-color: #e5c4ff;
+			}
 
 			.prop,
 			.value {
 				padding-top: 0;
 				padding-bottom: 0;
 				color: #555;
+				font-family: @fontFamily;
 			}
 
 			.prop {
@@ -134,11 +141,12 @@ export default {
 				font-size: 1em;
 
 				&:before {
-					content: ':';
+					content: '- ';
 				}
 			}
 
 			.value {
+				font-size: 1em;
 			}
 		}
 	}

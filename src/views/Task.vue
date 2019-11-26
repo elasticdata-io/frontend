@@ -79,6 +79,7 @@ export default {
 			},
 			{
 				cmd: 'loop',
+				running: true,
 				params: {
 					maxIterations: 50,
 					commands: [

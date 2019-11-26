@@ -8,6 +8,7 @@
 			:number="number + '.' + (index + 1)"
 			:cmd="command.cmd"
 			:params="command.params"
+			:running="command.running"
 		></command-factory>
 	</div>
 </template>
