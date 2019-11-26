@@ -45,27 +45,14 @@
 			</v-system-bar>
 			<v-row class="task">
 				<v-col class="commands">
-					<view-command
-						:number="1"
-						name="waitElement"
-						:params="{ selector: '.ticket-item.new__ticket.t .item.ticket-title a' }"
-					></view-command>
-					<view-command
-						:number="2"
-						:running="true"
-						name="waitAjax"
-						:params="{ commands: [] }"
-					></view-command>
-					<view-command :number="3" name="loop" :params="{ commands: [] }"></view-command>
-					<view-command
-						:number="4"
-						name="getText"
-						:params="{
-							key: 'link',
-							attribute: 'href',
-							selector: '.ticket-item.new__ticket.t$i .item.ticket-title a',
-						}"
-					></view-command>
+					<command-factory
+						v-for="(command, index) in commands"
+						:key="index"
+						:number="index + 1 + ''"
+						:cmd="command.cmd"
+						:running="command.running"
+						:params="command.params"
+					></command-factory>
 				</v-col>
 				<v-col class="preview">
 					2
@@ -75,11 +62,79 @@
 	</v-content>
 </template>
 <script>
-import ViewCommand from '../components/ViewCommand';
+import CommandFactory from '../components/commands/CommandFactory';
 export default {
 	components: {
-		ViewCommand,
+		CommandFactory,
 	},
+	data: () => ({
+		commands: [
+			{
+				cmd: 'url',
+				params: {
+					urls: [
+						'http://rst.ua/oldcars/?task=newresults&results=1&saled=0&notcust=&sort=5&city=0&from=sform&start=40',
+					],
+				},
+			},
+			{
+				cmd: 'loop',
+				params: {
+					maxIterations: 50,
+					commands: [
+						{
+							cmd: 'pause',
+							params: {
+								timeout: 3,
+							},
+						},
+						{
+							cmd: 'waitElement',
+							params: {
+								selector: "//a[@id='next-page']",
+								timeout: 30,
+							},
+						},
+						{
+							cmd: 'scrollTo',
+							params: {
+								position: 'top',
+							},
+						},
+						{
+							cmd: 'scrollTo',
+							params: {
+								position: 'top',
+							},
+						},
+						{
+							cmd: 'loop',
+							params: {
+								commands: [
+									{
+										cmd: 'getText',
+										params: {
+											key: 'link',
+											attribute: 'href',
+											selector:
+												"//h3[@class='rst-ocb-i-h']/span[contains(text(), 'продам')]/../../../a[@class='rst-ocb-i-a']$i",
+											prefix: 'http://rst.ua',
+										},
+									},
+								],
+							},
+						},
+						{
+							cmd: 'click',
+							params: {
+								selector: "//a[@id='next-page']/..",
+							},
+						},
+					],
+				},
+			},
+		],
+	}),
 };
 </script>
 <style lang="less">
