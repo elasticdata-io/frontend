@@ -6,11 +6,16 @@
 			:number="number"
 			:params="params"
 			:running="running"
-		>
-			<slot></slot>
-		</loop-command>
+		></loop-command>
+		<condition-command
+			v-if="cmd === 'condition'"
+			:cmd="cmd"
+			:number="number"
+			:params="params"
+			:running="running"
+		></condition-command>
 		<default-command
-			v-if="cmd !== 'loop'"
+			v-if="cmd !== 'loop' && cmd !== 'condition'"
 			:cmd="cmd"
 			:number="number"
 			:params="params"
@@ -26,6 +31,7 @@ export default {
 	name: 'CommandFactory',
 	components: {
 		LoopCommand: () => import('./LoopCommand.vue'),
+		ConditionCommand: () => import('./ConditionCommand.vue'),
 		DefaultCommand,
 	},
 	props: {
