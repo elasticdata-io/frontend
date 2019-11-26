@@ -3,7 +3,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Karla&display=swap" rel="stylesheet" />
 		<v-container>
 			<v-system-bar color="white" lights-out height="40">
-				<v-btn depressed small>
+				<v-btn depressed small @click="back">
 					<v-icon class="mr-2">keyboard_backspace</v-icon> назад
 				</v-btn>
 				<v-divider vertical class="ml-4 "></v-divider>
@@ -591,6 +591,11 @@ export default {
 			},
 		],
 	}),
+	methods: {
+		back() {
+			this.$router.back();
+		},
+	},
 };
 </script>
 <style lang="less">
