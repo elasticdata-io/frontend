@@ -87,7 +87,10 @@
 									зупинити
 								</v-list-item-title>
 							</v-list-item>
-							<v-list-item v-if="isFinished(task.status)" :to="{ name: 'task' }">
+							<v-list-item
+								v-if="isFinished(task.status)"
+								:to="{ name: 'task', params: { id: task.id } }"
+							>
 								<v-list-item-title>
 									<v-icon class="pr-2">assignment</v-icon>
 									детально
