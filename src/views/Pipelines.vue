@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
 	<v-content>
 		<v-container class="fill-height" fluid>
 			<v-row>
@@ -37,7 +37,7 @@
 										:class="{ 'pink lighten-5': dataIsEmpty(pipeline) }"
 										:key="pipeline.id"
 									>
-										<td>
+										<td style="font-family: 'Ubuntu Mono', serif;">
 											<v-icon size="16" class="mr-1">description</v-icon>
 											<span>{{ docsCount(pipeline) }}</span>
 										</td>
