@@ -21,6 +21,7 @@
 							<template v-slot:default>
 								<thead>
 									<tr>
+										<th class="text-left">Документів</th>
 										<th class="text-left" v-if="false">Статус</th>
 										<th class="text-left">Зміненно</th>
 										<th class="text-left">Назва</th>
@@ -31,7 +32,15 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="pipeline in pipelines" :key="pipeline.id">
+									<tr
+										v-for="pipeline in pipelines"
+										:class="{ 'pink lighten-5': dataIsEmpty(pipeline) }"
+										:key="pipeline.id"
+									>
+										<td>
+											<v-icon size="16" class="mr-1">description</v-icon>
+											<span>{{ docsCount(pipeline) }}</span>
+										</td>
 										<td v-if="false">
 											<pipeline-run-status-button
 												:pipeline-id="pipeline.id"
@@ -199,6 +208,12 @@ export default {
 				return;
 			}
 			this.$store.dispatch(`pipelines/${REMOVE_PIPELINE}`, { id });
+		},
+		dataIsEmpty(pipeline) {
+			return !this.docsCount(pipeline);
+		},
+		docsCount(pipeline) {
+			return pipeline.lastParseRowsCount || 0;
 		},
 	},
 	created() {
