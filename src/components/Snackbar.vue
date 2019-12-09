@@ -23,13 +23,13 @@ export default {
 				return Boolean(this.snackMessage);
 			},
 			set() {
-				this.$store.commit(SET_SNACK_MESSAGE, '');
+				this.$store.commit(SET_SNACK_MESSAGE, { msg: '' });
 			},
 		},
 	},
 	methods: {
 		close() {
-			this.$store.commit(SET_SNACK_MESSAGE, '');
+			this.$store.commit(SET_SNACK_MESSAGE, { msg: '' });
 		},
 	},
 };

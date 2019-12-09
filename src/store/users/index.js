@@ -29,7 +29,7 @@ const actions = {
 		const response = await Vue.http.get(`/api/user/token/${userId}`);
 		const token = response.bodyText;
 		if (!token) {
-			commit(SET_SNACK_MESSAGE, `Цей користувач не має токенів`, { root: true });
+			commit(SET_SNACK_MESSAGE, { msg: `Цей користувач не має токенів` }, { root: true });
 			return;
 		}
 		commit(`user/${SET_TOKEN}`, token, { root: true });

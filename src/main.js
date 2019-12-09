@@ -30,7 +30,9 @@ Vue.http.interceptors.push(function(request, next) {
 		if (response.status === 500) {
 			const message =
 				typeof response.body === 'string' ? response.body : response.body.message;
-			store.commit(SET_SNACK_MESSAGE, `Упс... Виникла помилка на сервері: ${message}`);
+			store.commit(SET_SNACK_MESSAGE, {
+				msg: `Упс... Виникла помилка на сервері: ${message}`,
+			});
 		}
 	});
 });

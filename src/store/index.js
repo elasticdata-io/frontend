@@ -52,8 +52,8 @@ export default new Vuex.Store({
 		showVerticalMenu: false,
 	},
 	mutations: {
-		[SET_SNACK_MESSAGE](state, message) {
-			state.snackMessage = message;
+		[SET_SNACK_MESSAGE](state, { msg }) {
+			state.snackMessage = msg;
 		},
 
 		[SET_SHOW_VERTICAL_MENU](state, show) {

@@ -66,7 +66,11 @@ const actions = {
 						resolve('Данні успішно збережено!');
 					}, 500);
 				})
-				.catch(e => reject(e.bodyText || e.statusText));
+				.catch(e => {
+					commit(mutation.SET_PIPELINE_LOADING, false);
+					const body = e.body || {};
+					reject(body.message || e.bodyText || e.statusText);
+				});
 		});
 	},
 

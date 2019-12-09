@@ -278,10 +278,10 @@ export default {
 			return this.$store
 				.dispatch(`pipeline/${SAVE_PIPELINE}`)
 				.then(success => {
-					this.$store.commit(SET_SNACK_MESSAGE, success);
+					this.$store.commit(SET_SNACK_MESSAGE, { msg: success });
 					this.checkRedirectAfterCreated();
 				})
-				.catch(error => this.$store.commit(SET_SNACK_MESSAGE, error));
+				.catch(error => this.$store.commit(SET_SNACK_MESSAGE, { msg: error }));
 		},
 		checkRedirectAfterCreated() {
 			if (this.state === 'edit') {

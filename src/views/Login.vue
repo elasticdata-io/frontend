@@ -175,7 +175,9 @@ export default {
 
 		handleServerError(body) {
 			this.loading = false;
-			this.$store.commit(SET_SNACK_MESSAGE, body.bodyText || body.body || body.error);
+			this.$store.commit(SET_SNACK_MESSAGE, {
+				msg: body.bodyText || body.body || body.error,
+			});
 		},
 	},
 };

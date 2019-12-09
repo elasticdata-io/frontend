@@ -131,11 +131,11 @@ export default {
 	methods: {
 		copyJsonLink() {
 			copy(this.jsonLink);
-			this.$store.commit(SET_SNACK_MESSAGE, `Посилання скопійовано в буфер обміну`);
+			this.$store.commit(SET_SNACK_MESSAGE, { msg: `Посилання скопійовано в буфер обміну` });
 		},
 		copyCsvLink() {
 			copy(this.csvLink);
-			this.$store.commit(SET_SNACK_MESSAGE, `Посилання скопійовано в буфер обміну`);
+			this.$store.commit(SET_SNACK_MESSAGE, { msg: `Посилання скопійовано в буфер обміну` });
 		},
 	},
 	props: {
