@@ -38,8 +38,20 @@
 										:key="pipeline.id"
 									>
 										<td style="font-family: 'Ubuntu Mono', serif;">
-											<v-icon size="16" class="mr-1">description</v-icon>
-											<span>{{ docsCount(pipeline) }}</span>
+											<v-tooltip bottom>
+												<template v-slot:activator="{ on }">
+													<v-btn text small v-on="on">
+														<v-icon size="16" class="mr-1"
+															>description</v-icon
+														>
+														<span>{{ docsCount(pipeline) }}</span>
+													</v-btn>
+												</template>
+												<span
+													>Всього документів зібрано, при останьому
+													запуску павука</span
+												>
+											</v-tooltip>
 										</td>
 										<td v-if="false">
 											<pipeline-run-status-button
