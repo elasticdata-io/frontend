@@ -8,6 +8,7 @@ import {
 	IS_XS_ONLY,
 	SHOW_VERTICAL_MENU,
 	SNACK_MESSAGE,
+	SNACK_MESSAGE_COLOR,
 } from './getters';
 
 import pipeline from './pipeline/';
@@ -49,11 +50,13 @@ export default new Vuex.Store({
 	},
 	state: {
 		snackMessage: '',
+		snackMessageColor: '',
 		showVerticalMenu: false,
 	},
 	mutations: {
-		[SET_SNACK_MESSAGE](state, { msg }) {
+		[SET_SNACK_MESSAGE](state, { msg, color }) {
 			state.snackMessage = msg;
+			state.snackMessageColor = color;
 		},
 
 		[SET_SHOW_VERTICAL_MENU](state, show) {
@@ -118,5 +121,6 @@ export default new Vuex.Store({
 		},
 		[SHOW_VERTICAL_MENU]: state => state.showVerticalMenu,
 		[SNACK_MESSAGE]: state => state.snackMessage,
+		[SNACK_MESSAGE_COLOR]: state => state.snackMessageColor,
 	},
 });

@@ -281,7 +281,12 @@ export default {
 					this.$store.commit(SET_SNACK_MESSAGE, { msg: success });
 					this.checkRedirectAfterCreated();
 				})
-				.catch(error => this.$store.commit(SET_SNACK_MESSAGE, { msg: error }));
+				.catch(error =>
+					this.$store.commit(SET_SNACK_MESSAGE, {
+						msg: error,
+						color: 'rgba(255, 0, 0, 0.6)',
+					})
+				);
 		},
 		checkRedirectAfterCreated() {
 			if (this.state === 'edit') {
