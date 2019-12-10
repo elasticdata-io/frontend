@@ -38,6 +38,7 @@
 import * as ace from 'brace';
 import 'brace/mode/json';
 import 'brace/theme/monokai';
+import 'brace/ext/searchbox';
 
 let editor;
 
