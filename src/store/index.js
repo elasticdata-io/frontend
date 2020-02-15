@@ -121,7 +121,7 @@ export default new Vuex.Store({
 		},
 		[FETCH_APP_VERSION]({ commit }) {
 			return Vue.http.get(`/api/system/version`).then(res => {
-				const appVersion = res.body || [];
+				const appVersion = res.body || res.bodyText || [];
 				commit(SET_APP_VERSION, appVersion);
 			});
 		},
