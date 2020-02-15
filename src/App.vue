@@ -15,7 +15,7 @@ import HttpTransportLayer from './components/HttpTransportLayer.vue';
 import Snackbar from './components/Snackbar';
 import AppHeader from './components/AppHeader';
 import UserMenu from './components/UserMenu';
-import { SUBSCRIBE_PIPELINE_ALL, WEBSOCKET_CONNECT } from './store/actions';
+import { FETCH_APP_VERSION, SUBSCRIBE_PIPELINE_ALL, WEBSOCKET_CONNECT } from './store/actions';
 import { USER } from './store/user/getters';
 import { mapGetters } from 'vuex';
 
@@ -32,6 +32,7 @@ export default {
 			this.$store.dispatch(WEBSOCKET_CONNECT, { userId });
 			this.$store.dispatch(SUBSCRIBE_PIPELINE_ALL, { userId });
 		}
+		this.$store.dispatch(FETCH_APP_VERSION);
 	},
 };
 </script>

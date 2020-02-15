@@ -4,3 +4,4 @@ export const IS_SM_ONLY = 'IS_SM_ONLY';
 export const SHOW_VERTICAL_MENU = 'SHOW_VERTICAL_MENU';
 export const SNACK_MESSAGE = 'SNACK_MESSAGE';
 export const SNACK_MESSAGE_COLOR = 'SNACK_MESSAGE_COLOR';
+export const APP_VERSION = 'APP_VERSION';

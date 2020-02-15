@@ -6,6 +6,7 @@
 		<v-toolbar-title class="ml-0 pl-4">
 			<a href="/" class="md-title" style="flex: 1 1 0%;">
 				<img src="/logo-black.svg" width="125" alt="elastic data service" />
+				<small class="app-version">{{ APP_VERSION }}</small>
 			</a>
 		</v-toolbar-title>
 		<div class="flex-grow-1"></div>
@@ -34,7 +35,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { IS_MOBILE_VIEW } from '../store/getters';
+import { APP_VERSION, IS_MOBILE_VIEW } from '../store/getters';
 import { TOGGLE_SHOW_VERTICAL_MENU } from '../store/mutations';
 import { LOGGED_IN, LOGIN } from '../store/user/getters';
 
@@ -42,6 +43,7 @@ export default {
 	computed: {
 		...mapGetters({
 			IS_MOBILE_VIEW: IS_MOBILE_VIEW,
+			APP_VERSION: APP_VERSION,
 		}),
 		...mapGetters('user', {
 			login: LOGIN,
@@ -58,3 +60,12 @@ export default {
 	},
 };
 </script>
+<style lang="less">
+.app-version {
+	color: white;
+	font-size: 12px;
+	font-weight: bold;
+	padding-left: 8px;
+	font-family: 'Ubuntu Mono', 'Ubuntu', sans-serif;
+}
+</style>

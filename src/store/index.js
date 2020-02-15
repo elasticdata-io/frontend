@@ -1,7 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
-import { SET_SNACK_MESSAGE, TOGGLE_SHOW_VERTICAL_MENU, SET_SHOW_VERTICAL_MENU } from './mutations';
+import {
+	SET_SNACK_MESSAGE,
+	TOGGLE_SHOW_VERTICAL_MENU,
+	SET_SHOW_VERTICAL_MENU,
+	SET_APP_VERSION,
+} from './mutations';
 import {
 	IS_MOBILE_VIEW,
 	IS_SM_ONLY,
@@ -9,6 +14,7 @@ import {
 	SHOW_VERTICAL_MENU,
 	SNACK_MESSAGE,
 	SNACK_MESSAGE_COLOR,
+	APP_VERSION,
 } from './getters';
 
 import pipeline from './pipeline/';
@@ -19,6 +25,7 @@ import users from './users/';
 import logs from './logs/';
 import { subscribe, stompConnect } from './websocket';
 import {
+	FETCH_APP_VERSION,
 	SUBSCRIBE_PIPELINE_ALL,
 	SUBSCRIBE_PIPELINE_CHANGED,
 	SUBSCRIBE_PIPELINE_EXECUTE_COMMAND,
@@ -31,6 +38,7 @@ import {
 } from './tasks/actions';
 
 import { TASK_CHANGED } from './tasks/actions';
+import * as mutation from './tasks/mutations';
 
 Vue.use(Vuex);
 
@@ -52,6 +60,7 @@ export default new Vuex.Store({
 		snackMessage: '',
 		snackMessageColor: '',
 		showVerticalMenu: false,
+		appVersion: '?',
 	},
 	mutations: {
 		[SET_SNACK_MESSAGE](state, { msg, color }) {
@@ -65,6 +74,10 @@ export default new Vuex.Store({
 
 		[TOGGLE_SHOW_VERTICAL_MENU](state) {
 			state.showVerticalMenu = !state.showVerticalMenu;
+		},
+
+		[SET_APP_VERSION](state, appVersion) {
+			state.appVersion = appVersion;
 		},
 	},
 	actions: {
@@ -106,6 +119,12 @@ export default new Vuex.Store({
 				});
 			});
 		},
+		[FETCH_APP_VERSION]({ commit }) {
+			return Vue.http.get(`/api/system/version`).then(res => {
+				const appVersion = res.body || [];
+				commit(SET_APP_VERSION, appVersion);
+			});
+		},
 	},
 	getters: {
 		[IS_XS_ONLY]: () => {
@@ -122,5 +141,6 @@ export default new Vuex.Store({
 		[SHOW_VERTICAL_MENU]: state => state.showVerticalMenu,
 		[SNACK_MESSAGE]: state => state.snackMessage,
 		[SNACK_MESSAGE_COLOR]: state => state.snackMessageColor,
+		[APP_VERSION]: state => state.appVersion,
 	},
 });
