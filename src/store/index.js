@@ -6,6 +6,7 @@ import {
 	TOGGLE_SHOW_VERTICAL_MENU,
 	SET_SHOW_VERTICAL_MENU,
 	SET_APP_VERSION,
+	SET_APP_LAST_UPDATED,
 } from './mutations';
 import {
 	IS_MOBILE_VIEW,
@@ -15,6 +16,7 @@ import {
 	SNACK_MESSAGE,
 	SNACK_MESSAGE_COLOR,
 	APP_VERSION,
+	APP_LAST_UPDATED,
 } from './getters';
 
 import pipeline from './pipeline/';
@@ -25,6 +27,7 @@ import users from './users/';
 import logs from './logs/';
 import { subscribe, stompConnect } from './websocket';
 import {
+	FETCH_APP_LAST_UPDATED,
 	FETCH_APP_VERSION,
 	SUBSCRIBE_PIPELINE_ALL,
 	SUBSCRIBE_PIPELINE_CHANGED,
@@ -61,6 +64,7 @@ export default new Vuex.Store({
 		snackMessageColor: '',
 		showVerticalMenu: false,
 		appVersion: '?',
+		appLastUpdated: '',
 	},
 	mutations: {
 		[SET_SNACK_MESSAGE](state, { msg, color }) {
@@ -78,6 +82,10 @@ export default new Vuex.Store({
 
 		[SET_APP_VERSION](state, appVersion) {
 			state.appVersion = appVersion;
+		},
+
+		[SET_APP_LAST_UPDATED](state, appLastUpdated) {
+			state.appLastUpdated = appLastUpdated;
 		},
 	},
 	actions: {
@@ -125,6 +133,12 @@ export default new Vuex.Store({
 				commit(SET_APP_VERSION, appVersion);
 			});
 		},
+		[FETCH_APP_LAST_UPDATED]({ commit }) {
+			return Vue.http.get(`/api/system/last-updated`).then(res => {
+				const appLastUpdated = res.body || res.bodyText || [];
+				commit(SET_APP_LAST_UPDATED, appLastUpdated);
+			});
+		},
 	},
 	getters: {
 		[IS_XS_ONLY]: () => {
@@ -142,5 +156,6 @@ export default new Vuex.Store({
 		[SNACK_MESSAGE]: state => state.snackMessage,
 		[SNACK_MESSAGE_COLOR]: state => state.snackMessageColor,
 		[APP_VERSION]: state => state.appVersion,
+		[APP_LAST_UPDATED]: state => state.appLastUpdated,
 	},
 });

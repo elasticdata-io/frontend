@@ -6,7 +6,12 @@
 		<v-toolbar-title class="ml-0 pl-4">
 			<a href="/" class="md-title" style="flex: 1 1 0%;">
 				<img src="/logo-black.svg" width="125" alt="elastic data service" />
-				<small class="app-version">{{ APP_VERSION }}</small>
+				<v-tooltip bottom>
+					<template v-slot:activator="{ on }">
+						<small class="app-version" v-on="on">{{ APP_VERSION }}</small>
+					</template>
+					<span>Востанє оновлено: {{ lastUpdated }}</span>
+				</v-tooltip>
 			</a>
 		</v-toolbar-title>
 		<div class="flex-grow-1"></div>
@@ -35,7 +40,8 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { APP_VERSION, IS_MOBILE_VIEW } from '../store/getters';
+import moment from 'moment';
+import { APP_LAST_UPDATED, APP_VERSION, IS_MOBILE_VIEW } from '../store/getters';
 import { TOGGLE_SHOW_VERTICAL_MENU } from '../store/mutations';
 import { LOGGED_IN, LOGIN } from '../store/user/getters';
 
@@ -44,6 +50,7 @@ export default {
 		...mapGetters({
 			IS_MOBILE_VIEW: IS_MOBILE_VIEW,
 			APP_VERSION: APP_VERSION,
+			APP_LAST_UPDATED: APP_LAST_UPDATED,
 		}),
 		...mapGetters('user', {
 			login: LOGIN,
@@ -51,6 +58,12 @@ export default {
 		}),
 		showUserToggleMenu: function() {
 			return true;
+		},
+		lastUpdated: function() {
+			if (!this.APP_LAST_UPDATED) {
+				return;
+			}
+			return moment(this.APP_LAST_UPDATED).fromNow();
 		},
 	},
 	methods: {
