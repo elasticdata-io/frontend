@@ -222,10 +222,13 @@ export default {
 			this.$store.dispatch(`pipelines/${REMOVE_PIPELINE}`, { id });
 		},
 		dataIsEmpty(pipeline) {
-			return !this.docsCount(pipeline);
+			return !this.docsBytes(pipeline);
 		},
 		docsCount(pipeline) {
 			return pipeline.lastParseRowsCount || 0;
+		},
+		docsBytes(pipeline) {
+			return pipeline.lastParseBytes || 0;
 		},
 	},
 	created() {
