@@ -7,7 +7,7 @@
 			:key="index"
 			:number="number + '.' + (index + 1)"
 			:cmd="command.cmd"
-			:params="command.params"
+			:params="command"
 			:running="command.running"
 		></command-factory>
 	</div>

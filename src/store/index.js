@@ -22,6 +22,7 @@ import {
 import pipeline from './pipeline/';
 import pipelines from './pipelines/';
 import tasks from './tasks/';
+import task from './task/';
 import user from './user/';
 import users from './users/';
 import logs from './logs/';
@@ -41,7 +42,6 @@ import {
 } from './tasks/actions';
 
 import { TASK_CHANGED } from './tasks/actions';
-import * as mutation from './tasks/mutations';
 
 Vue.use(Vuex);
 
@@ -55,6 +55,7 @@ export default new Vuex.Store({
 		pipeline,
 		pipelines,
 		tasks,
+		task,
 		user,
 		users,
 		logs,

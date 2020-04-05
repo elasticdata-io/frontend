@@ -70,7 +70,7 @@ const router = new Router({
 		},
 		{
 			name: 'task',
-			path: '/task/:id',
+			path: '/task/:taskId',
 			component: Task,
 			props: true,
 		},

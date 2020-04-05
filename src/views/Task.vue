@@ -4,7 +4,8 @@
 		<v-container>
 			<v-system-bar color="white" lights-out height="40">
 				<v-btn depressed small @click="back">
-					<v-icon class="mr-2">keyboard_backspace</v-icon> назад
+					<v-icon class="mr-2">keyboard_backspace</v-icon>
+					назад
 				</v-btn>
 				<v-divider vertical class="ml-4 "></v-divider>
 				<v-tooltip bottom>
@@ -46,16 +47,21 @@
 			<v-row class="task">
 				<v-col class="commands">
 					<command-factory
-						v-for="(command, index) in commandsWithLoop"
+						v-for="(command, index) in commands"
 						:key="index"
 						:number="index + 1 + ''"
 						:cmd="command.cmd"
 						:running="command.running"
-						:params="command.params"
+						:params="command"
 					></command-factory>
 				</v-col>
 				<v-col class="preview">
-					2
+					<iframe
+						width="100%"
+						src="file:///Users/sergeytkachenko/Desktop/111.mhtml"
+						height="300"
+						style="border: 1px solid #ddd;"
+					/>
 				</v-col>
 			</v-row>
 		</v-container>
@@ -63,12 +69,16 @@
 </template>
 <script>
 import CommandFactory from '../components/commands/CommandFactory';
+import { FETCH_TASK } from '../store/task/actions';
+import { TASK } from '../store/task/getters';
+import { mapGetters } from 'vuex';
+
 export default {
 	components: {
 		CommandFactory,
 	},
 	data: () => ({
-		commands: [
+		commands1: [
 			{
 				cmd: 'loop',
 				params: {
@@ -591,9 +601,26 @@ export default {
 			},
 		],
 	}),
+	computed: {
+		...mapGetters(`task`, {
+			task: TASK,
+		}),
+		commands: function() {
+			const pipeline = JSON.parse(this.task.commands || '{}') || { commands: [] };
+			return pipeline.commands;
+		},
+	},
 	methods: {
 		back() {
 			this.$router.back();
+		},
+	},
+	created: function() {
+		this.$store.dispatch(`task/${FETCH_TASK}`, this.taskId);
+	},
+	props: {
+		taskId: {
+			type: String,
 		},
 	},
 };
