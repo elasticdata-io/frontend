@@ -69,8 +69,8 @@
 </template>
 <script>
 import CommandFactory from '../components/commands/CommandFactory';
-import { FETCH_TASK } from '../store/task/actions';
-import { TASK } from '../store/task/getters';
+import { FETCH_TASK, FETCH_TASK_COMMANDS_INFORMATION } from '../store/task/actions';
+import { TASK, TASK_COMMANDS_INFORMATION } from '../store/task/getters';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -604,10 +604,11 @@ export default {
 	computed: {
 		...mapGetters(`task`, {
 			task: TASK,
+			taskCommandsInformation: TASK_COMMANDS_INFORMATION,
 		}),
 		commands: function() {
-			const pipeline = JSON.parse(this.task.commands || '{}') || { commands: [] };
-			return pipeline.commands;
+			const taskCommandsInformation = this.taskCommandsInformation || { analyzed: [] };
+			return taskCommandsInformation.analyzed.map(x => x.json);
 		},
 	},
 	methods: {
@@ -615,8 +616,9 @@ export default {
 			this.$router.back();
 		},
 	},
-	created: function() {
-		this.$store.dispatch(`task/${FETCH_TASK}`, this.taskId);
+	created: async function() {
+		await this.$store.dispatch(`task/${FETCH_TASK}`, this.taskId);
+		await this.$store.dispatch(`task/${FETCH_TASK_COMMANDS_INFORMATION}`);
 	},
 	props: {
 		taskId: {
