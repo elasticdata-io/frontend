@@ -14,7 +14,7 @@
 			:key="index"
 			:number="number + '.' + (index + 1)"
 			:cmd="command.cmd"
-			:params="command"
+			:params="command.params"
 			:running="command.running"
 			:success="command.success"
 			:failureReason="command.failureReason"

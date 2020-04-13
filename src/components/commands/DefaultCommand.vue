@@ -4,7 +4,7 @@
 			<div class="default-command" @click="toggleSelected">
 				<span class="number">{{ number }}</span>
 				<div class="name">{{ cmd }}</div>
-				<div class="prop-value" v-for="(value, prop) in params" :key="prop + value">
+				<div class="prop-value" v-for="(value, prop) in commandParams" :key="prop + value">
 					<span class="prop">{{ prop }}</span>
 					<div v-if="!isObjectOrArray(value)" class="value">{{ value }}</div>
 					<div v-if="isObjectOrArray(value)" class="value">
@@ -47,6 +47,11 @@ export default {
 		padding: function() {
 			const padding = this.number.split('.').length - 1;
 			return padding * 21;
+		},
+		commandParams: function() {
+			const params = { ...this.params };
+			delete params.cmd;
+			return params;
 		},
 	},
 	methods: {
