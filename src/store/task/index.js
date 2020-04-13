@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import * as action from './actions';
 import * as mutation from './mutations';
-import { TASK, TASK_COMMANDS_INFORMATION } from './getters';
+import { TASK, TASK_COMMANDS_INFORMATION, TASK_DATA } from './getters';
 
 const state = {
 	task: {},
+	taskData: [],
 	taskCommandsInformation: {},
 	loading: false,
 };
@@ -14,12 +15,20 @@ const mutations = {
 		Vue.set(state, 'loading', loading);
 	},
 
+	[mutation.SET_TASK_DATA](state, taskData) {
+		Vue.set(state, 'taskData', taskData);
+	},
+
 	[mutation.SET_TASK](state, task) {
 		Vue.set(state, 'task', task);
 	},
 
 	[mutation.SET_TASK_COMMANDS_INFORMATION](state, commandsInformation) {
 		Vue.set(state, 'commandsInformation', commandsInformation);
+	},
+
+	[mutation.CLEAR_TASK_DATA](state) {
+		Vue.set(state, 'taskData', []);
 	},
 
 	[mutation.CLEAR_TASK](state) {
@@ -44,7 +53,9 @@ const actions = {
 			commit(mutation.SET_TASK_LOADING, false);
 		});
 	},
+
 	async [action.FETCH_TASK_COMMANDS_INFORMATION]({ commit, state }) {
+		commit(mutation.CLEAR_TASK_COMMANDS_INFORMATION);
 		const task = state.task || {};
 		const link = task.commandsInformationLink;
 		if (!link) {
@@ -55,11 +66,25 @@ const actions = {
 			commit(mutation.SET_TASK_COMMANDS_INFORMATION, commandsInformation);
 		});
 	},
+
+	async [action.FETCH_TASK_DATA]({ commit, state }) {
+		commit(mutation.CLEAR_TASK_DATA);
+		const task = state.task || {};
+		const docsUrl = task.docsUrl;
+		if (!docsUrl) {
+			return;
+		}
+		return Vue.http.get(docsUrl).then(res => {
+			const docs = res.body || {};
+			commit(mutation.SET_TASK_DATA, docs);
+		});
+	},
 };
 
 const getters = {
 	[TASK]: state => state.task,
 	[TASK_COMMANDS_INFORMATION]: state => state.commandsInformation,
+	[TASK_DATA]: state => state.taskData,
 };
 
 export default {

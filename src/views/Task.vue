@@ -45,7 +45,7 @@
 				<span>Завершено</span>
 			</v-system-bar>
 			<v-row class="task">
-				<v-col class="commands">
+				<v-col class="commands" cols="6">
 					<command-factory
 						v-for="(command, index) in commands"
 						:key="index"
@@ -55,13 +55,32 @@
 						:params="command"
 					></command-factory>
 				</v-col>
-				<v-col class="preview">
-					<iframe
-						width="100%"
-						src="file:///Users/sergeytkachenko/Desktop/111.mhtml"
-						height="300"
-						style="border: 1px solid #ddd;"
-					/>
+				<v-col class="preview" cols="6">
+					<v-card>
+						<v-tabs v-model="tab">
+							<v-tab key="data">Данні</v-tab>
+							<v-tab key="snapshot">snapshots</v-tab>
+						</v-tabs>
+						<v-tabs-items v-model="tab">
+							<v-tab-item key="data">
+								<v-card flat>
+									<v-card-text>{{ taskData }}</v-card-text>
+								</v-card>
+							</v-tab-item>
+							<v-tab-item key="snapshot">
+								<v-card flat>
+									<v-card-text>
+										<iframe
+											width="100%"
+											src="https://vuetifyjs.com/ru/components/tabs/"
+											height="300"
+											style="border: 1px solid #ddd;"
+										/>
+									</v-card-text>
+								</v-card>
+							</v-tab-item>
+						</v-tabs-items>
+					</v-card>
 				</v-col>
 			</v-row>
 		</v-container>
@@ -69,8 +88,12 @@
 </template>
 <script>
 import CommandFactory from '../components/commands/CommandFactory';
-import { FETCH_TASK, FETCH_TASK_COMMANDS_INFORMATION } from '../store/task/actions';
-import { TASK, TASK_COMMANDS_INFORMATION } from '../store/task/getters';
+import {
+	FETCH_TASK,
+	FETCH_TASK_COMMANDS_INFORMATION,
+	FETCH_TASK_DATA,
+} from '../store/task/actions';
+import { TASK, TASK_COMMANDS_INFORMATION, TASK_DATA } from '../store/task/getters';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -600,15 +623,18 @@ export default {
 				},
 			},
 		],
+		tab: null,
 	}),
 	computed: {
 		...mapGetters(`task`, {
 			task: TASK,
+			taskData: TASK_DATA,
 			taskCommandsInformation: TASK_COMMANDS_INFORMATION,
 		}),
 		commands: function() {
 			const taskCommandsInformation = this.taskCommandsInformation || { analyzed: [] };
-			return taskCommandsInformation.analyzed
+			const analyzed = taskCommandsInformation.analyzed || [];
+			return analyzed
 				.sort((a, b) => {
 					const aTime = new Date(a.startOnUtc).getTime();
 					const bTime = new Date(b.startOnUtc).getTime();
@@ -636,6 +662,7 @@ export default {
 	created: async function() {
 		await this.$store.dispatch(`task/${FETCH_TASK}`, this.taskId);
 		await this.$store.dispatch(`task/${FETCH_TASK_COMMANDS_INFORMATION}`);
+		await this.$store.dispatch(`task/${FETCH_TASK_DATA}`);
 	},
 	props: {
 		taskId: {
