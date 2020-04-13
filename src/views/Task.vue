@@ -608,7 +608,24 @@ export default {
 		}),
 		commands: function() {
 			const taskCommandsInformation = this.taskCommandsInformation || { analyzed: [] };
-			return taskCommandsInformation.analyzed.map(x => x.json);
+			return taskCommandsInformation.analyzed
+				.sort((a, b) => {
+					const aTime = new Date(a.startOnUtc).getTime();
+					const bTime = new Date(b.startOnUtc).getTime();
+					if (aTime > bTime) {
+						return 1;
+					}
+					if (aTime < bTime) {
+						return -1;
+					}
+					return 0;
+				})
+				.map(x => {
+					return {
+						...x.json,
+						data_context: x.dataContext,
+					};
+				});
 		},
 	},
 	methods: {
