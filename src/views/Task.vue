@@ -123,11 +123,6 @@ export default {
 			const taskCommandsInformation = this.taskCommandsInformation || { json: [] };
 			return taskCommandsInformation.json || [];
 		},
-		commandsHierarchical() {
-			const commandsHierarchical = {};
-			this.setCommandsHierarchical(this.commandsJson, commandsHierarchical);
-			return commandsHierarchical;
-		},
 		commands: function() {
 			const commands = this.commandsAnalyzed.map(x => {
 				return {
@@ -141,8 +136,7 @@ export default {
 					uuid: x.uuid,
 				};
 			});
-			// todo: change linked mechanism, because it is has bags in inner deep structure
-			return this.linkedCommands(commands);
+			return commands;
 		},
 		totalTime: function() {
 			const commandsAnalyzed = this.commandsAnalyzed;
@@ -155,9 +149,6 @@ export default {
 			const end = moment.utc(lastCommand.endOnUtc);
 			const diff = end.diff(start);
 			return moment.utc(diff).format('HH:mm:ss');
-		},
-		flattenCommandAnalyzed: function() {
-			return flatten(this.commandsAnalyzed || []);
 		},
 		flattenTaskData: function() {
 			return flatten(this.taskData || []);
@@ -177,44 +168,6 @@ export default {
 	methods: {
 		back() {
 			this.$router.back();
-		},
-		setCommandsHierarchical: function(commands, commandsHierarchical) {
-			commands.forEach(command => {
-				if (command.commands) {
-					command.commands.forEach(innerCommand => {
-						commandsHierarchical[innerCommand.uuid] = command.uuid;
-						if (innerCommand.commands) {
-							this.setCommandsHierarchical(
-								innerCommand.commands,
-								commandsHierarchical
-							);
-						}
-					});
-				}
-			});
-		},
-		linkedCommands(commands) {
-			const commandsHierarchical = this.commandsHierarchical;
-			commands.forEach(command => {
-				const parentUuid = commandsHierarchical[command.uuid];
-				if (parentUuid) {
-					const parentCommand = this.findCommandByUuid(commands, parentUuid);
-					parentCommand.params.commands = parentCommand.params.commands || [];
-					parentCommand.params.commands.push(command);
-				}
-			});
-			return commands.filter(x => !commandsHierarchical[x.uuid]);
-		},
-		findCommandByUuid(commands, uuid) {
-			return commands.find(x => {
-				const find = x.uuid === uuid;
-				if (find) {
-					return true;
-				}
-				if (x.commands) {
-					return this.findCommandByUuid(x.commands, uuid);
-				}
-			});
 		},
 	},
 	created: async function() {
