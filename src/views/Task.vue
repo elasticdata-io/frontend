@@ -12,7 +12,7 @@
 					<template v-slot:activator="{ on }">
 						<v-btn text color="secondary" class="font-weight-bold" v-on="on">
 							<v-icon>link</v-icon>
-							12
+							{{ totalPages }}
 						</v-btn>
 					</template>
 					<span>Всього сторінок</span>
@@ -21,17 +21,17 @@
 					<template v-slot:activator="{ on }">
 						<v-btn text color="primary" class="font-weight-bold" v-on="on">
 							<v-icon>insert_drive_file</v-icon>
-							250
+							{{ totalKeys }}
 						</v-btn>
 					</template>
-					<span>Всього документів</span>
+					<span>Всього зібраних ключів</span>
 				</v-tooltip>
 				<v-divider vertical class="ml-4 "></v-divider>
 				<v-tooltip bottom>
 					<template v-slot:activator="{ on }">
 						<v-btn text class="font-weight-bold" v-on="on">
 							<v-icon>access_time</v-icon>
-							03:12
+							{{ totalTime }}
 						</v-btn>
 					</template>
 					<span>Всього затраченого часу</span>
@@ -94,6 +94,8 @@ import {
 	FETCH_TASK_DATA,
 } from '../store/task/actions';
 import { TASK, TASK_COMMANDS_INFORMATION, TASK_DATA } from '../store/task/getters';
+import moment from 'moment';
+import { flatten } from 'flat';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -631,27 +633,54 @@ export default {
 			taskData: TASK_DATA,
 			taskCommandsInformation: TASK_COMMANDS_INFORMATION,
 		}),
-		commands: function() {
+		commandAnalyzed: function() {
 			const taskCommandsInformation = this.taskCommandsInformation || { analyzed: [] };
 			const analyzed = taskCommandsInformation.analyzed || [];
-			return analyzed
-				.sort((a, b) => {
-					const aTime = new Date(a.startOnUtc).getTime();
-					const bTime = new Date(b.startOnUtc).getTime();
-					if (aTime > bTime) {
-						return 1;
-					}
-					if (aTime < bTime) {
-						return -1;
-					}
-					return 0;
-				})
-				.map(x => {
-					return {
-						...x.json,
-						data_context: x.dataContext,
-					};
-				});
+			return analyzed.sort((a, b) => {
+				const aTime = new Date(a.startOnUtc).getTime();
+				const bTime = new Date(b.startOnUtc).getTime();
+				if (aTime > bTime) {
+					return 1;
+				}
+				if (aTime < bTime) {
+					return -1;
+				}
+				return 0;
+			});
+		},
+		commands: function() {
+			return this.commandAnalyzed.map(x => {
+				return {
+					...x.json,
+					data_context: x.dataContext,
+				};
+			});
+		},
+		totalTime: function() {
+			const commandAnalyzed = this.commandAnalyzed;
+			if (commandAnalyzed.length === 0) {
+				return;
+			}
+			const firstCommand = commandAnalyzed[0];
+			const lastCommand = commandAnalyzed[commandAnalyzed.length - 1];
+			const start = moment.utc(firstCommand.startOnUtc);
+			const end = moment.utc(lastCommand.endOnUtc);
+			const diff = end.diff(start);
+			return moment.utc(diff).format('HH:mm:ss');
+		},
+		flattenData: function() {
+			return flatten(this.taskData || []);
+		},
+		totalKeys: function() {
+			const flattenData = this.flattenData;
+			return Object.keys(flattenData).length;
+		},
+		totalPages: function() {
+			const commandAnalyzed = this.commandAnalyzed;
+			if (commandAnalyzed.length === 0) {
+				return;
+			}
+			return commandAnalyzed.filter(x => x.json.cmd === 'openurl').length;
 		},
 	},
 	methods: {
