@@ -6,6 +6,7 @@
 			:params="loopParams"
 			:running="running"
 			:success="success"
+			:failureReason="failureReason"
 		>
 		</default-command>
 		<command-factory
@@ -16,6 +17,7 @@
 			:params="command"
 			:running="command.running"
 			:success="command.success"
+			:failureReason="command.failureReason"
 		></command-factory>
 	</div>
 </template>
@@ -57,6 +59,10 @@ export default {
 		success: {
 			type: Boolean,
 			default: false,
+		},
+		failureReason: {
+			type: String,
+			default: '',
 		},
 	},
 };

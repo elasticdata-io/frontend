@@ -1,6 +1,12 @@
 <template>
 	<div>
-		<default-command :cmd="cmd" :number="number" :params="conditionParams" :running="running">
+		<default-command
+			:cmd="cmd"
+			:number="number"
+			:params="conditionParams"
+			:running="running"
+			:failureReason="failureReason"
+		>
 		</default-command>
 		<default-command
 			:cmd="ifCommand.cmd"
@@ -15,6 +21,7 @@
 			:cmd="command.cmd"
 			:params="command.params"
 			:running="command.running"
+			:failureReason="command.failureReason"
 		></command-factory>
 		<command-factory
 			v-for="(command, index) in falseCommands"
@@ -23,6 +30,7 @@
 			:cmd="command.cmd"
 			:params="command.params"
 			:running="command.running"
+			:failureReason="command.failureReason"
 		></command-factory>
 	</div>
 </template>
@@ -71,6 +79,10 @@ export default {
 		running: {
 			type: Boolean,
 			default: false,
+		},
+		failureReason: {
+			type: String,
+			default: '',
 		},
 	},
 };

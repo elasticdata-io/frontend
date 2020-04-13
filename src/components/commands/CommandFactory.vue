@@ -7,6 +7,7 @@
 			:params="params"
 			:running="running"
 			:success="success"
+			:failureReason="failureReason"
 		></loop-command>
 		<condition-command
 			v-if="cmd === 'condition'"
@@ -15,6 +16,7 @@
 			:params="params"
 			:running="running"
 			:success="success"
+			:failureReason="failureReason"
 		></condition-command>
 		<default-command
 			v-if="cmd !== 'loop' && cmd !== 'condition'"
@@ -23,6 +25,7 @@
 			:params="params"
 			:running="running"
 			:success="success"
+			:failureReason="failureReason"
 		>
 		</default-command>
 	</div>
@@ -57,6 +60,10 @@ export default {
 		success: {
 			type: Boolean,
 			default: false,
+		},
+		failureReason: {
+			type: String,
+			default: '',
 		},
 	},
 };

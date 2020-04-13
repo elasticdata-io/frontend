@@ -55,6 +55,7 @@
 							:running="command.running"
 							:params="command.params"
 							:success="command.success"
+							:failureReason="command.failureReason"
 						></command-factory>
 					</v-card>
 				</v-col>
@@ -659,6 +660,7 @@ export default {
 						data_context: x.dataContext,
 					},
 					success: x.status === 'success',
+					failureReason: x.failureReason,
 					cmd: x.json.cmd,
 				};
 			});

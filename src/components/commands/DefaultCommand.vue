@@ -11,6 +11,9 @@
 						<v-btn x-small depressed>JSON</v-btn>
 					</div>
 				</div>
+				<div v-if="failureReason">
+					<v-alert dense text>{{ failureReason }}</v-alert>
+				</div>
 			</div>
 		</div>
 		<v-progress-linear
@@ -74,6 +77,10 @@ export default {
 		success: {
 			type: Boolean,
 			default: false,
+		},
+		failureReason: {
+			type: String,
+			default: '',
 		},
 	},
 };
