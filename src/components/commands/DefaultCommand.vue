@@ -12,7 +12,7 @@
 					</div>
 				</div>
 				<div v-if="failureReason">
-					<v-alert dense text>{{ failureReason }}</v-alert>
+					<v-alert dense text class="subtitle-2">{{ failureReason }}</v-alert>
 				</div>
 			</div>
 		</div>

@@ -639,18 +639,7 @@ export default {
 		}),
 		commandAnalyzed: function() {
 			const taskCommandsInformation = this.taskCommandsInformation || { analyzed: [] };
-			const analyzed = taskCommandsInformation.analyzed || [];
-			return analyzed.sort((a, b) => {
-				const aTime = new Date(a.startOnUtc).getTime();
-				const bTime = new Date(b.startOnUtc).getTime();
-				if (aTime > bTime) {
-					return 1;
-				}
-				if (aTime < bTime) {
-					return -1;
-				}
-				return 0;
-			});
+			return taskCommandsInformation.analyzed || [];
 		},
 		commands: function() {
 			return this.commandAnalyzed.map(x => {
