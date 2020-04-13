@@ -37,6 +37,8 @@ export default {
 			return {
 				selected: this.selected,
 				running: this.running,
+				'cmd-success': this.success,
+				'cmd-error': !this.success,
 			};
 		},
 		padding: function() {
@@ -69,6 +71,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		success: {
+			type: Boolean,
+			default: false,
+		},
 	},
 };
 </script>
@@ -81,6 +87,14 @@ export default {
 	&:hover,
 	&.selected {
 		background-color: #e0e2e7;
+	}
+
+	&.cmd-success {
+		background-color: rgba(46, 255, 0, 0.2);
+	}
+
+	&.cmd-error {
+		background-color: rgba(255, 0, 3, 0.2);
 	}
 
 	&.running {

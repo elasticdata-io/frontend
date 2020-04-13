@@ -6,6 +6,7 @@
 			:number="number"
 			:params="params"
 			:running="running"
+			:success="success"
 		></loop-command>
 		<condition-command
 			v-if="cmd === 'condition'"
@@ -13,6 +14,7 @@
 			:number="number"
 			:params="params"
 			:running="running"
+			:success="success"
 		></condition-command>
 		<default-command
 			v-if="cmd !== 'loop' && cmd !== 'condition'"
@@ -20,6 +22,7 @@
 			:number="number"
 			:params="params"
 			:running="running"
+			:success="success"
 		>
 		</default-command>
 	</div>
@@ -48,6 +51,10 @@ export default {
 			default: () => {},
 		},
 		running: {
+			type: Boolean,
+			default: false,
+		},
+		success: {
 			type: Boolean,
 			default: false,
 		},

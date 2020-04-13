@@ -46,14 +46,17 @@
 			</v-system-bar>
 			<v-row class="task">
 				<v-col class="commands" cols="6">
-					<command-factory
-						v-for="(command, index) in commands"
-						:key="index"
-						:number="index + 1 + ''"
-						:cmd="command.cmd"
-						:running="command.running"
-						:params="command"
-					></command-factory>
+					<v-card>
+						<command-factory
+							v-for="(command, index) in commands"
+							:key="index"
+							:number="index + 1 + ''"
+							:cmd="command.cmd"
+							:running="command.running"
+							:params="command.params"
+							:success="command.success"
+						></command-factory>
+					</v-card>
 				</v-col>
 				<v-col class="preview" cols="6">
 					<v-card>
@@ -651,8 +654,12 @@ export default {
 		commands: function() {
 			return this.commandAnalyzed.map(x => {
 				return {
-					...x.json,
-					data_context: x.dataContext,
+					params: {
+						...x.json,
+						data_context: x.dataContext,
+					},
+					success: x.status === 'success',
+					cmd: x.json.cmd,
 				};
 			});
 		},

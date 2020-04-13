@@ -1,6 +1,12 @@
 <template>
 	<div>
-		<default-command :cmd="cmd" :number="number" :params="loopParams" :running="running">
+		<default-command
+			:cmd="cmd"
+			:number="number"
+			:params="loopParams"
+			:running="running"
+			:success="success"
+		>
 		</default-command>
 		<command-factory
 			v-for="(command, index) in params.commands"
@@ -9,6 +15,7 @@
 			:cmd="command.cmd"
 			:params="command"
 			:running="command.running"
+			:success="command.success"
 		></command-factory>
 	</div>
 </template>
@@ -44,6 +51,10 @@ export default {
 			default: () => {},
 		},
 		running: {
+			type: Boolean,
+			default: false,
+		},
+		success: {
 			type: Boolean,
 			default: false,
 		},
