@@ -1,5 +1,5 @@
 <template>
-	<v-snackbar v-model="snackbar" :timeout="10000" :color="snackMessageColor">
+	<v-snackbar v-model="snackbar" :timeout="snackTimeout" :color="snackMessageColor">
 		<span style="max-width: 500px;word-wrap: break-word">
 			{{ snackMessage }}
 		</span>
@@ -11,13 +11,14 @@
 <script>
 import { mapGetters } from 'vuex';
 import { SET_SNACK_MESSAGE } from '../store/mutations';
-import { SNACK_MESSAGE, SNACK_MESSAGE_COLOR } from '../store/getters';
+import { SNACK_MESSAGE, SNACK_MESSAGE_COLOR, SNACK_TIMEOUT } from '../store/getters';
 
 export default {
 	computed: {
 		...mapGetters({
 			snackMessage: SNACK_MESSAGE,
 			snackMessageColor: SNACK_MESSAGE_COLOR,
+			snackTimeout: SNACK_TIMEOUT,
 		}),
 		snackbar: {
 			get() {

@@ -1,6 +1,7 @@
 <template>
 	<div class="json-editor">
 		<v-dialog
+			persistent
 			v-model="dialog"
 			fullscreen
 			hide-overlay
@@ -21,9 +22,13 @@
 					<v-toolbar-title>yaml: {{ title }}</v-toolbar-title>
 					<div class="flex-grow-1"></div>
 					<v-toolbar-items>
-						<v-btn dark text @click="save">
+						<v-btn text @click="save" class="mr-5">
 							<v-icon>save</v-icon>
 							<span class="pl-2">Зберегти</span>
+						</v-btn>
+						<v-btn dark text @click="saveAndClose">
+							<v-icon>undo</v-icon>
+							<span class="pl-2">Зберегти і закрити</span>
 						</v-btn>
 					</v-toolbar-items>
 				</v-toolbar>
@@ -50,6 +55,11 @@ export default {
 			this.editData = YAML.stringify(JSON.parse(this.json || '{"commands": []}'));
 		},
 		save() {
+			let yaml = this.getEditData();
+			const json = JSON.stringify(YAML_JS.parse(yaml));
+			this.$emit('save', json);
+		},
+		saveAndClose() {
 			this.dialog = false;
 			let yaml = this.getEditData();
 			const json = JSON.stringify(YAML_JS.parse(yaml));

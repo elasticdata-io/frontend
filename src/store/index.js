@@ -17,6 +17,7 @@ import {
 	SNACK_MESSAGE_COLOR,
 	APP_VERSION,
 	APP_LAST_UPDATED,
+	SNACK_TIMEOUT,
 } from './getters';
 
 import pipeline from './pipeline/';
@@ -61,6 +62,7 @@ export default new Vuex.Store({
 		logs,
 	},
 	state: {
+		snackTimeout: 10000,
 		snackMessage: '',
 		snackMessageColor: '',
 		showVerticalMenu: false,
@@ -68,9 +70,10 @@ export default new Vuex.Store({
 		appLastUpdated: '',
 	},
 	mutations: {
-		[SET_SNACK_MESSAGE](state, { msg, color }) {
+		[SET_SNACK_MESSAGE](state, { msg, color, timeout }) {
 			state.snackMessage = msg;
 			state.snackMessageColor = color;
+			state.snackTimeout = timeout;
 		},
 
 		[SET_SHOW_VERTICAL_MENU](state, show) {
@@ -155,6 +158,7 @@ export default new Vuex.Store({
 		},
 		[SHOW_VERTICAL_MENU]: state => state.showVerticalMenu,
 		[SNACK_MESSAGE]: state => state.snackMessage,
+		[SNACK_TIMEOUT]: state => state.snackTimeout,
 		[SNACK_MESSAGE_COLOR]: state => state.snackMessageColor,
 		[APP_VERSION]: state => state.appVersion,
 		[APP_LAST_UPDATED]: state => state.appLastUpdated,
