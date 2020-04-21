@@ -33,7 +33,7 @@ const mutations = {
 const actions = {
 	async [action.RUN_PIPELINE]({ commit, dispatch }, { pipelineId }) {
 		commit(mutation.SET_PIPELINE_LOADING, true);
-		const res = await Vue.http.post(`/api/pipeline/run-from-client/${pipelineId}`);
+		await Vue.http.post(`/api/pipeline/run-from-client/${pipelineId}`);
 		//commit(mutation.SET_PIPELINE, res.body);
 		commit(mutation.SET_PIPELINE_LOADING, false);
 		// dispatch(`pipelines/${PIPELINE_CHANGED}`, { pipeline: res.body }, { root: true });
@@ -57,8 +57,15 @@ const actions = {
 	async [action.SAVE_PIPELINE]({ commit, state }) {
 		return new Promise((resolve, reject) => {
 			commit(mutation.SET_PIPELINE_LOADING, true);
+			const jsonCommands = JSON.parse(state.pipeline.jsonCommands || {});
 			Vue.http
-				.post(`/api/pipeline/save`, JSON.stringify(state.pipeline))
+				.post(
+					`/api/pipeline/save`,
+					JSON.stringify({
+						...state.pipeline,
+						pipelineVersion: jsonCommands.version || '',
+					})
+				)
 				.then(res => {
 					setTimeout(() => {
 						commit(mutation.SET_PIPELINE, res.body);
