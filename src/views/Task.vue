@@ -48,13 +48,16 @@
 				<v-col class="commands" cols="6">
 					<v-card>
 						<command-factory
-							v-for="(command, index) in commands"
+							v-for="(command, index) in commandsSortingWithLevel"
 							:key="index"
-							:number="index + 1 + ''"
-							:cmd="command.cmd"
+							:number="command.number"
+							:cmd="command.json.cmd"
+							:uuid="command.uuid"
+							:parentUuid="command.parentUuid"
+							:level="command.level"
 							:running="command.running"
-							:params="command.params"
-							:success="command.success"
+							:params="command.json"
+							:success="command.status === 'success'"
 							:failureReason="command.failureReason"
 						></command-factory>
 					</v-card>
@@ -101,6 +104,7 @@ import { TASK, TASK_COMMANDS_INFORMATION, TASK_DATA } from '../store/task/getter
 import moment from 'moment';
 import { flatten } from 'flat';
 import { mapGetters } from 'vuex';
+import CommandsAnalyzedStructure from '../lib/commands.analyzed.structure';
 
 export default {
 	components: {
@@ -124,7 +128,7 @@ export default {
 			return taskCommandsInformation.json || [];
 		},
 		commands: function() {
-			const commands = this.commandsAnalyzed.map(x => {
+			return this.commandsAnalyzed.map(x => {
 				return {
 					params: {
 						...x.json,
@@ -136,7 +140,12 @@ export default {
 					uuid: x.uuid,
 				};
 			});
-			return commands;
+		},
+		commandsSortingWithLevel: function() {
+			return CommandsAnalyzedStructure.getSortingWithLevel(
+				this.commandsAnalyzed,
+				this.commandsJson
+			);
 		},
 		totalTime: function() {
 			const commandsAnalyzed = this.commandsAnalyzed;

@@ -1,14 +1,5 @@
 <template>
 	<div>
-		<loop-command
-			v-if="cmd === 'loop'"
-			:cmd="cmd"
-			:number="number"
-			:params="params"
-			:running="running"
-			:success="success"
-			:failureReason="failureReason"
-		></loop-command>
 		<condition-command
 			v-if="cmd === 'condition'"
 			:cmd="cmd"
@@ -19,8 +10,10 @@
 			:failureReason="failureReason"
 		></condition-command>
 		<default-command
-			v-if="cmd !== 'loop' && cmd !== 'condition'"
 			:cmd="cmd"
+			:uuid="uuid"
+			:parentUuid="parentUuid"
+			:level="level"
 			:number="number"
 			:params="params"
 			:running="running"
@@ -41,11 +34,23 @@ export default {
 		DefaultCommand,
 	},
 	props: {
+		level: {
+			type: Number,
+			default: 0,
+		},
 		number: {
 			type: String,
-			default: '0',
+			default: '',
 		},
 		cmd: {
+			type: String,
+			default: '',
+		},
+		parentUuid: {
+			type: String,
+			default: '',
+		},
+		uuid: {
 			type: String,
 			default: '',
 		},

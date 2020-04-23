@@ -45,7 +45,7 @@ export default {
 			};
 		},
 		padding: function() {
-			const padding = this.number.split('.').length - 1;
+			const padding = this.level;
 			return padding * 21;
 		},
 		commandParams: function() {
@@ -65,9 +65,21 @@ export default {
 	props: {
 		number: {
 			type: String,
-			default: '0',
+			default: '',
+		},
+		level: {
+			type: Number,
+			default: 0,
 		},
 		cmd: {
+			type: String,
+			default: '',
+		},
+		parentUuid: {
+			type: String,
+			default: '',
+		},
+		uuid: {
 			type: String,
 			default: '',
 		},
