@@ -15,9 +15,9 @@
 			</a>
 		</v-toolbar-title>
 		<div class="flex-grow-1"></div>
-		<v-menu offset-y>
+		<v-menu offset-y v-if="login">
 			<template v-slot:activator="{ on }">
-				<v-btn v-if="login" v-on="on" small color="white" text>
+				<v-btn v-on="on" small color="white" text>
 					<span style="padding-left: 5px;">{{ login }}</span>
 				</v-btn>
 			</template>
