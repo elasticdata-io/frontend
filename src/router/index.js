@@ -9,6 +9,10 @@ import Enter from '../views/Enter';
 import Admin from '../views/Admin';
 import PipelineDataView from '../views/PipelineDataView';
 import Task from '../views/Task';
+import DocsView from '../views/DocsView';
+import CommandsDocs from '../components/docs/CommandsDocs';
+import DataRulesDocs from '../components/docs/DataRulesDocs';
+import SettingsDocs from '../components/docs/SettingsDocs';
 
 Vue.use(Router);
 
@@ -73,6 +77,26 @@ const router = new Router({
 			path: '/task/:taskId',
 			component: Task,
 			props: true,
+		},
+		{
+			name: 'docs',
+			path: '/docs',
+			component: DocsView,
+		},
+		{
+			name: 'docs.commands',
+			path: '/docs/commands',
+			component: CommandsDocs,
+		},
+		{
+			name: 'docs.data-rules',
+			path: '/docs/data-rules',
+			component: DataRulesDocs,
+		},
+		{
+			name: 'docs.settings',
+			path: '/docs/settings',
+			component: SettingsDocs,
 		},
 		{
 			name: 'help',

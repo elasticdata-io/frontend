@@ -9,7 +9,7 @@
 		:clipped="true"
 		:touchless="true"
 	>
-		<v-list>
+		<v-list dense>
 			<v-list-item>
 				<v-list-item-content>
 					<v-list-item-title>
@@ -22,42 +22,59 @@
 				</v-list-item-content>
 			</v-list-item>
 			<v-divider></v-divider>
-			<v-list-item :to="{ name: 'pipelines' }">
-				<v-list-item-title>
-					<v-icon>list</v-icon>
-					<span class="pl-2">Павуки</span>
-				</v-list-item-title>
-			</v-list-item>
-			<v-list-item :to="{ name: 'analytics' }">
-				<v-list-item-title>
-					<v-icon>equalizer</v-icon>
-					<span class="pl-2">Аналітика</span>
-				</v-list-item-title>
-			</v-list-item>
-			<v-list-item :to="{ name: 'payment' }">
-				<v-list-item-title>
-					<v-icon>payment</v-icon>
-					<span class="pl-2">Оплата</span>
-				</v-list-item-title>
-			</v-list-item>
-			<v-list-item href="//docs.elasticdata.io" target="_blank">
-				<v-list-item-title>
-					<v-icon>help</v-icon>
-					<span class="pl-2">Допомога</span>
-				</v-list-item-title>
-			</v-list-item>
-			<v-list-item :to="{ name: 'account' }">
-				<v-list-item-title>
-					<v-icon>account_circle</v-icon>
-					<span class="pl-2">Аккаунт</span>
-				</v-list-item-title>
-			</v-list-item>
-			<v-list-item v-if="user.isAdmin" :to="{ name: 'admin' }">
-				<v-list-item-title>
-					<v-icon>security</v-icon>
-					<span class="pl-2">Admin</span>
-				</v-list-item-title>
-			</v-list-item>
+			<template v-for="item in sections">
+				<v-list-group
+					v-if="item.children"
+					:key="item.text"
+					v-model="item.model"
+					:prepend-icon="item.model ? item.icon : item['icon-alt']"
+					append-icon=""
+				>
+					<template v-slot:activator>
+						<v-list-item-content>
+							<v-list-item-title>
+								{{ item.text }}
+							</v-list-item-title>
+						</v-list-item-content>
+					</template>
+					<v-list-item
+						v-for="(child, i) in item.children"
+						:key="i"
+						link
+						:to="child.route"
+						:href="child.href"
+						:target="child.target"
+					>
+						<v-list-item-action v-if="child.icon">
+							<v-icon>{{ child.icon }}</v-icon>
+						</v-list-item-action>
+						<v-list-item-content>
+							<v-list-item-title>
+								{{ child.text }}
+							</v-list-item-title>
+						</v-list-item-content>
+					</v-list-item>
+					<v-divider></v-divider>
+				</v-list-group>
+				<v-list-item
+					v-else
+					:key="item.text"
+					link
+					:disabled="item.disabled"
+					:to="item.route"
+					:href="item.href"
+					:target="item.target"
+				>
+					<v-list-item-action>
+						<v-icon>{{ item.icon }}</v-icon>
+					</v-list-item-action>
+					<v-list-item-content>
+						<v-list-item-title>
+							{{ item.text }}
+						</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+			</template>
 		</v-list>
 	</v-navigation-drawer>
 </template>
@@ -87,16 +104,67 @@ export default {
 		missingName: function() {
 			return !this.firstName && !this.lastName;
 		},
+		sections: function() {
+			return this.items.concat(this.adminItems);
+		},
+		adminItems: function() {
+			const user = this.user || {};
+			if (user.isAdmin) {
+				return [{ icon: 'security', text: 'Admin', route: { name: 'admin' } }];
+			}
+			return [];
+		},
 	},
 	data: () => {
 		return {
 			expand: true,
+			items: [
+				{
+					icon: 'list',
+					text: 'Павуки',
+					route: { name: 'pipelines' },
+				},
+				{
+					icon: 'expand_less',
+					'icon-alt': 'expand_more',
+					text: 'Допомога',
+					model: false,
+					children: [
+						{
+							icon: 'local_offer',
+							text: 'DSL 1.0',
+							href: '//docs.elasticdata.io',
+							target: '_blank',
+						},
+						{
+							icon: 'layers',
+							text: 'DSL 2.0',
+							route: { name: 'docs' },
+						},
+					],
+				},
+				{
+					icon: 'equalizer',
+					text: 'Аналітика',
+					route: { name: 'analytics' },
+					disabled: true,
+				},
+				{
+					icon: 'payment',
+					text: 'Оплата',
+					route: { name: 'payment' },
+					disabled: true,
+				},
+				{
+					icon: 'account_circle',
+					text: 'Аккаунт',
+					route: { name: 'account' },
+					disabled: true,
+				},
+			],
 		};
 	},
 	methods: {
-		goTo(path) {
-			this.$router.push(path);
-		},
 		activeClass(path) {
 			return {
 				active: this.$route.fullPath.startsWith(path),
