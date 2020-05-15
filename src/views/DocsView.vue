@@ -8,14 +8,14 @@
 							<span>Документація DSL версії 2.0</span>
 						</v-card-title>
 						<v-card-text>
-							<div class="block">
+							<div class="block disabled">
 								<router-link tag="a" :to="{ name: 'docs.commands' }">
 									<span class="command">
 										commands
 									</span>
-									<span class="summary"
-										>Reload the ACLs from the configured ACL file</span
-									>
+									<span class="summary">
+										Команди взаємоції зі сторінкою
+									</span>
 								</router-link>
 							</div>
 							<div class="block">
@@ -23,19 +23,19 @@
 									<span class="command">
 										data rules
 									</span>
-									<span class="summary"
-										>Reload the ACLs from the configured ACL file</span
-									>
+									<span class="summary">
+										Правила форматування тексту
+									</span>
 								</router-link>
 							</div>
-							<div class="block">
+							<div class="block disabled">
 								<router-link tag="a" :to="{ name: 'docs.docs.settings' }">
 									<span class="command">
 										pipeline settings
 									</span>
-									<span class="summary"
-										>Reload the ACLs from the configured ACL file</span
-									>
+									<span class="summary">
+										Налуштування павука (мова, screen size, proxy та інше)
+									</span>
 								</router-link>
 							</div>
 						</v-card-text>
@@ -52,6 +52,18 @@ export default {};
 .block {
 	margin: 1em 0;
 	overflow: hidden;
+
+	&.disabled {
+		> a {
+			pointer-events: none;
+			cursor: text;
+			color: gray;
+
+			.command {
+				color: gray;
+			}
+		}
+	}
 
 	> a {
 		border-radius: 5px;

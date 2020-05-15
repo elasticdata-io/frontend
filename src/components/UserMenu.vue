@@ -131,15 +131,15 @@ export default {
 					model: false,
 					children: [
 						{
+							icon: 'layers',
+							text: 'DSL 2.0',
+							route: { name: 'docs' },
+						},
+						{
 							icon: 'local_offer',
 							text: 'DSL 1.0',
 							href: '//docs.elasticdata.io',
 							target: '_blank',
-						},
-						{
-							icon: 'layers',
-							text: 'DSL 2.0',
-							route: { name: 'docs' },
 						},
 					],
 				},
