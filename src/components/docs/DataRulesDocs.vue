@@ -55,47 +55,18 @@
 	</v-content>
 </template>
 <script>
+import { DATA_RULES } from '../../store/data-rules/getters';
+import { mapGetters } from 'vuex';
+
 export default {
 	data: () => ({
 		groups: ['всі', 'хочу змінити текст', 'хочу вибрати текст', 'маніпуляція ключами'],
-		rules: [
-			{
-				cmd: 'only_number',
-				summary: 'Залишити тільки цифри',
-				route: { name: 'docs.data-rules.only_number' },
-			},
-			{
-				cmd: 'trim',
-				summary: 'Обрізати пусті символи по крям',
-				route: { name: 'docs.data-rules.trim' },
-				disabled: true,
-			},
-			{
-				cmd: 'replace',
-				summary: 'Знайти і замінити',
-				route: { name: 'docs.data-rules.replace' },
-				disabled: true,
-			},
-			{
-				cmd: 'concat',
-				summary: 'Обєднати декілька ключів',
-				route: { name: 'docs.data-rules.concat' },
-				disabled: true,
-			},
-			{
-				cmd: 'extract',
-				summary: 'Вибрати необхдний текст',
-				route: { name: 'docs.data-rules.extract' },
-				disabled: true,
-			},
-			{
-				cmd: 'split',
-				summary: 'Розбити текст на массив',
-				route: { name: 'docs.data-rules.split' },
-				disabled: true,
-			},
-		],
 	}),
+	computed: {
+		...mapGetters('dataRules', {
+			rules: DATA_RULES,
+		}),
+	},
 	methods: {
 		back() {
 			this.$router.back();
