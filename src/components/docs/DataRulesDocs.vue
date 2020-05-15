@@ -36,8 +36,8 @@
 								</v-col>
 								<v-col md="7">
 									<v-row no-gutters align="center">
-										<v-col cols="4" v-for="rule in rules">
-											<div class="rule">
+										<v-col cols="4" v-for="rule in rules" v-bind:key="rule.cmd">
+											<div class="rule" :disabled="rule.disabled">
 												<router-link tag="a" :to="rule.route">
 													<span class="command">{{ rule.cmd }}</span>
 													<span class="summary">{{ rule.summary }}</span>
@@ -68,26 +68,31 @@ export default {
 				cmd: 'trim',
 				summary: 'Обрізати пусті символи по крям',
 				route: { name: 'docs.data-rules.trim' },
+				disabled: true,
 			},
 			{
 				cmd: 'replace',
 				summary: 'Знайти і замінити',
 				route: { name: 'docs.data-rules.replace' },
+				disabled: true,
 			},
 			{
 				cmd: 'concat',
 				summary: 'Обєднати декілька ключів',
 				route: { name: 'docs.data-rules.concat' },
+				disabled: true,
 			},
 			{
 				cmd: 'extract',
 				summary: 'Вибрати необхдний текст',
 				route: { name: 'docs.data-rules.extract' },
+				disabled: true,
 			},
 			{
 				cmd: 'split',
 				summary: 'Розбити текст на массив',
 				route: { name: 'docs.data-rules.split' },
+				disabled: true,
 			},
 		],
 	}),
@@ -105,6 +110,16 @@ export default {
 }
 .rule {
 	padding: 10px;
+	&[disabled='disabled'] {
+		pointer-events: none;
+		> a {
+			color: gray;
+
+			.command {
+				color: gray;
+			}
+		}
+	}
 
 	> a {
 		border-radius: 5px;
