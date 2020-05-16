@@ -15,7 +15,7 @@
 							<v-row justify="center" class="pt-6">
 								<v-col cols="12" class="search-nav">
 									<v-row justify="center">
-										<v-col cols="3">
+										<v-col md="3" sm="6" xs="12">
 											<v-select
 												:items="groups"
 												label="фільтрувати по группі"
@@ -23,7 +23,7 @@
 												:hide-details="true"
 											></v-select>
 										</v-col>
-										<v-col cols="3">
+										<v-col md="3" sm="6" xs="12">
 											<v-text-field
 												flat
 												solo
@@ -34,9 +34,14 @@
 										</v-col>
 									</v-row>
 								</v-col>
-								<v-col md="7">
+								<v-col md="7" sm="12" xs="12">
 									<v-row no-gutters align="center">
-										<v-col cols="4" v-for="rule in rules" v-bind:key="rule.cmd">
+										<v-col
+											md="4"
+											sm="6"
+											v-for="rule in rules"
+											v-bind:key="rule.cmd"
+										>
 											<div class="rule" :disabled="rule.disabled">
 												<router-link tag="a" :to="rule.route">
 													<span class="command">{{ rule.cmd }}</span>
@@ -81,6 +86,7 @@ export default {
 }
 .rule {
 	padding: 10px;
+
 	&[disabled='disabled'] {
 		pointer-events: none;
 		> a {
