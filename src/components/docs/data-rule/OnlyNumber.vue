@@ -38,17 +38,15 @@
 												>json</v-btn
 											>
 										</div>
-										<pre
-											class="json"
-											id="input-editor"
-										><code>{{ example }}</code></pre>
+										<code-preview
+											:code="example"
+											:mode="mode"
+											:selection-text="cmd"
+										></code-preview>
 									</div>
 									<div class="head">
 										<h2 class="headline">Data output</h2>
-										<pre
-											class="json"
-											id="output-editor"
-										><code>{{ outputData }}</code></pre>
+										<code-preview :code="outputData" mode="json"></code-preview>
 									</div>
 								</v-col>
 								<v-col md="6">
@@ -69,16 +67,15 @@
 	</v-content>
 </template>
 <script>
-import * as ace from 'brace';
-import 'brace/theme/monokai';
-import 'brace/ext/searchbox';
 import * as YAML from 'json-to-pretty-yaml';
-import 'brace/mode/yaml';
-import 'brace/mode/json';
 import { mapGetters } from 'vuex';
 import { DATA_RULES } from '../../../store/data-rules/getters';
+import CodePreview from '../../CodePreview';
 
 export default {
+	components: {
+		CodePreview,
+	},
 	computed: {
 		...mapGetters('dataRules', {
 			rules: DATA_RULES,
@@ -123,46 +120,13 @@ export default {
 		back() {
 			this.$router.back();
 		},
-		setSelection() {
-			const editor = this.editor;
-			const startRange = editor.find(this.cmd);
-			startRange.start.column = 0;
-			startRange.end.column = Number.MAX_VALUE;
-			editor.selection.setRange(startRange);
-		},
 		switchMode() {
-			const editor = this.editor;
 			if (this.mode === 'json') {
 				this.mode = 'yaml';
 			} else if (this.mode === 'yaml') {
 				this.mode = 'json';
 			}
-			editor.getSession().setValue(this.example);
-			editor.getSession().setMode(`ace/mode/${this.mode}`);
-			this.updateHeight();
-			this.setSelection();
 		},
-		updateHeight() {
-			const editor = this.editor;
-			const newHeight =
-				editor.getSession().getScreenLength() * editor.renderer.lineHeight +
-				editor.renderer.scrollBar.getWidth();
-			editor.setOptions({ maxLines: newHeight });
-		},
-	},
-	created() {
-		setTimeout(() => {
-			const editor = (this.editor = ace.edit('input-editor'));
-			editor.setTheme('ace/theme/monokai');
-			editor.getSession().setMode(`ace/mode/${this.mode}`);
-			this.setSelection();
-			this.updateHeight();
-		});
-		setTimeout(() => {
-			const editor = ace.edit('output-editor');
-			editor.setTheme('ace/theme/monokai');
-			editor.getSession().setMode(`ace/mode/json`);
-		});
 	},
 };
 </script>
@@ -176,30 +140,6 @@ export default {
 		h2.headline {
 			font-family: @ubuntu-mono;
 			margin-bottom: 10px;
-		}
-	}
-
-	#input-editor {
-		height: 250px;
-
-		code {
-			visibility: hidden;
-		}
-
-		.ace_content * {
-			font-family: Monaco, 'Ubuntu Mono', monospace;
-		}
-	}
-
-	#output-editor {
-		height: 150px;
-
-		code {
-			visibility: hidden;
-		}
-
-		.ace_content * {
-			font-family: Monaco, 'Ubuntu Mono', monospace;
 		}
 	}
 }
