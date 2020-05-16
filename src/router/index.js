@@ -14,6 +14,7 @@ import CommandsDocs from '../components/docs/CommandsDocs';
 import DataRulesDocs from '../components/docs/DataRulesDocs';
 import SettingsDocs from '../components/docs/SettingsDocs';
 import OnlyNumber from '../components/docs/data-rule/OnlyNumber';
+import Trim from '../components/docs/data-rule/Trim';
 
 Vue.use(Router);
 
@@ -98,6 +99,11 @@ const router = new Router({
 			name: 'docs.data-rules.only_number',
 			path: '/docs/data-rules/only_number',
 			component: OnlyNumber,
+		},
+		{
+			name: 'docs.data-rules.trim',
+			path: '/docs/data-rules/trim',
+			component: Trim,
 		},
 		{
 			name: 'docs.settings',

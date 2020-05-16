@@ -11,7 +11,6 @@ const state = {
 			cmd: 'trim',
 			summary: 'Обрізати пусті символи по крям',
 			route: { name: 'docs.data-rules.trim' },
-			disabled: true,
 		},
 		{
 			cmd: 'replace',
