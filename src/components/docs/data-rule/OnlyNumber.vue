@@ -13,7 +13,7 @@
 								Назад
 							</v-btn>
 							<v-row class="pt-6">
-								<v-col cols="5">
+								<v-col cols="5" class="left">
 									<div class="head">
 										<h2 class="headline">Description</h2>
 										<p>
@@ -53,13 +53,7 @@
 									</div>
 								</v-col>
 								<v-col md="6">
-									<ul>
-										<li v-for="rule in rules" v-bind:key="rule.cmd">
-											<router-link tag="a" :to="rule.route">
-												{{ rule.cmd }}
-											</router-link>
-										</li>
-									</ul>
+									<data-rules-navigation></data-rules-navigation>
 								</v-col>
 							</v-row>
 						</v-card-text>
@@ -71,18 +65,15 @@
 </template>
 <script>
 import * as YAML from 'json-to-pretty-yaml';
-import { mapGetters } from 'vuex';
-import { DATA_RULES } from '../../../store/data-rules/getters';
 import CodePreview from '../../CodePreview';
+import DataRulesNavigation from '../DataRulesNavigation';
 
 export default {
 	components: {
 		CodePreview,
+		DataRulesNavigation,
 	},
 	computed: {
-		...mapGetters('dataRules', {
-			rules: DATA_RULES,
-		}),
 		example: function() {
 			if (this.mode === 'json') {
 				return JSON.stringify(this.code, null, 4);
@@ -136,7 +127,7 @@ export default {
 	},
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 @import '../../../less/var';
 
 .data-rule-command {
@@ -147,6 +138,10 @@ export default {
 			font-family: @ubuntu-mono;
 			margin-bottom: 10px;
 		}
+	}
+
+	.left {
+		border-right: 1px solid rgba(0, 0, 0, 0.12);
 	}
 }
 </style>
