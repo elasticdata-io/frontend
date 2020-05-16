@@ -12,6 +12,16 @@
 					звичайного одного <code>\</code>
 				</v-alert>
 			</p>
+			<p>
+				<v-alert type="info" color="#999">
+					<a
+						href="https://javascript.info/regexp-methods#str-replace-str-regexp-str-func"
+						target="_blank"
+					>
+						Детальніша інформація про функцію заміни
+					</a>
+				</v-alert>
+			</p>
 		</div>
 		<div class="head">
 			<h2 class="headline">Example</h2>
