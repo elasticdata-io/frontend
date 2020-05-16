@@ -61,6 +61,7 @@ export default {
 						cmd: 'split',
 						bindKey: 'phones',
 						toKey: 'phones-array',
+						delimiter: ',',
 					},
 				],
 				commands: [
