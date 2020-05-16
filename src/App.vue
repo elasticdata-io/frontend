@@ -42,7 +42,7 @@ export default {
 	},
 };
 </script>
-<style>
+<style lang="less">
 * {
 	font-family: Ubuntu, sans-serif;
 	/*font-family: 'PT Sans', Ubuntu, sans-serif;*/

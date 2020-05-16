@@ -1,5 +1,5 @@
 <template>
-	<v-content>
+	<v-content class="data-rule-command">
 		<v-container class="fill-height" fluid>
 			<v-row>
 				<v-col>
@@ -14,11 +14,42 @@
 							</v-btn>
 							<v-row class="pt-6">
 								<v-col cols="5">
-									<h2 class="headline">Наприклад</h2>
-									<pre
-										class="json"
-										id="json-editor"
-									><code>{{ example }}</code></pre>
+									<div class="head">
+										<h2 class="headline">Description</h2>
+										<p>
+											Команда використовуєтся для
+											<strong>обрізання НЕ ЧИСЛОВИХ</strong> символів в тексті
+										</p>
+									</div>
+									<div class="head">
+										<h2 class="headline">Example</h2>
+										<div class="mb-2">
+											<v-btn
+												:color="mode === 'yaml' ? 'primary' : 'default'"
+												x-small
+												@click="switchMode"
+												>yaml</v-btn
+											>
+											<v-btn
+												:color="mode === 'json' ? 'primary' : 'default'"
+												x-small
+												class="ml-2"
+												@click="switchMode"
+												>json</v-btn
+											>
+										</div>
+										<pre
+											class="json"
+											id="input-editor"
+										><code>{{ example }}</code></pre>
+									</div>
+									<div class="head">
+										<h2 class="headline">Data output</h2>
+										<pre
+											class="json"
+											id="output-editor"
+										><code>{{ outputData }}</code></pre>
+									</div>
 								</v-col>
 								<v-col md="6">
 									<ul>
@@ -54,7 +85,7 @@ export default {
 		}),
 		example: function() {
 			if (this.mode === 'json') {
-				return this.code;
+				return JSON.stringify(this.code, null, 4);
 			}
 			return YAML.stringify(this.code);
 		},
@@ -63,7 +94,7 @@ export default {
 		return {
 			editor: null,
 			cmd: 'only_number',
-			mode: 'yaml',
+			mode: 'json',
 			code: {
 				version: '2.0',
 				dataRules: [
@@ -85,6 +116,7 @@ export default {
 					},
 				],
 			},
+			outputData: [{ price: 'Home\nprice: 540$', 'price-only-number': '540' }],
 		};
 	},
 	methods: {
@@ -98,27 +130,76 @@ export default {
 			startRange.end.column = Number.MAX_VALUE;
 			editor.selection.setRange(startRange);
 		},
+		switchMode() {
+			const editor = this.editor;
+			if (this.mode === 'json') {
+				this.mode = 'yaml';
+			} else if (this.mode === 'yaml') {
+				this.mode = 'json';
+			}
+			editor.getSession().setValue(this.example);
+			editor.getSession().setMode(`ace/mode/${this.mode}`);
+			this.updateHeight();
+		},
+		updateHeight() {
+			const editor = this.editor;
+			const newHeight =
+				editor.getSession().getScreenLength() * editor.renderer.lineHeight +
+				editor.renderer.scrollBar.getWidth();
+			editor.setOptions({ maxLines: newHeight });
+		},
 	},
 	created() {
 		setTimeout(() => {
-			const editor = (this.editor = ace.edit('json-editor'));
+			const editor = (this.editor = ace.edit('input-editor'));
 			editor.setTheme('ace/theme/monokai');
 			editor.getSession().setMode(`ace/mode/${this.mode}`);
 			this.setSelection();
+			this.updateHeight();
+		});
+		setTimeout(() => {
+			const editor = ace.edit('output-editor');
+			editor.setTheme('ace/theme/monokai');
+			editor.getSession().setMode(`ace/mode/json`);
 		});
 	},
 };
 </script>
 <style lang="less">
-#json-editor {
-	height: 250px;
+@import '../../../less/var';
 
-	code {
-		visibility: hidden;
+.data-rule-command {
+	.head {
+		padding-bottom: 25px;
+
+		h2.headline {
+			font-family: @ubuntu-mono;
+			margin-bottom: 10px;
+		}
 	}
 
-	.ace_content * {
-		font-family: Monaco, 'Ubuntu Mono', monospace;
+	#input-editor {
+		height: 250px;
+
+		code {
+			visibility: hidden;
+		}
+
+		.ace_content * {
+			font-family: Monaco, 'Ubuntu Mono', monospace;
+		}
+	}
+
+	#output-editor {
+		height: 150px;
+
+		code {
+			visibility: hidden;
+		}
+
+		.ace_content * {
+			font-family: Monaco, 'Ubuntu Mono', monospace;
+		}
 	}
 }
 </style>
