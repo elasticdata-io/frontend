@@ -140,6 +140,7 @@ export default {
 			editor.getSession().setValue(this.example);
 			editor.getSession().setMode(`ace/mode/${this.mode}`);
 			this.updateHeight();
+			this.setSelection();
 		},
 		updateHeight() {
 			const editor = this.editor;
