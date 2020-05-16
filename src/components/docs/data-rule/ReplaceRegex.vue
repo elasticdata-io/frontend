@@ -6,6 +6,12 @@
 				Команда використовуєтся для
 				<strong>ЗАМІНА в тексті за РЕГУЛЯРНИМ ВИРАЗОМ</strong>
 			</p>
+			<p>
+				<v-alert type="warning" color="secondary">
+					Екранування повинно відбуватися двома символами <code>\\</code> замість
+					звичайного одного <code>\</code>
+				</v-alert>
+			</p>
 		</div>
 		<div class="head">
 			<h2 class="headline">Example</h2>
