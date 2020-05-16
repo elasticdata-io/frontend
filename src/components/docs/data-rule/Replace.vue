@@ -4,7 +4,7 @@
 			<h2 class="headline">Description</h2>
 			<p>
 				Команда використовуєтся для
-				<strong>обрізання ПУСТИХ</strong> символів по краям тексту
+				<strong>ЗАМІНИ будьяких символів</strong> в тексті
 			</p>
 		</div>
 		<div class="head">
