@@ -71,7 +71,7 @@ export default {
 						link: 'https://sandbox.elasticdata.io/price',
 					},
 					{
-						cmd: 'gethtml',
+						cmd: 'gettext',
 						key: 'price',
 						selector: 'div.price',
 					},
