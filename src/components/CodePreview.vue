@@ -7,12 +7,14 @@ import 'brace/theme/monokai';
 import 'brace/ext/searchbox';
 import 'brace/mode/yaml';
 import 'brace/mode/json';
+import { StringGenerator } from '../lib/string.generator';
 
 export default {
 	data: () => {
 		return {
+			interval: null,
 			editor: null,
-			id: `input-editor-${new Date().getTime()}`,
+			id: `input-editor-${StringGenerator.generate()}`,
 		};
 	},
 	methods: {
@@ -39,15 +41,25 @@ export default {
 			startRange.end.column = Number.MAX_VALUE;
 			editor.selection.setRange(startRange);
 		},
+		init() {
+			const interval = (this.interval = setInterval(() => {
+				const el = document.getElementById(this.id);
+				if (el) {
+					clearInterval(interval);
+				}
+				const editor = (this.editor = ace.edit(this.id));
+				editor.setTheme('ace/theme/monokai');
+				this.setMode();
+				this.updateHeight();
+				this.setSelection();
+			}, 200));
+		},
 	},
 	mounted() {
-		setTimeout(() => {
-			const editor = (this.editor = ace.edit(this.id));
-			editor.setTheme('ace/theme/monokai');
-			this.setMode();
-			this.updateHeight();
-			this.setSelection();
-		});
+		this.init();
+	},
+	destroyed() {
+		clearInterval(this.interval);
 	},
 	watch: {
 		code: function() {

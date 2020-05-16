@@ -46,7 +46,10 @@
 									</div>
 									<div class="head">
 										<h2 class="headline">Data output</h2>
-										<code-preview :code="outputData" mode="json"></code-preview>
+										<code-preview
+											:code="outputDataExample"
+											mode="json"
+										></code-preview>
 									</div>
 								</v-col>
 								<v-col md="6">
@@ -86,6 +89,9 @@ export default {
 			}
 			return YAML.stringify(this.code);
 		},
+		outputDataExample: function() {
+			return JSON.stringify(this.outputData, null, 4);
+		},
 	},
 	data: () => {
 		return {
@@ -118,7 +124,7 @@ export default {
 	},
 	methods: {
 		back() {
-			this.$router.back();
+			this.$router.push({ name: 'docs.data-rules' });
 		},
 		switchMode() {
 			if (this.mode === 'json') {
