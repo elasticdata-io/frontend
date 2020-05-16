@@ -47,7 +47,16 @@ const mutations = {};
 const actions = {};
 
 const getters = {
-	[DATA_RULES]: state => state.dataRules,
+	[DATA_RULES]: state =>
+		state.dataRules.sort((a, b) => {
+			if (a.cmd > b.cmd) {
+				return 1;
+			}
+			if (a.cmd < b.cmd) {
+				return -1;
+			}
+			return 0;
+		}),
 };
 
 export default {
