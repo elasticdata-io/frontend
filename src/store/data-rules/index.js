@@ -16,7 +16,6 @@ const state = {
 			cmd: 'replace',
 			summary: 'Знайти і замінити',
 			route: { name: 'docs.data-rules.replace' },
-			disabled: true,
 		},
 		{
 			cmd: 'concat',
