@@ -14,10 +14,7 @@
 			</p>
 			<p>
 				<v-alert type="info" color="#999">
-					<a
-						href="https://javascript.info/regexp-methods#str-replace-str-regexp-str-func"
-						target="_blank"
-					>
+					<a href="https://javascript.info/regexp-groups" target="_blank">
 						Детальніша інформація про функцію заміни
 					</a>
 				</v-alert>
