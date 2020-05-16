@@ -34,7 +34,6 @@ const state = {
 			cmd: 'split',
 			summary: 'Розбити текст на массив',
 			route: { name: 'docs.data-rules.split' },
-			disabled: true,
 		},
 	],
 };

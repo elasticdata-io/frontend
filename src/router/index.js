@@ -15,6 +15,7 @@ import DataRulesDocs from '../components/docs/DataRulesDocs';
 import SettingsDocs from '../components/docs/SettingsDocs';
 import OnlyNumber from '../components/docs/data-rule/OnlyNumber';
 import Trim from '../components/docs/data-rule/Trim';
+import Split from '../components/docs/data-rule/Split';
 
 Vue.use(Router);
 
@@ -104,6 +105,11 @@ const router = new Router({
 			name: 'docs.data-rules.trim',
 			path: '/docs/data-rules/trim',
 			component: Trim,
+		},
+		{
+			name: 'docs.data-rules.split',
+			path: '/docs/data-rules/split',
+			component: Split,
 		},
 		{
 			name: 'docs.settings',
