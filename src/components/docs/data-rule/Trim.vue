@@ -69,7 +69,7 @@ export default {
 						link: 'https://sandbox.elasticdata.io/text-with-spaces',
 					},
 					{
-						cmd: 'gettext',
+						cmd: 'gethtml',
 						key: 'text-with-spaces',
 						selector: 'div.text-with-spaces',
 					},
