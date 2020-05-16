@@ -4,7 +4,7 @@
 			<h2 class="headline">Description</h2>
 			<p>
 				Команда використовуєтся для
-				<strong>ЗАМІНА в тексті за РЕГУЛЯРНИМ ВИРАЗОМ</strong>
+				<strong>ЗАМІНИ в тексті за РЕГУЛЯРНИМ ВИРАЗОМ</strong>
 			</p>
 			<p>
 				<v-alert type="warning" color="secondary">
