@@ -81,7 +81,7 @@ export default {
 					{
 						cmd: 'gettext',
 						key: 'price',
-						selector: 'body',
+						selector: 'div.price',
 					},
 				],
 			},
@@ -94,9 +94,7 @@ export default {
 		setSelection() {
 			const editor = this.editor;
 			const startRange = editor.find(this.cmd);
-			const endRange = editor.find('commands');
 			startRange.start.column = 0;
-			startRange.end.row = endRange.start.row - 1;
 			startRange.end.column = Number.MAX_VALUE;
 			editor.selection.setRange(startRange);
 		},
