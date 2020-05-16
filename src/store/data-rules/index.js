@@ -18,6 +18,11 @@ const state = {
 			route: { name: 'docs.data-rules.replace' },
 		},
 		{
+			cmd: 'replace_regex',
+			summary: 'Знайти і замінити по регулярному виразу',
+			route: { name: 'docs.data-rules.replace_regex' },
+		},
+		{
 			cmd: 'concat',
 			summary: 'Обєднати декілька ключів',
 			route: { name: 'docs.data-rules.concat' },
