@@ -61,7 +61,7 @@ export default {
 						cmd: 'replace_regex',
 						bindKey: 'phones',
 						toKey: 'phones-replaced',
-						searchRegex: '+38([0-9]{3})',
+						searchRegex: '\\+38([0-9]{3})',
 						replaceValue: '+38($1)',
 					},
 				],
