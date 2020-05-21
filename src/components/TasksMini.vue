@@ -88,7 +88,7 @@
 								</v-list-item-title>
 							</v-list-item>
 							<v-list-item
-								v-if="isFinished(task.status)"
+								v-if="showTaskDetailsLink(task)"
 								:to="{ name: 'task', params: { taskId: task.id } }"
 							>
 								<v-list-item-title>
@@ -171,6 +171,11 @@ export default {
 		},
 	},
 	methods: {
+		showTaskDetailsLink: function(task) {
+			const isVersion2 = task.pipelineVersion === '2.0';
+			const isFinished = this.isFinished(task.status);
+			return isFinished && isVersion2;
+		},
 		viewLogs(task) {
 			this.selectedTaskId = task.id;
 			this.selectedPipelineTitle = this.pipelineKey;
