@@ -44,6 +44,11 @@ const state = {
 			summary: 'Залишити лише унікальні записи у масиві',
 			route: { name: 'docs.data-rules.unique' },
 		},
+		{
+			cmd: 'join',
+			summary: 'Сформувати строку з елементів массива',
+			route: { name: 'docs.data-rules.join' },
+		},
 	],
 };
 

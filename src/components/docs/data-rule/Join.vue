@@ -4,7 +4,7 @@
 			<h2 class="headline">Description</h2>
 			<p>
 				Команда використовуєтся для
-				<strong>ВИДАЛЕННЯ ДУБЛЮЮЧИХ записів</strong> у масиві
+				<strong>формування строки з масиву</strong>
 			</p>
 		</div>
 		<div class="head">
@@ -53,7 +53,7 @@ export default {
 	data: () => {
 		return {
 			mode: 'json',
-			cmd: 'unique',
+			cmd: 'join',
 			code: {
 				version: '2.0',
 				dataRules: [
@@ -65,7 +65,12 @@ export default {
 					{
 						cmd: 'unique',
 						bindKey: 'phones',
-						toKey: 'phones-unique',
+					},
+					{
+						cmd: 'join',
+						bindKey: 'phones',
+						toKey: 'phones-join',
+						separator: ',',
 					},
 				],
 				commands: [
@@ -83,7 +88,7 @@ export default {
 			outputData: [
 				{
 					phones: ['+38097-123-50-17', '+38050-333-11-22', '+38097-123-50-17'],
-					'phones-unique': ['+38097-123-50-17', '+38050-333-11-22'],
+					'phones-join': '+38097-123-50-17,+38050-333-11-22',
 				},
 			],
 		};

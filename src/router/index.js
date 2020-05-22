@@ -19,6 +19,7 @@ import Split from '../components/docs/data-rule/Split';
 import Replace from '../components/docs/data-rule/Replace';
 import ReplaceRegex from '../components/docs/data-rule/ReplaceRegex';
 import Unique from '../components/docs/data-rule/Unique';
+import Join from '../components/docs/data-rule/Join';
 
 Vue.use(Router);
 
@@ -128,6 +129,11 @@ const router = new Router({
 			name: 'docs.data-rules.unique',
 			path: '/docs/data-rules/unique',
 			component: Unique,
+		},
+		{
+			name: 'docs.data-rules.join',
+			path: '/docs/data-rules/join',
+			component: Join,
 		},
 		{
 			name: 'docs.settings',
