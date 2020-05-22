@@ -39,6 +39,11 @@ const state = {
 			summary: 'Розбити текст на массив',
 			route: { name: 'docs.data-rules.split' },
 		},
+		{
+			cmd: 'unique',
+			summary: 'Залишити лише унікальні записи у масиві',
+			route: { name: 'docs.data-rules.unique' },
+		},
 	],
 };
 

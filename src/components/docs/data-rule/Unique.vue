@@ -4,20 +4,7 @@
 			<h2 class="headline">Description</h2>
 			<p>
 				Команда використовуєтся для
-				<strong>ЗАМІНИ в тексті за РЕГУЛЯРНИМ ВИРАЗОМ</strong>
-			</p>
-			<p>
-				<v-alert type="warning" color="secondary">
-					Екранування повинно відбуватися двома символами <code>\\</code> замість
-					звичайного одного <code>\</code>
-				</v-alert>
-			</p>
-			<p>
-				<v-alert type="info" color="#999">
-					<a href="https://javascript.info/regexp-groups" target="_blank">
-						Детальніша інформація про функцію заміни
-					</a>
-				</v-alert>
+				<strong>ЗАМІНИ будьяких символів</strong> в тексті
 			</p>
 		</div>
 		<div class="head">
@@ -66,16 +53,19 @@ export default {
 	data: () => {
 		return {
 			mode: 'json',
-			cmd: 'replace_regex',
+			cmd: 'unique',
 			code: {
 				version: '2.0',
 				dataRules: [
 					{
-						cmd: 'replace_regex',
+						cmd: 'split',
 						bindKey: 'phones',
-						toKey: 'phones-replaced',
-						searchRegex: '\\+38([0-9]{3})',
-						replaceValue: '+38($1)',
+						delimiter: ',',
+					},
+					{
+						cmd: 'unique',
+						bindKey: 'phones',
+						toKey: 'phones-unique',
 					},
 				],
 				commands: [
@@ -92,8 +82,8 @@ export default {
 			},
 			outputData: [
 				{
-					phones: '+38097-123-50-17,+38050-333-11-22,+38097-123-50-17',
-					'phones-replaced': '+38(097)-123-50-17,+38(050)-333-11-22,+38(097)-123-50-17',
+					phones: ['+38097-123-50-17', '+38050-333-11-22', '+38097-123-50-17'],
+					'phones-unique': ['+38097-123-50-17', '+38050-333-11-22'],
 				},
 			],
 		};

@@ -18,6 +18,7 @@ import Trim from '../components/docs/data-rule/Trim';
 import Split from '../components/docs/data-rule/Split';
 import Replace from '../components/docs/data-rule/Replace';
 import ReplaceRegex from '../components/docs/data-rule/ReplaceRegex';
+import Unique from '../components/docs/data-rule/Unique';
 
 Vue.use(Router);
 
@@ -122,6 +123,11 @@ const router = new Router({
 			name: 'docs.data-rules.replace_regex',
 			path: '/docs/data-rules/replace_regex',
 			component: ReplaceRegex,
+		},
+		{
+			name: 'docs.data-rules.unique',
+			path: '/docs/data-rules/unique',
+			component: Unique,
 		},
 		{
 			name: 'docs.settings',
