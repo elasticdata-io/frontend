@@ -13,7 +13,7 @@
 								Назад
 							</v-btn>
 							<v-row class="pt-6">
-								<v-col cols="5" class="left">
+								<v-col xl="6" lg="8" md="7" sm="12" cols="12" class="left">
 									<!--									<slot></slot>-->
 									<div class="head">
 										<h2 class="headline">Description</h2>
@@ -55,7 +55,7 @@
 										<slot name="example-output"></slot>
 									</div>
 								</v-col>
-								<v-col md="6">
+								<v-col xl="5" lg="3" md="4" sm="12" cols="12">
 									<data-rules-navigation></data-rules-navigation>
 								</v-col>
 							</v-row>
