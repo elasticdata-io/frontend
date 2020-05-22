@@ -82,6 +82,14 @@ const actions = {
 		});
 	},
 
+	[action.FETCH_PIPELINES_IN_PROCESSING]({ commit }) {
+		commit(mutation.SET_LOADING, true);
+		Vue.http.get(`/api/pipeline/list/in-processing`).then(res => {
+			commit(mutation.PIPELINES_SET_FROM_ARRAY, res.body);
+			commit(mutation.SET_LOADING, false);
+		});
+	},
+
 	[action.FETCH_DEPENDS]({ commit }, { pipelineId }) {
 		commit(mutation.SET_LOADING, true);
 		Vue.http.get(`/api/pipeline/list-depends/${pipelineId}`).then(res => {
