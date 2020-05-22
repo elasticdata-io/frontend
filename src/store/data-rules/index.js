@@ -29,10 +29,9 @@ const state = {
 			disabled: true,
 		},
 		{
-			cmd: 'extract',
+			cmd: 'extract_regex',
 			summary: 'Вибрати необхдний текст',
-			route: { name: 'docs.data-rules.extract' },
-			disabled: true,
+			route: { name: 'docs.data-rules.extract_regex' },
 		},
 		{
 			cmd: 'split',

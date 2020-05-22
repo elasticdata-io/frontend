@@ -20,6 +20,7 @@ import Replace from '../components/docs/data-rule/Replace';
 import ReplaceRegex from '../components/docs/data-rule/ReplaceRegex';
 import Unique from '../components/docs/data-rule/Unique';
 import Join from '../components/docs/data-rule/Join';
+import ExtractRegex from '../components/docs/data-rule/ExtractRegex';
 
 Vue.use(Router);
 
@@ -134,6 +135,11 @@ const router = new Router({
 			name: 'docs.data-rules.join',
 			path: '/docs/data-rules/join',
 			component: Join,
+		},
+		{
+			name: 'docs.data-rules.extract_regex',
+			path: '/docs/data-rules/extract_regex',
+			component: ExtractRegex,
 		},
 		{
 			name: 'docs.settings',
