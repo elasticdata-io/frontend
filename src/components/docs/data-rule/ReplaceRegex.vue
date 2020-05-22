@@ -72,6 +72,11 @@ export default {
 						version: '2.0',
 						dataRules: [
 							{
+								cmd: 'split',
+								bindKey: 'phones',
+								delimiter: ',',
+							},
+							{
 								cmd: 'replace_regex',
 								bindKey: 'phones',
 								toKey: 'phones-replaced',
@@ -93,9 +98,12 @@ export default {
 					},
 					outputData: [
 						{
-							phones: '+38097-123-50-17,+38050-333-11-22,+38097-123-50-17',
-							'phones-replaced':
-								'+38(097)-123-50-17,+38(050)-333-11-22,+38(097)-123-50-17',
+							phones: ['+38097-123-50-17', '+38050-333-11-22', '+38097-123-50-17'],
+							'phones-replaced': [
+								'+38(097)-123-50-17',
+								'+38(050)-333-11-22',
+								'+38(097)-123-50-17',
+							],
 						},
 					],
 				},

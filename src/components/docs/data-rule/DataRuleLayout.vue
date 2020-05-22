@@ -59,13 +59,16 @@
 											<v-tabs-slider></v-tabs-slider>
 											<v-tab
 												v-for="(item, index) in examples"
-												v-bind:key="index"
+												:key="index"
+												:href="`#tab-${index}`"
 											>
 												Example {{ index + 1 }}
 											</v-tab>
 											<v-tab-item
 												v-for="(item, index) in examples"
-												v-bind:key="index"
+												:key="index"
+												:value="'tab-' + index"
+												:transition="false"
 											>
 												<code-preview
 													:code="example(item.code)"
