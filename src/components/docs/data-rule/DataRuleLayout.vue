@@ -31,8 +31,9 @@
 											</li>
 										</ul>
 									</div>
+
 									<div class="head">
-										<h2 class="headline">Example</h2>
+										<h2 class="headline">Examples</h2>
 										<div class="mb-2">
 											<v-btn
 												:color="mode === 'yaml' ? 'primary' : 'default'"
@@ -48,11 +49,38 @@
 												>json</v-btn
 											>
 										</div>
-										<slot name="example"></slot>
-									</div>
-									<div class="head">
-										<h2 class="headline">Data output</h2>
-										<slot name="example-output"></slot>
+										<v-tabs
+											class="elevation-1"
+											fixed-tabs
+											background-color="indigo"
+											dark
+											@change="examplesTabsChanged"
+										>
+											<v-tabs-slider></v-tabs-slider>
+											<v-tab
+												v-for="(item, index) in examples"
+												v-bind:key="index"
+											>
+												Example {{ index + 1 }}
+											</v-tab>
+											<v-tab-item
+												v-for="(item, index) in examples"
+												v-bind:key="index"
+											>
+												<code-preview
+													:code="example(item.code)"
+													:mode="mode"
+													:selection-text="cmd"
+												></code-preview>
+												<div class="mt-4">
+													<h2 class="headline">Data output</h2>
+													<code-preview
+														:code="outputDataExample(item.outputData)"
+														mode="json"
+													></code-preview>
+												</div>
+											</v-tab-item>
+										</v-tabs>
 									</div>
 								</v-col>
 								<v-col xl="5" lg="3" md="4" sm="12" cols="12">
@@ -71,10 +99,12 @@ import * as YAML from 'json-to-pretty-yaml';
 import DataRulesNavigation from '../DataRulesNavigation';
 import { mapGetters } from 'vuex';
 import { DATA_RULE_BY_CMD } from '../../../store/data-rules/getters';
+import CodePreview from '../../CodePreview';
 
 export default {
 	components: {
 		DataRulesNavigation,
+		CodePreview,
 	},
 	computed: {
 		...mapGetters('dataRules', {
@@ -85,15 +115,6 @@ export default {
 				return {};
 			}
 			return this.DATA_RULE_BY_CMD(this.cmd);
-		},
-		example: function() {
-			if (this.mode === 'json') {
-				return JSON.stringify(this.code, null, 4);
-			}
-			return YAML.stringify(this.code);
-		},
-		outputDataExample: function() {
-			return JSON.stringify(this.outputData, null, 4);
 		},
 	},
 	data: () => {
@@ -113,10 +134,25 @@ export default {
 			}
 			this.$emit('mode', this.mode);
 		},
+		examplesTabsChanged(activeTab) {},
+
+		example(code) {
+			if (this.mode === 'json') {
+				return JSON.stringify(code, null, 4);
+			}
+			return YAML.stringify(code);
+		},
+		outputDataExample(outputData) {
+			return JSON.stringify(outputData, null, 4);
+		},
 	},
 	props: {
 		cmd: {
 			type: String,
+			required: true,
+		},
+		examples: {
+			type: Array,
 			required: true,
 		},
 	},

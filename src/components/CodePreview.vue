@@ -1,5 +1,7 @@
 <template>
-	<pre class="input-editor" :id="id"><code>{{ code }}</code></pre>
+	<div>
+		<pre class="input-editor" :id="id"><code>{{ code }}</code></pre>
+	</div>
 </template>
 <script>
 import * as ace from 'brace';
