@@ -14,8 +14,11 @@ import { DATA_RULES } from '../../store/data-rules/getters';
 export default {
 	computed: {
 		...mapGetters('dataRules', {
-			rules: DATA_RULES,
+			DATA_RULES: DATA_RULES,
 		}),
+		rules: function() {
+			return this.DATA_RULES.filter(x => x.disabled !== true);
+		},
 	},
 };
 </script>
