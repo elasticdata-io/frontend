@@ -34,11 +34,12 @@
 										</v-col>
 									</v-row>
 								</v-col>
-								<v-col md="7" sm="12" xs="12">
+								<v-col md="7" sm="12" cols="12">
 									<v-row no-gutters align="center">
 										<v-col
 											md="4"
 											sm="6"
+											cols="12"
 											v-for="rule in rules"
 											v-bind:key="rule.cmd"
 										>
@@ -101,7 +102,7 @@ export default {
 	> a {
 		border-radius: 5px;
 		background-color: #fafafa;
-		height: 8em;
+		height: 9em;
 		display: block;
 		padding: 1em;
 		color: #333333;
