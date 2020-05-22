@@ -27,7 +27,7 @@
 												v-for="(supportTypes,
 												index) in dataRule.supportTypes"
 											>
-												{{ supportTypes.name }}
+												<strong>{{ supportTypes.name }}</strong>
 											</li>
 										</ul>
 									</div>
