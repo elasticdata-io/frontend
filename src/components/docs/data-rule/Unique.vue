@@ -4,7 +4,7 @@
 			<h2 class="headline">Description</h2>
 			<p>
 				Команда використовуєтся для
-				<strong>ВИДАЛЕННЯ ДУБЛЮЮЧИХ записів</strong> у масиві
+				<strong>видалення дублюцчих записів</strong> у масиві
 			</p>
 		</div>
 		<div class="head">
