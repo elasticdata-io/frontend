@@ -14,7 +14,46 @@
 							</v-btn>
 							<v-row class="pt-6">
 								<v-col cols="5" class="left">
-									<slot></slot>
+									<!--									<slot></slot>-->
+									<div class="head">
+										<h2 class="headline">Description</h2>
+										<slot name="description"></slot>
+									</div>
+									<div class="head">
+										<h2 class="headline">Support value types</h2>
+										<ul>
+											<li
+												v-bind:key="index"
+												v-for="(supportTypes,
+												index) in dataRule.supportTypes"
+											>
+												{{ supportTypes.name }}
+											</li>
+										</ul>
+									</div>
+									<div class="head">
+										<h2 class="headline">Example</h2>
+										<div class="mb-2">
+											<v-btn
+												:color="mode === 'yaml' ? 'primary' : 'default'"
+												x-small
+												@click="switchMode"
+												>yaml</v-btn
+											>
+											<v-btn
+												:color="mode === 'json' ? 'primary' : 'default'"
+												x-small
+												class="ml-2"
+												@click="switchMode"
+												>json</v-btn
+											>
+										</div>
+										<slot name="example"></slot>
+									</div>
+									<div class="head">
+										<h2 class="headline">Data output</h2>
+										<slot name="example-output"></slot>
+									</div>
 								</v-col>
 								<v-col md="6">
 									<data-rules-navigation></data-rules-navigation>
@@ -30,12 +69,23 @@
 <script>
 import * as YAML from 'json-to-pretty-yaml';
 import DataRulesNavigation from '../DataRulesNavigation';
+import { mapGetters } from 'vuex';
+import { DATA_RULE_BY_CMD } from '../../../store/data-rules/getters';
 
 export default {
 	components: {
 		DataRulesNavigation,
 	},
 	computed: {
+		...mapGetters('dataRules', {
+			DATA_RULE_BY_CMD: DATA_RULE_BY_CMD,
+		}),
+		dataRule: function() {
+			if (!this.cmd) {
+				return {};
+			}
+			return this.DATA_RULE_BY_CMD(this.cmd);
+		},
 		example: function() {
 			if (this.mode === 'json') {
 				return JSON.stringify(this.code, null, 4);
@@ -54,6 +104,14 @@ export default {
 	methods: {
 		back() {
 			this.$router.push({ name: 'docs.data-rules' });
+		},
+		switchMode() {
+			if (this.mode === 'json') {
+				this.mode = 'yaml';
+			} else if (this.mode === 'yaml') {
+				this.mode = 'json';
+			}
+			this.$emit('mode', this.mode);
 		},
 	},
 	props: {

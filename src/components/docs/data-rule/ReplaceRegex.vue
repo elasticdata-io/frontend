@@ -1,7 +1,6 @@
 <template>
-	<data-rule-layout :cmd="cmd">
-		<div class="head">
-			<h2 class="headline">Description</h2>
+	<data-rule-layout :cmd="cmd" @mode="switchMode">
+		<div slot="description">
 			<p>
 				Команда використовуєтся для
 				<strong>ЗАМІНИ в тексті за РЕГУЛЯРНИМ ВИРАЗОМ</strong>
@@ -20,52 +19,28 @@
 				</v-alert>
 			</p>
 		</div>
-		<div class="head">
-			<h2 class="headline">Example</h2>
-			<div class="mb-2">
-				<v-btn :color="mode === 'yaml' ? 'primary' : 'default'" x-small @click="switchMode"
-					>yaml</v-btn
-				>
-				<v-btn
-					:color="mode === 'json' ? 'primary' : 'default'"
-					x-small
-					class="ml-2"
-					@click="switchMode"
-					>json</v-btn
-				>
-			</div>
+		<div slot="example">
 			<code-preview :code="example" :mode="mode" :selection-text="cmd"></code-preview>
 		</div>
-		<div class="head">
-			<h2 class="headline">Data output</h2>
+		<div slot="example-output">
 			<code-preview :code="outputDataExample" mode="json"></code-preview>
 		</div>
 	</data-rule-layout>
 </template>
 <script>
-import * as YAML from 'json-to-pretty-yaml';
 import CodePreview from '../../CodePreview';
 import DataRuleLayout from './DataRuleLayout';
+import DataRuleMixin from './DataRuleMixin';
 
 export default {
+	mixins: [DataRuleMixin],
 	components: {
 		DataRuleLayout,
 		CodePreview,
 	},
-	computed: {
-		example: function() {
-			if (this.mode === 'json') {
-				return JSON.stringify(this.code, null, 4);
-			}
-			return YAML.stringify(this.code);
-		},
-		outputDataExample: function() {
-			return JSON.stringify(this.outputData, null, 4);
-		},
-	},
+	computed: {},
 	data: () => {
 		return {
-			mode: 'json',
 			cmd: 'replace_regex',
 			code: {
 				version: '2.0',
@@ -98,14 +73,6 @@ export default {
 			],
 		};
 	},
-	methods: {
-		switchMode() {
-			if (this.mode === 'json') {
-				this.mode = 'yaml';
-			} else if (this.mode === 'yaml') {
-				this.mode = 'json';
-			}
-		},
-	},
+	methods: {},
 };
 </script>
