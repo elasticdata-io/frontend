@@ -34,7 +34,7 @@ const state = {
 		},
 		{
 			cmd: 'extract_regex',
-			summary: 'Вибрати необхдний текст',
+			summary: 'Вибрати необхдний текст по регулярному виразу',
 			route: { name: 'docs.data-rules.extract_regex' },
 			supportTypes: [String, Array],
 		},
