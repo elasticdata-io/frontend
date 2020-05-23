@@ -49,27 +49,52 @@
 												>json</v-btn
 											>
 										</div>
-										<v-tabs
-											class="elevation-1"
-											fixed-tabs
-											background-color="indigo"
-											dark
-											@change="examplesTabsChanged"
-										>
-											<v-tabs-slider></v-tabs-slider>
-											<v-tab
-												v-for="(item, index) in examples"
-												:key="index"
-												:href="`#tab-${index}`"
+										<div v-if="examples.length > 1">
+											<v-tabs
+												v-if="examples.length > 1"
+												class="elevation-1"
+												fixed-tabs
+												background-color="indigo"
+												dark
+												@change="examplesTabsChanged"
+												:grow="examples.length === 1"
 											>
-												Example {{ index + 1 }}
-											</v-tab>
-											<v-tab-item
-												v-for="(item, index) in examples"
-												:key="index"
-												:value="'tab-' + index"
-												transition="fade-transition"
-											>
+												<v-tabs-slider></v-tabs-slider>
+												<v-tab
+													v-for="(item, index) in examples"
+													:key="index"
+													:href="`#tab-${index}`"
+												>
+													Example {{ index + 1 }}
+												</v-tab>
+												<v-tab-item
+													v-for="(item, index) in examples"
+													:key="index"
+													:value="'tab-' + index"
+													transition="fade-transition"
+													reverse-transition="fade-transition"
+												>
+													<code-preview
+														:code="example(item.code)"
+														:mode="mode"
+														:selection-text="cmd"
+														:fakeUpdated="fakeUpdated"
+													></code-preview>
+													<div class="mt-4">
+														<h2 class="headline">Data output</h2>
+														<code-preview
+															:code="
+																outputDataExample(item.outputData)
+															"
+															mode="json"
+															:fakeUpdated="fakeUpdated"
+														></code-preview>
+													</div>
+												</v-tab-item>
+											</v-tabs>
+										</div>
+										<div v-else>
+											<div v-for="(item, index) in examples" :key="index">
 												<code-preview
 													:code="example(item.code)"
 													:mode="mode"
@@ -84,8 +109,8 @@
 														:fakeUpdated="fakeUpdated"
 													></code-preview>
 												</div>
-											</v-tab-item>
-										</v-tabs>
+											</div>
+										</div>
 									</div>
 								</v-col>
 								<v-col xl="5" lg="3" md="4" sm="12" cols="12">
