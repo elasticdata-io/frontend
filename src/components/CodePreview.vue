@@ -72,6 +72,10 @@ export default {
 		mode: function() {
 			this.setMode();
 		},
+		fakeUpdated: function() {
+			this.setMode();
+			this.updateHeight();
+		},
 	},
 	props: {
 		code: {
@@ -88,6 +92,10 @@ export default {
 		readOnly: {
 			type: Boolean,
 			default: true,
+		},
+		fakeUpdated: {
+			type: Date,
+			required: true,
 		},
 	},
 };

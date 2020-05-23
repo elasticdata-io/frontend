@@ -74,12 +74,14 @@
 													:code="example(item.code)"
 													:mode="mode"
 													:selection-text="cmd"
+													:fakeUpdated="fakeUpdated"
 												></code-preview>
 												<div class="mt-4">
 													<h2 class="headline">Data output</h2>
 													<code-preview
 														:code="outputDataExample(item.outputData)"
 														mode="json"
+														:fakeUpdated="fakeUpdated"
 													></code-preview>
 												</div>
 											</v-tab-item>
@@ -123,6 +125,7 @@ export default {
 	data: () => {
 		return {
 			mode: 'json',
+			fakeUpdated: new Date(),
 		};
 	},
 	methods: {
@@ -137,7 +140,9 @@ export default {
 			}
 			this.$emit('mode', this.mode);
 		},
-		examplesTabsChanged(activeTab) {},
+		examplesTabsChanged() {
+			this.fakeUpdated = new Date();
+		},
 
 		example(code) {
 			if (this.mode === 'json') {
