@@ -25,7 +25,7 @@
 								:color="onlyRunningPipeline ? 'secondary' : ''"
 							>
 								<v-icon small class="mr-3">filter_list</v-icon>
-								в процессі
+								в процесі
 								<v-icon small class="ml-3" v-if="onlyRunningPipeline">close</v-icon>
 							</v-btn>
 							<v-simple-table>
