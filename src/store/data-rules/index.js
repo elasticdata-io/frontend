@@ -56,6 +56,20 @@ const state = {
 			route: { name: 'docs.data-rules.join' },
 			supportTypes: [Array],
 		},
+		{
+			cmd: 'uppercase',
+			summary: 'Зробити текст великими літерами',
+			route: { name: 'docs.data-rules.uppercase' },
+			supportTypes: [Array],
+			disabled: true,
+		},
+		{
+			cmd: 'lowercase',
+			summary: 'Зробити текст маленькими літерами',
+			route: { name: 'docs.data-rules.lowercase' },
+			supportTypes: [Array],
+			disabled: true,
+		},
 	],
 };
 
