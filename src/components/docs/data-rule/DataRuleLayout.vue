@@ -68,7 +68,7 @@
 												v-for="(item, index) in examples"
 												:key="index"
 												:value="'tab-' + index"
-												:transition="false"
+												transition="fade-transition"
 											>
 												<code-preview
 													:code="example(item.code)"
