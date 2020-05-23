@@ -35,6 +35,7 @@
 											<th class="text-left">Документів</th>
 											<th class="text-left" v-if="false">Статус</th>
 											<th class="text-left">Зміненно</th>
+											<th class="text-left">Версія</th>
 											<th class="text-left">Назва</th>
 											<th class="text-left">Опис</th>
 											<th class="text-left">Запуски</th>
@@ -79,6 +80,9 @@
 											</td>
 											<td>
 												<small>{{ fromNow(pipeline.modifiedOn) }}</small>
+											</td>
+											<td>
+												{{ pipeline.pipelineVersion }}
 											</td>
 											<td>
 												<router-link
@@ -198,6 +202,12 @@
 									</tbody>
 								</template>
 							</v-simple-table>
+							<div
+								class="title"
+								v-if="pipelines && pipelines.length === 0 && !pipelinesLoading"
+							>
+								За вашим запитом нічого не знайдено
+							</div>
 							<v-progress-linear
 								v-if="pipelinesLoading"
 								indeterminate

@@ -57,7 +57,6 @@
 												background-color="indigo"
 												dark
 												@change="examplesTabsChanged"
-												:grow="examples.length === 1"
 											>
 												<v-tabs-slider></v-tabs-slider>
 												<v-tab
