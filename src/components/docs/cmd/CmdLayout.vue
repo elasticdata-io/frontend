@@ -63,7 +63,8 @@
 													:key="index"
 													:href="`#tab-${index}`"
 												>
-													Example {{ index + 1 }}
+													<span v-if="item.name">{{ item.name }}</span>
+													<span v-else>Example {{ index + 1 }}</span>
 												</v-tab>
 												<v-tab-item
 													v-for="(item, index) in examples"

@@ -9,12 +9,29 @@ const state = {
 			properties: [],
 			examples: [
 				{
+					name: 'static link',
 					code: {
 						version: '2.0',
 						commands: [
 							{
 								cmd: 'openurl',
 								link: 'https://sandbox.elasticdata.io',
+							},
+						],
+					},
+					outputData: [],
+				},
+				{
+					name: 'dynamic link',
+					code: {
+						version: '2.0',
+						commands: [
+							{
+								cmd: 'openurl',
+								link: {
+									cmd: 'js',
+									script: `'https://' + 'sandbox.elasticdata.io'`,
+								},
 							},
 						],
 					},
