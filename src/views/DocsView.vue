@@ -11,6 +11,7 @@
 							<div class="block">
 								<router-link tag="a" :to="{ name: 'docs.commands' }">
 									<span class="command">
+										<v-icon>reorder</v-icon>
 										commands
 									</span>
 									<span class="summary">
@@ -21,6 +22,7 @@
 							<div class="block">
 								<router-link tag="a" :to="{ name: 'docs.data-rules' }">
 									<span class="command">
+										<v-icon>input</v-icon>
 										data rules
 									</span>
 									<span class="summary">
@@ -31,6 +33,7 @@
 							<div class="block disabled">
 								<router-link tag="a" :to="{ name: 'docs.docs.settings' }">
 									<span class="command">
+										<v-icon>settings_applications</v-icon>
 										pipeline settings
 									</span>
 									<span class="summary">
