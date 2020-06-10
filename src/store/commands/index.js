@@ -17,6 +17,9 @@ const state = {
 								cmd: 'openurl',
 								link: 'https://sandbox.elasticdata.io',
 							},
+							{
+								cmd: 'getscreenshot',
+							},
 						],
 					},
 					outputData: [],
@@ -32,6 +35,9 @@ const state = {
 									cmd: 'js',
 									script: `'https://' + 'sandbox.elasticdata.io'`,
 								},
+							},
+							{
+								cmd: 'getscreenshot',
 							},
 						],
 					},
