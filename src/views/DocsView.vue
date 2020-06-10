@@ -8,7 +8,7 @@
 							<span>Документація DSL версії 2.0</span>
 						</v-card-title>
 						<v-card-text>
-							<div class="block disabled">
+							<div class="block">
 								<router-link tag="a" :to="{ name: 'docs.commands' }">
 									<span class="command">
 										commands
@@ -73,6 +73,10 @@ export default {};
 		padding: 1em;
 		color: #333333;
 		text-decoration: none;
+
+		&:hover {
+			background-color: #ecf7fa;
+		}
 
 		.command {
 			white-space: nowrap;

@@ -10,10 +10,10 @@
 </template>
 <script>
 import DataRuleLayout from './DataRuleLayout';
-import DataRuleMixin from './DataRuleMixin';
+import CmdDocMixin from '../CmdDocMixin';
 
 export default {
-	mixins: [DataRuleMixin],
+	mixins: [CmdDocMixin],
 	components: {
 		DataRuleLayout,
 	},

@@ -28,6 +28,7 @@ import user from './user/';
 import users from './users/';
 import logs from './logs/';
 import dataRules from './data-rules';
+import commands from './commands';
 import { subscribe, stompConnect } from './websocket';
 import {
 	FETCH_APP_LAST_UPDATED,
@@ -62,6 +63,7 @@ export default new Vuex.Store({
 		users,
 		logs,
 		dataRules,
+		commands,
 	},
 	state: {
 		snackTimeout: 10000,

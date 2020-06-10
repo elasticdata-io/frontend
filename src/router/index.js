@@ -21,6 +21,7 @@ import ReplaceRegex from '../components/docs/data-rule/ReplaceRegex';
 import Unique from '../components/docs/data-rule/Unique';
 import Join from '../components/docs/data-rule/Join';
 import ExtractRegex from '../components/docs/data-rule/ExtractRegex';
+import OpenUrl from '../components/docs/cmd/OpenUrl';
 
 Vue.use(Router);
 
@@ -95,6 +96,11 @@ const router = new Router({
 			name: 'docs.commands',
 			path: '/docs/commands',
 			component: CommandsDocs,
+		},
+		{
+			name: 'docs.commands.openurl',
+			path: '/docs/commands/openurl',
+			component: OpenUrl,
 		},
 		{
 			name: 'docs.data-rules',

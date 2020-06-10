@@ -108,6 +108,10 @@ export default {
 		color: #333333;
 		text-decoration: none;
 
+		&:hover {
+			background-color: #ecf7fa;
+		}
+
 		.command {
 			white-space: nowrap;
 			overflow: hidden;
@@ -123,6 +127,8 @@ export default {
 		.summary {
 			display: block;
 			line-height: 1.5em;
+			font-family: 'Open Sans', Helvetica, sans-serif;
+			font-size: 0.9em;
 		}
 	}
 }
