@@ -95,18 +95,18 @@ const router = new Router({
 		},
 		{
 			name: 'docs.commands',
-			path: '/docs/commands',
+			path: '/docs/cmd',
 			component: CommandsDocs,
 		},
 		{
 			name: 'docs.commands.view',
-			path: '/docs/commands/:cmd',
+			path: '/docs/cmd/:cmd',
 			component: CmdDoc,
 			props: true,
 		},
 		{
 			name: 'docs.commands.custom',
-			path: '/docs/commands/custom/:cmd',
+			path: '/docs/cmd/custom/:cmd',
 			component: CmdLoader,
 			props: true,
 		},
