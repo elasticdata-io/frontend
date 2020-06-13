@@ -44,7 +44,10 @@
 											v-bind:key="command.cmd"
 										>
 											<div class="command-doc" :disabled="command.disabled">
-												<router-link tag="a" :to="command.route">
+												<router-link
+													tag="a"
+													:to="{ name: 'docs.commands.' + command.cmd }"
+												>
 													<span class="command">{{ command.cmd }}</span>
 													<span class="summary">{{
 														command.summary
@@ -65,6 +68,7 @@
 <script>
 import { COMMANDS } from '../../store/commands/getters';
 import { mapGetters } from 'vuex';
+import { FETCH_COMMANDS_DOCUMENTATION } from '../../store/commands/actions';
 
 export default {
 	data: () => ({
@@ -79,6 +83,9 @@ export default {
 		back() {
 			this.$router.push({ name: 'docs' });
 		},
+	},
+	created() {
+		this.$store.dispatch(`commands/${FETCH_COMMANDS_DOCUMENTATION}`);
 	},
 };
 </script>

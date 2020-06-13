@@ -1,7 +1,7 @@
 <template>
 	<ul>
 		<li v-for="command in commands" v-bind:key="command.cmd">
-			<router-link tag="a" :to="command.route">
+			<router-link tag="a" :to="{ name: 'docs.commands.' + command.cmd }">
 				{{ command.cmd }}
 			</router-link>
 		</li>
@@ -10,6 +10,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { COMMANDS } from '../../store/commands/getters';
+import { FETCH_COMMANDS_DOCUMENTATION } from '../../store/commands/actions';
 
 export default {
 	computed: {
@@ -19,6 +20,9 @@ export default {
 		commands: function() {
 			return this.COMMANDS.filter(x => x.disabled !== true);
 		},
+	},
+	created() {
+		this.$store.dispatch(`commands/${FETCH_COMMANDS_DOCUMENTATION}`);
 	},
 };
 </script>

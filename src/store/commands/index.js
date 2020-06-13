@@ -1,12 +1,13 @@
+import Vue from 'vue';
 import { COMMAND_BY_CMD, COMMANDS } from './getters';
+import { FETCH_COMMANDS_DOCUMENTATION } from './actions';
+import { MERGE_COMMANDS } from './mutations';
 
 const state = {
 	commands: [
 		{
 			cmd: 'openurl',
-			summary: 'Залишити тільки цифри',
 			route: { name: 'docs.commands.openurl' },
-			properties: [],
 			examples: [
 				{
 					name: 'static link',
@@ -48,9 +49,28 @@ const state = {
 	],
 };
 
-const mutations = {};
+const mutations = {
+	[MERGE_COMMANDS](state, commandsDocs) {
+		commandsDocs.forEach((commandDoc, index) => {
+			const findCommand = state.commands.find(x => x.cmd === commandDoc.cmd);
+			if (findCommand) {
+				commandsDocs[index] = {
+					...commandDoc,
+					...findCommand,
+				};
+			}
+		});
+		Vue.set(state, 'commands', commandsDocs);
+	},
+};
 
-const actions = {};
+const actions = {
+	[FETCH_COMMANDS_DOCUMENTATION]({ commit }) {
+		Vue.http.get(`/worker/doc/commands/v2`).then(res => {
+			commit(MERGE_COMMANDS, res.body);
+		});
+	},
+};
 
 const getters = {
 	[COMMANDS]: state => {
