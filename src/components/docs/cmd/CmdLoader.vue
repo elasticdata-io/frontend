@@ -2,10 +2,10 @@
 	<component :is="cmd" v-bind="{ cmd: cmd }"></component>
 </template>
 <script>
-import openurl from './OpenUrl';
+import OpenUrl from './OpenUrl';
 export default {
 	components: {
-		openurl,
+		openurl: OpenUrl,
 	},
 	data: function() {
 		return {};
