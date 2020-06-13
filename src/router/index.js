@@ -22,6 +22,7 @@ import Unique from '../components/docs/data-rule/Unique';
 import Join from '../components/docs/data-rule/Join';
 import ExtractRegex from '../components/docs/data-rule/ExtractRegex';
 import CmdDoc from '../components/docs/cmd/CmdDoc';
+import CmdLoader from '../components/docs/cmd/CmdLoader';
 
 Vue.use(Router);
 
@@ -98,9 +99,15 @@ const router = new Router({
 			component: CommandsDocs,
 		},
 		{
-			name: 'docs.commands.doc',
+			name: 'docs.commands.view',
 			path: '/docs/commands/:cmd',
 			component: CmdDoc,
+			props: true,
+		},
+		{
+			name: 'docs.commands.custom',
+			path: '/docs/commands/custom/:cmd',
+			component: CmdLoader,
 			props: true,
 		},
 		{

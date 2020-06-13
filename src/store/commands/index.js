@@ -7,6 +7,7 @@ const state = {
 	commands: [
 		{
 			cmd: 'openurl',
+			route: { name: 'docs.commands.custom', params: { cmd: 'openurl' } },
 			examples: [
 				{
 					name: 'static link',
