@@ -1,7 +1,7 @@
 <template>
 	<ul>
 		<li v-for="command in commands" v-bind:key="command.cmd">
-			<router-link tag="a" :to="{ name: 'docs.commands.' + command.cmd }">
+			<router-link tag="a" :to="{ name: 'docs.commands.doc', params: { cmd: command.cmd } }">
 				{{ command.cmd }}
 			</router-link>
 		</li>

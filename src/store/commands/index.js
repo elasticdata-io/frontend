@@ -7,7 +7,6 @@ const state = {
 	commands: [
 		{
 			cmd: 'openurl',
-			route: { name: 'docs.commands.openurl' },
 			examples: [
 				{
 					name: 'static link',
@@ -45,6 +44,7 @@ const state = {
 					outputData: [],
 				},
 			],
+			description: 'Команда використовуєтся для завантаження веб сторінки (url адреси)',
 		},
 	],
 };
@@ -56,6 +56,9 @@ const mutations = {
 			if (findCommand) {
 				commandsDocs[index] = {
 					...commandDoc,
+					...{
+						examples: [],
+					},
 					...findCommand,
 				};
 			}

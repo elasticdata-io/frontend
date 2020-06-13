@@ -16,7 +16,6 @@ export default {
 	data: () => {
 		return {
 			mode: 'json',
-			cmd: '',
 		};
 	},
 	methods: {

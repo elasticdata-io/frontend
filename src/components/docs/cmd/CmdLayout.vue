@@ -23,15 +23,21 @@
 										<h2 class="headline">Properties</h2>
 										<ul>
 											<li
+												class="monospace"
 												v-bind:key="index"
-												v-for="(prop, index) in command.properties"
+												v-for="(prop, index) in command.props"
 											>
-												<strong>{{ prop.name }}</strong>
+												<span class="monospace">{{ prop.name }}</span>
+												<ul>
+													<li class="monospace">
+														required: {{ prop.required }}
+													</li>
+												</ul>
 											</li>
 										</ul>
 									</div>
 
-									<div class="head">
+									<div class="head" v-if="examples.length">
 										<h2 class="headline">Examples</h2>
 										<div class="mb-2">
 											<v-btn
@@ -186,6 +192,7 @@ export default {
 		examples: {
 			type: Array,
 			required: true,
+			default: () => [],
 		},
 	},
 };
@@ -194,6 +201,10 @@ export default {
 @import '../../../less/var';
 
 .doc-command {
+	.monospace {
+		font-family: Monaco, 'Ubuntu Mono', monospace;
+		font-size: 1em;
+	}
 	.head {
 		padding-bottom: 25px;
 

@@ -46,7 +46,10 @@
 											<div class="command-doc" :disabled="command.disabled">
 												<router-link
 													tag="a"
-													:to="{ name: 'docs.commands.' + command.cmd }"
+													:to="{
+														name: 'docs.commands.doc',
+														params: { cmd: command.cmd },
+													}"
 												>
 													<span class="command">{{ command.cmd }}</span>
 													<span class="summary">{{
