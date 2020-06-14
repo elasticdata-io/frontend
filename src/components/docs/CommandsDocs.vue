@@ -5,7 +5,7 @@
 				<v-col>
 					<v-card>
 						<v-card-title>
-							<span>Commands версії 2.0</span>
+							<span>Команди версії 2.0</span>
 						</v-card-title>
 						<v-card-text>
 							<v-btn depressed small @click="back">
@@ -17,6 +17,7 @@
 									<v-row justify="center">
 										<v-col md="3" sm="6" xs="12">
 											<v-select
+												v-model="group"
 												:items="groups"
 												label="фільтрувати по группі"
 												solo
@@ -26,10 +27,12 @@
 										<v-col md="3" sm="6" xs="12">
 											<v-text-field
 												flat
+												clearable
 												solo
 												hide-details
 												prepend-inner-icon="search"
 												label="або шукати"
+												v-model="search"
 											></v-text-field>
 										</v-col>
 									</v-row>
@@ -40,7 +43,7 @@
 											md="4"
 											sm="6"
 											cols="12"
-											v-for="command in commands"
+											v-for="command in displayCommands"
 											v-bind:key="command.cmd"
 										>
 											<div class="command-doc" :disabled="command.disabled">
@@ -60,6 +63,11 @@
 												</router-link>
 											</div>
 										</v-col>
+										<v-col v-if="emptyResult" md="12" sm="12">
+											<div class="text-center pa-8">
+												За вашим запитом нічого не знайдено
+											</div>
+										</v-col>
 									</v-row>
 								</v-col>
 							</v-row>
@@ -77,12 +85,52 @@ import { FETCH_COMMANDS_DOCUMENTATION } from '../../store/commands/actions';
 
 export default {
 	data: () => ({
-		groups: ['всі', 'вибрати текст', 'дія на сторінці'],
+		search: null,
+		group: null,
+		groups: [
+			{
+				text: 'всі',
+				value: null,
+			},
+			{
+				text: 'вибрати текст',
+				value: 'SELECTABLE',
+			},
+			{
+				text: 'дія на сторінці',
+				value: 'ACTION',
+			},
+			{
+				text: 'інше',
+				value: 'OTHER',
+			},
+		],
 	}),
 	computed: {
 		...mapGetters('commands', {
 			commands: COMMANDS,
 		}),
+		displayCommands: function() {
+			let commands = this.commands;
+			if (this.group) {
+				commands = this.commands.filter(command => command.type === this.group);
+			}
+			const search = (this.search || '').toLowerCase();
+			if (!search) {
+				return commands;
+			}
+			return commands.filter(command => {
+				return (
+					command.cmd.toLowerCase().includes(search) ||
+					(command.summary && command.summary.toLowerCase().includes(search)) ||
+					(command.description && command.description.toLowerCase().includes(search)) ||
+					command.props.find(p => p.name.toLowerCase().includes(search))
+				);
+			});
+		},
+		emptyResult: function() {
+			return this.displayCommands.length === 0;
+		},
 	},
 	methods: {
 		back() {
@@ -99,11 +147,13 @@ export default {
 	text-align: center;
 	background: #f0f0f0;
 }
+
 .command-doc {
 	padding: 10px;
 
 	&[disabled='disabled'] {
 		pointer-events: none;
+
 		> a {
 			color: gray;
 
