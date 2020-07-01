@@ -21,33 +21,52 @@
 									</div>
 									<div class="head">
 										<h2 class="headline">Properties</h2>
-										<ul class="properties">
-											<li
-												class="property"
-												v-bind:key="index"
+										<v-expansion-panels>
+											<v-expansion-panel
 												v-for="(prop, index) in command.props"
+												v-bind:key="index"
 											>
-												<v-tooltip bottom>
-													<template v-slot:activator="{ on, attrs }">
-														<code class="prop-name" v-on="on">{{
-															prop.name
-														}}</code>
-														<v-icon class="ml-1" small v-on="on"
-															>help</v-icon
-														>
-													</template>
-													<span>{{
-														prop.summary ||
-															'Property not have any description'
-													}}</span>
-												</v-tooltip>
-												<ul class="property-params">
-													<li>type: {{ prop.type }}</li>
-													<li>required: {{ prop.required }}</li>
-													<li>default: {{ prop.default }}</li>
-												</ul>
-											</li>
-										</ul>
+												<v-expansion-panel-header>
+													<div class="property">
+														<v-tooltip bottom>
+															<template v-slot:activator="{ on }">
+																<span v-on="on">{{
+																	prop.name
+																}}</span>
+															</template>
+															<span>
+																{{
+																	prop.summary ||
+																		'Property not have any description'
+																}}
+															</span>
+														</v-tooltip>
+													</div>
+												</v-expansion-panel-header>
+												<v-expansion-panel-content>
+													<ul class="property-params">
+														<li>
+															<code>type</code>:
+															<code class="right-code">{{
+																displayPropType(prop.type)
+															}}</code>
+														</li>
+														<li>
+															<code>required</code>:
+															<code class="right-code">{{
+																prop.required
+															}}</code>
+														</li>
+														<li>
+															<code>default</code>:
+															<code class="right-code">{{
+																prop.default
+															}}</code>
+														</li>
+													</ul>
+												</v-expansion-panel-content>
+											</v-expansion-panel>
+										</v-expansion-panels>
 									</div>
 
 									<div class="head" v-if="examples.length">
@@ -196,6 +215,12 @@ export default {
 		outputDataExample(outputData) {
 			return JSON.stringify(outputData, null, 4);
 		},
+		displayPropType(type) {
+			if (Array.isArray(type)) {
+				return type.map(x => x.toLowerCase()).join(' | ');
+			}
+			return type.toLowerCase();
+		},
 	},
 	props: {
 		cmd: {
@@ -214,42 +239,41 @@ export default {
 @import '../../../less/var';
 
 .doc-command {
-	ul.properties {
-		padding: 20px;
+	.property {
+		span {
+			font-family: Monaco, 'Ubuntu Mono', monospace;
+		}
+
+		&:before {
+			content: '•';
+			margin: 0 0.5rem 0 0;
+			color: #ff8a00;
+		}
+	}
+
+	.property-params {
+		margin: 0;
 		list-style: none;
+		li {
+			padding: 3px 0;
 
-		li.property {
-			font-family: 'Ubuntu Mono', monospace;
-			text-indent: -1.1rem;
-			margin: 0 0 10px;
-
-			&:first-child {
-				margin-top: 0;
-			}
-
-			&:before {
-				content: '•';
-				margin: 0 0.5rem 0 0;
-				color: #ff8a00;
-			}
-
-			.prop-name {
-				padding: 0.1rem 0.3rem 0.2rem;
+			code {
 				background: #fff6ea;
+				color: rgb(46, 47, 62);
 				overflow-wrap: break-word;
 				word-wrap: break-word;
 				-webkit-box-decoration-break: clone;
 				box-decoration-break: clone;
+				padding: 0.1rem 0.3rem 0.2rem;
 				border-radius: 0.2rem;
-				font-size: 120%;
-				display: inline;
-				font-family: 'Ubuntu Mono', monospace;
+				font-family: Monaco, 'Ubuntu Mono', monospace;
 				box-shadow: none;
-				color: rgba(46, 47, 62, 0.9);
-			}
+				margin-right: 3px;
 
-			ul.property-params {
-				margin-left: 15px;
+				&.right-code {
+					background: #eaf8ff;
+					margin-left: 3px;
+				}
 			}
 		}
 	}
