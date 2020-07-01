@@ -62,7 +62,7 @@
 														<li>
 															<code class="code">default</code>:
 															<code class="code right-code">{{
-																prop.default
+																displayPropDefault(prop.default)
 															}}</code>
 														</li>
 													</ul>
@@ -225,6 +225,18 @@ export default {
 		},
 		displayPropSummary(summary) {
 			return summary || 'Property not have any description';
+		},
+		displayPropDefault(def) {
+			if (def === '') {
+				return `empty string`;
+			}
+			if (def === null) {
+				return `null`;
+			}
+			if (def === undefined) {
+				return `undefined`;
+			}
+			return def;
 		},
 	},
 	props: {
