@@ -36,30 +36,32 @@
 															</template>
 															<span>
 																{{
-																	prop.summary ||
-																		'Property not have any description'
+																	displayPropSummary(prop.summary)
 																}}
 															</span>
 														</v-tooltip>
+														<code v-if="prop.required" class="code ml-2"
+															>required</code
+														>
 													</div>
 												</v-expansion-panel-header>
 												<v-expansion-panel-content>
 													<ul class="property-params">
 														<li>
-															<code>type</code>:
-															<code class="right-code">{{
+															<code class="code">type</code>:
+															<code class="code right-code">{{
 																displayPropType(prop.type)
 															}}</code>
 														</li>
 														<li>
-															<code>required</code>:
-															<code class="right-code">{{
+															<code class="code">required</code>:
+															<code class="code right-code">{{
 																prop.required
 															}}</code>
 														</li>
 														<li>
-															<code>default</code>:
-															<code class="right-code">{{
+															<code class="code">default</code>:
+															<code class="code right-code">{{
 																prop.default
 															}}</code>
 														</li>
@@ -221,6 +223,9 @@ export default {
 			}
 			return type.toLowerCase();
 		},
+		displayPropSummary(summary) {
+			return summary || 'Property not have any description';
+		},
 	},
 	props: {
 		cmd: {
@@ -239,6 +244,25 @@ export default {
 @import '../../../less/var';
 
 .doc-command {
+	code.code {
+		background: #fff6ea;
+		color: rgb(46, 47, 62);
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+		-webkit-box-decoration-break: clone;
+		box-decoration-break: clone;
+		padding: 0.1rem 0.3rem 0.2rem;
+		border-radius: 0.2rem;
+		font-family: Monaco, 'Ubuntu Mono', monospace;
+		box-shadow: none;
+		margin-right: 3px;
+
+		&.right-code {
+			background: #eaf8ff;
+			margin-left: 3px;
+		}
+	}
+
 	.property {
 		span {
 			font-family: Monaco, 'Ubuntu Mono', monospace;
@@ -256,25 +280,6 @@ export default {
 		list-style: none;
 		li {
 			padding: 3px 0;
-
-			code {
-				background: #fff6ea;
-				color: rgb(46, 47, 62);
-				overflow-wrap: break-word;
-				word-wrap: break-word;
-				-webkit-box-decoration-break: clone;
-				box-decoration-break: clone;
-				padding: 0.1rem 0.3rem 0.2rem;
-				border-radius: 0.2rem;
-				font-family: Monaco, 'Ubuntu Mono', monospace;
-				box-shadow: none;
-				margin-right: 3px;
-
-				&.right-code {
-					background: #eaf8ff;
-					margin-left: 3px;
-				}
-			}
 		}
 	}
 
