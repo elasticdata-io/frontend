@@ -21,17 +21,30 @@
 									</div>
 									<div class="head">
 										<h2 class="headline">Properties</h2>
-										<ul>
+										<ul class="properties">
 											<li
-												class="monospace"
+												class="property"
 												v-bind:key="index"
 												v-for="(prop, index) in command.props"
 											>
-												<span class="monospace">{{ prop.name }}</span>
-												<ul>
-													<li class="monospace">
-														required: {{ prop.required }}
-													</li>
+												<v-tooltip bottom>
+													<template v-slot:activator="{ on, attrs }">
+														<code class="prop-name" v-on="on">{{
+															prop.name
+														}}</code>
+														<v-icon class="ml-1" small v-on="on"
+															>help</v-icon
+														>
+													</template>
+													<span>{{
+														prop.summary ||
+															'Property not have any description'
+													}}</span>
+												</v-tooltip>
+												<ul class="property-params">
+													<li>type: {{ prop.type }}</li>
+													<li>required: {{ prop.required }}</li>
+													<li>default: {{ prop.default }}</li>
 												</ul>
 											</li>
 										</ul>
@@ -201,10 +214,46 @@ export default {
 @import '../../../less/var';
 
 .doc-command {
-	.monospace {
-		font-family: Monaco, 'Ubuntu Mono', monospace;
-		font-size: 1em;
+	ul.properties {
+		padding: 20px;
+		list-style: none;
+
+		li.property {
+			font-family: 'Ubuntu Mono', monospace;
+			text-indent: -1.1rem;
+			margin: 0 0 10px;
+
+			&:first-child {
+				margin-top: 0;
+			}
+
+			&:before {
+				content: '•';
+				margin: 0 0.5rem 0 0;
+				color: #ff8a00;
+			}
+
+			.prop-name {
+				padding: 0.1rem 0.3rem 0.2rem;
+				background: #fff6ea;
+				overflow-wrap: break-word;
+				word-wrap: break-word;
+				-webkit-box-decoration-break: clone;
+				box-decoration-break: clone;
+				border-radius: 0.2rem;
+				font-size: 120%;
+				display: inline;
+				font-family: 'Ubuntu Mono', monospace;
+				box-shadow: none;
+				color: rgba(46, 47, 62, 0.9);
+			}
+
+			ul.property-params {
+				margin-left: 15px;
+			}
+		}
 	}
+
 	.head {
 		padding-bottom: 25px;
 
