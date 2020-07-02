@@ -78,7 +78,7 @@ const state = {
 					],
 				},
 				{
-					name: 'use loop context in CSS/XPATH selector',
+					name: 'use loop context',
 					code: {
 						version: '2.0',
 						commands: [
