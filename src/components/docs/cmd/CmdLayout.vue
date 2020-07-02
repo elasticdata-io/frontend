@@ -20,7 +20,7 @@
 										<slot name="description"></slot>
 									</div>
 									<div class="head">
-										<h2 class="headline">Properties</h2>
+										<h2 class="headline">{{ $t('DOC.CMD.PROPERTIES') }}</h2>
 										<v-expansion-panels>
 											<v-expansion-panel
 												v-for="(prop, index) in command.props"
@@ -72,7 +72,7 @@
 									</div>
 
 									<div class="head" v-if="examples.length">
-										<h2 class="headline">Examples</h2>
+										<h2 class="headline">{{ $t('DOC.CMD.EXAMPLES') }}</h2>
 										<div class="mb-2 text-right">
 											<v-btn
 												:color="mode === 'yaml' ? 'primary' : 'default'"
