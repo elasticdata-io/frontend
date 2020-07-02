@@ -73,46 +73,38 @@
 
 									<div class="head" v-if="examples.length">
 										<h2 class="headline">Examples</h2>
-										<div class="mb-2">
+										<div class="mb-2 text-right">
 											<v-btn
 												:color="mode === 'yaml' ? 'primary' : 'default'"
 												x-small
+												depressed
 												@click="switchMode"
 												>yaml</v-btn
 											>
 											<v-btn
 												:color="mode === 'json' ? 'primary' : 'default'"
 												x-small
+												depressed
 												class="ml-2"
 												@click="switchMode"
 												>json</v-btn
 											>
 										</div>
-										<div v-if="examples.length > 1">
-											<v-tabs
-												v-if="examples.length > 1"
-												class="elevation-1"
-												fixed-tabs
-												background-color="indigo"
-												dark
-												@change="examplesTabsChanged"
+										<v-expansion-panels v-model="panel" multiple>
+											<v-expansion-panel
+												v-for="(item, index) in examples"
+												:key="index"
+												@click="examplesTabsChanged"
 											>
-												<v-tabs-slider></v-tabs-slider>
-												<v-tab
-													v-for="(item, index) in examples"
-													:key="index"
-													:href="`#tab-${index}`"
-												>
-													<span v-if="item.name">{{ item.name }}</span>
-													<span v-else>Example {{ index + 1 }}</span>
-												</v-tab>
-												<v-tab-item
-													v-for="(item, index) in examples"
-													:key="index"
-													:value="'tab-' + index"
-													transition="fade-transition"
-													reverse-transition="fade-transition"
-												>
+												<v-expansion-panel-header>
+													<div class="property text-uppercase">
+														<span v-if="item.name">{{
+															item.name
+														}}</span>
+														<span v-else>Example {{ index + 1 }}</span>
+													</div>
+												</v-expansion-panel-header>
+												<v-expansion-panel-content>
 													<code-preview
 														:code="example(item.code)"
 														:mode="mode"
@@ -129,27 +121,9 @@
 															:fakeUpdated="fakeUpdated"
 														></code-preview>
 													</div>
-												</v-tab-item>
-											</v-tabs>
-										</div>
-										<div v-else>
-											<div v-for="(item, index) in examples" :key="index">
-												<code-preview
-													:code="example(item.code)"
-													:mode="mode"
-													:selection-text="cmd"
-													:fakeUpdated="fakeUpdated"
-												></code-preview>
-												<div v-if="item.outputData.length" class="mt-4">
-													<h2 class="headline">Data output</h2>
-													<code-preview
-														:code="outputDataExample(item.outputData)"
-														mode="json"
-														:fakeUpdated="fakeUpdated"
-													></code-preview>
-												</div>
-											</div>
-										</div>
+												</v-expansion-panel-content>
+											</v-expansion-panel>
+										</v-expansion-panels>
 									</div>
 								</v-col>
 								<v-col xl="5" lg="3" md="4" sm="12" cols="12">
@@ -190,6 +164,7 @@ export default {
 		return {
 			mode: 'json',
 			fakeUpdated: new Date(),
+			panel: [0],
 		};
 	},
 	methods: {
