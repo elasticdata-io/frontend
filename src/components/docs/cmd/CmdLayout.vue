@@ -165,7 +165,7 @@ export default {
 		return {
 			mode: 'json',
 			fakeUpdated: new Date(),
-			panel: [0],
+			panel: [],
 		};
 	},
 	methods: {
