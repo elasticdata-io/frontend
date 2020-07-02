@@ -10,7 +10,7 @@
 						'pink--text': pipelineIsStopped === status,
 					}"
 				>
-					{{ $t(`pipeline.status.${status}`) }}
+					{{ $t(`PIPELINE.STATUS.${status}`) }}
 				</div>
 				<div class="text-center" v-if="showCommandName">
 					<div v-if="docsCount" class="text-center docs-count-wrap">
