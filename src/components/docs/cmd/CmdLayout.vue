@@ -200,7 +200,8 @@ export default {
 			return type.toLowerCase();
 		},
 		displayPropSummary(summary) {
-			return summary || 'Property not have any description';
+			summary = summary || 'doc.cmd.not_have_any_description';
+			return this.$t(summary);
 		},
 		displayPropDefault(def) {
 			if (def === '') {

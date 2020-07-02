@@ -6,12 +6,14 @@ import VueLocalStorage from 'vue-localstorage';
 import Vuelidate from 'vuelidate';
 import router from './router';
 import store from './store';
-import { messages } from './i18n';
 
 import 'vuetify/dist/vuetify.min.css';
 import vuetify from './vuetify';
 import VueI18n from 'vue-i18n';
 import { SET_SNACK_MESSAGE } from './store/mutations';
+import { ENGLISH_TRANSLATIONS } from './translations/en';
+import { RUSSIAN_TRANSLATIONS } from './translations/ru';
+import { UKRAINE_TRANSLATIONS } from './translations/uk';
 
 Vue.use(VueI18n);
 Vue.use(VueResource);
@@ -20,9 +22,22 @@ Vue.use(Vuelidate);
 
 Vue.config.productionTip = false;
 
+const locale = 'uk';
+const TRANSLATIONS = {
+	en: ENGLISH_TRANSLATIONS,
+	ru: RUSSIAN_TRANSLATIONS,
+	uk: UKRAINE_TRANSLATIONS,
+};
+
+const i18n = new VueI18n({
+	locale: locale,
+	messages: TRANSLATIONS,
+});
+
 Vue.http.options.emulateJSON = true;
 Vue.http.interceptors.push(function(request, next) {
 	request.headers.set('token', Vue.localStorage.get('token'));
+	request.headers.set('lang', i18n.locale);
 	next(function(response) {
 		if (response.status === 401) {
 			router.push({ name: 'logout' });
@@ -37,12 +52,7 @@ Vue.http.interceptors.push(function(request, next) {
 	});
 });
 
-moment.locale('uk');
-
-const i18n = new VueI18n({
-	locale: 'uk', // set locale
-	messages, // set locale messages
-});
+moment.locale(locale);
 
 new Vue({
 	router,
