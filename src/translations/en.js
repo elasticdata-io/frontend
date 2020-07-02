@@ -1,7 +1,8 @@
 export const ENGLISH_TRANSLATIONS = {
-	doc: {
-		cmd: {
-			not_have_any_description: 'not have any description',
+	DOC: {
+		CMD: {
+			DESCRIPTION: 'Description',
+			NOT_HAVE_ANY_DESCRIPTION: 'not have any description',
 		},
 	},
 };

@@ -16,7 +16,7 @@
 								<v-col xl="6" lg="8" md="7" sm="12" cols="12" class="left">
 									<!--									<slot></slot>-->
 									<div class="head">
-										<h2 class="headline">Description</h2>
+										<h2 class="headline">{{ $t('DOC.CMD.DESCRIPTION') }}</h2>
 										<slot name="description"></slot>
 									</div>
 									<div class="head">
@@ -200,7 +200,7 @@ export default {
 			return type.toLowerCase();
 		},
 		displayPropSummary(summary) {
-			summary = summary || 'doc.cmd.not_have_any_description';
+			summary = summary || 'DOC.CMD.NOT_HAVE_ANY_DESCRIPTION';
 			return this.$t(summary);
 		},
 		displayPropDefault(def) {

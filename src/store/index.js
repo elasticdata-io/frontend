@@ -29,6 +29,7 @@ import users from './users/';
 import logs from './logs/';
 import dataRules from './data-rules';
 import commands from './commands';
+import locale from './locale';
 import { subscribe, stompConnect } from './websocket';
 import {
 	FETCH_APP_LAST_UPDATED,
@@ -64,6 +65,7 @@ export default new Vuex.Store({
 		logs,
 		dataRules,
 		commands,
+		locale,
 	},
 	state: {
 		snackTimeout: 10000,

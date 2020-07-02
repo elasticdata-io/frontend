@@ -56,9 +56,6 @@ const mutations = {
 			const findCommand = state.commands.find(x => x.cmd === commandDoc.cmd);
 			if (findCommand) {
 				commandsDocs[index] = {
-					...{
-						examples: [],
-					},
 					...commandDoc,
 					...findCommand,
 				};

@@ -23,6 +23,7 @@ import {
 } from './store/actions';
 import { USER } from './store/user/getters';
 import { mapGetters } from 'vuex';
+import { INIT_LOCALE } from './store/locale/actions';
 
 export default {
 	components: { HttpTransportLayer, Snackbar, AppHeader, UserMenu },
@@ -39,6 +40,7 @@ export default {
 		}
 		this.$store.dispatch(FETCH_APP_VERSION);
 		this.$store.dispatch(FETCH_APP_LAST_UPDATED);
+		this.$store.dispatch(`locale/${INIT_LOCALE}`);
 	},
 };
 </script>

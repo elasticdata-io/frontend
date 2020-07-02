@@ -11,9 +11,7 @@ import 'vuetify/dist/vuetify.min.css';
 import vuetify from './vuetify';
 import VueI18n from 'vue-i18n';
 import { SET_SNACK_MESSAGE } from './store/mutations';
-import { ENGLISH_TRANSLATIONS } from './translations/en';
-import { RUSSIAN_TRANSLATIONS } from './translations/ru';
-import { UKRAINE_TRANSLATIONS } from './translations/uk';
+import i18n from './i18n';
 
 Vue.use(VueI18n);
 Vue.use(VueResource);
@@ -21,18 +19,6 @@ Vue.use(VueLocalStorage);
 Vue.use(Vuelidate);
 
 Vue.config.productionTip = false;
-
-const locale = 'uk';
-const TRANSLATIONS = {
-	en: ENGLISH_TRANSLATIONS,
-	ru: RUSSIAN_TRANSLATIONS,
-	uk: UKRAINE_TRANSLATIONS,
-};
-
-const i18n = new VueI18n({
-	locale: locale,
-	messages: TRANSLATIONS,
-});
 
 Vue.http.options.emulateJSON = true;
 Vue.http.interceptors.push(function(request, next) {
@@ -52,7 +38,7 @@ Vue.http.interceptors.push(function(request, next) {
 	});
 });
 
-moment.locale(locale);
+moment.locale(i18n.locale);
 
 new Vue({
 	router,

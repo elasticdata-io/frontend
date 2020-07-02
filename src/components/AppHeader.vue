@@ -15,6 +15,19 @@
 			</a>
 		</v-toolbar-title>
 		<div class="flex-grow-1"></div>
+		<v-menu>
+			<template v-slot:activator="{ on }">
+				<v-btn v-on="on" light x-small depressed>
+					{{ locale.id }}
+				</v-btn>
+			</template>
+
+			<v-list>
+				<v-list-item v-for="(item, i) in locales" :key="i" @click="changeLocale(item)">
+					<v-list-item-title>{{ item.title }}</v-list-item-title>
+				</v-list-item>
+			</v-list>
+		</v-menu>
 		<v-menu offset-y v-if="login">
 			<template v-slot:activator="{ on }">
 				<v-btn v-on="on" small color="white" text>
@@ -44,8 +57,13 @@ import moment from 'moment';
 import { APP_LAST_UPDATED, APP_VERSION, IS_MOBILE_VIEW } from '../store/getters';
 import { TOGGLE_SHOW_VERTICAL_MENU } from '../store/mutations';
 import { LOGGED_IN, LOGIN } from '../store/user/getters';
+import { SET_LOCALE } from '../store/locale/mutations';
+import { LOCALE, LOCALES } from '../store/locale/getters';
 
 export default {
+	data: () => {
+		return {};
+	},
 	computed: {
 		...mapGetters({
 			IS_MOBILE_VIEW: IS_MOBILE_VIEW,
@@ -55,6 +73,10 @@ export default {
 		...mapGetters('user', {
 			login: LOGIN,
 			loggedIn: LOGGED_IN,
+		}),
+		...mapGetters('locale', {
+			locales: LOCALES,
+			locale: LOCALE,
 		}),
 		showUserToggleMenu: function() {
 			return true;
@@ -69,6 +91,10 @@ export default {
 	methods: {
 		toggleMenu() {
 			this.$store.commit(TOGGLE_SHOW_VERTICAL_MENU);
+		},
+		changeLocale(locale) {
+			this.$store.commit(`locale/${SET_LOCALE}`, locale);
+			location.reload();
 		},
 	},
 };

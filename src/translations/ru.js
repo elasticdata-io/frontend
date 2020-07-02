@@ -1,7 +1,8 @@
 export const RUSSIAN_TRANSLATIONS = {
-	doc: {
-		cmd: {
-			not_have_any_description: 'нет описания',
+	DOC: {
+		CMD: {
+			DESCRIPTION: 'Описание',
+			NOT_HAVE_ANY_DESCRIPTION: 'нет описания',
 		},
 	},
 };
