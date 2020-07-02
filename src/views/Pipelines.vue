@@ -5,7 +5,7 @@
 				<v-col>
 					<v-card>
 						<v-card-title>
-							<span>Павуки</span>
+							<span>{{ $t('USER_MENU.PIPELINES') }}</span>
 							<v-btn
 								color="accent"
 								small
@@ -14,7 +14,7 @@
 								to="/pipeline/add"
 							>
 								<v-icon>add</v-icon>
-								додати нового павука
+								{{ $t('USER_MENU.ADD_PIPELINE') }}
 							</v-btn>
 						</v-card-title>
 						<v-card-text>

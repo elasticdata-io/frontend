@@ -33,7 +33,7 @@
 					<template v-slot:activator>
 						<v-list-item-content>
 							<v-list-item-title>
-								{{ item.text }}
+								{{ $t(item.text) }}
 							</v-list-item-title>
 						</v-list-item-content>
 					</template>
@@ -50,7 +50,7 @@
 						</v-list-item-action>
 						<v-list-item-content>
 							<v-list-item-title>
-								{{ child.text }}
+								{{ $t(child.text) }}
 							</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
@@ -70,7 +70,7 @@
 					</v-list-item-action>
 					<v-list-item-content>
 						<v-list-item-title>
-							{{ item.text }}
+							{{ $t(item.text) }}
 						</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
@@ -121,13 +121,13 @@ export default {
 			items: [
 				{
 					icon: 'list',
-					text: 'Павуки',
+					text: 'USER_MENU.PIPELINES',
 					route: { name: 'pipelines' },
 				},
 				{
 					icon: 'expand_less',
 					'icon-alt': 'expand_more',
-					text: 'Допомога',
+					text: 'USER_MENU.HELP',
 					model: false,
 					children: [
 						{
@@ -145,19 +145,19 @@ export default {
 				},
 				{
 					icon: 'equalizer',
-					text: 'Аналітика',
+					text: 'USER_MENU.ANALYTICS',
 					route: { name: 'analytics' },
 					disabled: true,
 				},
 				{
 					icon: 'payment',
-					text: 'Оплата',
+					text: 'USER_MENU.PAYMENT',
 					route: { name: 'payment' },
 					disabled: true,
 				},
 				{
 					icon: 'account_circle',
-					text: 'Аккаунт',
+					text: 'USER_MENU.ACCOUNT',
 					route: { name: 'account' },
 					disabled: true,
 				},

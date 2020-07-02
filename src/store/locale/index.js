@@ -3,6 +3,7 @@ import { LOCALE, LOCALES } from './getters';
 import { SET_LOCALE } from './mutations';
 import { INIT_LOCALE } from './actions';
 import i18n from '../../i18n';
+import * as moment from 'moment';
 
 const locales = [
 	{
@@ -32,6 +33,7 @@ const mutations = {
 		Vue.set(state, 'locale', locale);
 		Vue.localStorage.set('locale', JSON.stringify(locale));
 		i18n.locale = locale.id;
+		moment.locale(locale.id);
 	},
 };
 

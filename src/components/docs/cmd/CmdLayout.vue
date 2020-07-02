@@ -16,11 +16,15 @@
 								<v-col xl="6" lg="8" md="7" sm="12" cols="12" class="left">
 									<!--									<slot></slot>-->
 									<div class="head">
-										<h2 class="headline">{{ $t('DOC.CMD.DESCRIPTION') }}</h2>
+										<h2 class="headline mb-6">
+											{{ $t('DOC.CMD.DESCRIPTION') }}
+										</h2>
 										<slot name="description"></slot>
 									</div>
 									<div class="head">
-										<h2 class="headline">{{ $t('DOC.CMD.PROPERTIES') }}</h2>
+										<h2 class="headline mb-6">
+											{{ $t('DOC.CMD.PROPERTIES') }}
+										</h2>
 										<v-expansion-panels>
 											<v-expansion-panel
 												v-for="(prop, index) in command.props"

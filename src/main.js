@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import * as moment from 'moment';
 import App from './App.vue';
 import VueResource from 'vue-resource';
 import VueLocalStorage from 'vue-localstorage';
@@ -37,8 +36,6 @@ Vue.http.interceptors.push(function(request, next) {
 		}
 	});
 });
-
-moment.locale(i18n.locale);
 
 new Vue({
 	router,
