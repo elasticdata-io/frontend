@@ -1,5 +1,5 @@
 <template>
-	<div style="background: #272822">
+	<div style="background: #272822; padding: 10px 0;">
 		<pre class="input-editor" :id="id"><code>{{ code }}</code></pre>
 	</div>
 </template>

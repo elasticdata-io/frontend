@@ -47,6 +47,70 @@ const state = {
 			],
 			description: 'Команда використовуєтся для завантаження веб сторінки (url адреси)',
 		},
+		{
+			cmd: 'loop',
+			examples: [
+				{
+					name: 'use loop index in CSS/XPATH selector',
+					code: {
+						version: '2.0',
+						commands: [
+							{
+								cmd: 'openurl',
+								link: 'https://sandbox.elasticdata.io/pagination/0',
+							},
+							{
+								cmd: 'loop',
+								commands: [
+									{
+										cmd: 'gettext',
+										key: 'title',
+										selector: '.card-title{$i}',
+									},
+								],
+							},
+						],
+					},
+					outputData: [
+						{ title: 'Card title 1.1' },
+						{ title: 'Card title 1.2' },
+						{ title: 'Card title 1.3' },
+					],
+				},
+				{
+					name: 'use loop context in CSS/XPATH selector',
+					code: {
+						version: '2.0',
+						commands: [
+							{
+								cmd: 'openurl',
+								link: 'https://sandbox.elasticdata.io/pagination/0',
+							},
+							{
+								cmd: 'loop',
+								context: 'cards',
+								commands: [
+									{
+										cmd: 'gettext',
+										key: 'title',
+										selector: '.card{$i} .card-title',
+									},
+								],
+							},
+						],
+					},
+					outputData: [
+						{
+							cards: [
+								{ title: 'Card title 1.1' },
+								{ title: 'Card title 1.2' },
+								{ title: 'Card title 1.3' },
+							],
+						},
+					],
+				},
+			],
+		},
 	],
 };
 

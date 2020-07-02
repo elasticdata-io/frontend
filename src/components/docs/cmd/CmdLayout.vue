@@ -97,7 +97,8 @@
 												@click="examplesTabsChanged"
 											>
 												<v-expansion-panel-header>
-													<div class="property text-uppercase">
+													<div class="example-title">
+														<span>{{ index + 1 }}. </span>
 														<span v-if="item.name">{{
 															item.name
 														}}</span>
@@ -281,6 +282,17 @@ export default {
 
 	.left {
 		border-right: 1px solid rgba(0, 0, 0, 0.12);
+	}
+
+	.example-title {
+		text-transform: capitalize;
+
+		span {
+			padding: 2px 6px 4px 6px;
+			border-radius: 6px;
+			font-family: 'Ubuntu Mono', monospace;
+			font-size: 18px;
+		}
 	}
 }
 </style>
