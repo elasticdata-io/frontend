@@ -1,29 +1,81 @@
 # scraper-frontend
 
 ## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+* ```'/worker/*'``` - https://github.com/sergeytkachenko/scraper-worker-ts
+* ```'/api/*'``` - https://github.com/sergeytkachenko/scraper-service
+* ```'/api/ws/*'``` - websockets of https://github.com/sergeytkachenko/scraper-service
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Develop only frontend
 
-### Run your tests
+* Change content of file ```vue.config.js```
 ```
-npm run test
-```
+module.exports = {
+	devServer: {
+		host: 'localhost',
+		proxy: {
+			'/worker/*': {
+				target: 'https://elasticdata.io',
+				changeOrigin: true,
+                autoRewrite: true,
+			},
+			'/api/*': {
+				target: 'https://elasticdata.io',
+				changeOrigin: true,
+				autoRewrite: true,
+			},
+			'/api/ws/*': {
+				target: 'https://elasticdata.io',
+				changeOrigin: true,
+				autoRewrite: true,
+				ws: true,
+			},
+		},
+	},
+};
 
-### Lints and fixes files
 ```
-npm run lint
-```
+* ``npm install``
+* ```npm run dev```
+### Develop frontend and worker
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+#### Run worker
+
+* clone project https://github.com/sergeytkachenko/scraper-worker-ts
+* run worker project 
+    * ```cd scraper-worker-ts```
+    * ``npm install``
+    * ```npm run dev```
+
+#### Run frontend
+
+* run frontend
+    * ```cd scraper-frontend```
+    * change content of file ```vue.config.js```
+```
+module.exports = {
+	devServer: {
+		host: 'localhost',
+		proxy: {
+			'/worker/*': {
+				target: 'http://localhost:3000',
+				changeOrigin: true,
+                autoRewrite: true,
+			},
+			'/api/*': {
+				target: 'https://elasticdata.io',
+				changeOrigin: true,
+				autoRewrite: true,
+			},
+			'/api/ws/*': {
+				target: 'https://elasticdata.io',
+				changeOrigin: true,
+				autoRewrite: true,
+				ws: true,
+			},
+		},
+	},
+};
+```
+* ``npm install``
+* ```npm run dev```
