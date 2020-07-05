@@ -37,6 +37,10 @@ module.exports = {
 ```
 * ``npm install``
 * ```npm run dev```
+* Copy local store values
+    * Login in app ```https://app.elasticdata.io/#/login```
+    * Copy values from https://prnt.sc/tc5ikm to https://prnt.sc/tc5j91
+
 ### Develop frontend and worker
 
 #### Run worker
@@ -79,3 +83,6 @@ module.exports = {
 ```
 * ``npm install``
 * ```npm run dev```
+* Copy local store values
+    * Login in app ```https://app.elasticdata.io/#/login```
+    * Copy values from https://prnt.sc/tc5ikm to https://prnt.sc/tc5j91
