@@ -15,17 +15,17 @@ module.exports = {
 		host: 'localhost',
 		proxy: {
 			'/worker/*': {
-				target: 'https://elasticdata.io',
+				target: 'https://app.elasticdata.io',
 				changeOrigin: true,
-                autoRewrite: true,
+				autoRewrite: true,
 			},
 			'/api/*': {
-				target: 'https://elasticdata.io',
+				target: 'https://app.elasticdata.io',
 				changeOrigin: true,
 				autoRewrite: true,
 			},
 			'/api/ws/*': {
-				target: 'https://elasticdata.io',
+				target: 'https://app.elasticdata.io',
 				changeOrigin: true,
 				autoRewrite: true,
 				ws: true,
@@ -63,12 +63,12 @@ module.exports = {
                 autoRewrite: true,
 			},
 			'/api/*': {
-				target: 'https://elasticdata.io',
+				target: 'https://app.elasticdata.io',
 				changeOrigin: true,
 				autoRewrite: true,
 			},
 			'/api/ws/*': {
-				target: 'https://elasticdata.io',
+				target: 'https://app.elasticdata.io',
 				changeOrigin: true,
 				autoRewrite: true,
 				ws: true,
