@@ -1,5 +1,19 @@
 export const RUSSIAN_TRANSLATIONS = {
 	PIPELINE: {
+		PIPELINES: {
+			DOCS: 'Документов',
+			STATUS: 'Статус',
+			CHANGED: 'Изменено',
+			VERSION: 'Версия',
+			NAME: 'Название',
+			DESCRIPTION: 'Описание',
+			RUNS: 'Запуски',
+			COLLECTED_DATA: 'Собранные данные',
+			ACTIONS: 'Действия',
+			ACTIVE: 'В процессі',
+			COLLECTED_TOTAL: 'Всего документов собрано',
+			RUNS_AMOUNT: 'Запуска(ов)',
+		},
 		STATUS: {
 			error: 'возникла ошибка',
 			'not running': 'не запущен',

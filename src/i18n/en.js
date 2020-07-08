@@ -1,5 +1,19 @@
 export const ENGLISH_TRANSLATIONS = {
 	PIPELINE: {
+		PIPELINES: {
+			DOCS: 'Documents',
+			STATUS: 'Status',
+			CHANGED: 'Changed',
+			VERSION: 'Version',
+			NAME: 'Name',
+			DESCRIPTION: 'Description',
+			RUNS: 'Starts',
+			COLLECTED_DATA: 'Collected data',
+			ACTIONS: 'Actions',
+			ACTIVE: 'Active',
+			COLLECTED_TOTAL: 'Total documents collected',
+			RUNS_AMOUNT: 'Starts',
+		},
 		STATUS: {
 			error: 'error',
 			'not running': 'not running',

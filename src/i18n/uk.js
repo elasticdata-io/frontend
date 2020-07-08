@@ -1,5 +1,19 @@
 export const UKRAINE_TRANSLATIONS = {
 	PIPELINE: {
+		PIPELINES: {
+			DOCS: 'Документів',
+			STATUS: 'Статус',
+			CHANGED: 'Зміненно',
+			VERSION: 'Версія',
+			NAME: 'Назва',
+			DESCRIPTION: 'Опис',
+			RUNS: 'Запуски',
+			COLLECTED_DATA: 'Зібранні данні',
+			ACTIONS: 'Дії',
+			ACTIVE: 'В процессі',
+			COLLECTED_TOTAL: 'Всього документів зібрано',
+			RUNS_AMOUNT: 'Запуска(ів)',
+		},
 		STATUS: {
 			error: 'виникла помилка',
 			'not running': 'не працює',

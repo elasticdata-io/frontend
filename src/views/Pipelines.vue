@@ -25,22 +25,40 @@
 								:color="onlyRunningPipeline ? 'secondary' : ''"
 							>
 								<v-icon small class="mr-3">filter_list</v-icon>
-								в процесі
+								{{ $t('PIPELINE.PIPELINES.ACTIVE') }}
 								<v-icon small class="ml-3" v-if="onlyRunningPipeline">close</v-icon>
 							</v-btn>
 							<v-simple-table>
 								<template v-slot:default>
 									<thead>
 										<tr>
-											<th class="text-left">Документів</th>
-											<th class="text-left" v-if="false">Статус</th>
-											<th class="text-left">Зміненно</th>
-											<th class="text-left">Версія</th>
-											<th class="text-left">Назва</th>
-											<th class="text-left">Опис</th>
-											<th class="text-left">Запуски</th>
-											<th class="text-left">Зібранні данні</th>
-											<th class="text-left">Дії</th>
+											<th class="text-left">
+												{{ $t('PIPELINE.PIPELINES.DOCS') }}
+											</th>
+											<th class="text-left" v-if="false">
+												{{ $t('PIPELINE.PIPELINES.STATUS') }}
+											</th>
+											<th class="text-left">
+												{{ $t('PIPELINE.PIPELINES.CHANGED') }}
+											</th>
+											<th class="text-left">
+												{{ $t('PIPELINE.PIPELINES.VERSION') }}
+											</th>
+											<th class="text-left">
+												{{ $t('PIPELINE.PIPELINES.NAME') }}
+											</th>
+											<th class="text-left">
+												{{ $t('PIPELINE.PIPELINES.DESCRIPTION') }}
+											</th>
+											<th class="text-left">
+												{{ $t('PIPELINE.PIPELINES.RUNS') }}
+											</th>
+											<th class="text-left">
+												{{ $t('PIPELINE.PIPELINES.COLLECTED_DATA') }}
+											</th>
+											<th class="text-left">
+												{{ $t('PIPELINE.PIPELINES.ACTIONS') }}
+											</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -59,10 +77,9 @@
 															<span>{{ docsCount(pipeline) }}</span>
 														</v-btn>
 													</template>
-													<span
-														>Всього документів зібрано, при останьому
-														запуску павука</span
-													>
+													<span>{{
+														$t('PIPELINE.PIPELINES.COLLECTED_TOTAL')
+													}}</span>
 												</v-tooltip>
 											</td>
 											<td v-if="false">
@@ -113,7 +130,8 @@
 													color="primary"
 													disabled
 													:to="'/tasks/' + pipeline.id"
-													>{{ pipeline.tasksTotal }} запуск(ів)
+													>{{ pipeline.tasksTotal
+													}}{{ $t('PIPELINE.PIPELINES.RUNS_AMOUNTvesr') }}
 												</v-btn>
 											</td>
 											<td>
