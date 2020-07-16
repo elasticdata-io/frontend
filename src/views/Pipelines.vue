@@ -130,8 +130,8 @@
 													color="primary"
 													disabled
 													:to="'/tasks/' + pipeline.id"
-													>{{ pipeline.tasksTotal
-													}}{{ $t('PIPELINE.PIPELINES.RUNS_AMOUNTvesr') }}
+													>{{ pipeline.tasksTotal }}
+													{{ $t('PIPELINE.PIPELINES.RUNS_AMOUNT') }}
 												</v-btn>
 											</td>
 											<td>
