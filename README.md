@@ -50,7 +50,7 @@ module.exports = {
 * run worker project 
     * ```cd scraper-worker-ts```
     * ``npm install``
-    * ```npm run dev```
+    * ```npm run start```
 
 #### Run frontend
 
