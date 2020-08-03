@@ -1,12 +1,18 @@
 import Vue from 'vue';
 import * as action from './actions';
 import * as mutation from './mutations';
-import { TASK, TASK_COMMANDS_INFORMATION, TASK_DATA } from './getters';
+import {
+	TASK,
+	TASK_COMMANDS_INFORMATION,
+	TASK_COMMANDS_INFORMATION_LOADING,
+	TASK_DATA,
+} from './getters';
 
 const state = {
 	task: {},
 	taskData: [],
 	taskCommandsInformation: {},
+	commandsInformationLoading: false,
 	loading: false,
 };
 
@@ -25,6 +31,10 @@ const mutations = {
 
 	[mutation.SET_TASK_COMMANDS_INFORMATION](state, commandsInformation) {
 		Vue.set(state, 'commandsInformation', commandsInformation);
+	},
+
+	[mutation.SET_TASK_COMMANDS_INFORMATION_LOADING](state, loading) {
+		Vue.set(state, 'commandsInformationLoading', loading);
 	},
 
 	[mutation.CLEAR_TASK_DATA](state) {
@@ -61,10 +71,16 @@ const actions = {
 		if (!link) {
 			return;
 		}
-		return Vue.http.get(link).then(res => {
-			const commandsInformation = res.body || {};
-			commit(mutation.SET_TASK_COMMANDS_INFORMATION, commandsInformation);
-		});
+		commit(mutation.SET_TASK_COMMANDS_INFORMATION_LOADING, true);
+		return Vue.http
+			.get(link)
+			.then(res => {
+				const commandsInformation = res.body || {};
+				commit(mutation.SET_TASK_COMMANDS_INFORMATION, commandsInformation);
+			})
+			.finally(() => {
+				commit(mutation.SET_TASK_COMMANDS_INFORMATION_LOADING, false);
+			});
 	},
 
 	async [action.FETCH_TASK_DATA]({ commit, state }) {
@@ -84,6 +100,7 @@ const actions = {
 const getters = {
 	[TASK]: state => state.task,
 	[TASK_COMMANDS_INFORMATION]: state => state.commandsInformation,
+	[TASK_COMMANDS_INFORMATION_LOADING]: state => state.commandsInformationLoading,
 	[TASK_DATA]: state => state.taskData,
 };
 

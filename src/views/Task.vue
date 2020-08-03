@@ -2,120 +2,125 @@
 	<v-content>
 		<link href="https://fonts.googleapis.com/css?family=Karla&display=swap" rel="stylesheet" />
 		<v-container>
-			<v-system-bar color="white" lights-out height="60">
-				<v-btn depressed small @click="back">
-					<v-icon class="mr-2">keyboard_backspace</v-icon>
-					назад
-				</v-btn>
+			<div v-if="!taskCommandsInformationLoading">
+				<v-system-bar color="white" lights-out height="60">
+					<v-btn depressed small @click="back">
+						<v-icon class="mr-2">keyboard_backspace</v-icon>
+						назад
+					</v-btn>
 
-				<v-divider vertical class="ml-2 mr-2"></v-divider>
-				<v-tooltip bottom>
-					<template v-slot:activator="{ on }">
-						<v-btn x-small text class="font-weight-bold" v-on="on">
-							<v-icon>donut_large</v-icon>
-							<strong class="green--text">{{ successTotal }}</strong>
-							|
-							<strong class="red--text">{{ errorTotal }}</strong>
-						</v-btn>
-					</template>
-					<span>Всього: успішних | не успішних команд</span>
-				</v-tooltip>
-				<v-divider vertical class="ml-2 mr-2"></v-divider>
+					<v-divider vertical class="ml-2 mr-2"></v-divider>
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+							<v-btn x-small text class="font-weight-bold" v-on="on">
+								<v-icon>donut_large</v-icon>
+								<strong class="green--text">{{ successTotal }}</strong>
+								|
+								<strong class="red--text">{{ errorTotal }}</strong>
+							</v-btn>
+						</template>
+						<span>Всього: успішних | не успішних команд</span>
+					</v-tooltip>
+					<v-divider vertical class="ml-2 mr-2"></v-divider>
 
-				<v-tooltip bottom>
-					<template v-slot:activator="{ on }">
-						<v-switch
-							v-on="on"
-							v-model="showOnlyError"
-							class="ml-2"
-							label="only error"
-						></v-switch>
-					</template>
-					<span>Відобразити команди лише з помилками</span>
-				</v-tooltip>
-				<v-divider vertical class="ml-2 mr-2"></v-divider>
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+							<v-switch
+								v-on="on"
+								v-model="showOnlyError"
+								class="ml-2"
+								label="only error"
+							></v-switch>
+						</template>
+						<span>Відобразити команди лише з помилками</span>
+					</v-tooltip>
+					<v-divider vertical class="ml-2 mr-2"></v-divider>
 
-				<v-tooltip bottom>
-					<template v-slot:activator="{ on }">
-						<v-btn x-small text class="font-weight-bold" v-on="on">
-							<v-icon>access_time</v-icon>
-							{{ totalTime }}
-						</v-btn>
-					</template>
-					<span>Всього: затраченого часу</span>
-				</v-tooltip>
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+							<v-btn x-small text class="font-weight-bold" v-on="on">
+								<v-icon>access_time</v-icon>
+								{{ totalTime }}
+							</v-btn>
+						</template>
+						<span>Всього: затраченого часу</span>
+					</v-tooltip>
 
-				<v-divider vertical class="ml-2 mr-2"></v-divider>
-				<v-tooltip bottom>
-					<template v-slot:activator="{ on }">
-						<v-btn x-small text class="font-weight-bold" v-on="on">
-							<v-icon>link</v-icon>
-							{{ totalPages }}
-						</v-btn>
-					</template>
-					<span>Всього: завантажених сторінок</span>
-				</v-tooltip>
+					<v-divider vertical class="ml-2 mr-2"></v-divider>
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+							<v-btn x-small text class="font-weight-bold" v-on="on">
+								<v-icon>link</v-icon>
+								{{ totalPages }}
+							</v-btn>
+						</template>
+						<span>Всього: завантажених сторінок</span>
+					</v-tooltip>
 
-				<v-divider vertical class="ml-2 mr-2"></v-divider>
-				<v-tooltip bottom>
-					<template v-slot:activator="{ on }">
-						<v-btn x-small text class="font-weight-bold" v-on="on">
-							<v-icon>insert_drive_file</v-icon>
-							{{ totalKeys }}
-						</v-btn>
-					</template>
-					<span>Всього: зібраних ключів</span>
-				</v-tooltip>
-				<v-divider vertical class="ml-2 mr-2"></v-divider>
+					<v-divider vertical class="ml-2 mr-2"></v-divider>
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+							<v-btn x-small text class="font-weight-bold" v-on="on">
+								<v-icon>insert_drive_file</v-icon>
+								{{ totalKeys }}
+							</v-btn>
+						</template>
+						<span>Всього: зібраних ключів</span>
+					</v-tooltip>
+					<v-divider vertical class="ml-2 mr-2"></v-divider>
 
-				<v-spacer></v-spacer>
-				<span>Завершено</span>
-			</v-system-bar>
-			<v-row class="task">
-				<v-col class="commands" cols="12">
-					<v-card>
-						<command-factory
-							v-for="(command, index) in displayCommandsAnalyzed"
-							:key="index"
-							:number="commandNumber(command)"
-							:cmd="command.cmd"
-							:uuid="command.uuid"
-							:level="commandLevel(command)"
-							:running="command.running"
-							:params="commandParams(command)"
-							:success="command.status === 'success'"
-							:failureReason="command.failureReason"
-						></command-factory>
-					</v-card>
-				</v-col>
-				<v-col v-if="false" class="preview" cols="12">
-					<v-card>
-						<v-tabs v-model="tab">
-							<v-tab key="data">Данні</v-tab>
-							<v-tab key="snapshot">snapshots</v-tab>
-						</v-tabs>
-						<v-tabs-items v-model="tab">
-							<v-tab-item key="data">
-								<v-card flat>
-									<v-card-text>{{ taskData }}</v-card-text>
-								</v-card>
-							</v-tab-item>
-							<v-tab-item key="snapshot">
-								<v-card flat>
-									<v-card-text>
-										<iframe
-											width="100%"
-											src="https://vuetifyjs.com/ru/components/tabs/"
-											height="400"
-											style="border: 1px solid #ddd;"
-										/>
-									</v-card-text>
-								</v-card>
-							</v-tab-item>
-						</v-tabs-items>
-					</v-card>
-				</v-col>
-			</v-row>
+					<v-spacer></v-spacer>
+					<span>Завершено</span>
+				</v-system-bar>
+				<v-row class="task">
+					<v-col class="commands" cols="12">
+						<v-card>
+							<command-factory
+								v-for="(command, index) in displayCommandsAnalyzed"
+								:key="index"
+								:number="commandNumber(command)"
+								:cmd="command.cmd"
+								:uuid="command.uuid"
+								:level="commandLevel(command)"
+								:running="command.running"
+								:params="commandParams(command)"
+								:success="command.status === 'success'"
+								:failureReason="command.failureReason"
+							></command-factory>
+						</v-card>
+					</v-col>
+					<v-col v-if="false" class="preview" cols="12">
+						<v-card>
+							<v-tabs v-model="tab">
+								<v-tab key="data">Данні</v-tab>
+								<v-tab key="snapshot">snapshots</v-tab>
+							</v-tabs>
+							<v-tabs-items v-model="tab">
+								<v-tab-item key="data">
+									<v-card flat>
+										<v-card-text>{{ taskData }}</v-card-text>
+									</v-card>
+								</v-tab-item>
+								<v-tab-item key="snapshot">
+									<v-card flat>
+										<v-card-text>
+											<iframe
+												width="100%"
+												src="https://vuetifyjs.com/ru/components/tabs/"
+												height="400"
+												style="border: 1px solid #ddd;"
+											/>
+										</v-card-text>
+									</v-card>
+								</v-tab-item>
+							</v-tabs-items>
+						</v-card>
+					</v-col>
+				</v-row>
+			</div>
+			<div v-else>
+				<v-progress-linear indeterminate color="green"></v-progress-linear>
+			</div>
 		</v-container>
 	</v-content>
 </template>
@@ -126,7 +131,12 @@ import {
 	FETCH_TASK_COMMANDS_INFORMATION,
 	FETCH_TASK_DATA,
 } from '../store/task/actions';
-import { TASK, TASK_COMMANDS_INFORMATION, TASK_DATA } from '../store/task/getters';
+import {
+	TASK,
+	TASK_COMMANDS_INFORMATION,
+	TASK_COMMANDS_INFORMATION_LOADING,
+	TASK_DATA,
+} from '../store/task/getters';
 import moment from 'moment';
 import { flatten } from 'flat';
 import { mapGetters } from 'vuex';
@@ -144,6 +154,7 @@ export default {
 			task: TASK,
 			taskData: TASK_DATA,
 			taskCommandsInformation: TASK_COMMANDS_INFORMATION,
+			taskCommandsInformationLoading: TASK_COMMANDS_INFORMATION_LOADING,
 		}),
 		commandsAnalyzed: function() {
 			const taskCommandsInformation = this.taskCommandsInformation || { analyzed: [] };
