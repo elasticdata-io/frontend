@@ -72,7 +72,14 @@ export default {
 			const start = moment.utc(this.startOnUtc);
 			const end = moment.utc(this.endOnUtc);
 			const diff = end.diff(start);
-			return moment.utc(diff).format('HH:mm:ss');
+			const duration = moment.duration(diff);
+			if (duration.asMinutes() > 1) {
+				return moment.utc(diff).format('m[m] s[s]');
+			}
+			if (duration.asSeconds() > 1) {
+				return moment.utc(diff).format('s [s]');
+			}
+			return `${diff} ms`;
 		},
 	},
 	methods: {
