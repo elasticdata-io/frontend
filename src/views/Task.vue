@@ -50,7 +50,7 @@
 						<command-factory
 							v-for="(command, index) in commandsAnalyzed"
 							:key="index"
-							:number="command.number"
+							:number="commandNumber(command)"
 							:cmd="command.cmd"
 							:uuid="command.uuid"
 							:level="commandLevel(command)"
@@ -179,6 +179,9 @@ export default {
 		},
 		commandLevel(command) {
 			return command.designTimeConfig.materializedUuidPath.split('_').length - 1;
+		},
+		commandNumber(command) {
+			return command.designTimeConfig.materializedUuidPath.replace(/_/g, '.');
 		},
 	},
 	created: async function() {
