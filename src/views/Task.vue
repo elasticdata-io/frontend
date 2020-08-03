@@ -99,6 +99,8 @@
 								:success="command.status === 'success'"
 								:failureReason="command.failureReason"
 								:dataValue="command.dataValue"
+								:start-on-utc="command.startOnUtc"
+								:end-on-utc="command.endOnUtc"
 							></command-factory>
 						</v-card>
 					</v-col>

@@ -13,6 +13,10 @@
 						<v-btn x-small depressed>JSON</v-btn>
 					</div>
 				</div>
+				<div class="prop-value">
+					<span class="prop">totalTime</span>
+					<div class="value">{{ totalTime }}</div>
+				</div>
 				<div v-if="dataValue" class="prop-value parsed-data-value">
 					<span class="prop">value --></span>
 					<div v-if="isLink(dataValue)" class="value">
@@ -35,6 +39,8 @@
 	</div>
 </template>
 <script>
+import moment from 'moment';
+
 export default {
 	data: () => ({
 		selected: false,
@@ -61,6 +67,12 @@ export default {
 			const params = { ...this.params };
 			delete params.cmd;
 			return params;
+		},
+		totalTime() {
+			const start = moment.utc(this.startOnUtc);
+			const end = moment.utc(this.endOnUtc);
+			const diff = end.diff(start);
+			return moment.utc(diff).format('HH:mm:ss');
 		},
 	},
 	methods: {
@@ -118,6 +130,14 @@ export default {
 			default: '',
 		},
 		dataValue: {},
+		startOnUtc: {
+			type: String,
+			default: '',
+		},
+		endOnUtc: {
+			type: String,
+			default: '',
+		},
 	},
 };
 </script>

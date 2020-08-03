@@ -11,6 +11,8 @@
 			:success="success"
 			:failureReason="failureReason"
 			:data-value="dataValue"
+			:start-on-utc="startOnUtc"
+			:end-on-utc="endOnUtc"
 		>
 		</default-command>
 	</div>
@@ -61,6 +63,14 @@ export default {
 			default: '',
 		},
 		dataValue: {},
+		startOnUtc: {
+			type: String,
+			default: '',
+		},
+		endOnUtc: {
+			type: String,
+			default: '',
+		},
 	},
 };
 </script>
