@@ -13,32 +13,6 @@
 					<v-tooltip bottom>
 						<template v-slot:activator="{ on }">
 							<v-btn x-small text class="font-weight-bold" v-on="on">
-								<v-icon>donut_large</v-icon>
-								<strong class="green--text">{{ successTotal }}</strong>
-								|
-								<strong class="red--text">{{ errorTotal }}</strong>
-							</v-btn>
-						</template>
-						<span>Всього: успішних | не успішних команд</span>
-					</v-tooltip>
-					<v-divider vertical class="ml-2 mr-2"></v-divider>
-
-					<v-tooltip bottom>
-						<template v-slot:activator="{ on }">
-							<v-switch
-								v-on="on"
-								v-model="showOnlyError"
-								class="ml-2"
-								label="only error"
-							></v-switch>
-						</template>
-						<span>Відобразити команди лише з помилками</span>
-					</v-tooltip>
-					<v-divider vertical class="ml-2 mr-2"></v-divider>
-
-					<v-tooltip bottom>
-						<template v-slot:activator="{ on }">
-							<v-btn x-small text class="font-weight-bold" v-on="on">
 								<v-icon>access_time</v-icon>
 								{{ totalTime }}
 							</v-btn>
@@ -50,14 +24,23 @@
 					<v-tooltip bottom>
 						<template v-slot:activator="{ on }">
 							<v-btn x-small text class="font-weight-bold" v-on="on">
+								<v-icon>donut_large</v-icon>
+								<strong class="green--text">{{ successTotal }}</strong>
+								|
+								<strong class="red--text">{{ errorTotal }}</strong>
+							</v-btn>
+						</template>
+						<span>Всього: успішних | не успішних команд</span>
+					</v-tooltip>
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+							<v-btn x-small text class="font-weight-bold" v-on="on">
 								<v-icon>link</v-icon>
 								{{ totalPages }}
 							</v-btn>
 						</template>
 						<span>Всього: завантажених сторінок</span>
 					</v-tooltip>
-
-					<v-divider vertical class="ml-2 mr-2"></v-divider>
 					<v-tooltip bottom>
 						<template v-slot:activator="{ on }">
 							<v-btn x-small text class="font-weight-bold" v-on="on">
@@ -67,7 +50,37 @@
 						</template>
 						<span>Всього: зібраних ключів</span>
 					</v-tooltip>
+
 					<v-divider vertical class="ml-2 mr-2"></v-divider>
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+							<pipeline-json-editor
+								v-on="on"
+								:json="taskData"
+								:read-only="true"
+								:small="true"
+								btn-icon="list"
+								btn-caption="переглянути дані"
+								btn-tooltip="Переглянути зідранні данні"
+								:btn-elevation="0"
+								title="Зібранні данні"
+							></pipeline-json-editor>
+						</template>
+						<span>Всього: зібраних ключів</span>
+					</v-tooltip>
+
+					<v-divider vertical class="ml-2 mr-2"></v-divider>
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+							<v-switch
+								v-on="on"
+								v-model="showOnlyError"
+								class="ml-2"
+								label="тільки з помилками"
+							></v-switch>
+						</template>
+						<span>Відобразити команди лише з помилками</span>
+					</v-tooltip>
 
 					<v-spacer></v-spacer>
 					<span>Завершено</span>
@@ -140,9 +153,11 @@ import {
 import moment from 'moment';
 import { flatten } from 'flat';
 import { mapGetters } from 'vuex';
+import PipelineJsonEditor from '../components/PipelineJsonEditor';
 
 export default {
 	components: {
+		PipelineJsonEditor,
 		CommandFactory,
 	},
 	data: () => ({
@@ -244,7 +259,7 @@ export default {
 .v-system-bar {
 	position: sticky;
 	top: 64px;
-	z-index: 1;
+	z-index: 5;
 	background-color: white;
 }
 </style>

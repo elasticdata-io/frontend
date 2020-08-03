@@ -9,9 +9,17 @@
 			transition="dialog-bottom-transition"
 		>
 			<template v-slot:activator="{ on }">
-				<v-btn :disabled="disabled" block depressed elevation="1" v-on="on">
-					<v-icon class="pr-2">create </v-icon>
-					json
+				<v-btn
+					:disabled="disabled"
+					block
+					depressed
+					:elevation="btnElevation"
+					v-on="on"
+					:x-small="xSmall"
+					:small="small"
+				>
+					<v-icon :class="!small && !x - small ? 'pr-2' : ''">{{ btnIcon }}</v-icon>
+					{{ btnCaption }}
 				</v-btn>
 			</template>
 			<v-card v-if="dialog">
@@ -21,7 +29,7 @@
 					</v-btn>
 					<v-toolbar-title>json: {{ title }}</v-toolbar-title>
 					<div class="flex-grow-1"></div>
-					<v-toolbar-items>
+					<v-toolbar-items v-if="!readOnly">
 						<v-btn text @click="save" class="mr-5">
 							<v-icon>save</v-icon>
 							<span class="pl-2">Зберегти</span>
@@ -72,6 +80,7 @@ export default {
 				editor = ace.edit('editor');
 				editor.setTheme('ace/theme/monokai');
 				editor.getSession().setMode(`ace/mode/${this.textType}`);
+				editor.setOptions({ readOnly: this.readOnly });
 			});
 		},
 		onCloseDialog() {
@@ -99,15 +108,46 @@ export default {
 			type: String,
 			default: '',
 		},
-		json: {
-			type: String,
-			required: false,
-			default: '',
-		},
+		json: {},
 		disabled: {
 			type: Boolean,
 			required: false,
 			default: false,
+		},
+		readOnly: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
+		small: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
+		xSmall: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
+		btnIcon: {
+			type: String,
+			required: false,
+			default: 'create',
+		},
+		btnCaption: {
+			type: String,
+			required: false,
+			default: 'json',
+		},
+		btnTooltip: {
+			type: String,
+			required: false,
+			default: '',
+		},
+		btnElevation: {
+			type: Number,
+			required: false,
+			default: 1,
 		},
 	},
 };
