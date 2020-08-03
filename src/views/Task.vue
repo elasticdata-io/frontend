@@ -11,7 +11,21 @@
 				<v-divider vertical class="ml-2 mr-2"></v-divider>
 				<v-tooltip bottom>
 					<template v-slot:activator="{ on }">
+						<v-btn x-small text class="font-weight-bold" v-on="on">
+							<v-icon>donut_large</v-icon>
+							<strong class="green--text">{{ successTotal }}</strong
+							>|
+							<strong class="red--text">{{ errorTotal }}</strong>
+						</v-btn>
+					</template>
+					<span>Всього: успішних | не успішних команд</span>
+				</v-tooltip>
+				<v-divider vertical class="ml-2 mr-2"></v-divider>
+
+				<v-tooltip bottom>
+					<template v-slot:activator="{ on }">
 						<v-switch
+							v-on="on"
 							v-model="showOnlyError"
 							class="ml-2"
 							label="only error"
@@ -19,38 +33,38 @@
 					</template>
 					<span>Відобразити команди лише з помилками</span>
 				</v-tooltip>
-
 				<v-divider vertical class="ml-2 mr-2"></v-divider>
+
 				<v-tooltip bottom>
 					<template v-slot:activator="{ on }">
-						<v-btn small text color="secondary" class="font-weight-bold" v-on="on">
-							<v-icon>link</v-icon>
-							{{ totalPages }}
-						</v-btn>
-					</template>
-					<span>Всього сторінок</span>
-				</v-tooltip>
-
-				<v-divider vertical class="ml-2 mr-2"></v-divider>
-				<v-tooltip bottom>
-					<template v-slot:activator="{ on }">
-						<v-btn small text color="primary" class="font-weight-bold" v-on="on">
-							<v-icon>insert_drive_file</v-icon>
-							{{ totalKeys }}
-						</v-btn>
-					</template>
-					<span>Всього зібраних ключів</span>
-				</v-tooltip>
-
-				<v-divider vertical class="ml-2 mr-2"></v-divider>
-				<v-tooltip bottom>
-					<template v-slot:activator="{ on }">
-						<v-btn small text class="font-weight-bold" v-on="on">
+						<v-btn x-small text class="font-weight-bold" v-on="on">
 							<v-icon>access_time</v-icon>
 							{{ totalTime }}
 						</v-btn>
 					</template>
-					<span>Всього затраченого часу</span>
+					<span>Всього: затраченого часу</span>
+				</v-tooltip>
+
+				<v-divider vertical class="ml-2 mr-2"></v-divider>
+				<v-tooltip bottom>
+					<template v-slot:activator="{ on }">
+						<v-btn x-small text class="font-weight-bold" v-on="on">
+							<v-icon>link</v-icon>
+							{{ totalPages }}
+						</v-btn>
+					</template>
+					<span>Всього: завантажених сторінок</span>
+				</v-tooltip>
+
+				<v-divider vertical class="ml-2 mr-2"></v-divider>
+				<v-tooltip bottom>
+					<template v-slot:activator="{ on }">
+						<v-btn x-small text class="font-weight-bold" v-on="on">
+							<v-icon>insert_drive_file</v-icon>
+							{{ totalKeys }}
+						</v-btn>
+					</template>
+					<span>Всього: зібраних ключів</span>
 				</v-tooltip>
 				<v-divider vertical class="ml-2 mr-2"></v-divider>
 
@@ -165,6 +179,12 @@ export default {
 				return;
 			}
 			return commandsAnalyzed.filter(x => x.cmd === 'openurl' || x.cmd === 'opentab').length;
+		},
+		successTotal: function() {
+			return this.commandsAnalyzed.filter(x => x.status === 'success').length;
+		},
+		errorTotal: function() {
+			return this.commandsAnalyzed.filter(x => x.status === 'error').length;
 		},
 	},
 	methods: {
