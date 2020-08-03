@@ -122,11 +122,11 @@ export default {
 	}
 
 	&.cmd-success {
-		background-color: rgba(46, 255, 0, 0.2);
+		background-color: rgba(46, 255, 0, 0.06);
 	}
 
 	&.cmd-error {
-		background-color: rgba(255, 0, 3, 0.2);
+		background-color: rgba(255, 0, 3, 0.1);
 	}
 
 	&.running {

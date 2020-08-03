@@ -2,53 +2,66 @@
 	<v-content>
 		<link href="https://fonts.googleapis.com/css?family=Karla&display=swap" rel="stylesheet" />
 		<v-container>
-			<v-system-bar color="white" lights-out height="40">
+			<v-system-bar color="white" lights-out height="60">
 				<v-btn depressed small @click="back">
 					<v-icon class="mr-2">keyboard_backspace</v-icon>
 					назад
 				</v-btn>
-				<v-divider vertical class="ml-4 "></v-divider>
+
+				<v-divider vertical class="ml-2 mr-2"></v-divider>
 				<v-tooltip bottom>
 					<template v-slot:activator="{ on }">
-						<v-btn text color="secondary" class="font-weight-bold" v-on="on">
+						<v-switch
+							v-model="showOnlyError"
+							class="ml-2"
+							label="only error"
+						></v-switch>
+					</template>
+					<span>Відобразити команди лише з помилками</span>
+				</v-tooltip>
+
+				<v-divider vertical class="ml-2 mr-2"></v-divider>
+				<v-tooltip bottom>
+					<template v-slot:activator="{ on }">
+						<v-btn small text color="secondary" class="font-weight-bold" v-on="on">
 							<v-icon>link</v-icon>
 							{{ totalPages }}
 						</v-btn>
 					</template>
 					<span>Всього сторінок</span>
 				</v-tooltip>
+
+				<v-divider vertical class="ml-2 mr-2"></v-divider>
 				<v-tooltip bottom>
 					<template v-slot:activator="{ on }">
-						<v-btn text color="primary" class="font-weight-bold" v-on="on">
+						<v-btn small text color="primary" class="font-weight-bold" v-on="on">
 							<v-icon>insert_drive_file</v-icon>
 							{{ totalKeys }}
 						</v-btn>
 					</template>
 					<span>Всього зібраних ключів</span>
 				</v-tooltip>
-				<v-divider vertical class="ml-4 "></v-divider>
+
+				<v-divider vertical class="ml-2 mr-2"></v-divider>
 				<v-tooltip bottom>
 					<template v-slot:activator="{ on }">
-						<v-btn text class="font-weight-bold" v-on="on">
+						<v-btn small text class="font-weight-bold" v-on="on">
 							<v-icon>access_time</v-icon>
 							{{ totalTime }}
 						</v-btn>
 					</template>
 					<span>Всього затраченого часу</span>
 				</v-tooltip>
+				<v-divider vertical class="ml-2 mr-2"></v-divider>
 
-				<v-divider vertical></v-divider>
 				<v-spacer></v-spacer>
-				<v-icon>mdi-wifi-strength-4</v-icon>
-				<v-icon>mdi-signal-cellular-outline</v-icon>
-				<v-icon>mdi-battery</v-icon>
 				<span>Завершено</span>
 			</v-system-bar>
 			<v-row class="task">
-				<v-col class="commands" cols="6">
+				<v-col class="commands" cols="12">
 					<v-card>
 						<command-factory
-							v-for="(command, index) in commandsAnalyzed"
+							v-for="(command, index) in displayCommandsAnalyzed"
 							:key="index"
 							:number="commandNumber(command)"
 							:cmd="command.cmd"
@@ -61,7 +74,7 @@
 						></command-factory>
 					</v-card>
 				</v-col>
-				<v-col class="preview" cols="6">
+				<v-col v-if="false" class="preview" cols="12">
 					<v-card>
 						<v-tabs v-model="tab">
 							<v-tab key="data">Данні</v-tab>
@@ -103,7 +116,6 @@ import { TASK, TASK_COMMANDS_INFORMATION, TASK_DATA } from '../store/task/getter
 import moment from 'moment';
 import { flatten } from 'flat';
 import { mapGetters } from 'vuex';
-import CommandsAnalyzedStructure from '../lib/commands.analyzed.structure';
 
 export default {
 	components: {
@@ -111,6 +123,7 @@ export default {
 	},
 	data: () => ({
 		tab: null,
+		showOnlyError: false,
 	}),
 	computed: {
 		...mapGetters(`task`, {
@@ -122,29 +135,10 @@ export default {
 			const taskCommandsInformation = this.taskCommandsInformation || { analyzed: [] };
 			return taskCommandsInformation.analyzed || [];
 		},
-		commandsJson: function() {
-			const taskCommandsInformation = this.taskCommandsInformation || { json: [] };
-			return taskCommandsInformation.json || [];
-		},
-		commands: function() {
-			return this.commandsAnalyzed.map(x => {
-				return {
-					params: {
-						...x.json,
-						data_context: x.dataContext,
-					},
-					success: x.status === 'success',
-					failureReason: x.failureReason,
-					cmd: x.json.cmd,
-					uuid: x.uuid,
-				};
-			});
-		},
-		commandsSortingWithLevel: function() {
-			return CommandsAnalyzedStructure.getSortingWithLevel(
-				this.commandsAnalyzed,
-				this.commandsJson
-			);
+		displayCommandsAnalyzed: function() {
+			return this.showOnlyError
+				? this.commandsAnalyzed.filter(x => x.status === 'error')
+				: this.commandsAnalyzed;
 		},
 		totalTime: function() {
 			const commandsAnalyzed = this.commandsAnalyzed;
@@ -170,7 +164,7 @@ export default {
 			if (commandsAnalyzed.length === 0) {
 				return;
 			}
-			return commandsAnalyzed.filter(x => x.json.cmd === 'openurl').length;
+			return commandsAnalyzed.filter(x => x.cmd === 'openurl' || x.cmd === 'opentab').length;
 		},
 	},
 	methods: {
@@ -178,10 +172,12 @@ export default {
 			this.$router.back();
 		},
 		commandLevel(command) {
-			return command.designTimeConfig.materializedUuidPath.split('_').length - 1;
+			const materializedUuidPath = command.designTimeConfig.materializedUuidPath || '';
+			return materializedUuidPath.split('_').length - 1;
 		},
 		commandNumber(command) {
-			return command.designTimeConfig.materializedUuidPath.replace(/_/g, '.');
+			const materializedUuidPath = command.designTimeConfig.materializedUuidPath || '';
+			return materializedUuidPath.replace(/_/g, '.');
 		},
 		commandParams(command) {
 			const params = {
@@ -207,9 +203,17 @@ export default {
 	},
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .task {
 	.commands {
+		.v-card {
+		}
 	}
+}
+.v-system-bar {
+	position: sticky;
+	top: 64px;
+	z-index: 1;
+	background-color: white;
 }
 </style>
