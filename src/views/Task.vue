@@ -48,15 +48,14 @@
 				<v-col class="commands" cols="6">
 					<v-card>
 						<command-factory
-							v-for="(command, index) in commandsSortingWithLevel"
+							v-for="(command, index) in commandsAnalyzed"
 							:key="index"
 							:number="command.number"
-							:cmd="command.json.cmd"
+							:cmd="command.cmd"
 							:uuid="command.uuid"
-							:parentUuid="command.parentUuid"
-							:level="command.level"
+							:level="commandLevel(command)"
 							:running="command.running"
-							:params="command.json"
+							:params="command.runTimeConfig"
 							:success="command.status === 'success'"
 							:failureReason="command.failureReason"
 						></command-factory>
@@ -177,6 +176,9 @@ export default {
 	methods: {
 		back() {
 			this.$router.back();
+		},
+		commandLevel(command) {
+			return command.designTimeConfig.materializedUuidPath.split('_').length - 1;
 		},
 	},
 	created: async function() {
