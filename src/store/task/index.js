@@ -57,9 +57,7 @@ const actions = {
 	async [action.FETCH_TASK_COMMANDS_INFORMATION]({ commit, state }) {
 		commit(mutation.CLEAR_TASK_COMMANDS_INFORMATION);
 		const task = state.task || {};
-		const link =
-			'https://storage.elasticdata.io/591b716f6e87cc0789badadb/40d1a0ff-ecb3-48ab-9e6e-9515aa58ad8b..json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=elasticdataio%2F20200803%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200803T091739Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=ed9e60a923e6db2c5836e477955cc9408bc45e0ac760c31723bef7959fa21bbd' ||
-			task.commandsInformationLink;
+		const link = task.commandsInformationLink;
 		if (!link) {
 			return;
 		}
