@@ -55,7 +55,7 @@
 							:uuid="command.uuid"
 							:level="commandLevel(command)"
 							:running="command.running"
-							:params="command.runTimeConfig"
+							:params="commandParams(command)"
 							:success="command.status === 'success'"
 							:failureReason="command.failureReason"
 						></command-factory>
@@ -182,6 +182,15 @@ export default {
 		},
 		commandNumber(command) {
 			return command.designTimeConfig.materializedUuidPath.replace(/_/g, '.');
+		},
+		commandParams(command) {
+			const params = {
+				...command.designTimeConfig,
+				...command.runTimeConfig,
+			};
+			delete params.materializedUuidPath;
+			delete params.index;
+			return params;
 		},
 	},
 	created: async function() {
