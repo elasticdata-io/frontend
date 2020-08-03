@@ -187,6 +187,8 @@ export default {
 			const params = {
 				...command.designTimeConfig,
 				...command.runTimeConfig,
+				dataContext: command.dataContext,
+				pageContext: command.pageContext,
 			};
 			delete params.materializedUuidPath;
 			delete params.index;
