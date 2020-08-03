@@ -180,10 +180,6 @@ export default {
 
 			&.parsed-data-value {
 				font-weight: bold;
-
-				.prop {
-					color: #000;
-				}
 			}
 
 			&:hover {
