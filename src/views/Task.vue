@@ -195,17 +195,21 @@ export default {
 					x => x.designTimeConfig.materializedUuidPath === uuidPath
 				);
 				const context = loopCommand.designTimeConfig.context;
-				if (!context) {
-					continue;
-				}
 				const dataContext = loopCommand.dataContext;
+				let ctx;
+				if (context) {
+					ctx = `${dataContext}.${context}.${page}`;
+				} else {
+					ctx = `${dataContext}.${page}`;
+				}
 				commandsAnalyzed = commandsAnalyzed.filter(command => {
 					if (command.designTimeConfig.materializedUuidPath === uuidPath) {
 						return true;
 					}
-					if (command.designTimeConfig.materializedUuidPath.startsWith(uuidPath)) {
-						const ctx = `${dataContext}.${context}.${page}`;
-						return command.dataContext.includes(ctx);
+					if (command.designTimeConfig.materializedUuidPath.startsWith(`${uuidPath}_`)) {
+						return (
+							command.dataContext.startsWith(`${ctx}.`) || command.dataContext === ctx
+						);
 					}
 					return true;
 				});
