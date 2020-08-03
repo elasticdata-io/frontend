@@ -13,8 +13,8 @@
 					<template v-slot:activator="{ on }">
 						<v-btn x-small text class="font-weight-bold" v-on="on">
 							<v-icon>donut_large</v-icon>
-							<strong class="green--text">{{ successTotal }}</strong
-							>|
+							<strong class="green--text">{{ successTotal }}</strong>
+							|
 							<strong class="red--text">{{ errorTotal }}</strong>
 						</v-btn>
 					</template>
