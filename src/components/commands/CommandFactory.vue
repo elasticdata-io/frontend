@@ -1,29 +1,58 @@
 <template>
 	<div>
 		<default-command
+			v-if="cmd !== 'loop'"
 			:cmd="cmd"
 			:uuid="uuid"
-			:parentUuid="parentUuid"
+			:materializedUuidPath="materializedUuidPath"
 			:level="level"
 			:number="number"
 			:params="params"
 			:running="running"
 			:success="success"
-			:failureReason="failureReason"
+			:failure-reason="failureReason"
 			:data-value="dataValue"
 			:start-on-utc="startOnUtc"
 			:end-on-utc="endOnUtc"
 		>
 		</default-command>
+		<loop-command
+			v-if="cmd === 'loop'"
+			:uuid="uuid"
+			:materializedUuidPath="materializedUuidPath"
+			:level="level"
+			:number="number"
+			:params="params"
+			:data-context="params.dataContext"
+			:context="params.context"
+			:start-index="params.index"
+			:current-index="params.currentIndex"
+			:max="params.max"
+			:running="running"
+			:success="success"
+			:failure-reason="failureReason"
+			:data-value="dataValue"
+			:start-on-utc="startOnUtc"
+			:end-on-utc="endOnUtc"
+			@changeLoopPage="changeLoopPageEmit"
+		>
+		</loop-command>
 	</div>
 </template>
 <script>
 import DefaultCommand from './DefaultCommand';
+import LoopCommand from './LoopCommand';
 
 export default {
 	name: 'CommandFactory',
 	components: {
 		DefaultCommand,
+		LoopCommand,
+	},
+	methods: {
+		changeLoopPageEmit(materializedUuidPath, index) {
+			this.$emit('changeLoopPage', materializedUuidPath, index);
+		},
 	},
 	props: {
 		level: {
@@ -38,7 +67,7 @@ export default {
 			type: String,
 			default: '',
 		},
-		parentUuid: {
+		materializedUuidPath: {
 			type: String,
 			default: '',
 		},

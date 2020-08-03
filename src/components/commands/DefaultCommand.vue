@@ -42,6 +42,7 @@
 import moment from 'moment';
 
 export default {
+	name: 'DefaultCommand',
 	data: () => ({
 		selected: false,
 	}),
@@ -77,9 +78,9 @@ export default {
 				return moment.utc(diff).format('m[m] s[s]');
 			}
 			if (duration.asSeconds() > 1) {
-				return moment.utc(diff).format('s [s]');
+				return moment.utc(diff).format('s[s]');
 			}
-			return `${diff} ms`;
+			return `${diff}ms`;
 		},
 	},
 	methods: {

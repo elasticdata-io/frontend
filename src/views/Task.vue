@@ -93,6 +93,9 @@
 								:number="commandNumber(command)"
 								:cmd="command.cmd"
 								:uuid="command.uuid"
+								:materializedUuidPath="
+									command.designTimeConfig.materializedUuidPath
+								"
 								:level="commandLevel(command)"
 								:running="command.running"
 								:params="commandParams(command)"
@@ -101,6 +104,7 @@
 								:dataValue="command.dataValue"
 								:start-on-utc="command.startOnUtc"
 								:end-on-utc="command.endOnUtc"
+								@changeLoopPage="changeLoopPage"
 							></command-factory>
 						</v-card>
 					</v-col>
@@ -165,6 +169,7 @@ export default {
 	data: () => ({
 		tab: null,
 		showOnlyError: false,
+		loopPages: {},
 	}),
 	computed: {
 		...mapGetters(`task`, {
@@ -178,9 +183,34 @@ export default {
 			return taskCommandsInformation.analyzed || [];
 		},
 		displayCommandsAnalyzed: function() {
-			return this.showOnlyError
-				? this.commandsAnalyzed.filter(x => x.status === 'error')
-				: this.commandsAnalyzed;
+			let commandsAnalyzed = this.commandsAnalyzed || [];
+			this.appendLoopPage(commandsAnalyzed);
+			if (this.showOnlyError) {
+				return commandsAnalyzed.filter(x => x.status === 'error');
+			}
+			const uuidPaths = Object.keys(this.loopPages).sort();
+			for (let uuidPath of uuidPaths) {
+				const page = this.loopPages[uuidPath];
+				const loopCommand = this.commandsAnalyzed.find(
+					x => x.designTimeConfig.materializedUuidPath === uuidPath
+				);
+				const context = loopCommand.designTimeConfig.context;
+				if (!context) {
+					continue;
+				}
+				const dataContext = loopCommand.dataContext;
+				commandsAnalyzed = commandsAnalyzed.filter(command => {
+					if (command.designTimeConfig.materializedUuidPath === uuidPath) {
+						return true;
+					}
+					if (command.designTimeConfig.materializedUuidPath.startsWith(uuidPath)) {
+						const ctx = `${dataContext}.${context}.${page}`;
+						return command.dataContext.includes(ctx);
+					}
+					return true;
+				});
+			}
+			return commandsAnalyzed;
 		},
 		totalTime: function() {
 			const commandsAnalyzed = this.commandsAnalyzed;
@@ -235,8 +265,35 @@ export default {
 				pageContext: command.pageContext,
 			};
 			delete params.materializedUuidPath;
-			delete params.index;
 			return params;
+		},
+		appendLoopPage(commandsAnalyzed) {
+			Object.keys(this.loopPages).forEach(uuidPath => {
+				const page = this.loopPages[uuidPath];
+				commandsAnalyzed
+					.filter(x => x.designTimeConfig.materializedUuidPath === uuidPath)
+					.forEach(x => {
+						x.loopPage = page;
+					});
+			});
+		},
+		changeLoopPage(loopMaterializedUuidPath, loopIndex) {
+			this.loopPages = {
+				...this.loopPages,
+				[loopMaterializedUuidPath]: loopIndex,
+			};
+			Object.keys(this.loopPages)
+				.filter(key => {
+					return (
+						key.length > loopMaterializedUuidPath.length &&
+						key.startsWith(loopMaterializedUuidPath)
+					);
+				})
+				.forEach(key => {
+					delete this.loopPages[key];
+				});
+			this.loopPages = { ...this.loopPages };
+			// todo: trigger update loop commands state
 		},
 	},
 	created: async function() {
