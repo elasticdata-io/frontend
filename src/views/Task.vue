@@ -98,6 +98,7 @@
 								:params="commandParams(command)"
 								:success="command.status === 'success'"
 								:failureReason="command.failureReason"
+								:dataValue="command.dataValue"
 							></command-factory>
 						</v-card>
 					</v-col>

@@ -13,6 +13,13 @@
 						<v-btn x-small depressed>JSON</v-btn>
 					</div>
 				</div>
+				<div v-if="dataValue" class="prop-value parsed-data-value">
+					<span class="prop">value --></span>
+					<div v-if="isLink(dataValue)" class="value">
+						<a :href="dataValue" target="_blank">{{ dataValue }}</a>
+					</div>
+					<div v-else class="value">{{ dataValue }}</div>
+				</div>
 				<div v-if="failureReason">
 					<v-alert dense text class="subtitle-2">{{ failureReason }}</v-alert>
 				</div>
@@ -69,6 +76,9 @@ export default {
 			}
 			return true;
 		},
+		isLink: value => {
+			return /^https?:\/\//.test(value);
+		},
 	},
 	props: {
 		number: {
@@ -107,6 +117,7 @@ export default {
 			type: String,
 			default: '',
 		},
+		dataValue: {},
 	},
 };
 </script>
@@ -166,6 +177,14 @@ export default {
 		.prop-value {
 			position: relative;
 			padding-left: 110px;
+
+			&.parsed-data-value {
+				font-weight: bold;
+
+				.prop {
+					color: #000;
+				}
+			}
 
 			&:hover {
 				background-color: #e5c4ff;

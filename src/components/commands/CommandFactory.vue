@@ -1,14 +1,5 @@
 <template>
 	<div>
-		<condition-command
-			v-if="cmd === 'condition'"
-			:cmd="cmd"
-			:number="number"
-			:params="params"
-			:running="running"
-			:success="success"
-			:failureReason="failureReason"
-		></condition-command>
 		<default-command
 			:cmd="cmd"
 			:uuid="uuid"
@@ -19,6 +10,7 @@
 			:running="running"
 			:success="success"
 			:failureReason="failureReason"
+			:data-value="dataValue"
 		>
 		</default-command>
 	</div>
@@ -29,8 +21,6 @@ import DefaultCommand from './DefaultCommand';
 export default {
 	name: 'CommandFactory',
 	components: {
-		LoopCommand: () => import('./LoopCommand.vue'),
-		ConditionCommand: () => import('./ConditionCommand.vue'),
 		DefaultCommand,
 	},
 	props: {
@@ -70,6 +60,7 @@ export default {
 			type: String,
 			default: '',
 		},
+		dataValue: {},
 	},
 };
 </script>
