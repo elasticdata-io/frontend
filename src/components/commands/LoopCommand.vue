@@ -8,7 +8,7 @@
 						<div class="name">{{ cmd }}</div>
 						<div style="width: 400px;">
 							<v-pagination
-								@input="changeLoopPageEmit"
+								@input="changeDisplayIndex"
 								v-model="page"
 								:length="totalPages"
 								circle
@@ -20,7 +20,9 @@
 						v-for="(value, prop) in commandParams"
 						:key="prop + value"
 					>
-						<span class="prop" v-if="isNotEmpty(value)">{{ prop }}</span>
+						<span class="prop" v-if="isNotEmpty(value)">
+							{{ prop }}
+						</span>
 						<div v-if="!isObjectOrArray(value) && isNotEmpty(value)" class="value">
 							{{ value }}
 						</div>
@@ -44,39 +46,51 @@
 					</div>
 				</div>
 			</div>
-			<v-progress-linear
-				v-if="running"
-				height="2"
-				indeterminate
-				color="green"
-			></v-progress-linear>
 			<v-divider></v-divider>
 		</div>
 	</div>
 </template>
 <script>
 import DefaultCommand from './DefaultCommand';
+import { CHANGE_LOOP_DISPLAY_INDEX } from '../../store/task-analyzed-commands/actions';
+import { mapGetters } from 'vuex';
+import { LOOP_DISPLAY_INDEXES_BY_UUID } from '../../store/task-analyzed-commands/getters';
 
 export default {
 	name: 'LoopCommand',
 	components: {},
 	mixins: [DefaultCommand],
 	data: () => ({
-		selected: false,
 		page: 1,
 		totalPages: 1,
 	}),
-	computed: {},
+	watch: {
+		displayIndex: function(value) {
+			this.page = value + 1;
+		},
+	},
+	computed: {
+		...mapGetters('taskAnalyzedCommands', {
+			loopIndexesByUuid: LOOP_DISPLAY_INDEXES_BY_UUID,
+		}),
+		displayIndex: function() {
+			return this.loopIndexesByUuid[this.uuid] || 0;
+		},
+	},
 	methods: {
-		changeLoopPageEmit() {
-			this.$emit('changeLoopPage', this.materializedUuidPath, this.page - 1);
+		async changeDisplayIndex() {
+			const action = `taskAnalyzedCommands/${CHANGE_LOOP_DISPLAY_INDEX}`;
+			const uuid = this.uuid;
+			const materializedUuidPath = this.materializedUuidPath;
+			const index = this.page - 1;
+			const payload = { uuid, materializedUuidPath, index };
+			await this.$store.dispatch(action, payload);
 		},
 	},
 	mounted() {
-		this.page = this.startIndex + 1;
-		const max = Math.min(this.currentIndex + 1, this.max);
+		this.page = this.displayIndex + 1;
+		const max = Math.min(this.lastIndex + 1, this.max);
 		this.totalPages = max - this.startIndex;
-		this.changeLoopPageEmit();
 	},
 	props: {
 		number: {
@@ -103,7 +117,7 @@ export default {
 			type: Number,
 			default: 0,
 		},
-		currentIndex: {
+		lastIndex: {
 			type: Number,
 			default: 0,
 		},
@@ -122,10 +136,6 @@ export default {
 		params: {
 			type: Object,
 			default: () => {},
-		},
-		running: {
-			type: Boolean,
-			default: false,
 		},
 		success: {
 			type: Boolean,

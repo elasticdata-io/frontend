@@ -87,25 +87,7 @@
 				<v-row class="task">
 					<v-col class="commands" cols="12">
 						<v-card>
-							<command-factory
-								v-for="(command, index) in displayCommandsAnalyzed"
-								:key="index"
-								:number="commandNumber(command)"
-								:cmd="command.cmd"
-								:uuid="command.uuid"
-								:materializedUuidPath="
-									command.designTimeConfig.materializedUuidPath
-								"
-								:level="commandLevel(command)"
-								:running="command.running"
-								:params="commandParams(command)"
-								:success="command.status === 'success'"
-								:failureReason="command.failureReason"
-								:dataValue="command.dataValue"
-								:start-on-utc="command.startOnUtc"
-								:end-on-utc="command.endOnUtc"
-								@changeLoopPage="changeLoopPage"
-							></command-factory>
+							<analyzed-commands></analyzed-commands>
 						</v-card>
 					</v-col>
 					<v-col v-if="false" class="preview" cols="12">
@@ -144,7 +126,6 @@
 	</v-content>
 </template>
 <script>
-import CommandFactory from '../components/commands/CommandFactory';
 import {
 	FETCH_TASK,
 	FETCH_TASK_COMMANDS_INFORMATION,
@@ -160,11 +141,13 @@ import moment from 'moment';
 import { flatten } from 'flat';
 import { mapGetters } from 'vuex';
 import PipelineJsonEditor from '../components/PipelineJsonEditor';
+import AnalyzedCommands from '../components/AnalyzedCommands';
+import { INITIALIZE_TASK_ANALYZED_COMMANDS } from '../store/task-analyzed-commands/actions';
 
 export default {
 	components: {
 		PipelineJsonEditor,
-		CommandFactory,
+		AnalyzedCommands,
 	},
 	data: () => ({
 		tab: null,
@@ -178,46 +161,12 @@ export default {
 			taskCommandsInformation: TASK_COMMANDS_INFORMATION,
 			taskCommandsInformationLoading: TASK_COMMANDS_INFORMATION_LOADING,
 		}),
-		commandsAnalyzed: function() {
-			const taskCommandsInformation = this.taskCommandsInformation || { analyzed: [] };
-			return taskCommandsInformation.analyzed || [];
-		},
-		displayCommandsAnalyzed: function() {
-			let commandsAnalyzed = this.commandsAnalyzed || [];
-			this.appendLoopPage(commandsAnalyzed);
-			if (this.showOnlyError) {
-				return commandsAnalyzed.filter(x => x.status === 'error');
-			}
-			const uuidPaths = Object.keys(this.loopPages).sort();
-			for (let uuidPath of uuidPaths) {
-				const page = this.loopPages[uuidPath];
-				const loopCommand = this.commandsAnalyzed.find(
-					x => x.designTimeConfig.materializedUuidPath === uuidPath
-				);
-				const context = loopCommand.designTimeConfig.context;
-				const dataContext = loopCommand.dataContext;
-				let ctx;
-				if (context) {
-					ctx = `${dataContext}.${context}.${page}`;
-				} else {
-					ctx = `${dataContext}.${page}`;
-				}
-				commandsAnalyzed = commandsAnalyzed.filter(command => {
-					if (command.designTimeConfig.materializedUuidPath === uuidPath) {
-						return true;
-					}
-					if (command.designTimeConfig.materializedUuidPath.startsWith(`${uuidPath}_`)) {
-						return (
-							command.dataContext.startsWith(`${ctx}.`) || command.dataContext === ctx
-						);
-					}
-					return true;
-				});
-			}
-			return commandsAnalyzed;
+		analyzedCommands: function() {
+			const information = this.taskCommandsInformation || { analyzed: [] };
+			return information.analyzed || [];
 		},
 		totalTime: function() {
-			const commandsAnalyzed = this.commandsAnalyzed;
+			const commandsAnalyzed = this.analyzedCommands;
 			if (commandsAnalyzed.length === 0) {
 				return;
 			}
@@ -236,51 +185,24 @@ export default {
 			return Object.keys(flattenData).length;
 		},
 		totalPages: function() {
-			const commandsAnalyzed = this.commandsAnalyzed;
+			const commandsAnalyzed = this.analyzedCommands;
 			if (commandsAnalyzed.length === 0) {
 				return;
 			}
 			return commandsAnalyzed.filter(x => x.cmd === 'openurl' || x.cmd === 'opentab').length;
 		},
 		successTotal: function() {
-			return this.commandsAnalyzed.filter(x => x.status === 'success').length;
+			return this.analyzedCommands.filter(x => x.status === 'success').length;
 		},
 		errorTotal: function() {
-			return this.commandsAnalyzed.filter(x => x.status === 'error').length;
+			return this.analyzedCommands.filter(x => x.status === 'error').length;
 		},
 	},
 	methods: {
 		back() {
 			this.$router.back();
 		},
-		commandLevel(command) {
-			const materializedUuidPath = command.designTimeConfig.materializedUuidPath || '';
-			return materializedUuidPath.split('_').length - 1;
-		},
-		commandNumber(command) {
-			const materializedUuidPath = command.designTimeConfig.materializedUuidPath || '';
-			return materializedUuidPath.replace(/_/g, '.');
-		},
-		commandParams(command) {
-			const params = {
-				...command.designTimeConfig,
-				...command.runTimeConfig,
-				dataContext: command.dataContext,
-				pageContext: command.pageContext,
-			};
-			delete params.materializedUuidPath;
-			return params;
-		},
-		appendLoopPage(commandsAnalyzed) {
-			Object.keys(this.loopPages).forEach(uuidPath => {
-				const page = this.loopPages[uuidPath];
-				commandsAnalyzed
-					.filter(x => x.designTimeConfig.materializedUuidPath === uuidPath)
-					.forEach(x => {
-						x.loopPage = page;
-					});
-			});
-		},
+
 		changeLoopPage(loopMaterializedUuidPath, loopIndex) {
 			this.loopPages = {
 				...this.loopPages,
@@ -304,6 +226,10 @@ export default {
 		await this.$store.dispatch(`task/${FETCH_TASK}`, this.taskId);
 		await this.$store.dispatch(`task/${FETCH_TASK_COMMANDS_INFORMATION}`);
 		await this.$store.dispatch(`task/${FETCH_TASK_DATA}`);
+		await this.$store.dispatch(
+			`taskAnalyzedCommands/${INITIALIZE_TASK_ANALYZED_COMMANDS}`,
+			this.analyzedCommands
+		);
 	},
 	props: {
 		taskId: {

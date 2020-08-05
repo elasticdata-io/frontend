@@ -11,14 +11,14 @@ import {
 const state = {
 	task: {},
 	taskData: [],
+	taskLoading: false,
 	taskCommandsInformation: {},
 	commandsInformationLoading: false,
-	loading: false,
 };
 
 const mutations = {
 	[mutation.SET_TASK_LOADING](state, loading) {
-		Vue.set(state, 'loading', loading);
+		Vue.set(state, 'taskLoading', loading);
 	},
 
 	[mutation.SET_TASK_DATA](state, taskData) {

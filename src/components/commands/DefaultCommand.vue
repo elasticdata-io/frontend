@@ -29,12 +29,6 @@
 				</div>
 			</div>
 		</div>
-		<v-progress-linear
-			v-if="running"
-			height="2"
-			indeterminate
-			color="green"
-		></v-progress-linear>
 		<v-divider></v-divider>
 	</div>
 </template>
@@ -124,10 +118,6 @@ export default {
 		params: {
 			type: Object,
 			default: () => {},
-		},
-		running: {
-			type: Boolean,
-			default: false,
 		},
 		success: {
 			type: Boolean,
