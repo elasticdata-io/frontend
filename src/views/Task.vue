@@ -73,7 +73,7 @@
 						<template v-slot:activator="{ on }">
 							<v-switch
 								v-on="on"
-								v-model="showOnlyError"
+								v-model="showOnlyWithError"
 								class="ml-2"
 								label="тільки з помилками"
 							></v-switch>
@@ -139,10 +139,11 @@ import {
 } from '../store/task/getters';
 import moment from 'moment';
 import { flatten } from 'flat';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import PipelineJsonEditor from '../components/PipelineJsonEditor';
 import AnalyzedCommands from '../components/AnalyzedCommands';
 import { INITIALIZE_TASK_ANALYZED_COMMANDS } from '../store/task-analyzed-commands/actions';
+import { SET_SHOW_ONLY_WITH_ERRORS } from '../store/task-analyzed-commands/mutations';
 
 export default {
 	components: {
@@ -151,9 +152,14 @@ export default {
 	},
 	data: () => ({
 		tab: null,
-		showOnlyError: false,
+		showOnlyWithError: false,
 		loopPages: {},
 	}),
+	watch: {
+		showOnlyWithError: function(value) {
+			this.$store.commit(`taskAnalyzedCommands/${SET_SHOW_ONLY_WITH_ERRORS}`, value);
+		},
+	},
 	computed: {
 		...mapGetters(`task`, {
 			task: TASK,
@@ -201,25 +207,6 @@ export default {
 	methods: {
 		back() {
 			this.$router.back();
-		},
-
-		changeLoopPage(loopMaterializedUuidPath, loopIndex) {
-			this.loopPages = {
-				...this.loopPages,
-				[loopMaterializedUuidPath]: loopIndex,
-			};
-			Object.keys(this.loopPages)
-				.filter(key => {
-					return (
-						key.length > loopMaterializedUuidPath.length &&
-						key.startsWith(loopMaterializedUuidPath)
-					);
-				})
-				.forEach(key => {
-					delete this.loopPages[key];
-				});
-			this.loopPages = { ...this.loopPages };
-			// todo: trigger update loop commands state
 		},
 	},
 	created: async function() {

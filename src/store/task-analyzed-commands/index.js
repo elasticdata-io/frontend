@@ -4,6 +4,7 @@ import * as mutation from './mutations';
 import * as getter from './getters';
 
 const state = {
+	showOnlyWithError: false,
 	loopIndexesByUuid: {},
 	loopIndexesByMaterializedUuidPath: {},
 	taskAnalyzedCommands: [],
@@ -19,6 +20,10 @@ const getChildMaterializedUuidPathList = (state, materializedUuidPath) => {
 };
 
 const mutations = {
+	[mutation.SET_SHOW_ONLY_WITH_ERRORS](state, showOnlyWithError) {
+		Vue.set(state, 'showOnlyWithError', showOnlyWithError);
+	},
+
 	[mutation.SET_LOOP_DISPLAY_INDEX](state, { uuid, materializedUuidPath, index }) {
 		Vue.set(state.loopIndexesByUuid, uuid, index);
 		Vue.set(state.loopIndexesByMaterializedUuidPath, materializedUuidPath, index);
@@ -79,10 +84,13 @@ const actions = {
 const getters = {
 	[getter.TASK_ANALYZED_COMMANDS]: state => {
 		let taskAnalyzedCommands = state.taskAnalyzedCommands || [];
+		if (state.showOnlyWithError) {
+			return taskAnalyzedCommands.filter(x => x.status === 'error');
+		}
 		let loopIndexesByMaterializedUuidPath = state.loopIndexesByMaterializedUuidPath;
 		const uuidPaths = Object.keys(loopIndexesByMaterializedUuidPath).sort();
 		const loopCommands = taskAnalyzedCommands.filter(x => x.cmd === 'loop');
-		for (let uuidPath of uuidPaths) {
+		for (const uuidPath of uuidPaths) {
 			const loopIndex = loopIndexesByMaterializedUuidPath[uuidPath];
 			const loopCommand = loopCommands.find(x => x.materializedUuidPath === uuidPath);
 			const loopContext = loopCommand.designTimeConfig.context;
