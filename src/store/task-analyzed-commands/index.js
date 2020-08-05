@@ -105,9 +105,7 @@ const getters = {
 		}
 		return taskAnalyzedCommands;
 	},
-	[getter.LOOP_DISPLAY_INDEXES_BY_UUID]: state => {
-		return { ...state.loopIndexesByUuid };
-	},
+	[getter.LOOP_DISPLAY_INDEXES_BY_UUID]: state => state.loopIndexesByUuid,
 };
 
 export default {
