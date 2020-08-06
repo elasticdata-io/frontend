@@ -54,7 +54,7 @@
 import DefaultCommand from './DefaultCommand';
 import { CHANGE_LOOP_DISPLAY_INDEX } from '../../store/task-analyzed-commands/actions';
 import { mapGetters } from 'vuex';
-import { LOOP_DISPLAY_INDEXES_BY_UUID, LOOPS } from '../../store/task-analyzed-commands/getters';
+import { LOOP_DISPLAY_INDEXES_BY_UUID } from '../../store/task-analyzed-commands/getters';
 
 export default {
 	name: 'LoopCommand',

@@ -14,8 +14,6 @@ import * as getter from './getters';
 
 const state = {
 	showOnlyWithError: false,
-	loopIndexesByUuid: {},
-	loopIndexesByMaterializedUuidPath: {},
 	taskAnalyzedCommands: [],
 	/**
 	 * @type {Object.<string, LoopPageState>}
@@ -70,7 +68,6 @@ const mutations = {
 
 	[mutation.SET_LOOP_DISPLAY_INDEX](state, { uuid, materializedUuidPath, index }) {
 		const loop = findLoopByMaterializedUuid(state, materializedUuidPath);
-		console.log(JSON.parse(JSON.stringify(loop)));
 		const loopContext = loop.designTimeConfig.context
 			? `${loop.dataContext}.${loop.designTimeConfig.context}`
 			: loop.dataContext;
@@ -131,13 +128,9 @@ const mutations = {
 };
 
 const actions = {
-	async [action.CHANGE_LOOP_DISPLAY_INDEX](
-		{ commit, state },
-		{ uuid, materializedUuidPath, index }
-	) {
+	async [action.CHANGE_LOOP_DISPLAY_INDEX]({ commit }, { uuid, materializedUuidPath, index }) {
 		commit(mutation.SET_LOOP_DISPLAY_INDEX, { uuid, materializedUuidPath, index });
 		commit(mutation.RESET_LOOP_DISPLAY_INDEX_FOR_CHILD, { materializedUuidPath });
-		console.log(JSON.parse(JSON.stringify(state.loops)));
 	},
 
 	async [action.INITIALIZE_TASK_ANALYZED_COMMANDS]({ commit }, taskAnalyzedCommands) {
@@ -166,7 +159,6 @@ const getters = {
 			const loopFullContext = loopContext
 				? `${loopDataContext}.${loopContext}.${loopIndex}`
 				: `${loopDataContext}.${loopIndex}`;
-			console.log(`loopFullContext: ${loopFullContext}`);
 			taskAnalyzedCommands = taskAnalyzedCommands.filter(command => {
 				if (command.materializedUuidPath === uuidPath) {
 					// todo: display only loop command with need context
@@ -187,7 +179,6 @@ const getters = {
 		Object.values(state.loops).forEach(x => (loopIndexesByUuid[x.loopUuid] = x.loopIndex));
 		return loopIndexesByUuid;
 	},
-	[getter.LOOPS]: state => state.loops,
 };
 
 export default {
