@@ -17,6 +17,9 @@ export default {
 	name: 'LoopPagination',
 	methods: {
 		setActiveIndex(newIndex) {
+			if (this.activeIndex === this.newIndex) {
+				return;
+			}
 			this.$emit('change', newIndex);
 		},
 	},
