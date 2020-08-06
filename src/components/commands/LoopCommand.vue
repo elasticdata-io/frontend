@@ -68,6 +68,15 @@ export default {
 		displayIndex: function(value) {
 			this.page = value + 1;
 		},
+		lastIndex: function() {
+			this.updateTotalPages();
+		},
+		startIndex: function() {
+			this.updateTotalPages();
+		},
+		max: function() {
+			this.updateTotalPages();
+		},
 	},
 	computed: {
 		...mapGetters('taskAnalyzedCommands', {
@@ -86,11 +95,17 @@ export default {
 			const payload = { uuid, materializedUuidPath, index };
 			await this.$store.dispatch(action, payload);
 		},
+		updateTotalPages() {
+			const max = Math.min(this.lastIndex + 1, this.max);
+			this.totalPages = max - this.startIndex;
+		},
+		initPage() {
+			this.page = this.displayIndex + 1;
+		},
 	},
 	mounted() {
-		this.page = this.displayIndex + 1;
-		const max = Math.min(this.lastIndex + 1, this.max);
-		this.totalPages = max - this.startIndex;
+		this.initPage();
+		this.updateTotalPages();
 	},
 	props: {
 		number: {
