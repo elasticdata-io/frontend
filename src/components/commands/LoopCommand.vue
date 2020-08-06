@@ -6,13 +6,12 @@
 					<span class="number">{{ number }}</span>
 					<div style="display: flex;">
 						<div class="name">{{ cmd }}</div>
-						<div style="width: 400px;">
-							<v-pagination
-								@input="changeDisplayIndex"
-								v-model="page"
+						<div style="flex: 1;">
+							<loop-pagination
 								:length="totalPages"
-								circle
-							></v-pagination>
+								:active-index="displayIndex"
+								@change="changeDisplayIndex"
+							></loop-pagination>
 						</div>
 					</div>
 					<div
@@ -52,22 +51,21 @@
 </template>
 <script>
 import DefaultCommand from './DefaultCommand';
+import LoopPagination from './LoopPagination';
 import { CHANGE_LOOP_DISPLAY_INDEX } from '../../store/task-analyzed-commands/actions';
 import { mapGetters } from 'vuex';
 import { LOOP_DISPLAY_INDEXES_BY_UUID } from '../../store/task-analyzed-commands/getters';
 
 export default {
 	name: 'LoopCommand',
-	components: {},
+	components: {
+		LoopPagination,
+	},
 	mixins: [DefaultCommand],
 	data: () => ({
-		page: 1,
 		totalPages: 1,
 	}),
 	watch: {
-		displayIndex: function(value) {
-			this.page = value + 1;
-		},
 		lastIndex: function() {
 			this.updateTotalPages();
 		},
@@ -87,24 +85,19 @@ export default {
 		},
 	},
 	methods: {
-		async changeDisplayIndex() {
+		async changeDisplayIndex(displayIndex) {
 			const action = `taskAnalyzedCommands/${CHANGE_LOOP_DISPLAY_INDEX}`;
 			const uuid = this.uuid;
 			const materializedUuidPath = this.materializedUuidPath;
-			const index = this.page - 1;
-			const payload = { uuid, materializedUuidPath, index };
+			const payload = { uuid, materializedUuidPath, index: displayIndex };
 			await this.$store.dispatch(action, payload);
 		},
 		updateTotalPages() {
 			const max = Math.min(this.lastIndex + 1, this.max);
 			this.totalPages = max - this.startIndex;
 		},
-		initPage() {
-			this.page = this.displayIndex + 1;
-		},
 	},
 	mounted() {
-		this.initPage();
 		this.updateTotalPages();
 	},
 	props: {
