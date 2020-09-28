@@ -22,7 +22,6 @@
     "moment": "^2.24.0",
     "push.js": "^1.0.12",
     "sass-loader": "^7.0.0",
-    "showdown": "^1.9.1",
     "sockjs-client": "^1.4.0",
     "stompjs": "^2.3.3",
     "underscore": "^1.10.2",
