@@ -26,7 +26,7 @@
 				</div>
 				<div v-if="failureReasonHtml">
 					<v-alert class="failure-reason" dense>
-						<div>{{ failureReasonHtml }}</div>
+						<div :html="failureReasonHtml"></div>
 					</v-alert>
 				</div>
 			</div>
