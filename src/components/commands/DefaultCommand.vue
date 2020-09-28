@@ -25,7 +25,7 @@
 					<div v-else class="value">{{ dataValue }}</div>
 				</div>
 				<div v-if="failureReason">
-					<v-alert class="failure-reason" dense text>
+					<v-alert class="failure-reason" dense>
 						<div v-for="(errorLine, i) in failureReasonLines" :key="i">
 							{{ errorLine }}
 						</div>
