@@ -7,6 +7,7 @@
 			hide-overlay
 			scrollable
 			transition="dialog-bottom-transition"
+			@keydown.esc="saveAndClose()"
 		>
 			<template v-slot:activator="{ on }">
 				<v-btn
