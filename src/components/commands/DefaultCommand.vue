@@ -24,15 +24,9 @@
 					</div>
 					<div v-else class="value">{{ dataValue }}</div>
 				</div>
-				<div v-if="failureReason">
+				<div v-if="failureReasonHtml">
 					<v-alert class="failure-reason" dense>
-						<div
-							v-for="(errorLine, i) in failureReasonLines"
-							:key="i"
-							:class="{ bold: errorLine.startsWith('**') }"
-						>
-							{{ errorLine }}
-						</div>
+						<div>{{ failureReasonHtml }}</div>
 					</v-alert>
 				</div>
 			</div>
@@ -41,7 +35,10 @@
 	</div>
 </template>
 <script>
+import * as showdown from 'showdown';
 import moment from 'moment';
+
+const converter = new showdown.Converter();
 
 export default {
 	name: 'DefaultCommand',
@@ -84,9 +81,9 @@ export default {
 			}
 			return `${diff}ms`;
 		},
-		failureReasonLines: function() {
+		failureReasonHtml: function() {
 			const failureReason = this.failureReason || '';
-			return failureReason.split('\n');
+			return converter.makeHtml(failureReason);
 		},
 	},
 	methods: {
