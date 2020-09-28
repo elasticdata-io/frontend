@@ -244,8 +244,8 @@ export default {
 			line-height: 16px;
 			letter-spacing: 0.03em;
 
-			&::selection {
-				background-color: #222;
+			div::selection {
+				background-color: #565656;
 				color: white;
 			}
 
