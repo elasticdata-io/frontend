@@ -26,7 +26,11 @@
 				</div>
 				<div v-if="failureReason">
 					<v-alert class="failure-reason" dense>
-						<div v-for="(errorLine, i) in failureReasonLines" :key="i">
+						<div
+							v-for="(errorLine, i) in failureReasonLines"
+							:key="i"
+							:class="{ bold: errorLine.startsWith('**') }"
+						>
 							{{ errorLine }}
 						</div>
 					</v-alert>
@@ -242,6 +246,10 @@ export default {
 			color: gray;
 			font-size: 12px;
 			line-height: 16px;
+
+			.bold {
+				color: white;
+			}
 		}
 	}
 }
