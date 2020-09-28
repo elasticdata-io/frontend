@@ -25,7 +25,7 @@
 					<div v-else class="value">{{ dataValue }}</div>
 				</div>
 				<div v-if="failureReason">
-					<v-alert class="failure-reason subtitle-2" dense text color="black">
+					<v-alert class="failure-reason" dense text>
 						<div v-for="(errorLine, i) in failureReasonLines" :key="i">
 							{{ errorLine }}
 						</div>
@@ -238,6 +238,7 @@ export default {
 		}
 
 		.failure-reason {
+			background-color: black;
 			color: gray;
 			font-size: 12px;
 			line-height: 16px;
