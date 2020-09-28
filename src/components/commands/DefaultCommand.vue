@@ -25,7 +25,9 @@
 					<div v-else class="value">{{ dataValue }}</div>
 				</div>
 				<div v-if="failureReason">
-					<v-alert dense text class="subtitle-2">{{ failureReason }}</v-alert>
+					<v-alert dense text class="subtitle-2">
+						<p v-for="(errorLine, i) in failureReasonLines" :key="i">{{ errorLine }}</p>
+					</v-alert>
 				</div>
 			</div>
 		</div>
@@ -75,6 +77,10 @@ export default {
 				return moment.utc(diff).format('s[s]');
 			}
 			return `${diff}ms`;
+		},
+		failureReasonLines: function() {
+			const failureReason = this.failureReason || '';
+			return failureReason.split('\n');
 		},
 	},
 	methods: {
