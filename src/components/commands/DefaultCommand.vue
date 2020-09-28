@@ -239,9 +239,15 @@ export default {
 
 		.failure-reason {
 			background-color: black;
-			color: gray;
+			color: #999;
 			font-size: 12px;
 			line-height: 16px;
+			letter-spacing: 0.03em;
+
+			&::selection {
+				background-color: #222;
+				color: white;
+			}
 
 			.bold {
 				color: white;
