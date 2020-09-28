@@ -26,7 +26,9 @@
 				</div>
 				<div v-if="failureReason">
 					<v-alert dense text class="subtitle-2">
-						<p v-for="(errorLine, i) in failureReasonLines" :key="i">{{ errorLine }}</p>
+						<div v-for="(errorLine, i) in failureReasonLines" :key="i">
+							{{ errorLine }}
+						</div>
 					</v-alert>
 				</div>
 			</div>
