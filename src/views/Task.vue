@@ -139,7 +139,7 @@ import {
 } from '../store/task/getters';
 import moment from 'moment';
 import { flatten } from 'flat';
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import PipelineJsonEditor from '../components/PipelineJsonEditor';
 import AnalyzedCommands from '../components/AnalyzedCommands';
 import { INITIALIZE_TASK_ANALYZED_COMMANDS } from '../store/task-analyzed-commands/actions';
@@ -157,7 +157,7 @@ export default {
 	}),
 	watch: {
 		showOnlyWithError: function(value) {
-			this.$store.commit(`taskAnalyzedCommands/${SET_SHOW_ONLY_WITH_ERRORS}`, value);
+			this.initShowOnlyWithError(value);
 		},
 	},
 	computed: {
@@ -208,6 +208,12 @@ export default {
 		back() {
 			this.$router.back();
 		},
+		initShowOnlyWithError(showOnlyWithError) {
+			this.$store.commit(
+				`taskAnalyzedCommands/${SET_SHOW_ONLY_WITH_ERRORS}`,
+				showOnlyWithError
+			);
+		},
 	},
 	created: async function() {
 		await this.$store.dispatch(`task/${FETCH_TASK}`, this.taskId);
@@ -217,6 +223,7 @@ export default {
 			`taskAnalyzedCommands/${INITIALIZE_TASK_ANALYZED_COMMANDS}`,
 			this.analyzedCommands
 		);
+		this.initShowOnlyWithError(this.showOnlyWithError);
 	},
 	props: {
 		taskId: {
