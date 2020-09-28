@@ -245,7 +245,7 @@ export default {
 			letter-spacing: 0.03em;
 
 			div::selection {
-				background-color: #565656;
+				background-color: #541f86;
 				color: white;
 			}
 
