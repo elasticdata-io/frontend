@@ -33,7 +33,7 @@
 							error
 						</v-icon>
 					</template>
-					<span>{{ failureReason }}</span>
+					<span>{{ failureReasonFormatted }}</span>
 				</v-tooltip>
 			</v-col>
 		</v-row>
@@ -71,6 +71,13 @@ export default {
 				return `${string.slice(0, 20)}...`;
 			}
 			return string;
+		},
+		failureReasonFormatted: function() {
+			const failureReason = this.failureReason || '';
+			if (failureReason.length > 200) {
+				return `${failureReason.substr(0, 200)}...`;
+			}
+			return failureReason;
 		},
 	},
 	methods: {
