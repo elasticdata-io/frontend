@@ -144,6 +144,7 @@ import PipelineJsonEditor from '../components/PipelineJsonEditor';
 import AnalyzedCommands from '../components/AnalyzedCommands';
 import { INITIALIZE_TASK_ANALYZED_COMMANDS } from '../store/task-analyzed-commands/actions';
 import { SET_SHOW_ONLY_WITH_ERRORS } from '../store/task-analyzed-commands/mutations';
+import { SET_TASK_ANALYZED_COMMANDS } from '@/store/task-analyzed-commands/mutations';
 
 export default {
 	components: {
@@ -216,6 +217,7 @@ export default {
 		},
 	},
 	created: async function() {
+		await this.$store.commit(`taskAnalyzedCommands/${SET_TASK_ANALYZED_COMMANDS}`, []);
 		await this.$store.dispatch(`task/${FETCH_TASK}`, this.taskId);
 		await this.$store.dispatch(`task/${FETCH_TASK_COMMANDS_INFORMATION}`);
 		await this.$store.dispatch(`task/${FETCH_TASK_DATA}`);
