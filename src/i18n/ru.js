@@ -45,4 +45,7 @@ export const RUSSIAN_TRANSLATIONS = {
 			NOT_HAVE_ANY_DESCRIPTION: 'нет описания',
 		},
 	},
+	TASK: {
+		HAS_NOT_ERROR_COMMANDS: 'Эта задача не имеет команд с ошибками!',
+	},
 };

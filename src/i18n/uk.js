@@ -45,4 +45,7 @@ export const UKRAINE_TRANSLATIONS = {
 			NOT_HAVE_ANY_DESCRIPTION: 'не має опису',
 		},
 	},
+	TASK: {
+		HAS_NOT_ERROR_COMMANDS: 'Це завдання не має команд з помилками!',
+	},
 };

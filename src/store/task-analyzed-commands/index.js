@@ -140,6 +140,7 @@ const actions = {
 };
 
 const getters = {
+	[getter.SHOW_ONLY_WITH_ERROR]: state => state.showOnlyWithError,
 	[getter.TASK_ANALYZED_COMMANDS]: state => {
 		let taskAnalyzedCommands = state.taskAnalyzedCommands || [];
 		if (state.showOnlyWithError) {

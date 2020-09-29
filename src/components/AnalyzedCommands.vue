@@ -1,16 +1,24 @@
 <template>
-	<div v-if="analyzedCommands.length">
-		<analyzed-command-factory
-			v-for="(analyzedCommand, index) in displayAnalyzedCommands"
-			:analyzed-command="analyzedCommand"
-			:key="index"
-		></analyzed-command-factory>
+	<div>
+		<template v-if="analyzedCommands.length">
+			<analyzed-command-factory
+				v-for="(analyzedCommand, index) in displayAnalyzedCommands"
+				:analyzed-command="analyzedCommand"
+				:key="index"
+			></analyzed-command-factory>
+		</template>
+		<template v-else-if="showOnlyWithError">
+			<v-alert border="right" colored-border type="success" elevation="0">{{
+				$t('TASK.HAS_NOT_ERROR_COMMANDS')
+			}}</v-alert>
+		</template>
 	</div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
 import { TASK_ANALYZED_COMMANDS } from '../store/task-analyzed-commands/getters';
 import AnalyzedCommandFactory from './commands/AnalyzedCommandFactory';
+import { SHOW_ONLY_WITH_ERROR } from '@/store/task-analyzed-commands/getters';
 
 export default {
 	name: 'AnalyzedCommands',
@@ -19,6 +27,7 @@ export default {
 	},
 	computed: {
 		...mapGetters(`taskAnalyzedCommands`, {
+			showOnlyWithError: SHOW_ONLY_WITH_ERROR,
 			analyzedCommands: TASK_ANALYZED_COMMANDS,
 		}),
 		displayAnalyzedCommands: function() {

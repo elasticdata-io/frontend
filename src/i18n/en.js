@@ -45,4 +45,7 @@ export const ENGLISH_TRANSLATIONS = {
 			NOT_HAVE_ANY_DESCRIPTION: 'not have any description',
 		},
 	},
+	TASK: {
+		HAS_NOT_ERROR_COMMANDS: 'This task has not error commands!',
+	},
 };
