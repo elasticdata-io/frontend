@@ -8,9 +8,9 @@
 			></analyzed-command-factory>
 		</template>
 		<template v-else-if="showOnlyWithError">
-			<v-alert border="right" colored-border type="success" elevation="0">{{
-				$t('TASK.HAS_NOT_ERROR_COMMANDS')
-			}}</v-alert>
+			<v-alert border="right" colored-border type="success" elevation="0">
+				{{ $t('TASK.HAS_NOT_ERROR_COMMANDS') }}
+			</v-alert>
 		</template>
 	</div>
 </template>
