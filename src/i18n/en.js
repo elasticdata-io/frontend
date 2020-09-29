@@ -46,6 +46,6 @@ export const ENGLISH_TRANSLATIONS = {
 		},
 	},
 	TASK: {
-		HAS_NOT_ERROR_COMMANDS: 'This task has not error commands!',
+		HAS_NOT_ERROR_COMMANDS: 'There are no commands with errors in this task!',
 	},
 };
