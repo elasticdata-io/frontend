@@ -242,6 +242,7 @@ export default {
 			font-size: 12px;
 			line-height: 16px;
 			letter-spacing: 0.03em;
+			padding: 15px 20px;
 
 			div {
 				color: #ccc;
