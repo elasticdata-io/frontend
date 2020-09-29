@@ -239,10 +239,15 @@ export default {
 
 		.failure-reason {
 			background-color: black;
-			color: #999;
 			font-size: 12px;
 			line-height: 16px;
 			letter-spacing: 0.03em;
+
+			div {
+				color: #ccc;
+				font: 12px/16px Menlo, Consolas, Monaco, Lucida Console, Liberation Mono,
+					DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+			}
 
 			div::selection {
 				background-color: #541f86;
