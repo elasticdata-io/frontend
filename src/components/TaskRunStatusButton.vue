@@ -18,6 +18,9 @@
 					</div>
 					<div class="current-execute-command">
 						<small v-if="isRunning && currentExecuteCommand">
+							<v-icon small :color="`#${executeCommandColor}`"
+								>fiber_manual_record</v-icon
+							>
 							{{ currentExecuteCommand }}
 						</small>
 					</div>
@@ -41,6 +44,7 @@
 </template>
 <script>
 import PipelineStatuses from '../constants/pipeline-statuses';
+import { StringColorUtil } from '@/lib/string.color.util';
 
 export default {
 	components: {},
@@ -79,6 +83,9 @@ export default {
 			}
 			return failureReason;
 		},
+		executeCommandColor: function() {
+			return StringColorUtil.toRgb(this.currentExecuteCommandUuid);
+		},
 	},
 	methods: {
 		isRunnablePipeline(status) {
@@ -89,6 +96,11 @@ export default {
 	},
 	props: {
 		currentExecuteCommand: {
+			type: String,
+			required: false,
+			default: null,
+		},
+		currentExecuteCommandUuid: {
 			type: String,
 			required: false,
 			default: null,

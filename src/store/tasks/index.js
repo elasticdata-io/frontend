@@ -105,7 +105,7 @@ const actions = {
 
 	[action.UPDATE_CURRENT_EXECUTE_COMMAND](
 		{ commit, state },
-		{ commandName, commandProperties, taskId }
+		{ commandName, commandProperties, taskId, uuid }
 	) {
 		const taskIndex = state.tasks.findIndex(x => x.id === taskId);
 		if (taskIndex < 0) {
@@ -115,6 +115,7 @@ const actions = {
 		commit(mutation.REPLACE_TASK, {
 			...task,
 			currentExecuteCommand: commandName,
+			currentExecuteCommandUuid: uuid,
 			currentExecuteCommandProperties: commandProperties,
 		});
 	},

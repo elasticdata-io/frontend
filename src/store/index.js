@@ -134,12 +134,14 @@ export default new Vuex.Store({
 				let commandName = data.cmd;
 				let userId = data.userId;
 				let commandProperties = data.runTimeProperties;
+				let uuid = data.uuid;
 				dispatch(`tasks/${PIPELINES_UPDATE_CURRENT_EXECUTE_COMMAND}`, {
 					userId,
 					pipelineId,
 					taskId,
 					commandName,
 					commandProperties,
+					uuid,
 				});
 			});
 		},

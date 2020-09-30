@@ -42,6 +42,7 @@
 						:failureReason="task.failureReason"
 						:docs-count="task.newParseRowsCount"
 						:current-execute-command="task.currentExecuteCommand"
+						:current-execute-command-uuid="task.currentExecuteCommandUuid"
 						:current-execute-command-properties="task.currentExecuteCommandProperties"
 						:miniIcon="true"
 					></task-run-status-button>
