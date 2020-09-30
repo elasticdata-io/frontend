@@ -129,10 +129,14 @@ export default new Vuex.Store({
 		[SUBSCRIBE_PIPELINE_EXECUTE_COMMAND]({ dispatch }, { userId }) {
 			subscribe(`/task/command/execute/${userId}`, res => {
 				const data = JSON.parse(res.body);
-				let taskId = data.pipelineTaskId;
-				let commandName = data.commandExecutingName;
-				let commandProperties = data.commandExecutingProperties;
+				let taskId = data.taskId;
+				let pipelineId = data.pipelineId;
+				let commandName = data.cmd;
+				let userId = data.userId;
+				let commandProperties = data.runTimeProperties;
 				dispatch(`tasks/${PIPELINES_UPDATE_CURRENT_EXECUTE_COMMAND}`, {
+					userId,
+					pipelineId,
 					taskId,
 					commandName,
 					commandProperties,
