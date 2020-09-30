@@ -18,9 +18,9 @@
 					</div>
 					<div class="current-execute-command">
 						<small v-if="isRunning && currentExecuteCommand">
-							<v-icon small :color="`#${executeCommandColor}`"
-								>fiber_manual_record</v-icon
-							>
+							<v-icon small :color="`#${executeCommandColor}`">
+								fiber_manual_record
+							</v-icon>
 							{{ currentExecuteCommand }}
 						</small>
 					</div>
