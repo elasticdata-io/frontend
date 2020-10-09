@@ -1,17 +1,14 @@
 export default {
+    version: '2.0',
 	commands: [
 		{
 			cmd: 'url',
-			params: {
-				urls: ['http://google.com.ua'],
-			},
+            link: 'http://google.com.ua',
 		},
 		{
 			cmd: 'getText',
-			params: {
-				key: 'header',
-				selector: 'h1',
-			},
+            key: 'header',
+            selector: 'h1',
 		},
 	],
 };
