@@ -19,7 +19,7 @@
 					:x-small="xSmall"
 					:small="small"
 				>
-					<v-icon :class="!small && !x - small ? 'pr-2' : ''">{{ btnIcon }}</v-icon>
+					<v-icon :class="!small ? 'pr-2' : ''">{{ btnIcon }}</v-icon>
 					{{ btnCaption }}
 				</v-btn>
 			</template>
