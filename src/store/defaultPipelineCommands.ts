@@ -5,10 +5,30 @@ export default {
 			cmd: 'openurl',
             link: 'http://google.com.ua',
 		},
+        {
+          cmd: 'type',
+          selector: 'input[name="q"]',
+          text: 'pizza'
+        },
+        {
+            cmd: 'click',
+            selector: 'input[name="btnK"]',
+        },
 		{
-			cmd: 'gettext',
-            key: 'header',
-            selector: 'h1',
+			cmd: 'loop',
+            commands: [
+                {
+                    cmd: 'gettext',
+                    selector: 'div.g{$i} a',
+                    attribute: 'href',
+                    key: 'link'
+                },
+                {
+                    cmd: 'gettext',
+                    selector: 'div.g{$i} h3',
+                    key: 'name'
+                }
+            ]
 		},
 	],
 };
