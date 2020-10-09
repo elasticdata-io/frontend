@@ -12,7 +12,13 @@ import * as getter from './getters';
  * @property {String} loopMaterializedUuid
  */
 
-const state = {
+interface State {
+    showOnlyWithError: boolean,
+    taskAnalyzedCommands: any[],
+    loops: any,
+}
+
+const state: State = {
 	showOnlyWithError: false,
 	taskAnalyzedCommands: [],
 	/**
@@ -32,7 +38,7 @@ const getChildMaterializedUuidPathArray = (state, materializedUuidPath) => {
 		.filter(x => x.startsWith(`${materializedUuidPath}_`));
 };
 
-const getParentMaterializedUuid = (state, materializedUuidPath) => {
+const getParentMaterializedUuid = (state, materializedUuidPath): string => {
 	const keys = Object.keys(state.loops)
 		.filter(x => {
 			return materializedUuidPath.startsWith(`${x}_`) || materializedUuidPath === x;
@@ -40,7 +46,7 @@ const getParentMaterializedUuid = (state, materializedUuidPath) => {
 		.sort();
 	const findKeyIndex = keys.indexOf(materializedUuidPath);
 	if (findKeyIndex === -1) {
-		return [];
+		return '';
 	}
 	return keys[findKeyIndex - 1];
 };
@@ -141,14 +147,16 @@ const actions = {
 
 const getters = {
 	[getter.SHOW_ONLY_WITH_ERROR]: state => state.showOnlyWithError,
-	[getter.TASK_ANALYZED_COMMANDS]: state => {
+	[getter.TASK_ANALYZED_COMMANDS]: (state: State) => {
 		let taskAnalyzedCommands = state.taskAnalyzedCommands || [];
 		if (state.showOnlyWithError) {
 			return taskAnalyzedCommands.filter(x => x.status === 'error');
 		}
-		const uuids = Object.values(state.loops).map(x => x.loopUuid);
+		const uuids = Object
+            .values(state.loops as any[])
+            .map(x => x.loopUuid);
 		for (const uuid of uuids) {
-			const loopPageState = Object.values(state.loops).find(x => x.loopUuid === uuid);
+			const loopPageState = Object.values(state.loops as any[]).find(x => x.loopUuid === uuid) as any;
 			const loopIndex = loopPageState.loopIndex;
 			const loopCommand = state.taskAnalyzedCommands.find(x => x.uuid === uuid);
 			if (!loopCommand) {
@@ -177,7 +185,7 @@ const getters = {
 	},
 	[getter.LOOP_DISPLAY_INDEXES_BY_UUID]: state => {
 		const loopIndexesByUuid = {};
-		Object.values(state.loops).forEach(x => (loopIndexesByUuid[x.loopUuid] = x.loopIndex));
+		Object.values(state.loops as any[]).forEach(x => (loopIndexesByUuid[x.loopUuid] = x.loopIndex));
 		return loopIndexesByUuid;
 	},
 };

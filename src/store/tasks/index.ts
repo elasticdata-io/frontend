@@ -134,7 +134,7 @@ const getters = {
 	[TASKS_AT_WORK]: state => {
 		const atWorker = status => {
 			const taskStatus = status || '';
-			const statuses = Object.values(PipelineStatuses);
+			const statuses = Object.values(PipelineStatuses) as any;
 			return statuses.filter(s => s.worker && s.title === taskStatus).length > 0;
 		};
 		const tasks = state.tasks;

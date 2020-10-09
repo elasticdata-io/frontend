@@ -113,7 +113,7 @@ export default new Vuex.Store({
 			subscribe(`/task/change/${userId}`, res => {
 				const task = JSON.parse(res.body);
 				dispatch(`tasks/${TASK_CHANGED}`, { task });
-			});
+			}, null);
 		},
 		[SUBSCRIBE_PIPELINE_PARSED_LINES]({ dispatch }, { userId }) {
 			subscribe(`/task/parsed-lines/${userId}`, res => {
@@ -124,7 +124,7 @@ export default new Vuex.Store({
 					taskId,
 					newParseRowsCount,
 				});
-			});
+			}, null);
 		},
 		[SUBSCRIBE_PIPELINE_EXECUTE_COMMAND]({ dispatch }, { userId }) {
 			subscribe(`/task/command/execute/${userId}`, res => {
@@ -143,7 +143,7 @@ export default new Vuex.Store({
 					commandProperties,
 					uuid,
 				});
-			});
+			}, null);
 		},
 		[FETCH_APP_VERSION]({ commit }) {
 			return Vue.http.get(`/api/system/version`).then(res => {

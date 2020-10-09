@@ -3,7 +3,7 @@ import * as action from './actions';
 import * as mutation from './mutations';
 import * as getter from './getters';
 import { SET_SNACK_MESSAGE } from '../mutations';
-import { FETCH_CURRENT_USER, LOGIN } from '../user/actions';
+import { FETCH_CURRENT_USER } from '../user/actions';
 import { SET_LOGGED_IN, SET_TOKEN, SET_USER } from '../user/mutations';
 import { SUBSCRIBE_PIPELINE_ALL, WEBSOCKET_CONNECT } from '../actions';
 

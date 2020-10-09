@@ -11,7 +11,7 @@
 								<v-list-item-group>
 									<template v-for="(user, index) in users">
 										<v-list-item :key="user.login">
-											<template v-slot:default="{ active, toggle }">
+											<template v-slot:default="{}">
 												<v-list-item-content>
 													<v-list-item-title></v-list-item-title>
 													{{ user.email || user.login }}

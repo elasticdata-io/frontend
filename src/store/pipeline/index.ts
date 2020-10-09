@@ -3,7 +3,6 @@ import * as action from './actions';
 import * as mutation from './mutations';
 import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING, CURRENT_PIPELINE_LAST_DATA } from './getters';
 import defaultPipelineCommands from '../defaultPipelineCommands';
-import { PIPELINE_CHANGED } from '../pipelines/actions';
 import { FETCH_TASKS } from '../tasks/actions';
 
 const state = {

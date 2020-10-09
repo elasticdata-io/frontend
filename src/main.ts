@@ -20,7 +20,7 @@ Vue.use(Vuelidate);
 Vue.config.productionTip = false;
 
 Vue.http.options.emulateJSON = true;
-Vue.http.interceptors.push(function(request, next) {
+Vue.http.interceptors.push(function(request: any, next: any) {
 	request.headers.set('token', Vue.localStorage.get('token'));
 	request.headers.set('lang', i18n.locale);
 	next(function(response) {
