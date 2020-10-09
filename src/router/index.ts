@@ -9,6 +9,7 @@ import Enter from '../views/Enter.vue';
 import Admin from '../views/Admin.vue';
 import PipelineDataView from '../views/PipelineDataView.vue';
 import Task from '../views/Task.vue';
+import TaskInteraction from '../views/TaskInteraction.vue';
 import DocsView from '../views/DocsView.vue';
 import CommandsDocs from '../components/docs/CommandsDocs.vue';
 import DataRulesDocs from '../components/docs/DataRulesDocs.vue';
@@ -86,6 +87,12 @@ const router = new Router({
 			name: 'task',
 			path: '/task/:taskId',
 			component: Task,
+			props: true,
+		},
+		{
+			name: 'task',
+			path: '/task-interaction/:taskId',
+			component: TaskInteraction,
 			props: true,
 		},
 		{
