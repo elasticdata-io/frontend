@@ -5,6 +5,7 @@
 * ```'/worker/*'``` - https://github.com/sergeytkachenko/scraper-worker-ts
 * ```'/api/*'``` - https://github.com/sergeytkachenko/scraper-service
 * ```'/api/ws/*'``` - websockets of https://github.com/sergeytkachenko/scraper-service
+* ```data-service``` - https://github.com/sergeytkachenko/scraper-data-service
 
 ### Develop only frontend
 
@@ -42,13 +43,21 @@ module.exports = {
     * Copy values from https://prnt.sc/tc5ikm to https://prnt.sc/tc5j91
     * Go to ```http://localhost:8080```
 
-### Develop frontend and worker
+### Develop frontend, worker and data-service
 
 #### Run worker
 
 * clone project https://github.com/sergeytkachenko/scraper-worker-ts
 * run worker project 
     * ```cd scraper-worker-ts```
+    * ``npm install``
+    * ```npm run start```
+
+#### Run data-service
+
+* clone project https://github.com/sergeytkachenko/scraper-data-service
+* run data-service project 
+    * ```cd data-service```
     * ``npm install``
     * ```npm run start```
 
