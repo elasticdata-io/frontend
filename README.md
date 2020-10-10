@@ -5,7 +5,6 @@
 * ```'/worker/*'``` - https://github.com/sergeytkachenko/scraper-worker-ts
 * ```'/api/*'``` - https://github.com/sergeytkachenko/scraper-service
 * ```'/api/ws/*'``` - websockets of https://github.com/sergeytkachenko/scraper-service
-* ```data-service``` - https://github.com/sergeytkachenko/scraper-data-service
 
 ### Develop only frontend
 
