@@ -6,11 +6,15 @@
 			</v-card-title>
 			<v-card-text>
 				<p>Цей pipeline містить <strong>user interaction</strong> блок:</p>
-				<code-preview :code="format(userInteraction)" mode="json"></code-preview>
+				<code-preview
+					mode="json"
+					:code="format(userInteraction)"
+					:fake-updated="true"
+				></code-preview>
 				<br />
 				Тому в будьякий момент може бути необхідне Ваше втручання.<br />
 				Для запуску цього pipeline натисніть Продовжити та очикуйте сповіщення щодо
-				необхідність Вашого втручання.
+				необхідності Вашого втручання.
 			</v-card-text>
 			<v-divider></v-divider>
 			<v-card-actions>
@@ -18,7 +22,9 @@
 				<v-btn color="secondary" depressed @click="close()">
 					Відмінити
 				</v-btn>
-				<v-btn class="ml-5" depressed color="primary">Продовжити</v-btn>
+				<v-btn class="ml-5" depressed color="primary" @click="createTaskInteraction()">
+					Продовжити
+				</v-btn>
 			</v-card-actions>
 		</v-card>
 	</v-dialog>
@@ -44,6 +50,9 @@ export default {
         },
         format(outputData) {
             return JSON.stringify(outputData, null, 4);
+        },
+        createTaskInteraction() {
+            this.$router.push({name: 'create-task-interaction', params: {pipelineId: this.pipelineId}})
         },
     },
     props: {

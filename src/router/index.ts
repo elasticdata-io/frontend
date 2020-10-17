@@ -24,6 +24,7 @@ import Join from '../components/docs/data-rule/Join.vue';
 import ExtractRegex from '../components/docs/data-rule/ExtractRegex.vue';
 import CmdDoc from '../components/docs/cmd/CmdDoc.vue';
 import CmdLoader from '../components/docs/cmd/CmdLoader.vue';
+import CreateTaskInteraction from "@/views/CreateTaskInteraction.vue";
 
 Vue.use(Router);
 
@@ -90,7 +91,13 @@ const router = new Router({
 			props: true,
 		},
 		{
-			name: 'task',
+			name: 'create-task-interaction',
+			path: '/create-task-interaction/:pipelineId',
+			component: CreateTaskInteraction,
+			props: true,
+		},
+		{
+			name: 'task-interaction',
 			path: '/task-interaction/:taskId',
 			component: TaskInteraction,
 			props: true,

@@ -44,11 +44,11 @@ const mutations = {
 const actions = {
 	async [action.FETCH_USER_INTERACTIONS]({ commit, state }, { taskId }) {
 		commit(mutation.SET_LOADING, true);
-		if (this.fetch) {
-			this.fetch.abort();
+		if (state.fetch) {
+            state.fetch.abort();
 		}
         try {
-            const before = request => (this.fetch = request);
+            const before = request => (state.fetch = request);
             const res = await Vue.http.get(`/api/task-user-interaction/${taskId}`, { before });
             const data = res.body || [];
             commit(mutation.SET_USER_INTERACTIONS, data);
@@ -57,7 +57,6 @@ const actions = {
             throw e;
         }
 	},
-
 };
 
 const getters = {

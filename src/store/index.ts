@@ -48,6 +48,7 @@ import {
 } from './tasks/actions';
 
 import { TASK_CHANGED } from './tasks/actions';
+import {TASK_CHANGED_FROM_WS, TASK_UPDATE_CURRENT_EXECUTE_COMMAND_FROM_WS} from "@/store/task/actions";
 
 Vue.use(Vuex);
 
@@ -115,6 +116,7 @@ export default new Vuex.Store({
 			subscribe(`/task/change/${userId}`, res => {
 				const task = JSON.parse(res.body);
 				dispatch(`tasks/${TASK_CHANGED}`, { task });
+				dispatch(`task/${TASK_CHANGED_FROM_WS}`, { task });
 			}, null);
 		},
 		[SUBSCRIBE_PIPELINE_PARSED_LINES]({ dispatch }, { userId }) {
@@ -145,6 +147,14 @@ export default new Vuex.Store({
 					commandProperties,
 					uuid,
 				});
+                dispatch(`task/${TASK_UPDATE_CURRENT_EXECUTE_COMMAND_FROM_WS}`, {
+                    userId,
+                    pipelineId,
+                    taskId,
+                    commandName,
+                    commandProperties,
+                    uuid,
+                });
 			}, null);
 		},
 		[FETCH_APP_VERSION]({ commit }) {

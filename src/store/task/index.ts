@@ -2,10 +2,10 @@ import Vue from 'vue';
 import * as action from './actions';
 import * as mutation from './mutations';
 import {
-	TASK,
-	TASK_COMMANDS_INFORMATION,
-	TASK_COMMANDS_INFORMATION_LOADING,
-	TASK_DATA,
+    TASK,
+    TASK_COMMANDS_INFORMATION,
+    TASK_COMMANDS_INFORMATION_LOADING, TASK_CURRENT_EXECUTE_COMMAND,
+    TASK_DATA,
 } from './getters';
 
 const state = {
@@ -14,6 +14,7 @@ const state = {
 	taskLoading: false,
 	taskCommandsInformation: {},
 	commandsInformationLoading: false,
+	currentExecuteCommand: {},
 };
 
 const mutations = {
@@ -48,15 +49,19 @@ const mutations = {
 	[mutation.CLEAR_TASK_COMMANDS_INFORMATION](state) {
 		Vue.set(state, 'commandsInformation', {});
 	},
+
+	[mutation.SET_CURRENT_EXECUTE_COMMAND](state, data) {
+		Vue.set(state, 'currentExecuteCommand', data);
+	},
 };
 
 const actions = {
-	async [action.FETCH_TASK]({ commit }, taskId) {
+	async [action.FETCH_TASK]({ commit, state }, taskId) {
 		commit(mutation.SET_TASK_LOADING, true);
-		if (this.fetch) {
-			this.fetch.abort();
+		if (state.fetch) {
+            state.fetch.abort();
 		}
-		const before = request => (this.fetch = request);
+		const before = request => (state.fetch = request);
 		return Vue.http.get(`/api/task/${taskId}`, { before }).then(res => {
 			const task = res.body || [];
 			commit(mutation.SET_TASK, task);
@@ -95,6 +100,37 @@ const actions = {
 			commit(mutation.SET_TASK_DATA, docs);
 		});
 	},
+
+	async [action.TASK_CHANGED_FROM_WS]({ commit, state }, { task }) {
+		if (state.task.id !== task.id) {
+            return;
+        }
+        commit(mutation.SET_TASK, task);
+	},
+
+	async [action.TASK_UPDATE_CURRENT_EXECUTE_COMMAND_FROM_WS](
+        { commit, state },
+        {
+            userId,
+            pipelineId,
+            taskId,
+            commandName,
+            commandProperties,
+            uuid,
+        }
+    ) {
+		if (state.task.id !== taskId) {
+            return;
+        }
+        commit(mutation.SET_CURRENT_EXECUTE_COMMAND, {
+            userId,
+            pipelineId,
+            taskId,
+            commandName,
+            commandProperties,
+            uuid,
+        });
+	},
 };
 
 const getters = {
@@ -102,6 +138,7 @@ const getters = {
 	[TASK_COMMANDS_INFORMATION]: state => state.commandsInformation,
 	[TASK_COMMANDS_INFORMATION_LOADING]: state => state.commandsInformationLoading,
 	[TASK_DATA]: state => state.taskData,
+	[TASK_CURRENT_EXECUTE_COMMAND]: state => state.currentExecuteCommand,
 };
 
 export default {

@@ -54,7 +54,7 @@ export default {
 				this.setMode();
 				this.updateHeight();
 				this.setSelection();
-			}, 200));
+			}, 60));
 		},
 	},
 	mounted() {
@@ -103,6 +103,7 @@ export default {
 <style lang="less">
 .input-editor {
 	height: 200px;
+	transition: height 0.35s ease-out;
 
 	code {
 		visibility: hidden;
