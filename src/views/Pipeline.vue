@@ -208,10 +208,15 @@
 					</v-card>
 				</v-col>
 			</v-row>
+			<need-user-interaction-modal-box
+				:pipeline-id="id"
+				:opened="needUserInteractionModalBox"
+				@close="needUserInteractionModalBox = false"
+			></need-user-interaction-modal-box>
 		</v-container>
 	</v-content>
 </template>
-<script>
+<script type="ts">
 import * as moment from 'moment';
 import {
 	FETCH_PIPELINE,
@@ -219,16 +224,17 @@ import {
 	SAVE_PIPELINE,
 	INIT_DEFAULT_PIPELINE_PROPERTIES,
 	RUN_PIPELINE,
-} from '../store/pipeline/actions';
+} from '@/store/pipeline/actions';
 import { mapGetters } from 'vuex';
-import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from '../store/pipeline/getters';
-import { SET_SNACK_MESSAGE } from '../store/mutations';
+import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING } from '@/store/pipeline/getters';
+import { SET_SNACK_MESSAGE } from '@/store/mutations';
 import PipelineJsonEditor from '../components/PipelineJsonEditor';
 import PipelineYamlEditor from '../components/PipelineYamlEditor';
 import TasksMini from '../components/TasksMini';
-import { CLEAR_TASKS } from '../store/tasks/mutations';
+import { CLEAR_TASKS } from '@/store/tasks/mutations';
 import PipelineData from '../components/PipelineData';
 import PipelineDependents from '../components/PipelineDependents';
+import NeedUserInteractionModalBox from '@/components/NeedUserInteractionModalBox.vue';
 
 export default {
 	components: {
@@ -237,10 +243,12 @@ export default {
 		TasksMini,
 		PipelineData,
 		PipelineDependents,
+        NeedUserInteractionModalBox,
 	},
 	data() {
 		return {
 			viewAdditional: false,
+            needUserInteractionModalBox: false,
 		};
 	},
 	computed: {
@@ -268,6 +276,12 @@ export default {
 	},
 	methods: {
 		runPipeline() {
+            const pipeline = JSON.parse(this.pipeline.jsonCommands) || {settings: {}};
+            const settings = pipeline.settings || {};
+            this.needUserInteractionModalBox = Boolean(settings.userInteraction);
+            if (this.needUserInteractionModalBox) {
+                return;
+            }
 			this.$store.dispatch(`pipeline/${RUN_PIPELINE}`, { pipelineId: this.id });
 		},
 		saveJsonCommands(json) {
