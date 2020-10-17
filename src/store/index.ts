@@ -137,14 +137,14 @@ export default new Vuex.Store({
 				let pipelineId = data.pipelineId;
 				let commandName = data.cmd;
 				let userId = data.userId;
-				let commandProperties = data.runTimeProperties;
+				let designTimeConfig = data.designTimeConfig;
 				let uuid = data.uuid;
 				dispatch(`tasks/${PIPELINES_UPDATE_CURRENT_EXECUTE_COMMAND}`, {
 					userId,
 					pipelineId,
 					taskId,
 					commandName,
-					commandProperties,
+                    designTimeConfig,
 					uuid,
 				});
                 dispatch(`task/${TASK_UPDATE_CURRENT_EXECUTE_COMMAND_FROM_WS}`, {
@@ -152,7 +152,7 @@ export default new Vuex.Store({
                     pipelineId,
                     taskId,
                     commandName,
-                    commandProperties,
+                    designTimeConfig,
                     uuid,
                 });
 			}, null);

@@ -115,7 +115,7 @@ const actions = {
             pipelineId,
             taskId,
             commandName,
-            runTimeProperties,
+            designTimeConfig,
             uuid,
         }
     ) {
@@ -127,10 +127,10 @@ const actions = {
             pipelineId,
             taskId,
             commandName,
-            runTimeProperties,
+            designTimeConfig,
             uuid,
         };
-		console.log(data)
+		console.log(data);
         commit(mutation.SET_CURRENT_EXECUTE_COMMAND, data);
 	},
 };
