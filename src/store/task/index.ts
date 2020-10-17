@@ -115,21 +115,23 @@ const actions = {
             pipelineId,
             taskId,
             commandName,
-            commandProperties,
+            pageContext,
             uuid,
         }
     ) {
 		if (state.task.id !== taskId) {
             return;
         }
-        commit(mutation.SET_CURRENT_EXECUTE_COMMAND, {
+		const data = {
             userId,
             pipelineId,
             taskId,
             commandName,
-            commandProperties,
+            pageContext,
             uuid,
-        });
+        };
+		console.log(data)
+        commit(mutation.SET_CURRENT_EXECUTE_COMMAND, data);
 	},
 };
 

@@ -12,9 +12,6 @@
 								:docs-count="task.newParseRowsCount"
 								:current-execute-command="currentExecuteCommand.commandName"
 								:current-execute-command-uuid="currentExecuteCommand.uuid"
-								:current-execute-command-properties="
-									task.currentExecuteCommandProperties
-								"
 								:miniIcon="true"
 							></task-run-status-button>
 						</v-btn>
@@ -38,7 +35,7 @@
 							color="red"
 						></v-progress-linear>
 					</template>
-					<template v-if="userInteractions && isNotFinished(task.status)">
+					<template v-if="userInteractions && !isNotFinished(task.status)">
 						<v-row dense>
 							<v-col
 								v-for="userInteraction in userInteractions"
