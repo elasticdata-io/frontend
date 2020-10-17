@@ -115,7 +115,7 @@ const actions = {
             pipelineId,
             taskId,
             commandName,
-            pageContext,
+            runTimeProperties,
             uuid,
         }
     ) {
@@ -127,7 +127,7 @@ const actions = {
             pipelineId,
             taskId,
             commandName,
-            pageContext,
+            runTimeProperties,
             uuid,
         };
 		console.log(data)
