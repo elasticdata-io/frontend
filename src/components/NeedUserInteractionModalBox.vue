@@ -5,25 +5,33 @@
 				Увага!
 			</v-card-title>
 			<v-card-text>
-				Цей pipeline містить <code>user interaction</code> блок.<br />
+				<p>Цей pipeline містить <strong>user interaction</strong> блок:</p>
+				<code-preview :code="format(userInteraction)" mode="json"></code-preview>
+				<br />
 				Тому в будьякий момент може бути необхідне Ваше втручання.<br />
-				Для запуску цього pipeline перейдіть за посиланням. На сторінці нажміть кнопку
-				"запустити" і чекайте сповіщення про необхідність Вашего втручання.
+				Для запуску цього pipeline натисніть Продовжити та очикуйте сповіщення щодо
+				необхідність Вашого втручання.
 			</v-card-text>
 			<v-divider></v-divider>
 			<v-card-actions>
 				<v-spacer></v-spacer>
-				<v-btn color="primary" text @click="close()">
-					cancel
+				<v-btn color="secondary" depressed @click="close()">
+					Відмінити
 				</v-btn>
+				<v-btn class="ml-5" depressed color="primary">Продовжити</v-btn>
 			</v-card-actions>
 		</v-card>
 	</v-dialog>
 </template>
 <script type="ts">
 
+import CodePreview from "@/components/CodePreview.vue";
+
 export default {
     name: 'NeedUserInteractionModalBox',
+    components: {
+        CodePreview,
+    },
     data: () => ({}),
     computed: {
         dialog: function() {
@@ -33,7 +41,10 @@ export default {
     methods: {
         close() {
             this.$emit('close');
-        }
+        },
+        format(outputData) {
+            return JSON.stringify(outputData, null, 4);
+        },
     },
     props: {
         opened: {
@@ -42,6 +53,9 @@ export default {
         },
         pipelineId: {
             type: String,
+        },
+        userInteraction: {
+            type: Object,
         }
     }
 }

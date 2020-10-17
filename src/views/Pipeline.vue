@@ -211,6 +211,7 @@
 			<need-user-interaction-modal-box
 				:pipeline-id="id"
 				:opened="needUserInteractionModalBox"
+				:user-interaction="userInteraction"
 				@close="needUserInteractionModalBox = false"
 			></need-user-interaction-modal-box>
 		</v-container>
@@ -273,12 +274,15 @@ export default {
 				this.pipeline.dependencies = dependencies;
 			},
 		},
+        userInteraction: function() {
+            const pipeline = JSON.parse(this.pipeline.jsonCommands) || {settings: {}};
+            const settings = pipeline.settings || {};
+            return settings.userInteraction;
+        }
 	},
 	methods: {
 		runPipeline() {
-            const pipeline = JSON.parse(this.pipeline.jsonCommands) || {settings: {}};
-            const settings = pipeline.settings || {};
-            this.needUserInteractionModalBox = Boolean(settings.userInteraction);
+            this.needUserInteractionModalBox = Boolean(this.userInteraction);
             if (this.needUserInteractionModalBox) {
                 return;
             }

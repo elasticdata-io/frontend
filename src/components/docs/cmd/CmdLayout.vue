@@ -146,7 +146,7 @@
 import * as YAML from 'json-to-pretty-yaml';
 import CommandsNavigation from '../CommandsNavigation';
 import { mapGetters } from 'vuex';
-import { COMMAND_BY_CMD } from '../../../store/commands/getters';
+import { COMMAND_BY_CMD } from '@/store/commands/getters';
 import CodePreview from '../../CodePreview';
 
 export default {
