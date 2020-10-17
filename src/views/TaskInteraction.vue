@@ -35,7 +35,7 @@
 							color="red"
 						></v-progress-linear>
 					</template>
-					<template v-if="userInteractions && !isNotFinished(task.status)">
+					<template v-if="userInteractions && isNotFinished(task.status)">
 						<v-row dense>
 							<v-col
 								v-for="userInteraction in userInteractions"
