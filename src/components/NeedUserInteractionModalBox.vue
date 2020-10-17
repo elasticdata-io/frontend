@@ -10,6 +10,7 @@
 					mode="json"
 					:code="format(userInteraction)"
 					:fake-updated="true"
+					:auto-height="false"
 				></code-preview>
 				<br />
 				Тому в будьякий момент може бути необхідне Ваше втручання.<br />

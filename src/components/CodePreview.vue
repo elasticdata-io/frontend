@@ -22,10 +22,14 @@ export default {
 	methods: {
 		updateHeight() {
 			const editor = this.editor;
-			const newHeight =
-				editor.getSession().getScreenLength() * editor.renderer.lineHeight +
-				editor.renderer.scrollBar.getWidth();
-			editor.setOptions({ maxLines: newHeight, readOnly: true });
+			if (this.autoHeight) {
+				const newHeight =
+					editor.getSession().getScreenLength() * editor.renderer.lineHeight +
+					editor.renderer.scrollBar.getWidth();
+				editor.setOptions({ maxLines: newHeight, readOnly: true });
+			} else {
+				editor.setOptions({ readOnly: true });
+			}
 			this.setSelection();
 		},
 		setMode() {
@@ -97,13 +101,17 @@ export default {
 			type: Date,
 			required: true,
 		},
+		autoHeight: {
+			type: Boolean,
+			default: true,
+		},
 	},
 };
 </script>
 <style lang="less">
 .input-editor {
 	height: 200px;
-	transition: height 0.35s ease-out;
+	//transition: height 0.35s ease-out;
 
 	code {
 		visibility: hidden;
