@@ -31,6 +31,7 @@ import dataRules from './data-rules';
 import commands from './commands';
 import locale from './locale';
 import taskAnalyzedCommands from './task-analyzed-commands';
+import userInteraction from './user-interaction';
 import { subscribe, stompConnect } from './websocket';
 import {
 	FETCH_APP_LAST_UPDATED,
@@ -68,6 +69,7 @@ export default new Vuex.Store({
 		commands,
 		locale,
 		taskAnalyzedCommands,
+		userInteraction,
 	},
 	state: {
 		snackTimeout: 10000,
