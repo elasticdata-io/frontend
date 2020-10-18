@@ -61,9 +61,17 @@
 				<v-col class="text-left" xs="2" sm="2" md="2" lg="2" xl="2">
 					<v-menu offset-y>
 						<template v-slot:activator="{ on }">
-							<v-btn depressed text v-on="on">
-								<v-icon>more_vert</v-icon>
-							</v-btn>
+							<v-badge
+								v-if="isNotFinished(task.status) && task.hasUserInteraction"
+								bordered
+								color="error"
+								icon="bug_report"
+								overlap
+							>
+								<v-btn depressed text v-on="on">
+									<v-icon>more_vert</v-icon>
+								</v-btn>
+							</v-badge>
 						</template>
 						<v-list>
 							<v-list-item
@@ -106,7 +114,7 @@
 								:to="{ name: 'task-interaction', params: { taskId: task.id } }"
 							>
 								<v-list-item-title>
-									<v-icon class="pr-2">hourglass_bottom</v-icon>
+									<v-icon class="pr-2">bug_report</v-icon>
 									інтерактивний режим
 								</v-list-item-title>
 							</v-list-item>
