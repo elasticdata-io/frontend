@@ -72,6 +72,9 @@
 									<v-icon>more_vert</v-icon>
 								</v-btn>
 							</v-badge>
+							<v-btn v-else depressed text v-on="on">
+								<v-icon>more_vert</v-icon>
+							</v-btn>
 						</template>
 						<v-list>
 							<v-list-item

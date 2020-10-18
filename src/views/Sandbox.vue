@@ -12,20 +12,8 @@
 							instagram (собираем подписчиков)
 						</v-toolbar-title>
 						<v-spacer></v-spacer>
-						<div class="mr-5" style="width: 300px">
-							<v-btn depressed block small>
-								в процессі
-							</v-btn>
-							<v-progress-linear
-								indeterminate
-								height="2"
-								color="teal"
-							></v-progress-linear>
-						</div>
-						<v-btn color="secondary" depressed small>
-							<v-icon>stop</v-icon>
-							зупинити
-						</v-btn>
+						<task-status-button class="mr-5" style="width: 300px"></task-status-button>
+						<stop-task-button></stop-task-button>
 					</v-toolbar>
 				</v-col>
 				<v-col md="12" class="text-center mt-7" v-if="false">
@@ -167,7 +155,10 @@
 	</v-content>
 </template>
 <script type="ts">
+import TaskStatusButton from "@/components/TaskStatusButton.vue";
+import StopTaskButton from "@/components/StopTaskButton.vue";
 export default {
     name: 'Sandbox',
+    components: {TaskStatusButton, StopTaskButton},
 }
 </script>

@@ -108,6 +108,10 @@ const actions = {
         commit(mutation.SET_TASK, task);
 	},
 
+	async [action.TASK_STOP]({ commit, state }, { id }) {
+        await Vue.http.post(`/api/pipeline/stop/${id}`);
+	},
+
 	async [action.TASK_UPDATE_CURRENT_EXECUTE_COMMAND_FROM_WS](
         { commit, state },
         {
