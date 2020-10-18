@@ -8,7 +8,7 @@ export default {
     name: 'CreateTaskInteraction',
     async created() {
         const task = await this.$store.dispatch(`pipeline/${RUN_PIPELINE}`, { pipelineId: this.pipelineId });
-        await this.$router.push({name: 'task-interaction', params: {taskId: task.id}})
+        await this.$router.replace({name: 'task-interaction', params: {taskId: task.id}})
     },
     props: {
         pipelineId: {
