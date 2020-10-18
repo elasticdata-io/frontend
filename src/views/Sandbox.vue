@@ -8,11 +8,21 @@
 							<v-icon class="mr-2">keyboard_backspace</v-icon>
 							назад
 						</v-btn>
-						<v-toolbar-title class="ml-3"
-							>instagram (собираем подписчиков)</v-toolbar-title
-						>
+						<v-toolbar-title class="ml-3">
+							instagram (собираем подписчиков)
+						</v-toolbar-title>
 						<v-spacer></v-spacer>
-						<v-btn color="secondary" depressed dark>
+						<div class="mr-5" style="width: 300px">
+							<v-btn depressed block small>
+								в процессі
+							</v-btn>
+							<v-progress-linear
+								indeterminate
+								height="2"
+								color="teal"
+							></v-progress-linear>
+						</div>
+						<v-btn color="secondary" depressed small>
 							<v-icon>stop</v-icon>
 							зупинити
 						</v-btn>

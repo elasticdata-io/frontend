@@ -30,7 +30,10 @@
 		<v-divider></v-divider>
 		<div
 			class="task-row"
-			:class="{ 'pink--text': task.failureReason }"
+			:class="{
+				'pink--text': task.failureReason,
+				'interaction-mode-blink': isNotFinished(task.status) && task.hasUserInteraction,
+			}"
 			v-for="task in tasks"
 			:key="task.id"
 		>
@@ -95,6 +98,16 @@
 								<v-list-item-title>
 									<v-icon class="pr-2">assignment</v-icon>
 									детально
+								</v-list-item-title>
+							</v-list-item>
+							<v-list-item
+								class="interaction-mode"
+								v-if="isNotFinished(task.status) && task.hasUserInteraction"
+								:to="{ name: 'task-interaction', params: { taskId: task.id } }"
+							>
+								<v-list-item-title>
+									<v-icon class="pr-2">hourglass_bottom</v-icon>
+									інтерактивний режим
 								</v-list-item-title>
 							</v-list-item>
 						</v-list>
@@ -278,6 +291,8 @@ export default {
 };
 </script>
 <style lang="less">
+@interactionModeColor: rgba(255, 150, 186, 0.3);
+
 .tasks-mini {
 	&.v-data-table td {
 		font-size: 0.8em;
@@ -286,5 +301,21 @@ export default {
 	.task-row {
 		font-size: 12px;
 	}
+
+	.interaction-mode-blink {
+		animation: blinkingBackground 3s infinite;
+	}
+
+	@keyframes blinkingBackground {
+		0% {
+			background-color: @interactionModeColor;
+		}
+		100% {
+			background-color: #ffffff;
+		}
+	}
+}
+.interaction-mode {
+	background-color: @interactionModeColor;
 }
 </style>
