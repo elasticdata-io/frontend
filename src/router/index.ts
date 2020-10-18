@@ -25,6 +25,7 @@ import ExtractRegex from '../components/docs/data-rule/ExtractRegex.vue';
 import CmdDoc from '../components/docs/cmd/CmdDoc.vue';
 import CmdLoader from '../components/docs/cmd/CmdLoader.vue';
 import CreateTaskInteraction from "@/views/CreateTaskInteraction.vue";
+import Sandbox from "@/views/Sandbox.vue";
 
 Vue.use(Router);
 
@@ -100,6 +101,12 @@ const router = new Router({
 			name: 'task-interaction',
 			path: '/task-interaction/:taskId',
 			component: TaskInteraction,
+			props: true,
+		},
+		{
+			name: 'sandbox',
+			path: '/sandbox',
+			component: Sandbox,
 			props: true,
 		},
 		{

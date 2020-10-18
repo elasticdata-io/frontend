@@ -49,4 +49,8 @@ export default {
 	font-family: Ubuntu, sans-serif;
 	/*font-family: 'PT Sans', Ubuntu, sans-serif;*/
 }
+#content {
+	height: 100%;
+	background-color: #e5e5e5;
+}
 </style>
