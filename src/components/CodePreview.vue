@@ -9,6 +9,7 @@ export default {
 	data: () => {
 		return {
 			interval: null,
+            model: null,
 			editor: null,
 			id: `input-editor-${StringGenerator.generate()}`,
             defaultHeight: 200,
@@ -16,6 +17,25 @@ export default {
 	},
     computed: {},
 	methods: {
+        createModel() {
+            if (this.jsonSchema && !this.model) {
+                const modelUri = monaco.Uri.parse('a://s.json');
+                monaco.languages
+                    .json
+                    .jsonDefaults
+                    .setDiagnosticsOptions({
+                        schemas: [
+                            {
+                                uri: "http://local/pipeline.json",
+                                fileMatch: [modelUri.toString()],
+                                schema: this.jsonSchema,
+                            },
+                        ],
+                        validate: true,
+                    });
+                this.model = monaco.editor.createModel(this.code, 'json', modelUri);
+            }
+        },
         createEditor() {
             clearInterval(this.interval);
             this.interval = setInterval(() => {
@@ -25,12 +45,18 @@ export default {
                 }
                 el.innerHTML = '';
                 clearInterval(this.interval);
-                this.editor = monaco.editor.create(el, {
+                this.createModel();
+                const config = {
                     value: this.code,
-                    language: this.mode,
                     theme: 'vs-dark',
+                    language: 'json',
                     readOnly: this.readOnly,
-                });
+                };
+                if (this.model) {
+                    config.model = this.model;
+                    delete config.value;
+                }
+                this.editor = monaco.editor.create(el, config);
                 const options = {
                     fontSize: 14,
                     fontFamily: 'Monaco, "Ubuntu Mono", monospace',
@@ -65,7 +91,9 @@ export default {
 	},
 	destroyed() {
 		clearInterval(this.interval);
-		console.log('destroyed')
+		if (this.model) {
+            this.model.dispose();
+        }
 	},
 	watch: {
 		code: function(oldCode, newCode) {
@@ -115,6 +143,9 @@ export default {
             type: Date,
             required: false,
         },
+        jsonSchema: {
+            type: Object,
+        }
 	},
 };
 </script>

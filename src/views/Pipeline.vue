@@ -277,7 +277,11 @@ export default {
         userInteraction: function() {
             const pipeline = JSON.parse(this.pipeline.jsonCommands) || {settings: {}};
             const settings = pipeline.settings || {};
-            return {settings: settings.userInteraction};
+            return {
+                settings: {
+                    userInteraction: settings.userInteraction,
+                }
+            };
         }
 	},
 	methods: {
