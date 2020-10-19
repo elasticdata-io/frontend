@@ -1,15 +1,9 @@
 <template>
-	<div style="background: #272822; padding: 10px 0;">
-		<pre class="input-editor" :id="id"><code>{{ code }}</code></pre>
-	</div>
+	<div :id="id" :style="{ height: height ? `${height}px` : 'auto' }"></div>
 </template>
-<script>
-import * as ace from 'brace';
-import 'brace/theme/monokai';
-import 'brace/ext/searchbox';
-import 'brace/mode/yaml';
-import 'brace/mode/json';
-import { StringGenerator } from '../lib/string.generator';
+<script lang="ts">
+import * as monaco from 'monaco-editor';
+import { StringGenerator } from "@/lib/string.generator";
 
 export default {
 	data: () => {
@@ -17,69 +11,76 @@ export default {
 			interval: null,
 			editor: null,
 			id: `input-editor-${StringGenerator.generate()}`,
+            defaultHeight: 200,
 		};
 	},
+    computed: {},
 	methods: {
-		updateHeight() {
-			const editor = this.editor;
-			if (this.autoHeight) {
-				const newHeight =
-					editor.getSession().getScreenLength() * editor.renderer.lineHeight +
-					editor.renderer.scrollBar.getWidth();
-				editor.setOptions({ maxLines: newHeight, readOnly: true });
-			} else {
-				editor.setOptions({ readOnly: true });
-			}
-			this.setSelection();
-		},
-		setMode() {
-			const editor = this.editor;
-			editor.getSession().setMode(`ace/mode/${this.mode}`);
-			this.setSelection();
-		},
-		setSelection() {
-			if (this.selectionText === undefined) {
-				return;
-			}
-			const editor = this.editor;
-			const startRange = editor.find(this.selectionText);
-			startRange.start.column = 0;
-			startRange.end.column = Number.MAX_VALUE;
-			editor.selection.setRange(startRange);
-		},
-		init() {
-			const interval = (this.interval = setInterval(() => {
-				const el = document.getElementById(this.id);
-				if (el) {
-					clearInterval(interval);
-				}
-				const editor = (this.editor = ace.edit(this.id));
-				editor.setTheme('ace/theme/monokai');
-				this.setMode();
-				this.updateHeight();
-				this.setSelection();
-			}, 60));
-		},
+        createEditor() {
+            this.interval = setInterval(() => {
+                const el = document.getElementById(this.id);
+                if (!el) {
+                    return;
+                }
+                el.innerHTML = '';
+                clearInterval(this.interval);
+                this.editor = monaco.editor.create(el, {
+                    value: this.code,
+                    language: this.mode,
+                    theme: 'vs-dark',
+                    readOnly: this.readOnly,
+                });
+                const options = {
+                    fontSize: 14,
+                    fontFamily: 'Monaco, "Ubuntu Mono", monospace',
+                    tabSize: 2,
+                    scrollBeyondLastLine: false,
+                    renderWhitespace: true,
+                    letterSpacing: 0.8,
+                }
+                this.editor.updateOptions(options);
+                this.updateEditorHeight();
+            }, 30);
+        },
+        updateEditorHeight() {
+            if (this.height) {
+                return;
+            }
+            const editor = this.editor;
+            const editorElement = editor.getDomNode();
+            if (!editorElement) {
+                return
+            }
+            const lineHeight = editor.getOption(monaco.editor.EditorOption.lineHeight);
+            const lineCount = editor.getModel()?.getLineCount() || 1;
+            const height = editor.getTopForLineNumber(lineCount + 1) + lineHeight;
+            const el = document.getElementById(this.id);
+            el.style.height = `${Math.min(height, this.maxHeight)}px`;
+            editor.layout();
+        },
 	},
 	mounted() {
-		this.init();
+        this.createEditor();
 	},
 	destroyed() {
 		clearInterval(this.interval);
 	},
 	watch: {
-		code: function() {
-			const editor = this.editor;
-			editor.getSession().setValue(this.code);
-			this.updateHeight();
+		code: function(oldCode, newCode) {
+            if (oldCode === newCode) {
+                return;
+            }
+            const options = {
+                value: this.code,
+            }
+            this.editor.updateOptions(options);
 		},
-		mode: function() {
-			this.setMode();
-		},
-		fakeUpdated: function() {
-			this.setMode();
-			this.updateHeight();
-		},
+		mode: function(oldMode, newMode) {
+			if (oldMode === newMode) {
+                return;
+            }
+			this.createEditor();
+		}
 	},
 	props: {
 		code: {
@@ -97,20 +98,19 @@ export default {
 			type: Boolean,
 			default: true,
 		},
-		fakeUpdated: {
-			type: Date,
-			required: true,
+		height: {
+			type: Number,
+			default: null,
 		},
-		autoHeight: {
-			type: Boolean,
-			default: true,
-		},
+		maxHeight: {
+			type: Number,
+			default: 500,
+		}
 	},
 };
 </script>
 <style lang="less">
 .input-editor {
-	height: 200px;
 	//transition: height 0.35s ease-out;
 
 	code {

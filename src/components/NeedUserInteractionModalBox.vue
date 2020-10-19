@@ -6,12 +6,8 @@
 			</v-card-title>
 			<v-card-text>
 				<p>Цей pipeline містить <strong>user interaction</strong> блок:</p>
-				<code-preview
-					mode="json"
-					:code="format(userInteraction)"
-					:fake-updated="true"
-					:auto-height="false"
-				></code-preview>
+
+				<code-preview mode="json" :code="format(userInteraction)"></code-preview>
 				<br />
 				Тому в будьякий момент може бути необхідне Ваше втручання.<br />
 				Для запуску цього pipeline натисніть Продовжити та очикуйте сповіщення щодо
@@ -50,7 +46,7 @@ export default {
             this.$emit('close');
         },
         format(outputData) {
-            return JSON.stringify(outputData, null, 4);
+            return JSON.stringify(outputData, null, 8);
         },
         createTaskInteraction() {
             this.$router.push({name: 'create-task-interaction', params: {pipelineId: this.pipelineId}})

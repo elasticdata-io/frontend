@@ -20,6 +20,8 @@
     "less-loader": "^5.0.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
+    "monaco-editor": "^0.21.2",
+    "monaco-editor-webpack-plugin": "^2.0.0",
     "push.js": "^1.0.12",
     "sass-loader": "^7.0.0",
     "sockjs-client": "^1.4.0",
@@ -37,8 +39,8 @@
     "vuetify": "^2.3.13",
     "vuex": "^3.2.0",
     "vuex-persistedstate": "^2.7.1",
-    "yamljs": "^0.3.0",
-    "web-page-teleport": "1.0.6"
+    "web-page-teleport": "1.0.6",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@mdi/font": "^4.9.95",
