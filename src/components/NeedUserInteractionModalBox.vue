@@ -35,7 +35,9 @@ export default {
     components: {
         CodePreview,
     },
-    data: () => ({}),
+    data: () => ({
+
+    }),
     computed: {
         dialog: function() {
             return this.opened && Boolean(this.pipelineId);

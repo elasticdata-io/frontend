@@ -55,6 +55,7 @@ export default {
                 if (this.model) {
                     config.model = this.model;
                     delete config.value;
+                    delete config.readOnly;
                 }
                 this.editor = monaco.editor.create(el, config);
                 const options = {
@@ -62,7 +63,7 @@ export default {
                     fontFamily: 'Monaco, "Ubuntu Mono", monospace',
                     tabSize: 2,
                     scrollBeyondLastLine: false,
-                    renderWhitespace: true,
+                    renderWhitespace: false,
                     letterSpacing: 0.8,
                 }
                 this.editor.updateOptions(options);
