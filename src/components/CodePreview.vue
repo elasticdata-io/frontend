@@ -17,6 +17,7 @@ export default {
     computed: {},
 	methods: {
         createEditor() {
+            clearInterval(this.interval);
             this.interval = setInterval(() => {
                 const el = document.getElementById(this.id);
                 if (!el) {
@@ -64,6 +65,7 @@ export default {
 	},
 	destroyed() {
 		clearInterval(this.interval);
+		console.log('destroyed')
 	},
 	watch: {
 		code: function(oldCode, newCode) {
@@ -79,6 +81,9 @@ export default {
 			if (oldMode === newMode) {
                 return;
             }
+			this.createEditor();
+		},
+        fakeUpdated: function() {
 			this.createEditor();
 		}
 	},
@@ -105,7 +110,11 @@ export default {
 		maxHeight: {
 			type: Number,
 			default: 500,
-		}
+		},
+        fakeUpdated: {
+            type: Date,
+            required: false,
+        },
 	},
 };
 </script>
