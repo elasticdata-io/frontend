@@ -1,9 +1,9 @@
 <template>
 	<v-snackbar v-model="snackbar" :timeout="snackTimeout" :color="snackMessageColor">
-		<span style="max-width: 500px;word-wrap: break-word">
+		<span style="max-width: 800px; word-wrap: break-word;">
 			{{ snackMessage }}
 		</span>
-		<v-btn small style="color: #333333" @click="close">
+		<v-btn small @click="close" class="ml-2">
 			закрити
 		</v-btn>
 	</v-snackbar>
