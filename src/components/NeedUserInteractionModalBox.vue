@@ -1,5 +1,5 @@
 <template>
-	<v-dialog :value="dialog" persistent max-width="600">
+	<v-dialog :value="dialog" persistent max-width="800">
 		<v-card>
 			<v-card-title class="headline">
 				Увага!

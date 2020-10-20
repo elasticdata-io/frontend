@@ -51,6 +51,7 @@ export default {
                     theme: 'vs-dark',
                     language: 'json',
                     readOnly: this.readOnly,
+                    model: undefined,
                 };
                 if (this.model) {
                     config.model = this.model;
@@ -59,12 +60,18 @@ export default {
                 }
                 this.editor = monaco.editor.create(el, config);
                 const options = {
-                    fontSize: 14,
+                    fontSize: 12,
                     fontFamily: 'Monaco, "Ubuntu Mono", monospace',
                     tabSize: 2,
                     scrollBeyondLastLine: false,
                     renderWhitespace: false,
                     letterSpacing: 0.8,
+                    scrollbar: {
+                        useShadows: false,
+                        horizontalScrollbarSize: 10,
+                        verticalScrollbarSize: 10,
+                        alwaysConsumeMouseWheel: false,
+                    },
                 }
                 this.editor.updateOptions(options);
                 this.updateEditorHeight();
