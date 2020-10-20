@@ -210,9 +210,9 @@
 			</v-row>
 			<need-user-interaction-modal-box
 				:pipeline-id="id"
-				:opened="needUserInteractionModalBox"
-				:user-interaction="userInteraction"
-				@close="needUserInteractionModalBox = false"
+				:opened="showNeedUserInteractionModal"
+				:pipeline-settings="pipelineSettings"
+				@close="showNeedUserInteractionModal = false"
 			></need-user-interaction-modal-box>
 		</v-container>
 	</v-content>
@@ -249,7 +249,7 @@ export default {
 	data() {
 		return {
 			viewAdditional: false,
-            needUserInteractionModalBox: false,
+			showNeedUserInteractionModal: false,
 		};
 	},
 	computed: {
@@ -274,7 +274,7 @@ export default {
 				this.pipeline.dependencies = dependencies;
 			},
 		},
-        userInteraction: function() {
+        pipelineSettings: function() {
             const pipeline = JSON.parse(this.pipeline.jsonCommands) || {settings: {}};
             const settings = pipeline.settings || {};
             return {
@@ -282,12 +282,15 @@ export default {
                     userInteraction: settings.userInteraction,
                 }
             };
-        }
+        },
+        hasUserInteraction: function() {
+            return Boolean(this.pipelineSettings.settings.userInteraction);
+        },
 	},
 	methods: {
 		runPipeline() {
-            this.needUserInteractionModalBox = Boolean(this.userInteraction);
-            if (this.needUserInteractionModalBox) {
+            if (this.hasUserInteraction) {
+                this.showNeedUserInteractionModal = true;
                 return;
             }
 			this.$store.dispatch(`pipeline/${RUN_PIPELINE}`, { pipelineId: this.id });

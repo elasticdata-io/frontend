@@ -31,16 +31,16 @@ import dataRules from './data-rules';
 import commands from './commands';
 import locale from './locale';
 import taskAnalyzedCommands from './task-analyzed-commands';
-import userInteraction from './user-interaction';
+import userInteraction, {UserInteraction} from './user-interaction';
 import { subscribe, stompConnect } from './websocket';
 import {
-	FETCH_APP_LAST_UPDATED,
-	FETCH_APP_VERSION,
-	SUBSCRIBE_PIPELINE_ALL,
-	SUBSCRIBE_PIPELINE_CHANGED,
-	SUBSCRIBE_PIPELINE_EXECUTE_COMMAND,
-	SUBSCRIBE_PIPELINE_PARSED_LINES,
-	WEBSOCKET_CONNECT,
+    FETCH_APP_LAST_UPDATED,
+    FETCH_APP_VERSION, SUBSCRIBE_CHANGE_USER_INTERACTION,
+    SUBSCRIBE_PIPELINE_ALL,
+    SUBSCRIBE_TASK_CHANGED,
+    SUBSCRIBE_PIPELINE_EXECUTE_COMMAND,
+    SUBSCRIBE_PIPELINE_PARSED_LINES,
+    WEBSOCKET_CONNECT,
 } from './actions';
 import {
 	UPDATE_NEW_PARSED_ROWS_COUNT as PIPELINES_UPDATE_NEW_PARSED_ROWS_COUNT,
@@ -49,6 +49,8 @@ import {
 
 import { TASK_CHANGED } from './tasks/actions';
 import {TASK_CHANGED_FROM_WS, TASK_UPDATE_CURRENT_EXECUTE_COMMAND_FROM_WS} from "@/store/task/actions";
+import * as action from "@/store/user-interaction/actions";
+import {UPSERT_USER_INTERACTION} from "@/store/user-interaction/actions";
 
 Vue.use(Vuex);
 
@@ -108,11 +110,12 @@ export default new Vuex.Store({
 			stompConnect();
 		},
 		[SUBSCRIBE_PIPELINE_ALL]({ dispatch }, { userId }) {
-			dispatch(SUBSCRIBE_PIPELINE_CHANGED, { userId });
+			dispatch(SUBSCRIBE_TASK_CHANGED, { userId });
 			dispatch(SUBSCRIBE_PIPELINE_PARSED_LINES, { userId });
 			dispatch(SUBSCRIBE_PIPELINE_EXECUTE_COMMAND, { userId });
+			dispatch(SUBSCRIBE_CHANGE_USER_INTERACTION, { userId });
 		},
-		[SUBSCRIBE_PIPELINE_CHANGED]({ dispatch }, { userId }) {
+		[SUBSCRIBE_TASK_CHANGED]({ dispatch }, { userId }) {
 			subscribe(`/task/change/${userId}`, res => {
 				const task = JSON.parse(res.body);
 				dispatch(`tasks/${TASK_CHANGED}`, { task });
@@ -169,6 +172,12 @@ export default new Vuex.Store({
 				commit(SET_APP_LAST_UPDATED, appLastUpdated);
 			});
 		},
+        async [SUBSCRIBE_CHANGE_USER_INTERACTION]({ dispatch }, { userId }) {
+            subscribe(`/task/interaction/${userId}`, res => {
+                const data = JSON.parse(res.body) as UserInteraction;
+                dispatch(`userInteraction/${UPSERT_USER_INTERACTION}`, data);
+            }, this);
+        },
 	},
 	getters: {
 		[IS_XS_ONLY]: () => {

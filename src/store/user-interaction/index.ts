@@ -32,18 +32,28 @@ const state: State = {
 };
 
 const mutations = {
-	[mutation.SET_LOADING](state, loading) {
+	[mutation.SET_LOADING_USER_INTERACTIONS](state, loading) {
 		Vue.set(state, 'loading', loading);
 	},
 
-	[mutation.SET_USER_INTERACTIONS](state, userInteractions) {
+	[mutation.SET_USER_INTERACTIONS](state: State, userInteractions) {
 		Vue.set(state, 'userInteractions', userInteractions);
+	},
+
+	[mutation.UPSERT_USER_INTERACTION](state: State, userInteraction: UserInteraction) {
+        const index = state.userInteractions.findIndex(x => x.id === userInteraction.id);
+        if (index === -1) {
+            state.userInteractions.push(userInteraction);
+            return;
+        }
+        state.userInteractions[index] = userInteraction;
+        Vue.set(state, 'userInteractions', state.userInteractions);
 	},
 };
 
 const actions = {
 	async [action.FETCH_USER_INTERACTIONS]({ commit, state }, { taskId }) {
-		commit(mutation.SET_LOADING, true);
+		commit(mutation.SET_LOADING_USER_INTERACTIONS, true);
 		if (state.fetch) {
             state.fetch.abort();
 		}
@@ -52,15 +62,19 @@ const actions = {
             const res = await Vue.http.get(`/api/task-user-interaction/${taskId}`, { before });
             const data = res.body || [];
             commit(mutation.SET_USER_INTERACTIONS, data);
-        } catch (e) {
-            commit(mutation.SET_LOADING, false);
-            throw e;
+        } finally {
+            commit(mutation.SET_LOADING_USER_INTERACTIONS, false);
         }
+	},
+
+	async [action.UPSERT_USER_INTERACTION]({ commit, state }, userInteraction: UserInteraction) {
+        commit(mutation.UPSERT_USER_INTERACTION, userInteraction);
 	},
 };
 
 const getters = {
-	[getter.USER_INTERACTIONS]: state => state.userInteractions || [],
+	[getter.USER_INTERACTIONS]: (state: State) => state.userInteractions || [],
+	[getter.LOADING_USER_INTERACTIONS]: (state: State) => state.loading,
 };
 
 export default {

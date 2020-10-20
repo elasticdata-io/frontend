@@ -4,6 +4,7 @@
 			depressed
 			block
 			small
+			text
 			:class="{
 				'red--text': taskIsError === status,
 				'pink--text': taskIsStopped === status,

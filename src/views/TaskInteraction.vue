@@ -22,71 +22,83 @@
 						></stop-task-button>
 					</v-toolbar>
 				</v-col>
-				<v-col v-if="showFinished" md="12" class="text-center mt-7">
-					Ця задача <strong>завершена</strong>. <br />Для докладного аналізу натісніть на
-					кнопку:
-					<br />
-					<br />
-					<router-link :to="{ name: 'task', params: { id: task.id } }" tag="span">
-						<v-btn color="primary" depressed>аналізувати задачу</v-btn>
-					</router-link>
-				</v-col>
-				<v-col v-if="showNeedWaiting" md="12" class="text-center mt-7">
-					Зачекайте, будь ласка...<br />
-					Якщо павук буде зупинено, на сторінці буде відображена інформація про
-					необхідніть Вашого втручання.
-					<v-progress-linear
-						height="2"
-						indeterminate
-						color="light-blue"
-					></v-progress-linear>
-				</v-col>
-				<v-col
-					v-for="(userInteraction, index) in userInteractions"
-					:key="userInteraction.id"
-					md="4"
-				>
-					<v-card v-if="showInteractionTabs">
-						<v-toolbar elevation="0">
-							<v-toolbar-title>Вкладка №{{ index + 1 }}</v-toolbar-title>
-							<v-spacer></v-spacer>
-							<v-btn text>
-								<v-icon class="mr-2">history</v-icon>
-								00:14:23
-							</v-btn>
-						</v-toolbar>
-						<v-card-text class="pt-0">
-							<v-row no-gutters>
-								<v-col md="12">
-									<v-card>
-										<v-img
-											:src="userInteraction.jpegScreenshotLink"
-											class="align-center white--text"
-											gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-											height="350px"
-										>
-											<v-card-title class="justify-center">
-												<v-badge
-													bordered
-													color="error"
-													icon="pause arrow_back"
-													overlap
-												>
-													<v-btn
-														class="white--text"
+				<template v-if="!loadingUserInteractions">
+					<v-col v-if="showFinished" md="12" class="text-center mt-7">
+						Ця задача <strong>завершена</strong>. <br />Для докладного аналізу натісніть
+						на кнопку:
+						<br />
+						<br />
+						<router-link :to="{ name: 'task', params: { id: task.id } }" tag="span">
+							<v-btn color="primary" depressed>аналізувати задачу</v-btn>
+						</router-link>
+					</v-col>
+					<v-col v-if="showNeedWaiting" md="12" class="text-center mt-7">
+						Зачекайте, будь ласка...<br />
+						Якщо павук буде зупинено, на сторінці буде відображена інформація про
+						необхідніть Вашого втручання.
+						<v-progress-linear
+							height="2"
+							indeterminate
+							color="light-blue"
+						></v-progress-linear>
+					</v-col>
+					<v-col
+						v-for="(userInteraction, index) in userInteractions"
+						:key="userInteraction.id"
+						md="4"
+					>
+						<v-card v-if="showInteractionTabs">
+							<v-toolbar elevation="0">
+								<v-toolbar-title>Вкладка №{{ index + 1 }}</v-toolbar-title>
+								<v-spacer></v-spacer>
+								<v-btn text>
+									<v-icon class="mr-2">history</v-icon>
+									00:14:23
+								</v-btn>
+							</v-toolbar>
+							<v-card-text class="pt-0">
+								<v-row no-gutters>
+									<v-col md="12">
+										<v-card>
+											<v-img
+												:src="userInteraction.jpegScreenshotLink"
+												class="align-center white--text"
+												gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+												height="350px"
+											>
+												<v-card-title class="justify-center">
+													<v-badge
+														bordered
 														color="error"
-														depressed
-														>{{ userInteraction.currentUrl }}</v-btn
+														icon="pause arrow_back"
+														overlap
 													>
-												</v-badge>
-											</v-card-title>
-										</v-img>
-									</v-card>
-								</v-col>
-							</v-row>
-						</v-card-text>
-					</v-card>
-				</v-col>
+														<v-btn
+															class="white--text"
+															color="error"
+															depressed
+															>{{ userInteraction.currentUrl }}</v-btn
+														>
+													</v-badge>
+												</v-card-title>
+											</v-img>
+										</v-card>
+									</v-col>
+								</v-row>
+							</v-card-text>
+						</v-card>
+					</v-col>
+				</template>
+				<template v-if="loadingUserInteractions">
+					<v-col md="12">
+						<v-progress-linear
+							color="teal"
+							buffer-value="0"
+							value="20"
+							stream
+						></v-progress-linear>
+					</v-col>
+				</template>
 			</v-row>
 		</v-container>
 	</v-content>
@@ -95,7 +107,7 @@
 import { documentUnpack } from 'web-page-teleport';
 import { FETCH_USER_INTERACTIONS } from '@/store/user-interaction/actions';
 import { mapGetters } from 'vuex';
-import { USER_INTERACTIONS } from '@/store/user-interaction/getters';
+import { LOADING_USER_INTERACTIONS, USER_INTERACTIONS } from '@/store/user-interaction/getters';
 // eslint-disable-next-line no-unused-vars
 import { UserInteraction } from '@/store/user-interaction';
 import { TASK, TASK_CURRENT_EXECUTE_COMMAND } from '@/store/task/getters';
@@ -116,6 +128,7 @@ export default {
 	computed: {
 		...mapGetters('userInteraction', {
 			USER_INTERACTIONS: USER_INTERACTIONS,
+			LOADING_USER_INTERACTIONS: LOADING_USER_INTERACTIONS,
 		}),
 		...mapGetters('task', {
 			TASK: TASK,
@@ -126,6 +139,9 @@ export default {
 		}),
 		userInteractions(): UserInteraction[] {
 			return this.USER_INTERACTIONS || [];
+		},
+		loadingUserInteractions(): UserInteraction[] {
+			return this.LOADING_USER_INTERACTIONS;
 		},
 		task(): any {
 			return this.TASK || {};
@@ -174,8 +190,6 @@ export default {
 		},
 		drawDocument(userInteraction) {
 			const toEl = document.getElementById('to-element');
-			// eslint-disable-next-line no-debugger
-			debugger;
 			if (toEl) {
 				documentUnpack({
 					screenshotSrc: userInteraction.jpegScreenshotLink,

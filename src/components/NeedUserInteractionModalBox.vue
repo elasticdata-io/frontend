@@ -7,7 +7,7 @@
 			<v-card-text>
 				<p>Цей pipeline містить <strong>user interaction</strong> блок:</p>
 
-				<code-preview mode="json" :code="format(userInteraction)"></code-preview>
+				<code-preview mode="json" :code="format(pipelineSettings)"></code-preview>
 				<br />
 				Тому в будьякий момент може бути необхідне Ваше втручання.<br />
 				Для запуску цього pipeline натисніть Продовжити та очікуйте сповіщення щодо
@@ -41,7 +41,7 @@ export default {
     computed: {
         dialog: function() {
             return this.opened && Boolean(this.pipelineId);
-        }
+        },
     },
     methods: {
         close() {
@@ -62,7 +62,7 @@ export default {
         pipelineId: {
             type: String,
         },
-        userInteraction: {
+        pipelineSettings: {
             type: Object,
         }
     }
