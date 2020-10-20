@@ -47,46 +47,11 @@
 						:key="userInteraction.id"
 						md="4"
 					>
-						<v-card v-if="showInteractionTabs">
-							<v-toolbar elevation="0">
-								<v-toolbar-title>Вкладка №{{ index + 1 }}</v-toolbar-title>
-								<v-spacer></v-spacer>
-								<v-btn text>
-									<v-icon class="mr-2">history</v-icon>
-									00:14:23
-								</v-btn>
-							</v-toolbar>
-							<v-card-text class="pt-0">
-								<v-row no-gutters>
-									<v-col md="12">
-										<v-card>
-											<v-img
-												:src="userInteraction.jpegScreenshotLink"
-												class="align-center white--text"
-												gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-												height="350px"
-											>
-												<v-card-title class="justify-center">
-													<v-badge
-														bordered
-														color="error"
-														icon="pause arrow_back"
-														overlap
-													>
-														<v-btn
-															class="white--text"
-															color="error"
-															depressed
-															>{{ userInteraction.currentUrl }}</v-btn
-														>
-													</v-badge>
-												</v-card-title>
-											</v-img>
-										</v-card>
-									</v-col>
-								</v-row>
-							</v-card-text>
-						</v-card>
+						<task-interaction-card
+							v-if="showInteractionTabs"
+							:tab-name="`Вкладка №${index + 1}`"
+							:user-interaction="userInteraction"
+						></task-interaction-card>
 					</v-col>
 				</template>
 				<template v-if="loadingUserInteractions">
@@ -117,11 +82,13 @@ import StopTaskButton from '@/components/StopTaskButton.vue';
 import TaskStatusesMixin from '@/mixins/TaskStatusesMixin';
 import { FETCH_PIPELINE } from '@/store/pipeline/actions';
 import { CURRENT_PIPELINE } from '@/store/pipeline/getters';
+import TaskInteractionCard from '@/components/TaskInteractionCard.vue';
 
 export default {
 	name: 'TaskInteraction',
 	mixins: [TaskStatusesMixin],
 	components: {
+		TaskInteractionCard,
 		TaskStatusButton,
 		StopTaskButton,
 	},

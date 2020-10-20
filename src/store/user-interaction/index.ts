@@ -19,6 +19,7 @@ export interface UserInteraction {
     createdOnUtc: Date;
     modifiedOnUtc: Date;
     endOnUtc: Date;
+    expiredOnUtc: Date;
 }
 
 interface State {
