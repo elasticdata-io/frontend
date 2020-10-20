@@ -16,10 +16,10 @@
 			<v-divider></v-divider>
 			<v-card-actions>
 				<v-spacer></v-spacer>
-				<v-btn color="secondary" depressed @click="close()">
+				<v-btn depressed @click="close()">
 					Відмінити
 				</v-btn>
-				<v-btn class="ml-5" depressed color="primary" @click="createTaskInteraction()">
+				<v-btn class="ml-5" depressed color="accent" @click="createTaskInteraction()">
 					Продовжити
 				</v-btn>
 			</v-card-actions>
