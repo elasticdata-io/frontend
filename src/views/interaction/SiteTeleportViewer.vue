@@ -70,7 +70,9 @@ export default {
 		},
 		enableBodyScrollBar(enabled: boolean) {
 			const els = document.querySelectorAll('body, html');
-			Array.from(els).forEach(x => (x.style.overflow = enabled ? 'auto' : 'hidden'));
+			Array.from(els).forEach(
+				(x: HTMLElement) => (x.style.overflow = enabled ? 'auto' : 'hidden')
+			);
 		},
 	},
 	mounted() {
