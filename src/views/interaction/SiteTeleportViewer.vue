@@ -1,14 +1,24 @@
 <template>
 	<div id="site-view-box-wrapper">
-		<v-card>
-			<v-toolbar dark color="primary">
-				<v-btn icon dark @click="back()">
-					<v-icon>close</v-icon>
-				</v-btn>
-				<v-toolbar-title> Вкладка №{{ tabNumber }} - {{ pipeline.key }} </v-toolbar-title>
-			</v-toolbar>
-			<v-card-text :id="id"></v-card-text>
-		</v-card>
+		<div id="content">
+			<v-progress-linear
+				v-if="loading"
+				buffer-value="50"
+				stream
+				color="cyan"
+			></v-progress-linear>
+			<v-card v-else>
+				<v-toolbar dark color="primary">
+					<v-btn icon dark @click="back()">
+						<v-icon>close</v-icon>
+					</v-btn>
+					<v-toolbar-title>
+						Вкладка №{{ tabNumber }} - {{ pipeline.key }}
+					</v-toolbar-title>
+				</v-toolbar>
+				<v-card-text :id="id"></v-card-text>
+			</v-card>
+		</div>
 	</div>
 </template>
 <script lang="ts">
@@ -44,10 +54,14 @@ export default {
 			return this.CURRENT_PIPELINE || {};
 		},
 		userInteraction(): UserInteraction {
-			return this.FIND_USER_INTERACTION_BY_ID(this.interactionId);
+			return this.FIND_USER_INTERACTION_BY_ID(this.interactionId) || {};
 		},
 		tabNumber() {
-			return parseInt(this.userInteraction.pageContext) + 1;
+			const userInteraction = this.userInteraction || {};
+			return parseInt(userInteraction.pageContext) + 1;
+		},
+		loading() {
+			return Object.keys(this.userInteraction).length === 0;
 		},
 	},
 	methods: {
@@ -57,6 +71,7 @@ export default {
 			if (!userInteraction || !toEl) {
 				return;
 			}
+			clearInterval(this.timer);
 			documentUnpack({
 				screenshotSrc: userInteraction.jpegScreenshotLink,
 				width: userInteraction.pageWidthPx,
@@ -76,11 +91,12 @@ export default {
 		},
 	},
 	mounted() {
-		setTimeout(() => this.unpack());
+		this.timer = setInterval(() => this.unpack(), 100);
 		this.enableBodyScrollBar(false);
 	},
 	destroyed() {
 		this.enableBodyScrollBar(true);
+		clearInterval(this.timer);
 	},
 };
 </script>
@@ -109,8 +125,12 @@ export default {
 		height: @toolbarHeight !important;
 	}
 
+	#content {
+		padding-top: @toolbarHeight;
+	}
+
 	.v-card__text {
-		padding: @toolbarHeight 0 0 0;
+		padding: 0;
 	}
 }
 </style>
