@@ -27,7 +27,7 @@ Vue.http.interceptors.push(function(request: any, next: any) {
 		if (response.status === 401) {
 			router.push({ name: 'logout' });
 		}
-		if (response.status === 500) {
+		if (response.status >= 500) {
 			const message =
 				typeof response.body === 'string' ? response.body : response.body.message;
 			store.commit(SET_SNACK_MESSAGE, {
