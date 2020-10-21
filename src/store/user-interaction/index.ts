@@ -75,6 +75,10 @@ const actions = {
 
 const getters = {
 	[getter.USER_INTERACTIONS]: (state: State) => state.userInteractions || [],
+	[getter.FIND_USER_INTERACTION_BY_ID]: (state: State) => id => {
+        const userInteractions = state.userInteractions || [];
+        return userInteractions.find(x => x.id === id);
+    },
 	[getter.LOADING_USER_INTERACTIONS]: (state: State) => state.loading,
 };
 

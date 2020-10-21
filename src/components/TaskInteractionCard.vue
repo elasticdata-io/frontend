@@ -11,7 +11,7 @@
 		<v-card-text class="pt-0">
 			<v-row no-gutters>
 				<v-col md="12">
-					<v-card>
+					<v-card @click="click()">
 						<v-img
 							:src="userInteraction.jpegScreenshotLink"
 							class="align-center white--text"
@@ -36,6 +36,7 @@
 import moment from "moment";
 
 export default {
+    components: {},
     data: () => ({
         timer: null,
         now: moment(),
@@ -55,6 +56,11 @@ export default {
             const timeLeft = moment.utc(diff);
             return timeLeft.format('HH:mm:ss');
         },
+    },
+    methods: {
+        click() {
+            this.$emit('open', this.userInteraction.id);
+        }
     },
     created() {
         this.timer = setInterval(() => this.now = moment(), 1000);

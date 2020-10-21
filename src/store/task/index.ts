@@ -134,7 +134,6 @@ const actions = {
             designTimeConfig,
             uuid,
         };
-		console.log(data);
         commit(mutation.SET_CURRENT_EXECUTE_COMMAND, data);
 	},
 };

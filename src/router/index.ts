@@ -26,6 +26,8 @@ import CmdDoc from '../components/docs/cmd/CmdDoc.vue';
 import CmdLoader from '../components/docs/cmd/CmdLoader.vue';
 import CreateTaskInteraction from "@/views/CreateTaskInteraction.vue";
 import Sandbox from "@/views/Sandbox.vue";
+import InteractionTabs from "@/views/interaction/InteractionTabs.vue";
+import SiteTeleportViewer from "@/views/interaction/SiteTeleportViewer.vue";
 
 Vue.use(Router);
 
@@ -102,6 +104,28 @@ const router = new Router({
 			path: '/task-interaction/:taskId',
 			component: TaskInteraction,
 			props: true,
+            redirect: '/task-interaction/:taskId/',
+            children: [
+                {
+                    path: '',
+                    component: InteractionTabs,
+                    props: route => {
+                        return {
+                            taskId: route.params.taskId,
+                        };
+                    },
+                },
+                {
+                    path: ':interactionId',
+                    component: SiteTeleportViewer,
+                    props: route => {
+                        return {
+                            taskId: route.params.taskId,
+                            interactionId: route.params.interactionId,
+                        };
+                    },
+                }
+            ]
 		},
 		{
 			name: 'sandbox',

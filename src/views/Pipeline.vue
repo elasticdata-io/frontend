@@ -275,7 +275,7 @@ export default {
 			},
 		},
         pipelineSettings: function() {
-            const pipeline = JSON.parse(this.pipeline.jsonCommands) || {settings: {}};
+            const pipeline = JSON.parse(this.pipeline.jsonCommands || '{}') || {settings: {}};
             const settings = pipeline.settings || {};
             return {
                 settings: {
