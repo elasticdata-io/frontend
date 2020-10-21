@@ -7,6 +7,7 @@
 			<div :id="id"></div>
 		</div>
 		<v-menu
+			v-if="connected"
 			:position-x="contextMenuX"
 			:position-y="contextMenuY"
 			fixed
