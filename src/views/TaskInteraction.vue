@@ -8,11 +8,9 @@
 <script lang="ts">
 import { FETCH_USER_INTERACTIONS } from '@/store/user-interaction/actions';
 import { FETCH_TASK } from '@/store/task/actions';
-import TaskStatusesMixin from '@/mixins/TaskStatusesMixin';
 
 export default {
 	name: 'TaskInteraction',
-	mixins: [TaskStatusesMixin],
 	components: {},
 	computed: {},
 	created() {
