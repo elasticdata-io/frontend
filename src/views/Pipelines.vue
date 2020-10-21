@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-	<v-content>
+	<v-main>
 		<v-container class="fill-height" fluid>
 			<v-row>
 				<v-col>
@@ -236,7 +236,7 @@
 				</v-col>
 			</v-row>
 		</v-container>
-	</v-content>
+	</v-main>
 </template>
 <script>
 import PipelineRunStatusButton from '../components/PipelineRunStatusButton';

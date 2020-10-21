@@ -1,5 +1,5 @@
 <template>
-	<v-content>
+	<v-main>
 		<v-container>
 			<v-row>
 				<v-col>
@@ -215,7 +215,7 @@
 				@close="showNeedUserInteractionModal = false"
 			></need-user-interaction-modal-box>
 		</v-container>
-	</v-content>
+	</v-main>
 </template>
 <script type="ts">
 import * as moment from 'moment';
