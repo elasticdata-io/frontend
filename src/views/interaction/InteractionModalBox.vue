@@ -16,7 +16,10 @@
 						Вкладка №{{ tabNumber }} - {{ pipeline.key }}
 					</v-toolbar-title>
 				</v-toolbar>
-				<teleport-web-page :user-interaction="userInteraction"></teleport-web-page>
+				<teleport-web-page
+					@clickToEl="onClickToEl"
+					:user-interaction="userInteraction"
+				></teleport-web-page>
 			</v-card>
 		</div>
 	</div>
@@ -84,6 +87,9 @@ export default {
 		back() {
             this.$router.replace({name: 'task-interaction', params: {taskId: this.taskId} });
 		},
+        onClickToEl(fakeElId) {
+            alert(`fakeElId: ${fakeElId}`);
+        }
 	},
 };
 </script>

@@ -23,7 +23,7 @@
 				<v-list>
 					<v-list-item>
 						<v-list-item-title>
-							<v-btn text>
+							<v-btn text @click="triggerClick">
 								<v-icon class="mr-2">mouse</v-icon>
 								left click
 							</v-btn>
@@ -109,6 +109,9 @@ export default {
 				this.selectedFakeId = e.fakeId;
 			});
 			canvas.onLeftClick(() => (this.contextMenuVisible = false));
+		},
+		triggerClick() {
+			this.$emit('clickToEl', this.selectedFakeId);
 		},
 	},
 	mounted() {
