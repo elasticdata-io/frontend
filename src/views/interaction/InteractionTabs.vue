@@ -65,7 +65,6 @@ import TaskStatusesMixin from '@/mixins/TaskStatusesMixin';
 import TaskInteractionCard from '@/components/TaskInteractionCard.vue';
 import TaskStatusButton from '@/components/TaskStatusButton.vue';
 import StopTaskButton from '@/components/StopTaskButton.vue';
-import { FETCH_PIPELINE } from '@/store/pipeline/actions';
 
 export default {
 	name: 'InteractionTabs',
@@ -129,9 +128,6 @@ export default {
 				params: { id: this.pipeline.id, state: 'edit' },
 			});
 		},
-		fetchPipeline() {
-			this.$store.dispatch(`pipeline/${FETCH_PIPELINE}`, { id: this.task.pipelineId });
-		},
 		goToSiteViewBox(interactionId) {
 			this.$router.push(`/task-interaction/${this.taskId}/${interactionId}`);
 		},
@@ -143,13 +139,6 @@ export default {
 		},
 		interactionId: {
 			type: String,
-		},
-	},
-	watch: {
-		task(val) {
-			if (val) {
-				this.fetchPipeline();
-			}
 		},
 	},
 };
