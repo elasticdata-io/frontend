@@ -47,5 +47,6 @@ export const ENGLISH_TRANSLATIONS = {
 	},
 	TASK: {
 		HAS_NOT_ERROR_COMMANDS: 'There are no commands with errors in this task!',
+		INTERACTION_DISCONNECTED: 'This interaction has been disconnected!',
 	},
 };

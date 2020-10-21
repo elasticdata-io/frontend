@@ -13,7 +13,7 @@ import {mapGetters} from "vuex";
 import {TASK} from "@/store/task/getters";
 
 export default {
-	name: 'TaskInteraction',
+	name: 'TaskInteractions',
     watch: {
         task() {
             this.fetchPipeline();

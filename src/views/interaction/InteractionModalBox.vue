@@ -16,22 +16,26 @@
 						Вкладка №{{ tabNumber }} - {{ pipeline.key }}
 					</v-toolbar-title>
 				</v-toolbar>
-				<v-card-text :id="id"></v-card-text>
+				<teleport-web-page :user-interaction="userInteraction"></teleport-web-page>
 			</v-card>
 		</div>
 	</div>
 </template>
 <script lang="ts">
-import { documentUnpack } from 'web-page-teleport';
 import { mapGetters } from 'vuex';
 import { FIND_USER_INTERACTION_BY_ID } from '@/store/user-interaction/getters';
 // eslint-disable-next-line no-unused-vars
 import { UserInteraction } from '@/store/user-interaction';
 import { CURRENT_PIPELINE } from '@/store/pipeline/getters';
+import TeleportWebPage from "@/components/TeleportWebPage.vue";
+import {TASK} from "@/store/task/getters";
+import TaskStatusesMixin from "@/mixins/TaskStatusesMixin";
 
 export default {
-	name: 'SiteTeleportViewer',
-	props: {
+	name: 'InteractionModalBox',
+    components: {TeleportWebPage},
+    mixins: [TaskStatusesMixin],
+    props: {
 		interactionId: {
 			type: String,
 		},
@@ -39,10 +43,6 @@ export default {
 			type: String,
 		},
 	},
-	data: () => ({
-		id: 'site-view-box',
-		timer: null,
-	}),
 	computed: {
 		...mapGetters('userInteraction', {
 			FIND_USER_INTERACTION_BY_ID: FIND_USER_INTERACTION_BY_ID,
@@ -50,6 +50,12 @@ export default {
 		...mapGetters('pipeline', {
 			CURRENT_PIPELINE: CURRENT_PIPELINE,
 		}),
+        ...mapGetters('task', {
+            TASK: TASK,
+        }),
+        task() {
+            return this.TASK || {};
+        },
 		pipeline() {
 			return this.CURRENT_PIPELINE || {};
 		},
@@ -63,40 +69,21 @@ export default {
 		loading() {
 			return Object.keys(this.userInteraction).length === 0;
 		},
+        taskIsFinished() {
+            return this.isFinished(this.task?.status);
+        }
 	},
+    watch: {
+        taskIsFinished(value) {
+            if (value) {
+                this.back();
+            }
+        }
+    },
 	methods: {
-		unpack() {
-			const toEl = document.getElementById(this.id);
-			const userInteraction = this.userInteraction;
-			if (!userInteraction || !toEl) {
-				return;
-			}
-			clearInterval(this.timer);
-			documentUnpack({
-				screenshotSrc: userInteraction.jpegScreenshotLink,
-				width: userInteraction.pageWidthPx,
-				height: userInteraction.pageHeightPx,
-				viewElements: userInteraction.pageElements,
-				toElement: toEl,
-			});
-		},
 		back() {
-			this.$router.push(`/task-interaction/${this.taskId}`);
+            this.$router.replace({name: 'task-interaction', params: {taskId: this.taskId} });
 		},
-		enableBodyScrollBar(enabled: boolean) {
-			const els = document.querySelectorAll('body, html');
-			Array.from(els).forEach(
-				(x: HTMLElement) => (x.style.overflow = enabled ? 'auto' : 'hidden')
-			);
-		},
-	},
-	mounted() {
-		this.timer = setInterval(() => this.unpack(), 100);
-		this.enableBodyScrollBar(false);
-	},
-	destroyed() {
-		this.enableBodyScrollBar(true);
-		clearInterval(this.timer);
 	},
 };
 </script>
@@ -118,6 +105,7 @@ export default {
 		top: 0;
 		left: 0;
 		right: 0;
+		border-radius: 0;
 	}
 
 	.v-toolbar,
@@ -127,10 +115,6 @@ export default {
 
 	#content {
 		padding-top: @toolbarHeight;
-	}
-
-	.v-card__text {
-		padding: 0;
 	}
 }
 </style>

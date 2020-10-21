@@ -9,7 +9,7 @@ import Enter from '../views/Enter.vue';
 import Admin from '../views/Admin.vue';
 import PipelineDataView from '../views/PipelineDataView.vue';
 import Task from '../views/Task.vue';
-import TaskInteraction from '../views/TaskInteraction.vue';
+import TaskInteractions from '../views/TaskInteractions.vue';
 import DocsView from '../views/DocsView.vue';
 import CommandsDocs from '../components/docs/CommandsDocs.vue';
 import DataRulesDocs from '../components/docs/DataRulesDocs.vue';
@@ -27,7 +27,7 @@ import CmdLoader from '../components/docs/cmd/CmdLoader.vue';
 import CreateTaskInteraction from "@/views/CreateTaskInteraction.vue";
 import Sandbox from "@/views/Sandbox.vue";
 import InteractionTabs from "@/views/interaction/InteractionTabs.vue";
-import SiteTeleportViewer from "@/views/interaction/SiteTeleportViewer.vue";
+import InteractionModalBox from "@/views/interaction/InteractionModalBox.vue";
 
 Vue.use(Router);
 
@@ -102,7 +102,7 @@ const router = new Router({
 		{
 			name: 'task-interaction',
 			path: '/task-interaction/:taskId',
-			component: TaskInteraction,
+			component: TaskInteractions,
 			props: true,
             redirect: '/task-interaction/:taskId/',
             children: [
@@ -117,7 +117,7 @@ const router = new Router({
                 },
                 {
                     path: ':interactionId',
-                    component: SiteTeleportViewer,
+                    component: InteractionModalBox,
                     props: route => {
                         return {
                             taskId: route.params.taskId,
