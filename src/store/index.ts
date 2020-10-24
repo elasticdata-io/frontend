@@ -175,6 +175,7 @@ export default new Vuex.Store({
         async [SUBSCRIBE_CHANGE_USER_INTERACTION]({ dispatch }, { userId }) {
             subscribe(`/task/interaction/${userId}`, res => {
                 const data = JSON.parse(res.body) as UserInteraction;
+                console.log(data)
                 dispatch(`userInteraction/${UPSERT_USER_INTERACTION}`, data);
             }, this);
         },

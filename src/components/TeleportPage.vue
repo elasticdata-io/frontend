@@ -23,7 +23,7 @@
 				<v-list>
 					<v-list-item>
 						<v-list-item-title>
-							<v-btn text @click="triggerClick">
+							<v-btn text @click="triggerClickEmit">
 								<v-icon class="mr-2">mouse</v-icon>
 								left click
 							</v-btn>
@@ -31,7 +31,7 @@
 					</v-list-item>
 					<v-list-item>
 						<v-list-item-title>
-							<v-btn text>
+							<v-btn text @click="typeTextEmit">
 								<v-icon class="mr-2">keyboard</v-icon>
 								type text
 							</v-btn>
@@ -50,7 +50,7 @@ import { UserInteraction } from '@/store/user-interaction';
 import { TeleportCanvasEvent } from 'web-page-teleport/src/lib/page-reconstruction';
 
 export default {
-	name: 'TeleportWebPage',
+	name: 'TeleportPage',
 	data: () => ({
 		id: 'teleport-web-page',
 		timer: null,
@@ -76,7 +76,7 @@ export default {
 			return !this.disconnected;
 		},
 		selectedViewEl() {
-			return this.interaction.pageElements.find(x => x.fakeId === this.selectedFakeId) || {};
+			return this.interaction?.pageElements?.find(x => x.fakeId === this.selectedFakeId) || {};
 		},
 	},
 	methods: {
@@ -89,10 +89,14 @@ export default {
 		async unpack() {
 			const toEl = document.getElementById(this.id);
 			const interaction = this.interaction;
+			console.log('unpack')
+			console.log(interaction)
 			if (!interaction || !toEl) {
 				return;
 			}
+            console.log('clearInterval')
 			clearInterval(this.timer);
+            this.enableBodyScrollBar(false);
 			const canvas = await documentUnpack({
 				screenshotSrc: interaction.jpegScreenshotLink,
 				width: interaction.pageWidthPx,
@@ -110,18 +114,29 @@ export default {
 			});
 			canvas.onLeftClick(() => (this.contextMenuVisible = false));
 		},
-		triggerClick() {
+		triggerClickEmit() {
 			this.$emit('clickToEl', this.selectedFakeId);
 		},
+        typeTextEmit() {
+			this.$emit('typeToEl', {
+                fakeId: this.selectedFakeId,
+                text: 'fake text',
+            });
+		},
+        startTimer() {}
 	},
 	mounted() {
-		this.enableBodyScrollBar(false);
-		this.timer = setInterval(async () => this.unpack(), 100);
+        this.timer = setInterval(async () => this.unpack(), 100);
 	},
 	destroyed() {
 		this.enableBodyScrollBar(true);
 		clearInterval(this.timer);
 	},
+    watch: {
+        userInteraction() {
+            this.unpack();
+        }
+    }
 };
 </script>
 <style></style>

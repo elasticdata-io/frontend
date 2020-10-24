@@ -27,7 +27,7 @@ import CmdLoader from '../components/docs/cmd/CmdLoader.vue';
 import CreateTaskInteraction from "@/views/CreateTaskInteraction.vue";
 import Sandbox from "@/views/Sandbox.vue";
 import InteractionTabs from "@/views/interaction/InteractionTabs.vue";
-import InteractionModalBox from "@/views/interaction/InteractionModalBox.vue";
+import InteractionTab from "@/views/interaction/InteractionTab.vue";
 
 Vue.use(Router);
 
@@ -117,7 +117,7 @@ const router = new Router({
                 },
                 {
                     path: ':interactionId',
-                    component: InteractionModalBox,
+                    component: InteractionTab,
                     props: route => {
                         return {
                             taskId: route.params.taskId,
