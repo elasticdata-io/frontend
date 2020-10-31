@@ -140,12 +140,13 @@ export default {
                 },
             ]);
         },
-        onTypeToEl({fakeId, text }) {
+        onTypeToEl({ fakeId }) {
+            const str = prompt("Please enter text");
             this.sendCommands([
                 {
                     cmd: 'type',
                     selector: `[fake-id="${fakeId}"]`,
-                    text: text
+                    text: str
                 },
             ]);
         },

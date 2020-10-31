@@ -31,7 +31,6 @@
 				Зачекайте, будь ласка...<br />
 				Якщо павук буде зупинено, на сторінці буде відображена інформація про необхідніть
 				Вашого втручання.
-				<v-progress-linear height="2" indeterminate color="light-blue"></v-progress-linear>
 			</v-col>
 			<v-col v-for="userInteraction in userInteractions" :key="userInteraction.id" md="4">
 				<task-interaction-card
