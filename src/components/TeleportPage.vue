@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="teleport-page">
 		<div v-if="disconnected" class="text-center headline pa-3">
 			{{ $t('TASK.INTERACTION_DISCONNECTED') }}
 		</div>
@@ -40,6 +40,9 @@
 				</v-list>
 			</v-card>
 		</v-menu>
+		<div class="overlay" v-if="loading">
+			<v-progress-linear color="primary" indeterminate reverse></v-progress-linear>
+		</div>
 	</div>
 </template>
 <script lang="ts">
@@ -64,6 +67,10 @@ export default {
 			type: Object,
 		},
 		disconnected: {
+			type: Boolean,
+			default: false,
+		},
+        loading: {
 			type: Boolean,
 			default: false,
 		},
@@ -139,4 +146,17 @@ export default {
     }
 };
 </script>
-<style></style>
+<style lang="less">
+.teleport-page {
+	position: relative;
+
+	.overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		background-color: rgba(0, 0, 0, 0.3);
+	}
+}
+</style>

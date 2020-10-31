@@ -8,9 +8,10 @@
 				color="cyan"
 			></v-progress-linear>
 			<v-card>
-				<v-toolbar>
-					<v-btn @click="back()" icon>
-						<v-icon>close</v-icon>
+				<v-toolbar style="z-index: 2">
+					<v-btn depressed small @click="back()" class="mr-3" :disabled="asyncLoading">
+						<v-icon class="mr-2">keyboard_backspace</v-icon>
+						назад
 					</v-btn>
 					<v-toolbar-title>
 						Вкладка №{{ tabNumber }} - {{ pipeline.key }}
@@ -18,9 +19,15 @@
 
 					<v-spacer></v-spacer>
 
-					<v-btn color="secondary" small class="mr-2" @click="disableInteraction">
+					<v-btn
+						small
+						class="mr-2"
+						@click="disableInteraction"
+						color="primary"
+						:disabled="asyncLoading"
+					>
 						<v-icon>play_arrow</v-icon>
-						Resume to automation
+						continue automation
 					</v-btn>
 					<v-menu offset-y>
 						<template v-slot:activator="{ on, attrs }">
@@ -30,25 +37,25 @@
 						</template>
 
 						<v-list>
-							<v-list-item @click="refreshPage">
+							<v-list-item @click="refreshPage" :disabled="asyncLoading">
 								<v-list-item-title>
 									<v-icon class="mr-2">refresh</v-icon>
 									Синхроніхувати сторінку
 								</v-list-item-title>
 							</v-list-item>
-							<v-list-item @click="toBackPage">
+							<v-list-item @click="toBackPage" :disabled="asyncLoading">
 								<v-list-item-title>
 									<v-icon class="mr-2">arrow_back</v-icon>
 									Назад
 								</v-list-item-title>
 							</v-list-item>
-							<v-list-item @click="toForwardPage">
+							<v-list-item @click="toForwardPage" :disabled="asyncLoading">
 								<v-list-item-title>
 									<v-icon class="mr-2">arrow_forward</v-icon>
 									Вперед
 								</v-list-item-title>
 							</v-list-item>
-							<v-list-item @click="abortTask">
+							<v-list-item @click="abortTask" :disabled="asyncLoading">
 								<v-list-item-title>
 									<v-icon class="mr-2">block</v-icon>
 									Завершити задачу
@@ -62,6 +69,7 @@
 					@typeToEl="onTypeToEl"
 					:disconnected="taskIsFinished"
 					:user-interaction="userInteraction"
+					:loading="asyncLoading"
 				></teleport-page>
 			</v-card>
 		</div>
@@ -69,7 +77,7 @@
 </template>
 <script lang="ts">
 import { mapGetters } from 'vuex';
-import { FIND_USER_INTERACTION_BY_ID } from '@/store/user-interaction/getters';
+import {ASYNC_LOADING, FIND_USER_INTERACTION_BY_ID} from '@/store/user-interaction/getters';
 // eslint-disable-next-line no-unused-vars
 import { UserInteraction } from '@/store/user-interaction';
 import { CURRENT_PIPELINE } from '@/store/pipeline/getters';
@@ -94,6 +102,7 @@ export default {
 	computed: {
 		...mapGetters('userInteraction', {
 			FIND_USER_INTERACTION_BY_ID: FIND_USER_INTERACTION_BY_ID,
+            ASYNC_LOADING: ASYNC_LOADING,
 		}),
 		...mapGetters('pipeline', {
 			CURRENT_PIPELINE: CURRENT_PIPELINE,
@@ -109,6 +118,9 @@ export default {
 		},
 		userInteraction(): UserInteraction {
 			return this.FIND_USER_INTERACTION_BY_ID(this.interactionId) || {};
+		},
+		asyncLoading(): UserInteraction {
+			return this.ASYNC_LOADING;
 		},
 		tabNumber() {
 			const userInteraction = this.userInteraction || {};

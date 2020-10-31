@@ -32,16 +32,23 @@ export interface UserInteraction {
 interface State {
     userInteractions: Map<string, UserInteraction>;
     loading: boolean;
+    asyncLoading: boolean;
 }
 
 const state: State = {
 	userInteractions: new Map<string, UserInteraction>(),
 	loading: false,
+    asyncLoading: false,
 };
 
 const mutations = {
+
 	[mutation.SET_LOADING_USER_INTERACTIONS](state, loading) {
 		Vue.set(state, 'loading', loading);
+	},
+
+	[mutation.SET_ASYNC_LOADING](state, loading) {
+		Vue.set(state, 'asyncLoading', loading);
 	},
 
 	[mutation.SET_USER_INTERACTIONS](state: State, userInteractions: Array<UserInteraction>) {
@@ -74,18 +81,22 @@ const actions = {
             commit(mutation.SET_USER_INTERACTIONS, data);
         } finally {
             commit(mutation.SET_LOADING_USER_INTERACTIONS, false);
+            commit(mutation.SET_ASYNC_LOADING, false);
         }
 	},
 
 	async [action.UPSERT_USER_INTERACTION]({ commit, state }, userInteraction: UserInteraction) {
         commit(mutation.UPSERT_USER_INTERACTION, userInteraction);
+        commit(mutation.SET_ASYNC_LOADING, false);
 	},
 
 	async [action.EXECUTE_COMMAND]({ commit, state }, executeCommand: ExecuteCommand) {
+        commit(mutation.SET_ASYNC_LOADING, true);
         await Vue.http.post(`/api/task/execute-command/v2`, JSON.stringify(executeCommand));
 	},
 
 	async [action.DISABLE_INTERACTION_MODE]({ commit, state }, interactionId: string) {
+        commit(mutation.SET_ASYNC_LOADING, true);
         await Vue.http.post(`/api/task-user-interaction/disable/${interactionId}`, {});
 	},
 };
@@ -99,6 +110,7 @@ const getters = {
         return userInteractions.get(id) || {};
     },
 	[getter.LOADING_USER_INTERACTIONS]: (state: State) => state.loading,
+	[getter.ASYNC_LOADING]: (state: State) => state.asyncLoading,
 };
 
 export default {
