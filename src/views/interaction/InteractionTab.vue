@@ -18,7 +18,7 @@
 
 					<v-spacer></v-spacer>
 
-					<v-btn color="secondary" small class="mr-2">
+					<v-btn color="secondary" small class="mr-2" @click="disableInteraction">
 						<v-icon>play_arrow</v-icon>
 						Resume to automation
 					</v-btn>
@@ -76,7 +76,7 @@ import { CURRENT_PIPELINE } from '@/store/pipeline/getters';
 import TeleportPage from "@/components/TeleportPage.vue";
 import {TASK} from "@/store/task/getters";
 import TaskStatusesMixin from "@/mixins/TaskStatusesMixin";
-import {EXECUTE_COMMAND} from "@/store/user-interaction/actions";
+import {DISABLE_INTERACTION_MODE, EXECUTE_COMMAND} from "@/store/user-interaction/actions";
 import {TASK_STOP} from "@/store/task/actions";
 
 export default {
@@ -189,7 +189,10 @@ export default {
                 taskId: this.taskId,
                 pageContext: this.userInteraction.pageContext,
             });
-        }
+        },
+        disableInteraction() {
+            this.$store.dispatch(`userInteraction/${DISABLE_INTERACTION_MODE}`, this.interactionId);
+        },
 	},
 };
 </script>

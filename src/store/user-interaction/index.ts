@@ -84,6 +84,10 @@ const actions = {
 	async [action.EXECUTE_COMMAND]({ commit, state }, executeCommand: ExecuteCommand) {
         await Vue.http.post(`/api/task/execute-command/v2`, JSON.stringify(executeCommand));
 	},
+
+	async [action.DISABLE_INTERACTION_MODE]({ commit, state }, interactionId: string) {
+        await Vue.http.post(`/api/task-user-interaction/disable/${interactionId}`, {});
+	},
 };
 
 const getters = {
