@@ -103,7 +103,8 @@ const actions = {
 
 const getters = {
 	[getter.USER_INTERACTIONS]: (state: State) => {
-        return Array.from(state.userInteractions, ([key, value]) => (value));
+        return Array.from(state.userInteractions, ([key, value]) => (value))
+            .filter(x => x.status !== 'disabled');
     },
 	[getter.FIND_USER_INTERACTION_BY_ID]: (state: State) => id => {
         const userInteractions = state.userInteractions;

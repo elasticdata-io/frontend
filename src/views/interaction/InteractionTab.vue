@@ -202,8 +202,9 @@ export default {
                 pageContext: this.userInteraction.pageContext,
             });
         },
-        disableInteraction() {
-            this.$store.dispatch(`userInteraction/${DISABLE_INTERACTION_MODE}`, this.interactionId);
+        async disableInteraction() {
+            await this.$store.dispatch(`userInteraction/${DISABLE_INTERACTION_MODE}`, this.interactionId);
+            await this.$router.replace({name: 'task-interaction', params: {taskId: this.taskId}});
         },
 	},
 };
