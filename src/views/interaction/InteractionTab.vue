@@ -8,7 +8,7 @@
 				color="cyan"
 			></v-progress-linear>
 			<v-card>
-				<v-toolbar style="z-index: 2">
+				<v-toolbar style="z-index: 1">
 					<v-btn depressed small @click="back()" class="mr-3" :disabled="asyncLoading">
 						<v-icon class="mr-2">keyboard_backspace</v-icon>
 						назад
@@ -29,13 +29,12 @@
 						<v-icon>play_arrow</v-icon>
 						continue automation
 					</v-btn>
-					<v-menu offset-y>
+					<v-menu offset-y style="z-index: 99;">
 						<template v-slot:activator="{ on, attrs }">
 							<v-btn small v-bind="attrs" v-on="on" depressed text>
 								<v-icon>more_vert</v-icon>
 							</v-btn>
 						</template>
-
 						<v-list>
 							<v-list-item @click="refreshPage" :disabled="asyncLoading">
 								<v-list-item-title>
