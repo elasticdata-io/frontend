@@ -146,7 +146,7 @@ export default {
         onClickToEl(fakeId) {
             this.sendCommands([
                 {
-                    cmd: 'click',
+                    cmd: 'nativeclick',
                     selector: `[fake-id="${fakeId}"]`,
                 },
             ]);
