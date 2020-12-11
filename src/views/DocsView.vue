@@ -8,10 +8,12 @@
 							<span>Документація DSL версії 2.0</span>
 						</v-card-title>
 						<v-card-text>
+							Цей розділ містить інформацію необхідну для "ручного" налаштування
+							павука.
 							<div class="block">
 								<router-link tag="a" :to="{ name: 'docs.commands' }">
 									<span class="command">
-										<v-icon>reorder</v-icon>
+										<v-icon>view_week</v-icon>
 										commands
 									</span>
 									<span class="summary">
@@ -22,7 +24,7 @@
 							<div class="block">
 								<router-link tag="a" :to="{ name: 'docs.data-rules' }">
 									<span class="command">
-										<v-icon>input</v-icon>
+										<v-icon>spellcheck</v-icon>
 										data rules
 									</span>
 									<span class="summary">
@@ -34,10 +36,22 @@
 								<router-link tag="a" :to="{ name: 'docs.docs.settings' }">
 									<span class="command">
 										<v-icon>settings_applications</v-icon>
-										pipeline settings
+										Налаштування павука
 									</span>
 									<span class="summary">
-										Налуштування павука (мова, screen size, proxy та інше)
+										Налуштування павука (мова, розмір єкрану, proxy та інше)
+									</span>
+								</router-link>
+							</div>
+							<div class="block disabled">
+								<router-link tag="a" :to="{ name: 'docs.docs.settings' }">
+									<span class="command">
+										<v-icon>work_outline</v-icon>
+										Приклади робочих павуків
+									</span>
+									<span class="summary">
+										Тут можна переглянути повнітю готові павуки, для вирішення
+										різноманітних задач
 									</span>
 								</router-link>
 							</div>

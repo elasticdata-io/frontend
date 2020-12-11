@@ -15,7 +15,7 @@
 							></v-text-field>
 							<v-textarea
 								v-model="pipeline.description"
-								:rows="2"
+								:rows="1"
 								:counter="500"
 								label="Опис"
 							></v-textarea>
@@ -62,33 +62,33 @@
 										>
 									</v-tooltip>
 								</v-checkbox>
-								<v-checkbox
-									v-model="pipeline.isTakeScreenshot"
-									label="Зберігати скріншоти"
-								>
-									<v-tooltip top slot="append">
-										<template v-slot:activator="{ on }">
-											<v-icon small v-on="on" color="grey lighten-1"
-												>help
-											</v-icon>
-										</template>
-										<span
-											>Якщо увімкнено - для кожної команди зберігаєтся
-											скріншот, значно сповільнює роботу павука</span
-										>
-									</v-tooltip>
-								</v-checkbox>
-								<div>
-									<pipeline-dependents
-										:disabled="!pipeline.key"
-										:id="pipeline.id"
-										:title="pipeline.key"
-										:dependencies="dependencies"
-										@add="onAddDependency"
-										@remove="onRemoveDependency"
-										@save="onSaveDependency"
-									></pipeline-dependents>
-								</div>
+								<!--								<v-checkbox-->
+								<!--									v-model="pipeline.isTakeScreenshot"-->
+								<!--									label="Зберігати скріншоти"-->
+								<!--								>-->
+								<!--									<v-tooltip top slot="append">-->
+								<!--										<template v-slot:activator="{ on }">-->
+								<!--											<v-icon small v-on="on" color="grey lighten-1"-->
+								<!--												>help-->
+								<!--											</v-icon>-->
+								<!--										</template>-->
+								<!--										<span-->
+								<!--											>Якщо увімкнено - для кожної команди зберігаєтся-->
+								<!--											скріншот, значно сповільнює роботу павука</span-->
+								<!--										>-->
+								<!--									</v-tooltip>-->
+								<!--								</v-checkbox>-->
+								<!--								<div>-->
+								<!--									<pipeline-dependents-->
+								<!--										:disabled="!pipeline.key"-->
+								<!--										:id="pipeline.id"-->
+								<!--										:title="pipeline.key"-->
+								<!--										:dependencies="dependencies"-->
+								<!--										@add="onAddDependency"-->
+								<!--										@remove="onRemoveDependency"-->
+								<!--										@save="onSaveDependency"-->
+								<!--									></pipeline-dependents>-->
+								<!--								</div>-->
 								<div>
 									<v-btn depressed small color="grey darken-1" dark class="mt-4">
 										<v-icon class="pr-2">timer</v-icon>
@@ -163,18 +163,18 @@
 							</v-card>
 						</v-col>
 					</v-row>
-					<v-row>
-						<v-col>
-							<v-card>
-								<v-card-title>Поточні дані</v-card-title>
-								<v-divider></v-divider>
-								<pipeline-data
-									:pipeline-id="pipeline.id"
-									:last-parse-rows-count="pipeline.lastParseRowsCount"
-								></pipeline-data>
-							</v-card>
-						</v-col>
-					</v-row>
+					<!--					<v-row>-->
+					<!--						<v-col>-->
+					<!--							<v-card>-->
+					<!--								<v-card-title>Поточні дані</v-card-title>-->
+					<!--								<v-divider></v-divider>-->
+					<!--								<pipeline-data-->
+					<!--									:pipeline-id="pipeline.id"-->
+					<!--									:last-parse-rows-count="pipeline.lastParseRowsCount"-->
+					<!--								></pipeline-data>-->
+					<!--							</v-card>-->
+					<!--						</v-col>-->
+					<!--					</v-row>-->
 				</v-col>
 				<v-col>
 					<v-card>
@@ -233,8 +233,8 @@ import PipelineJsonEditor from '../components/PipelineJsonEditor';
 import PipelineYamlEditor from '../components/PipelineYamlEditor';
 import TasksMini from '../components/TasksMini';
 import { CLEAR_TASKS } from '@/store/tasks/mutations';
-import PipelineData from '../components/PipelineData';
-import PipelineDependents from '../components/PipelineDependents';
+// import PipelineData from '../components/PipelineData';
+// import PipelineDependents from '../components/PipelineDependents';
 import NeedUserInteractionModalBox from '@/components/NeedUserInteractionModalBox.vue';
 
 export default {
@@ -242,8 +242,8 @@ export default {
 		PipelineJsonEditor,
 		PipelineYamlEditor,
 		TasksMini,
-		PipelineData,
-		PipelineDependents,
+		// PipelineData,
+		// PipelineDependents,
         NeedUserInteractionModalBox,
 	},
 	data() {
