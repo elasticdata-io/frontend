@@ -89,6 +89,25 @@
 								<!--										@save="onSaveDependency"-->
 								<!--									></pipeline-dependents>-->
 								<!--								</div>-->
+
+								<div>
+									<v-text-field
+										v-model="pipeline.hookUrl"
+										:counter="500"
+										label="Hook url"
+										hint="https://mysite.example.com/hookurl"
+										:rules="[rules.url]"
+									>
+										<v-tooltip top slot="append">
+											<template v-slot:activator="{ on }">
+												<v-icon small v-on="on">help</v-icon>
+											</template>
+											<span>
+												HTTP/HTTPS url адреса на яку відсилати зібрані данні
+											</span>
+										</v-tooltip>
+									</v-text-field>
+								</div>
 								<div>
 									<v-btn depressed small color="grey darken-1" dark class="mt-4">
 										<v-icon class="pr-2">timer</v-icon>
@@ -250,6 +269,17 @@ export default {
 		return {
 			viewAdditional: false,
 			showNeedUserInteractionModal: false,
+            rules: {
+                url: value => {
+                   try {
+                       new URL(value)
+                       return true;
+                   } catch (e) {
+                       console.log(e);
+                   }
+                   return false;
+                },
+            },
 		};
 	},
 	computed: {
