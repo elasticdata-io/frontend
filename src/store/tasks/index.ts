@@ -81,10 +81,7 @@ const actions = {
 	},
 
 	async [action.STOP_PIPELINE_TASK]({ dispatch }, { taskId }) {
-		const res = await Vue.http.post(`/api/pipeline/stop/${taskId}`);
-		const task = res.body;
-		const count = state.count;
-		dispatch(action.FETCH_TASKS, { pipelineId: task.pipelineId, count });
+		await Vue.http.post(`/api/task/stop/${taskId}`);
 	},
 
 	async [action.TASK_CHANGED]({ commit }, { task }) {
