@@ -77,8 +77,9 @@ const actions = {
 			return;
 		}
 		commit(mutation.SET_TASK_COMMANDS_INFORMATION_LOADING, true);
+		const url = new URL(link);
 		return Vue.http
-			.get(link)
+			.get(url.pathname)
 			.then(res => {
 				const commandsInformation = res.body || {};
 				commit(mutation.SET_TASK_COMMANDS_INFORMATION, commandsInformation);
@@ -95,7 +96,8 @@ const actions = {
 		if (!docsUrl) {
 			return;
 		}
-		return Vue.http.get(docsUrl).then(res => {
+        const url = new URL(docsUrl);
+		return Vue.http.get(url.pathname).then(res => {
 			const docs = res.body || {};
 			commit(mutation.SET_TASK_DATA, docs);
 		});
