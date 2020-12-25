@@ -327,6 +327,7 @@ export default {
 		},
 		saveJsonCommands(json) {
 			this.pipeline.jsonCommands = JSON.stringify(JSON.parse(json), null, 4);
+			this.pipeline.dsl = JSON.parse(json);
 			this.savePipeline();
 		},
 		async savePipeline() {
