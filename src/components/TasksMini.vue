@@ -191,13 +191,7 @@ export default {
 	},
 	methods: {
 		showTaskDetailsLink: function(task) {
-			const isVersion2 = task.pipelineVersion === '2.0';
-			const isFinished = this.isFinished(task.status);
-			return isFinished && isVersion2;
-		},
-		viewLogs(task) {
-			this.selectedTaskId = task.id;
-			this.selectedPipelineTitle = this.pipelineKey;
+			return this.isFinished(task.status);
 		},
 		startedOn(time) {
 			const startOn = moment.utc(time);
