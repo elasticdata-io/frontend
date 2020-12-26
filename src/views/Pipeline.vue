@@ -327,10 +327,13 @@ export default {
 		},
 		saveJsonCommands(json) {
 			this.pipeline.jsonCommands = JSON.stringify(JSON.parse(json), null, 4);
-			this.pipeline.dsl = JSON.parse(json);
 			this.savePipeline();
 		},
 		async savePipeline() {
+            const dsl = JSON.parse(this.pipeline.jsonCommands);
+            dsl.settings = dsl.settings || {};
+            dsl.settings.needProxyRotation = this.pipeline.needProxy;
+            this.pipeline.dsl = dsl;
 			return this.$store
 				.dispatch(`pipeline/${SAVE_PIPELINE}`)
 				.then(success => {
