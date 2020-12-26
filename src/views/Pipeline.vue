@@ -161,7 +161,7 @@
 									<v-row>
 										<v-col>
 											<pipeline-json-editor
-												:json="pipeline.jsonCommands"
+												:json="toJson(pipeline.dsl)"
 												:title="pipeline.key"
 												@save="saveJsonCommands"
 												:disabled="!hasName"
@@ -171,7 +171,7 @@
 									<v-row>
 										<v-col>
 											<pipeline-yaml-editor
-												:json="pipeline.jsonCommands"
+												:json="toJson(pipeline.dsl)"
 												:title="pipeline.key"
 												@save="saveJsonCommands"
 												:disabled="!hasName"
@@ -374,6 +374,9 @@ export default {
 		async onSaveDependency() {
 			return this.savePipeline();
 		},
+        toJson(obj) {
+            return JSON.stringify(obj, null, 4);
+        }
 	},
 	created() {
 		this.$store.dispatch(`pipeline/${CLEAR_PIPELINE}`);
