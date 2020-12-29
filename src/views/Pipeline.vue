@@ -21,7 +21,14 @@
 							></v-textarea>
 							<v-checkbox
 								class="hide-v-messages"
-								v-model="pipeline?.settings?.needProxyRotation"
+								v-model="pipeline.needProxy"
+								@input="
+									$set(
+										pipeline.settings,
+										'needProxyRotation',
+										$event.target.value
+									)
+								"
 								label="Змінювати ip адресу"
 							>
 								<v-tooltip top slot="append">
