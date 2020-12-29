@@ -6,7 +6,12 @@ import defaultPipelineCommands from '../defaultPipelineCommands';
 import { FETCH_TASKS } from '../tasks/actions';
 
 const state = {
-	pipeline: {},
+	pipeline: {
+        settings: {},
+        commands: [],
+        dataRules: [],
+        version: '',
+    },
 	lastData: [],
 	loading: false,
 };

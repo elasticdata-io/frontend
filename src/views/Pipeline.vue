@@ -21,7 +21,7 @@
 							></v-textarea>
 							<v-checkbox
 								class="hide-v-messages"
-								v-model="pipeline.needProxy"
+								v-model="pipeline.settings.needProxyRotation"
 								label="Змінювати ip адресу"
 							>
 								<v-tooltip top slot="append">
@@ -332,7 +332,6 @@ export default {
 		async savePipeline() {
             const dsl = JSON.parse(this.pipeline.jsonCommands);
             dsl.settings = dsl.settings || {};
-            dsl.settings.needProxyRotation = this.pipeline.needProxy;
             this.pipeline.dsl = dsl;
 			return this.$store
 				.dispatch(`pipeline/${SAVE_PIPELINE}`)
