@@ -4,14 +4,24 @@ import * as mutation from './mutations';
 import { CURRENT_PIPELINE, CURRENT_PIPELINE_LOADING, CURRENT_PIPELINE_LAST_DATA } from './getters';
 import defaultPipelineCommands from '../defaultPipelineCommands';
 import { FETCH_TASKS } from '../tasks/actions';
+import { PipelineDsl } from '@/store/model/pipeline-dsl.model';
+import { PipelineSettings } from '@/store/model/pipeline-settings-dsl.model';
 
-const state = {
-	pipeline: {
-        settings: {},
-        commands: [],
-        dataRules: [],
-        version: '',
-    },
+type PipelineState = {
+    pipeline: PipelineDsl,
+    lastData: any[],
+    loading: boolean,
+};
+
+const pipelineDefault = {
+    settings: {} as PipelineSettings,
+    commands: [],
+    dataRules: [],
+    version: '',
+};
+
+const state: PipelineState = {
+	pipeline: pipelineDefault,
 	lastData: [],
 	loading: false,
 };
@@ -107,7 +117,7 @@ const actions = {
 
 const getters = {
 	[CURRENT_PIPELINE_LOADING]: state => state.loading,
-	[CURRENT_PIPELINE]: state => state.pipeline,
+	[CURRENT_PIPELINE]: state => state.pipeline || pipelineDefault,
 	[CURRENT_PIPELINE_LAST_DATA]: state => state.lastData,
 };
 
