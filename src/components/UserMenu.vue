@@ -159,7 +159,6 @@ export default {
 					icon: 'account_circle',
 					text: 'USER_MENU.ACCOUNT',
 					route: { name: 'account' },
-					disabled: true,
 				},
 			],
 		};
