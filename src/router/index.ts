@@ -23,6 +23,7 @@ import ReplaceRegex from '../components/docs/data-rule/ReplaceRegex.vue';
 import Unique from '../components/docs/data-rule/Unique.vue';
 import Join from '../components/docs/data-rule/Join.vue';
 import ExtractRegex from '../components/docs/data-rule/ExtractRegex.vue';
+import Pluck from '../components/docs/data-rule/Pluck.vue';
 import CmdDoc from '../components/docs/cmd/CmdDoc.vue';
 import CmdLoader from '../components/docs/cmd/CmdLoader.vue';
 import CreateTaskInteraction from "@/views/CreateTaskInteraction.vue";
@@ -200,6 +201,11 @@ const router = new Router({
 			name: 'docs.data-rules.extract_regex',
 			path: '/docs/data-rules/extract_regex',
 			component: ExtractRegex,
+		},
+		{
+			name: 'docs.data-rules.pluck',
+			path: '/docs/data-rules/pluck',
+			component: Pluck,
 		},
 		{
 			name: 'docs.settings',

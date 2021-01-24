@@ -56,6 +56,12 @@ const state = {
 			route: { name: 'docs.data-rules.join' },
 			supportTypes: [Array],
 		},
+        {
+            cmd: 'pluck',
+            summary: 'Вирвати значення із массива по ключу',
+            route: { name: 'docs.data-rules.pluck' },
+            supportTypes: [Array],
+        },
 		{
 			cmd: 'uppercase',
 			summary: 'Зробити текст великими літерами',
