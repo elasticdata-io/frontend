@@ -125,23 +125,10 @@ export default {
 					route: { name: 'pipelines' },
 				},
 				{
-					icon: 'expand_less',
-					'icon-alt': 'expand_more',
-					text: 'USER_MENU.HELP',
-					model: false,
-					children: [
-						{
-							icon: 'layers',
-							text: 'DSL 2.0',
-							route: { name: 'docs' },
-						},
-						{
-							icon: 'local_offer',
-							text: 'DSL 1.0',
-							href: '//docs.elasticdata.io',
-							target: '_blank',
-						},
-					],
+					icon: 'dns',
+					text: 'USER_MENU.WORKERS',
+					route: { name: 'workers' },
+					disabled: true,
 				},
 				{
 					icon: 'equalizer',
@@ -159,6 +146,25 @@ export default {
 					icon: 'account_circle',
 					text: 'USER_MENU.ACCOUNT',
 					route: { name: 'account' },
+				},
+				{
+					icon: 'expand_less',
+					'icon-alt': 'expand_more',
+					text: 'USER_MENU.HELP',
+					model: false,
+					children: [
+						{
+							icon: 'layers',
+							text: 'DSL 2.0',
+							route: { name: 'docs' },
+						},
+						{
+							icon: 'local_offer',
+							text: 'DSL 1.0',
+							href: '//docs.elasticdata.io',
+							target: '_blank',
+						},
+					],
 				},
 			],
 		};

@@ -36,6 +36,7 @@ export const UKRAINE_TRANSLATIONS = {
 		ANALYTICS: 'Аналітика',
 		PAYMENT: 'Оплата',
 		ACCOUNT: 'Профіль',
+        WORKERS: 'Робітники',
 	},
 	DOC: {
 		CMD: {

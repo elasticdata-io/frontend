@@ -230,6 +230,10 @@ const router = new Router({
 			path: '/analytics',
 		},
 		{
+			name: 'workers',
+			path: '/workers',
+		},
+		{
 			name: 'admin',
 			path: '/admin',
 			component: Admin,

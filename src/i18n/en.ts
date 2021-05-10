@@ -36,6 +36,7 @@ export const ENGLISH_TRANSLATIONS = {
 		ANALYTICS: 'Analytics',
 		PAYMENT: 'Payment',
 		ACCOUNT: 'Account',
+		WORKERS: 'Workers',
 	},
 	DOC: {
 		CMD: {

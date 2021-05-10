@@ -36,6 +36,7 @@ export const RUSSIAN_TRANSLATIONS = {
 		ANALYTICS: 'Аналитика',
 		PAYMENT: 'Оплата',
 		ACCOUNT: 'Профиль',
+		WORKERS: 'Работники',
 	},
 	DOC: {
 		CMD: {
