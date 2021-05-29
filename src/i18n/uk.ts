@@ -31,7 +31,7 @@ export const UKRAINE_TRANSLATIONS = {
 	},
 	USER_MENU: {
 		ADD_PIPELINE: 'Додати нового павука',
-		PIPELINES: 'Павуки',
+		PIPELINES: 'Проекти',
 		HELP: 'Допомога',
 		ANALYTICS: 'Аналітика',
 		PAYMENT: 'Оплата',

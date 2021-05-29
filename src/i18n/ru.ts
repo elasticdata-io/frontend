@@ -31,7 +31,7 @@ export const RUSSIAN_TRANSLATIONS = {
 	},
 	USER_MENU: {
 		ADD_PIPELINE: 'Добавить нового паука',
-		PIPELINES: 'Пауки',
+		PIPELINES: 'Проэкты',
 		HELP: 'Справка',
 		ANALYTICS: 'Аналитика',
 		PAYMENT: 'Оплата',
