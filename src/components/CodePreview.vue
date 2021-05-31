@@ -1,127 +1,55 @@
 <template>
-	<div :id="id" :style="{ height: height ? `${height}px` : 'auto' }"></div>
+	<pre class="json" :id="id" :style="{ height: height ? `${height}px` : 'auto' }">{{ code }}</pre>
 </template>
 <script lang="ts">
-import * as monaco from 'monaco-editor';
-import { StringGenerator } from "@/lib/string.generator";
+import * as ace from 'brace';
+import 'brace/mode/json';
+import 'brace/theme/monokai';
+import 'brace/ext/searchbox';
+import { StringGenerator } from '@/lib/string.generator';
 
 export default {
 	data: () => {
 		return {
 			interval: null,
-            model: null,
 			editor: null,
 			id: `input-editor-${StringGenerator.generate()}`,
-            defaultHeight: 200,
 		};
 	},
-    computed: {},
+	computed: {},
 	methods: {
-        createModel() {
-            if (this.jsonSchema && !this.model) {
-                const modelUri = monaco.Uri.parse('a://s.json');
-                monaco.languages
-                    .json
-                    .jsonDefaults
-                    .setDiagnosticsOptions({
-                        schemas: [
-                            {
-                                uri: "http://local/pipeline.json",
-                                fileMatch: [modelUri.toString()],
-                                schema: this.jsonSchema,
-                            },
-                        ],
-                        validate: true,
-                    });
-                this.model = monaco.editor.createModel(this.code, 'json', modelUri);
-            }
-        },
-        createEditor() {
-            clearInterval(this.interval);
-            this.interval = setInterval(() => {
-                const el = document.getElementById(this.id);
-                if (!el) {
-                    return;
-                }
-                el.innerHTML = '';
-                clearInterval(this.interval);
-                this.createModel();
-                const config = {
-                    value: this.code,
-                    theme: 'vs-dark',
-                    language: 'json',
-                    readOnly: this.readOnly,
-                    model: undefined,
-                };
-                if (this.model) {
-                    config.model = this.model;
-                    delete config.value;
-                    delete config.readOnly;
-                }
-                this.editor = monaco.editor.create(el, config);
-                const options = {
-                    fontSize: 12,
-                    fontFamily: 'Monaco, "Ubuntu Mono", monospace',
-                    tabSize: 2,
-                    scrollBeyondLastLine: false,
-                    renderWhitespace: false,
-                    letterSpacing: 0.8,
-                    scrollbar: {
-                        useShadows: false,
-                        horizontalScrollbarSize: 10,
-                        verticalScrollbarSize: 10,
-                        alwaysConsumeMouseWheel: false,
-                    },
-                }
-                this.editor.updateOptions(options);
-                this.updateEditorHeight();
-            }, 30);
-        },
-        updateEditorHeight() {
-            if (this.height) {
-                return;
-            }
-            const editor = this.editor;
-            const editorElement = editor.getDomNode();
-            if (!editorElement) {
-                return
-            }
-            const lineHeight = editor.getOption(monaco.editor.EditorOption.lineHeight);
-            const lineCount = editor.getModel()?.getLineCount() || 1;
-            const height = editor.getTopForLineNumber(lineCount + 1) + lineHeight;
-            const el = document.getElementById(this.id);
-            el.style.height = `${Math.min(height, this.maxHeight)}px`;
-            editor.layout();
-        },
+		createEditor() {
+			clearInterval(this.interval);
+			this.interval = setInterval(() => {
+				const el = document.getElementById(this.id);
+				if (!el) {
+					return;
+				}
+				clearInterval(this.interval);
+				this.editor = ace.edit(this.id);
+				this.editor.setTheme('ace/theme/monokai');
+				this.editor.getSession().setMode(`ace/mode/${this.mode}`);
+				this.editor.setOptions({ readOnly: this.readOnly });
+			}, 30);
+		},
+		updateEditorHeight() {},
 	},
 	mounted() {
-        this.createEditor();
+		this.createEditor();
 	},
 	destroyed() {
 		clearInterval(this.interval);
-		if (this.model) {
-            this.model.dispose();
-        }
 	},
 	watch: {
-		code: function(oldCode, newCode) {
-            if (oldCode === newCode) {
-                return;
-            }
-            const options = {
-                value: this.code,
-            }
-            this.editor.updateOptions(options);
-		},
 		mode: function(oldMode, newMode) {
 			if (oldMode === newMode) {
-                return;
-            }
+				return;
+			}
 			this.createEditor();
 		},
-        fakeUpdated: function() {
+		fakeUpdated: function() {
 			this.createEditor();
-		}
+		},
 	},
 	props: {
 		code: {
@@ -130,7 +58,7 @@ export default {
 		},
 		mode: {
 			type: String,
-			required: true,
+			default: 'json',
 		},
 		selectionText: {
 			type: String,
@@ -141,25 +69,22 @@ export default {
 		},
 		height: {
 			type: Number,
-			default: null,
+			default: 300,
 		},
 		maxHeight: {
 			type: Number,
 			default: 500,
 		},
-        fakeUpdated: {
-            type: Date,
-            required: false,
-        },
-        jsonSchema: {
-            type: Object,
-        }
+		fakeUpdated: {
+			type: Date,
+			required: false,
+		},
 	},
 };
 </script>
 <style lang="less">
-.input-editor {
-	//transition: height 0.35s ease-out;
+.json {
+	height: calc(100vh - 64px);
 
 	code {
 		visibility: hidden;
@@ -167,6 +92,10 @@ export default {
 
 	.ace_content * {
 		font-family: Monaco, 'Ubuntu Mono', monospace;
+		/*font-weight: 400;*/
+		/*font-size: 13px;*/
+		/*line-height: 1.35;*/
+		/*letter-spacing: 0.32px;*/
 	}
 }
 </style>

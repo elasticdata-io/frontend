@@ -99,6 +99,7 @@
 													:mode="mode"
 													:selection-text="cmd"
 													:fakeUpdated="fakeUpdated"
+													:read-only="false"
 												></code-preview>
 												<div class="mt-4">
 													<h2 class="headline">Data output</h2>

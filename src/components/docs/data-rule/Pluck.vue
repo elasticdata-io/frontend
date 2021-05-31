@@ -29,9 +29,7 @@ export default {
 						dataRules: [
 							{
 								cmd: 'pluck',
-								bindKey: 'pages',
-								innerKey: 'links',
-								merge: true,
+								bindKey: 'pages.links',
 							},
 						],
 						commands: [
