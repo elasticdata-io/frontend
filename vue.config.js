@@ -7,17 +7,20 @@ module.exports = {
 	devServer: {
 		host: 'localhost',
 		proxy: {
-			'/worker/*': {
+			'^/worker/': {
 				target: 'http://localhost:3000',
 				changeOrigin: true,
-				autoRewrite: true,
+				autoRewrite: false,
+				pathRewrite: {
+					'^/worker': '', //remove /service/api
+				},
 			},
-			'/api/*': {
+			'^/api/': {
 				target: 'http://localhost:8085',
 				changeOrigin: true,
 				autoRewrite: true,
 			},
-			'/api/ws/*': {
+			'^/api/ws/': {
 				target: 'http://localhost:8085',
 				changeOrigin: true,
 				autoRewrite: true,
