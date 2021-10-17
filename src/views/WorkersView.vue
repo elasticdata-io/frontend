@@ -12,7 +12,7 @@
 									<thead>
 										<tr>
 											<th class="text-left">
-												name
+												started on
 											</th>
 											<th class="text-left">
 												status
@@ -32,7 +32,7 @@
 									<tbody>
 										<tr v-for="worker in workers" :key="worker.podKey">
 											<td>
-												{{ worker.ip }}
+												{{ fromNow(worker.createdOn) }}
 											</td>
 											<td>
 												{{ worker.status }}
@@ -69,6 +69,7 @@
 import { mapGetters } from 'vuex';
 import { FETCH_USER_WORKERS, WORKER_RESTART } from '@/store/workers/actions';
 import { WORKERS_BY_USER } from '@/store/workers/getters';
+import * as moment from 'moment';
 
 export default {
 	computed: {
@@ -82,6 +83,12 @@ export default {
 	methods: {
 		restartWorker(podKey: string) {
 			this.$store.dispatch(`workers/${WORKER_RESTART}`, { podKey });
+		},
+		fromNow(date) {
+			if (!date) {
+				return 'ще не збирались';
+			}
+			return moment.utc(date).fromNow();
 		},
 	},
 	mounted() {
