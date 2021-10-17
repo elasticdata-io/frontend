@@ -4,6 +4,7 @@ import Login from '../views/Login.vue';
 import Pipelines from '../views/Pipelines.vue';
 import Pipeline from '../views/Pipeline.vue';
 import AccountView from '../views/AccountView.vue';
+import WorkersView from '../views/WorkersView.vue';
 import PipelineAddRedirect from '../views/PipelineAddRedirect.vue';
 import Exit from '../views/Exit.vue';
 import Enter from '../views/Enter.vue';
@@ -232,6 +233,7 @@ const router = new Router({
 		{
 			name: 'workers',
 			path: '/workers',
+            component: WorkersView,
 		},
 		{
 			name: 'admin',

@@ -7,6 +7,11 @@ module.exports = {
 	devServer: {
 		host: 'localhost',
 		proxy: {
+			'^/worker-manager/': {
+				target: 'http://localhost:3005',
+				changeOrigin: true,
+				autoRewrite: true,
+			},
 			'^/worker/': {
 				target: 'http://localhost:3000',
 				changeOrigin: true,

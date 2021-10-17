@@ -29,6 +29,7 @@ import users from './users/';
 import logs from './logs/';
 import dataRules from './data-rules';
 import commands from './commands';
+import workers from './workers';
 import locale from './locale';
 import taskAnalyzedCommands from './task-analyzed-commands';
 import userInteraction, {UserInteraction} from './user-interaction';
@@ -49,7 +50,6 @@ import {
 
 import { TASK_CHANGED } from './tasks/actions';
 import {TASK_CHANGED_FROM_WS, TASK_UPDATE_CURRENT_EXECUTE_COMMAND_FROM_WS} from "@/store/task/actions";
-import * as action from "@/store/user-interaction/actions";
 import {UPSERT_USER_INTERACTION} from "@/store/user-interaction/actions";
 
 Vue.use(Vuex);
@@ -70,6 +70,7 @@ export default new Vuex.Store({
 		logs,
 		dataRules,
 		commands,
+        workers,
 		locale,
 		taskAnalyzedCommands,
 		userInteraction,
