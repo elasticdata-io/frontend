@@ -12,6 +12,9 @@
 									<thead>
 										<tr>
 											<th class="text-left">
+												type
+											</th>
+											<th class="text-left">
 												started on
 											</th>
 											<th class="text-left">
@@ -31,6 +34,9 @@
 									</thead>
 									<tbody>
 										<tr v-for="worker in workers" :key="worker.podKey">
+											<td>
+												personal
+											</td>
 											<td>
 												{{ fromNow(worker.createdOn) }}
 											</td>
