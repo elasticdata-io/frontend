@@ -7,7 +7,7 @@ module.exports = {
 	devServer: {
 		host: 'localhost',
 		proxy: {
-			'^/cloud-manager/': {
+			'^/worker-manager/': {
 				target: 'http://localhost:3005',
 				changeOrigin: true,
 				autoRewrite: true,
