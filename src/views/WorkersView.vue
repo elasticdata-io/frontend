@@ -48,7 +48,8 @@
 											</td>
 											<td>
 												<v-btn
-													color="primary"
+													small
+													color="secondary"
 													@click="restartWorker(worker.podKey)"
 												>
 													restart
