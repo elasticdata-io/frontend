@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import { WORKERS_BY_USER } from './getters';
-import { FETCH_USER_WORKERS } from './actions';
+import { FETCH_USER_WORKERS, WORKER_RESTART } from './actions';
 import { SET_USER_WORKERS } from './mutations';
 
 export interface Worker {
-    podKey: string;
+    uuid: string;
     status: 'pending' | 'running' | 'waiting';
     cloudProvider: 'digitalocean';
     createdOn: Date;
@@ -24,11 +24,15 @@ const mutations = {
 };
 
 const actions = {
-	[FETCH_USER_WORKERS]({ commit }) {
-		Vue.http.get(`/worker-manager/workers/591b716f6e87cc0789badadb`).then(res => {
+	[FETCH_USER_WORKERS]({ commit }, { userId }) {
+		Vue.http.get(`/worker-manager/droplets/${userId}`).then(res => {
 			commit(SET_USER_WORKERS, res.body);
 		});
 	},
+
+    async [WORKER_RESTART]({ commit }, { uuid }) {
+        await Vue.http.post(`/worker-manager/droplets/recreate/${uuid}`);
+    },
 };
 
 const getters = {

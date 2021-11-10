@@ -18,6 +18,9 @@
 												started on
 											</th>
 											<th class="text-left">
+												ip
+											</th>
+											<th class="text-left">
 												status
 											</th>
 											<th class="text-left">
@@ -33,12 +36,15 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr v-for="worker in workers" :key="worker.podKey">
+										<tr v-for="worker in workers" :key="worker.uuid">
 											<td>
 												personal
 											</td>
 											<td>
 												{{ fromNow(worker.createdOn) }}
+											</td>
+											<td>
+												{{ worker.ip }}
 											</td>
 											<td>
 												{{ worker.status }}
@@ -56,7 +62,7 @@
 												<v-btn
 													small
 													color="secondary"
-													@click="restartWorker(worker.podKey)"
+													@click="restartWorker(worker.uuid)"
 												>
 													restart
 												</v-btn>
@@ -77,9 +83,13 @@ import { mapGetters } from 'vuex';
 import { FETCH_USER_WORKERS, WORKER_RESTART } from '@/store/workers/actions';
 import { WORKERS_BY_USER } from '@/store/workers/getters';
 import * as moment from 'moment';
+import { USER } from '@/store/user/getters';
 
 export default {
 	computed: {
+		...mapGetters('user', {
+			USER: USER,
+		}),
 		...mapGetters('workers', {
 			WORKERS_BY_USER: WORKERS_BY_USER,
 		}),
@@ -88,8 +98,13 @@ export default {
 		},
 	},
 	methods: {
-		restartWorker(podKey: string) {
-			this.$store.dispatch(`workers/${WORKER_RESTART}`, { podKey });
+		async restartWorker(uuid: string) {
+			const yes = confirm(`Are you sure?`);
+			if (!yes) {
+				return;
+			}
+			await this.$store.dispatch(`workers/${WORKER_RESTART}`, { uuid });
+			await this.$store.dispatch(`workers/${FETCH_USER_WORKERS}`, { userId: this.USER.id });
 		},
 		fromNow(date) {
 			if (!date) {
@@ -99,7 +114,7 @@ export default {
 		},
 	},
 	mounted() {
-		this.$store.dispatch(`workers/${FETCH_USER_WORKERS}`);
+		this.$store.dispatch(`workers/${FETCH_USER_WORKERS}`, { userId: this.USER.id });
 	},
 };
 </script>
