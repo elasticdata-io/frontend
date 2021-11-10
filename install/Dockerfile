@@ -1,4 +1,4 @@
-FROM node AS build
+FROM node:14 AS build
 WORKDIR /var/www/frontend
 COPY . /var/www/frontend
 RUN npm ci
