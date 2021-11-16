@@ -224,7 +224,7 @@
 								class="title"
 								v-if="pipelines && pipelines.length === 0 && !pipelinesLoading"
 							>
-								За вашим запитом нічого не знайдено
+								{{ $t('DATA.NOT_FOUND') }}
 							</div>
 							<v-progress-linear
 								v-if="pipelinesLoading"

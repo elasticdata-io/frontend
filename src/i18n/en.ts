@@ -50,4 +50,10 @@ export const ENGLISH_TRANSLATIONS = {
 		HAS_NOT_ERROR_COMMANDS: 'There are no commands with errors in this task!',
 		INTERACTION_DISCONNECTED: 'This interaction has been disconnected!',
 	},
+    WORKERS: {
+        NOT_RUNNING: 'There are no private workers running at the moment'
+    },
+    DATA: {
+        NOT_FOUND: 'Not found'
+    }
 };

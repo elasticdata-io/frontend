@@ -7,70 +7,7 @@
 						<v-card-title>{{ $t('USER_MENU.WORKERS') }}</v-card-title>
 						<v-divider></v-divider>
 						<v-card-text>
-							<v-simple-table>
-								<template v-slot:default>
-									<thead>
-										<tr>
-											<th class="text-left">
-												type
-											</th>
-											<th class="text-left">
-												started on
-											</th>
-											<th class="text-left">
-												ip
-											</th>
-											<th class="text-left">
-												status
-											</th>
-											<th class="text-left">
-												cpu
-											</th>
-											<th class="text-left">
-												memory
-											</th>
-											<th class="text-left">
-												provider
-											</th>
-											<th class="text-left"></th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr v-for="worker in workers" :key="worker.uuid">
-											<td>
-												personal
-											</td>
-											<td>
-												{{ fromNow(worker.createdOn) }}
-											</td>
-											<td>
-												{{ worker.ip }}
-											</td>
-											<td>
-												{{ worker.status }}
-											</td>
-											<td>
-												{{ worker.cpu }}
-											</td>
-											<td>
-												{{ worker.memory }}
-											</td>
-											<td>
-												{{ worker.cloudProvider }}
-											</td>
-											<td>
-												<v-btn
-													small
-													color="secondary"
-													@click="restartWorker(worker.uuid)"
-												>
-													restart
-												</v-btn>
-											</td>
-										</tr>
-									</tbody>
-								</template>
-							</v-simple-table>
+							<workers :workers="workers"></workers>
 						</v-card-text>
 					</v-card>
 				</v-col>
@@ -80,12 +17,15 @@
 </template>
 <script lang="ts">
 import { mapGetters } from 'vuex';
-import { FETCH_USER_WORKERS, WORKER_RESTART } from '@/store/workers/actions';
+import { FETCH_USER_WORKERS } from '@/store/workers/actions';
 import { WORKERS_BY_USER } from '@/store/workers/getters';
-import * as moment from 'moment';
 import { USER } from '@/store/user/getters';
+import Workers from '@/components/Workers.vue';
 
 export default {
+	components: {
+		Workers,
+	},
 	computed: {
 		...mapGetters('user', {
 			USER: USER,
@@ -97,22 +37,7 @@ export default {
 			return this.WORKERS_BY_USER;
 		},
 	},
-	methods: {
-		async restartWorker(uuid: string) {
-			const yes = confirm(`Are you sure?`);
-			if (!yes) {
-				return;
-			}
-			await this.$store.dispatch(`workers/${WORKER_RESTART}`, { uuid });
-			await this.$store.dispatch(`workers/${FETCH_USER_WORKERS}`, { userId: this.USER.id });
-		},
-		fromNow(date) {
-			if (!date) {
-				return 'ще не збирались';
-			}
-			return moment.utc(date).fromNow();
-		},
-	},
+	methods: {},
 	mounted() {
 		this.$store.dispatch(`workers/${FETCH_USER_WORKERS}`, { userId: this.USER.id });
 	},

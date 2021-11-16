@@ -49,4 +49,10 @@ export const RUSSIAN_TRANSLATIONS = {
 	TASK: {
 		HAS_NOT_ERROR_COMMANDS: 'Эта задача не имеет команд с ошибками!',
 	},
+    WORKERS: {
+        NOT_RUNNING: 'На данный момент нет запущенных, приватных воркеров'
+    },
+    DATA: {
+        NOT_FOUND: 'По вашему запросу ничего не найдено'
+    }
 };

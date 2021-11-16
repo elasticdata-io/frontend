@@ -49,4 +49,10 @@ export const UKRAINE_TRANSLATIONS = {
 	TASK: {
 		HAS_NOT_ERROR_COMMANDS: 'Це завдання не має команд з помилками!',
 	},
+    WORKERS: {
+        NOT_RUNNING: 'На даний момент немає запущених, персональних воркерів'
+    },
+    DATA: {
+        NOT_FOUND: 'За вашим запитом нічого не знайдено'
+    }
 };
