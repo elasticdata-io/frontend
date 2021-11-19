@@ -31,6 +31,8 @@ import CreateTaskInteraction from "@/views/CreateTaskInteraction.vue";
 import Sandbox from "@/views/Sandbox.vue";
 import InteractionTabs from "@/views/interaction/InteractionTabs.vue";
 import InteractionTab from "@/views/interaction/InteractionTab.vue";
+import WorkersSettings from '@/components/WorkersSettings.vue';
+import Workers from '@/components/Workers.vue';
 
 Vue.use(Router);
 
@@ -234,6 +236,16 @@ const router = new Router({
 			name: 'workers',
 			path: '/workers',
             component: WorkersView,
+            children: [
+                {
+                    path: '',
+                    component: Workers,
+                },
+                {
+                    path: 'settings',
+                    component: WorkersSettings,
+                }
+            ]
 		},
 		{
 			name: 'admin',

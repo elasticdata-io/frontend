@@ -68,17 +68,19 @@ import * as moment from 'moment';
 import { FETCH_USER_WORKERS, WORKER_RESTART } from '@/store/workers/actions';
 import { mapGetters } from 'vuex';
 import { USER } from '@/store/user/getters';
+import { WORKERS_BY_USER } from '@/store/workers/getters';
 
 export default {
-	props: {
-		workers: {
-			type: Array,
-		},
-	},
 	computed: {
 		...mapGetters('user', {
 			USER: USER,
 		}),
+		...mapGetters('workers', {
+			WORKERS_BY_USER: WORKERS_BY_USER,
+		}),
+		workers(): Worker[] {
+			return this.WORKERS_BY_USER;
+		},
 	},
 	methods: {
 		fromNow(date) {
@@ -92,6 +94,9 @@ export default {
 			await this.$store.dispatch(`workers/${WORKER_RESTART}`, { uuid });
 			await this.$store.dispatch(`workers/${FETCH_USER_WORKERS}`, { userId: this.USER.id });
 		},
+	},
+	created() {
+		this.$store.dispatch(`workers/${FETCH_USER_WORKERS}`, { userId: this.USER.id });
 	},
 };
 </script>
