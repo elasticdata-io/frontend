@@ -12,9 +12,11 @@ spec:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: /
+          - pathType: Prefix
+            path: /
             backend:
               service:
                 name: {{ template "frontend.fullname" . }}
-                port: {{ .Values.service.port }}
+                port:
+                  number: {{ .Values.service.port }}
   {{- end }}
