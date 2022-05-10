@@ -53,7 +53,7 @@ spec:
 						sh 'docker build -f install/Dockerfile -t  ${DOCKER_CONTAINER_PREFIX}/scraper-frontend:${DOCKER_TAG} .'
                     }
                     stage('publish application') {
-                        sh 'docker push ${DOCKER_CONTAINER_PREFIX}/scraper-lending:${DOCKER_TAG}'
+                        sh 'docker push ${DOCKER_CONTAINER_PREFIX}/scraper-frontend:${DOCKER_TAG}'
                     }
 				}
 
