@@ -63,6 +63,7 @@ spec:
                             -f install/helm/frontend/values-production.yaml \
 							--install frontend \
 							--namespace app \
+							--set image.repository=${DOCKER_CONTAINER_PREFIX}/scraper-frontend \
 							--set image.tag=${DOCKER_TAG} \
 							install/helm/frontend"
 					}
