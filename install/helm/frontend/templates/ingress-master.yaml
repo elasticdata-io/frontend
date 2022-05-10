@@ -1,6 +1,6 @@
 {{- if .Values.ingress.enabled -}}
   {{- $fullName := include "frontend.fullname" . -}}
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ template "frontend.fullname" . }}-master
@@ -10,12 +10,13 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
   annotations:
-    kubernetes.io/ingress.class: "nginx"
+    ingressClassName: nginx
+    kubernetes.io/ingress.class: nginx
     nginx.org/mergeable-ingress-type: master
     ingress.kubernetes.io/rewrite-target: /
-    cert-manager.io/issuer: letsencrypt-prod
+    #cert-manager.io/issuer: letsencrypt-prod
 {{- if (and (not (empty .Values.ingress.host)) (not (empty .Values.ingress.secretName))) }}
-    ingress.kubernetes.io/ssl-redirect: "true"
+    #ingress.kubernetes.io/ssl-redirect: "true"
 {{- end }}
 spec:
   rules:
