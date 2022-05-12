@@ -1,5 +1,14 @@
 <template>
 	<v-form v-model="valid">
+		<div class="caption pl-4 pt-4 pb-4">
+			Для правильного накопичування документів необхідно вказати МІНІМУМ два правила:
+			<ul>
+				<li v-for="item in predefinedRules" :key="item.id">
+					<strong>{{ item.caption }}</strong> -
+					<span>{{ item.description }}</span>
+				</li>
+			</ul>
+		</div>
 		<v-simple-table class="setup-table">
 			<template v-slot:default>
 				<thead>
@@ -10,9 +19,7 @@
 						<th class="text-left">
 							Поле
 						</th>
-						<th class="text-left">
-							Дія
-						</th>
+						<th class="text-left"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -38,17 +45,17 @@
 				</tbody>
 			</template>
 		</v-simple-table>
-		<v-btn depressed small @click="add">
-			<v-icon small class="pr-2">add_circle</v-icon>
-			додати правило
-		</v-btn>
-		<v-btn depressed small @click="validate" class="ml-5">
+		<v-btn depressed small @click="validate">
 			<v-icon small class="pr-2">check_circle</v-icon>
 			валідувати правила
 		</v-btn>
-		<v-btn depressed small @click="save" class="ml-5 float-right" color="accent">
+		<v-btn depressed small @click="save" color="accent" class="ml-5">
 			<v-icon small class="pr-2">check_circle</v-icon>
 			зберегти зміни
+		</v-btn>
+		<v-btn depressed small @click="add" class="ml-5 float-right">
+			<v-icon small class="pr-2">add_circle</v-icon>
+			додати правило
 		</v-btn>
 	</v-form>
 </template>
@@ -64,11 +71,13 @@ export default {
             predefinedRules: [
                 {
                     id: 1,
-                    caption: 'збирати документи які містять ключ'
+                    caption: 'Збирати документи які містять ключ',
+                    description: 'всі документи які мають вказаний ключ будуть накопичуватися'
                 },
                 {
                     id: 2,
-                    caption: 'ідентифікувати документ по унікальному ключу',
+                    caption: 'Ідентифікувати документ по унікальному ключу',
+                    description: 'вказаний ключ запопігає дублюванню при накопичуванні'
                 }
             ],
             rules: [
