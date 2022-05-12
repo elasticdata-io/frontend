@@ -17,7 +17,7 @@
 							Правило
 						</th>
 						<th class="text-left">
-							Поле
+							Поле в документі
 						</th>
 						<th class="text-left"></th>
 					</tr>
@@ -31,13 +31,21 @@
 								item-text="caption"
 								item-value="id"
 								required
+								disabled
 							></v-select>
 						</td>
 						<td>
 							<v-text-field v-model="item.property" required></v-text-field>
 						</td>
 						<td>
-							<v-btn small depressed color="secondary" icon @click="remove(item.id)">
+							<v-btn
+								disabled
+								small
+								depressed
+								color="secondary"
+								icon
+								@click="remove(item.id)"
+							>
 								<v-icon>delete</v-icon>
 							</v-btn>
 						</td>
@@ -53,7 +61,7 @@
 			<v-icon small class="pr-2">check_circle</v-icon>
 			зберегти зміни
 		</v-btn>
-		<v-btn depressed small @click="add" class="ml-5 float-right">
+		<v-btn depressed small @click="add" class="ml-5 float-right" disabled>
 			<v-icon small class="pr-2">add_circle</v-icon>
 			додати правило
 		</v-btn>
