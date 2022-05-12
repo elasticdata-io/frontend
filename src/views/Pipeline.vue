@@ -189,18 +189,15 @@
 							</v-card>
 						</v-col>
 					</v-row>
-					<!--					<v-row>-->
-					<!--						<v-col>-->
-					<!--							<v-card>-->
-					<!--								<v-card-title>Поточні дані</v-card-title>-->
-					<!--								<v-divider></v-divider>-->
-					<!--								<pipeline-data-->
-					<!--									:pipeline-id="pipeline.id"-->
-					<!--									:last-parse-rows-count="pipeline.lastParseRowsCount"-->
-					<!--								></pipeline-data>-->
-					<!--							</v-card>-->
-					<!--						</v-col>-->
-					<!--					</v-row>-->
+					<v-row>
+						<v-col>
+							<v-card>
+								<v-card-title>Накопичувач данних</v-card-title>
+								<v-divider></v-divider>
+								<pipeline-data :pipeline-id="pipeline.id"></pipeline-data>
+							</v-card>
+						</v-col>
+					</v-row>
 				</v-col>
 				<v-col>
 					<v-card>
@@ -259,7 +256,7 @@ import PipelineJsonEditor from '../components/PipelineJsonEditor';
 import PipelineYamlEditor from '../components/PipelineYamlEditor';
 import TasksMini from '../components/TasksMini';
 import { CLEAR_TASKS } from '@/store/tasks/mutations';
-// import PipelineData from '../components/PipelineData';
+import PipelineData from '../components/PipelineData';
 // import PipelineDependents from '../components/PipelineDependents';
 import NeedUserInteractionModalBox from '@/components/NeedUserInteractionModalBox.vue';
 
@@ -268,7 +265,7 @@ export default {
 		PipelineJsonEditor,
 		PipelineYamlEditor,
 		TasksMini,
-		// PipelineData,
+		PipelineData,
 		// PipelineDependents,
         NeedUserInteractionModalBox,
 	},

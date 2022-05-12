@@ -33,6 +33,8 @@ import InteractionTabs from "@/views/interaction/InteractionTabs.vue";
 import InteractionTab from "@/views/interaction/InteractionTab.vue";
 import WorkersSettings from '@/components/WorkersSettings.vue';
 import Workers from '@/components/Workers.vue';
+import SetupAccumulateData from "@/components/SetupAccumulateData.vue";
+import ViewAccumulateData from "@/components/ViewAccumulateData.vue";
 
 Vue.use(Router);
 
@@ -82,16 +84,36 @@ const router = new Router({
 				};
 			},
 		},
-		{
-			name: 'pipeline.data-view',
-			path: '/data/view/:id',
-			component: PipelineDataView,
-			props: route => {
-				return {
-					id: route.params.id,
-				};
-			},
-		},
+        {
+            name: 'pipeline.accumulate-data',
+            path: '/pipeline/accumulate-data/:id',
+            component: PipelineDataView,
+            props: route => {
+                return {
+                    id: route.params.id,
+                };
+            },
+            children: [
+                {
+                    path: 'setup',
+                    component: SetupAccumulateData,
+                    props: route => {
+                        return {
+                            id: route.params.id,
+                        };
+                    },
+                },
+                {
+                    path: 'view',
+                    component: ViewAccumulateData,
+                    props: route => {
+                        return {
+                            id: route.params.id,
+                        };
+                    },
+                }
+            ]
+        },
 		{
 			name: 'task',
 			path: '/task/:taskId',

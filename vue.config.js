@@ -13,7 +13,7 @@ module.exports = {
 				autoRewrite: true,
 			},
 			'^/worker/': {
-				target: 'http://localhost:3000',
+				target: 'https://app.elasticdata.io',
 				changeOrigin: true,
 				autoRewrite: false,
 				pathRewrite: {
@@ -21,12 +21,12 @@ module.exports = {
 				},
 			},
 			'^/api/': {
-				target: 'http://localhost:8085',
+				target: 'https://app.elasticdata.io',
 				changeOrigin: true,
 				autoRewrite: true,
 			},
 			'^/api/ws/': {
-				target: 'http://localhost:8085',
+				target: 'https://app.elasticdata.io',
 				changeOrigin: true,
 				autoRewrite: true,
 				ws: true,

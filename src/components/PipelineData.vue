@@ -3,107 +3,14 @@
 		<v-row>
 			<v-col class="pt-0">
 				<v-row>
-					<v-col xl="6" lg="6" md="12" sm="12" xs="12">
-						<v-btn
-							class="mr-4"
-							icon
-							:to="{ name: 'pipeline.data-view', params: $route.params }"
-						>
-							<v-tooltip bottom>
-								<template v-slot:activator="{ on }">
-									<v-icon v-on="on">view_list</v-icon>
-								</template>
-								<span>Переглянути документи</span>
-							</v-tooltip>
-						</v-btn>
-						<v-menu offset-y>
-							<template v-slot:activator="{ on }">
-								<v-btn class="mr-4" v-on="on" icon>
-									<v-tooltip bottom>
-										<template v-slot:activator="{ on }">
-											<v-icon v-on="on">get_app</v-icon>
-										</template>
-										<span>Завантажити документи</span>
-									</v-tooltip>
-								</v-btn>
-							</template>
-							<v-list>
-								<v-list-item :href="jsonLink" target="_blank">
-									<v-list-item-title>
-										<v-icon class="ml-2">get_app</v-icon>
-										json
-									</v-list-item-title>
-								</v-list-item>
-								<v-list-item :href="csvLink" target="_blank">
-									<v-list-item-title>
-										<v-icon class="ml-2">get_app</v-icon>
-										csv
-									</v-list-item-title>
-								</v-list-item>
-								<v-list-item disabled>
-									<v-list-item-title>
-										<v-icon disabled class="ml-2">get_app</v-icon>
-										xls
-									</v-list-item-title>
-								</v-list-item>
-							</v-list>
-						</v-menu>
-						<v-menu v-if="!$vuetify.breakpoint.lgOnly" offset-y>
-							<template v-slot:activator="{ on }">
-								<v-btn icon v-on="on">
-									<v-tooltip bottom>
-										<template v-slot:activator="{ on }">
-											<v-icon v-on="on">link</v-icon>
-										</template>
-										<span>Копіювати посилання на документи</span>
-									</v-tooltip>
-								</v-btn>
-							</template>
-							<v-list>
-								<v-list-item @click="copyJsonLink">
-									<v-list-item-title>
-										<v-icon class="ml-2">link</v-icon>
-										json
-									</v-list-item-title>
-								</v-list-item>
-								<v-list-item @click="copyCsvLink">
-									<v-list-item-title>
-										<v-icon class="ml-2">link</v-icon>
-										csv
-									</v-list-item-title>
-								</v-list-item>
-								<v-list-item disabled>
-									<v-list-item-title>
-										<v-icon disabled class="ml-2">link</v-icon>
-										xls
-									</v-list-item-title>
-								</v-list-item>
-							</v-list>
-						</v-menu>
-					</v-col>
-					<v-col xl="6" lg="6" md="12" sm="12" xs="12">
-						<v-badge color="purple" right overlap style="width: 100%;">
-							<template v-slot:badge>
-								<v-tooltip bottom>
-									<template v-slot:activator="{ on }">
-										<v-icon dark v-on="on">
-											attach_money
-										</v-icon>
-									</template>
-									<span>Доступно в платній підписці</span>
-								</v-tooltip>
-							</template>
-							<v-btn block small disabled>
-								Аналітика
-								<v-icon class="ml-2">equalizer</v-icon>
-							</v-btn>
-						</v-badge>
-					</v-col>
-				</v-row>
-				<v-divider></v-divider>
-				<v-row>
 					<v-col>
-						<span class="headline">Всього документів: {{ lastParseRowsCount }}</span>
+						<p class="caption">
+							Для збору і зберігання унікальних записів потрібно налаштувати правила
+							накопичування данних.
+						</p>
+						<v-btn depressed small @click="setupRules"
+							>Налаштувати правила накопичування</v-btn
+						>
 					</v-col>
 				</v-row>
 			</v-col>
@@ -137,15 +44,15 @@ export default {
 			copy(this.csvLink);
 			this.$store.commit(SET_SNACK_MESSAGE, { msg: `Посилання скопійовано в буфер обміну` });
 		},
+		setupRules() {
+			const location = `/pipeline/accumulate-data/${this.pipelineId}/setup`;
+			this.$router.push(location);
+		},
 	},
 	props: {
 		pipelineId: {
 			type: String,
 			default: '',
-		},
-		lastParseRowsCount: {
-			type: Number,
-			default: null,
 		},
 	},
 };
