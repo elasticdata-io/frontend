@@ -128,7 +128,7 @@ export default {
 					icon: 'dns',
 					text: 'USER_MENU.WORKERS',
 					route: { name: 'workers' },
-					disabled: false,
+					disabled: true,
 				},
 				{
 					icon: 'equalizer',
