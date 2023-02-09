@@ -1,9 +1,7 @@
-#!groovy
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
-
-def label = "frontend-${UUID.randomUUID().toString()}"
-podTemplate(label: label, yaml: """
+pipeline {
+    agent {
+        kubernetes {
+            yaml '''
 apiVersion: v1
 kind: Pod
 metadata:
@@ -34,40 +32,39 @@ spec:
     command:
     - cat
     tty: true
-"""
-)
-	{
-		node(label) {
-			properties([disableConcurrentBuilds()])
-
-			stage('checkout') {
-
-				checkout scm
-
-				container('docker') {
-                    env.DOCKER_TAG = "${BRANCH_NAME}_${BUILD_NUMBER}"
-                    stage('build application') {
-						sh 'docker login  \
-							-u ${DOCKER_CONTAINER_LOGIN}  \
-							-p ${DOCKER_CONTAINER_PASSWORD}'
-						sh 'docker build -f install/Dockerfile -t  ${DOCKER_CONTAINER_PREFIX}/scraper-frontend:${DOCKER_TAG} .'
+'''
+        }
+    }
+    environment {
+        DOCKER_TAG = ''
+    }
+    stages {
+        stage('docker build & push') {
+            steps {
+                checkout scm
+                container('docker') {
+                    script{
+                        def now = new Date()
+                        env.dateFormatted = now.format("yyyy-MM-dd'T'HH:mm:ss'Z'")
                     }
-                    stage('publish application') {
-                        sh 'docker push ${DOCKER_CONTAINER_PREFIX}/scraper-frontend:${DOCKER_TAG}'
-                    }
-				}
-
-				container('k8s-helm') {
-					stage('helm upgrade') {
-						sh "helm upgrade \
-                            -f install/helm/frontend/values-production.yaml \
-							--install frontend \
-							--namespace app \
-							--set image.repository=${DOCKER_CONTAINER_PREFIX}/scraper-frontend \
-							--set image.tag=${DOCKER_TAG} \
-							install/helm/frontend"
-					}
-				}
-			}
-		}
-	}
+                    sh 'docker login -u bombascter -p "!Prisoner31!"'
+                    sh 'docker build -f install/Dockerfile -t bombascter/scraper-frontend:${GIT_COMMIT} .'
+                    sh 'docker push bombascter/scraper-frontend:${GIT_COMMIT}'
+                }
+            }
+        }
+        stage('helm') {
+            steps {
+                container('k8s-helm') {
+                    sh "helm upgrade \
+                        -f install/helm/frontend/values-production.yaml \
+                        --install frontend \
+                        --namespace app \
+                        --set image.repository=bombascter/scraper-frontend \
+                        --set image.tag=${GIT_COMMIT} \
+                        install/helm/frontend"
+                }
+            }
+        }
+    }
+}
